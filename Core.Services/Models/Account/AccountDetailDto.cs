@@ -1,13 +1,15 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Core.Services.Models;
+using GT.Agreement.Models;
+using Core.Entity;
+using GT.Agreement.Entity;
 
-namespace Core.Entity
+namespace Core.Services.Models
 {
-    /// <summary>
-    /// 账号表
-    /// </summary>
-    public class Account : EntityBase
+    public class AccountDetailDto
     {
         /// <summary>
         /// 邮箱
@@ -36,11 +38,11 @@ namespace Core.Entity
         /// <summary>
         /// 软删除
         /// </summary>
-        public bool IsDeleted { get; set; } = false;
+        public bool IsDeleted { get; set; }
         /// <summary>
         /// 密码重试次数
         /// </summary>
-        public int RetryCount { get; set; } = 0;
+        public int RetryCount { get; set; }
         [MaxLength(16)]
         public string Phone { get; set; }
         public bool PhoneConfirm { get; set; }
@@ -51,8 +53,14 @@ namespace Core.Entity
         [MaxLength(200)]
         public string Avatar { get; set; }
 
-        public AccountExtend Extend { get; set; }
+        // public AccountExtendDto Extend { get; set; }
         public List<Role> Roles { get; set; }
         public List<Catalog> Catalogs { get; set; }
+        public DateTimeOffset? UpdatedTime { get; set; }
+        public Status Status { get; set; }
+        [Key]
+        public Guid Id { get; set; }
+        public DateTimeOffset? CreatedTime { get; set; }
+    
     }
 }

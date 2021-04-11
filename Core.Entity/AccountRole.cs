@@ -1,5 +1,4 @@
-﻿using Gov.Entity;
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
 namespace Core.Entity
 {

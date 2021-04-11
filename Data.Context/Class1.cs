@@ -1,4 +1,4 @@
-﻿namespace Services
+﻿namespace Data.Context
 {
     public class Class1
     {

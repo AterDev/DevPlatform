@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>App.Api</name>
+    </assembly>
+    <members>
+        <member name="T:App.Api.Controllers.AccountController">
+            <summary>
+            Account
+            </summary>
+        </member>
+        <member name="M:App.Api.Controllers.AccountController.AddAsync(Core.Services.Models.AccountAddDto)">
+            <summary>
+            添加Account
+            </summary>
+            <param name="form"></param>
+            <returns></returns>
+        </member>
+        <member name="M:App.Api.Controllers.AccountController.FilterAsync(Core.Services.Models.AccountFilter)">
+            <summary>
+            分页筛选Account
+            </summary>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:App.Api.Controllers.AccountController.UpdateAsync(System.Guid,Core.Services.Models.AccountUpdateDto)">
+            <summary>
+            更新Account
+            </summary>
+            <param name="id"></param>
+            <param name="form"></param>
+            <returns></returns>
+        </member>
+        <member name="T:App.Api.RepositoryServiceExtensions">
+            <summary>
+            仓储注册服务
+            </summary>
+        </member>
+    </members>
+</doc>

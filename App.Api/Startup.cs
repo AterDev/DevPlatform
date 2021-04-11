@@ -1,18 +1,13 @@
-using Core.Entity;
+using Data.Context;
+using IGeekFan.AspNetCore.Knife4jUI;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace App.Api
 {
@@ -33,11 +28,22 @@ namespace App.Api
             services.AddControllers();
             services.AddDbContext<CoreContext>(option =>
             {
-                option.UseMySQL(connectionStrings, op => op.MigrationsAssembly("Core.Entity"));
+                option.UseMySQL(connectionStrings, op => op.MigrationsAssembly("Data.Context"));
             });
+
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "App.Api", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "API V1", Version = "v1" });
+                c.AddServer(new OpenApiServer()
+                {
+                    Url = "",
+                    Description = "vvv"
+                });
+                c.CustomOperationIds(apiDesc =>
+                {
+                    var controllerAction = apiDesc.ActionDescriptor as ControllerActionDescriptor;
+                    return controllerAction.ControllerName + "-" + controllerAction.ActionName;
+                });
             });
         }
 
@@ -48,7 +54,13 @@ namespace App.Api
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "App.Api v1"));
+
+                app.UseKnife4UI(c =>
+                {
+                    c.RoutePrefix = "api/docs"; // serve the UI at root
+                    c.SwaggerEndpoint("/v1/api-docs", "V1 Docs");
+                });
+
             }
 
             app.UseHttpsRedirection();
@@ -60,6 +72,7 @@ namespace App.Api
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapSwagger("{documentName}/api-docs");
             });
         }
     }

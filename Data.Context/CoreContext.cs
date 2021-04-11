@@ -1,9 +1,8 @@
-﻿using System;
-using System.Diagnostics.CodeAnalysis;
-using Gov.Entity;
+﻿using Core.Entity;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics.CodeAnalysis;
 
-namespace Core.Entity
+namespace Data.Context
 {
     /// <summary>
     /// 数据库上下文
