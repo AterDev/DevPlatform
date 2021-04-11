@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
+using Services.AutoMapper;
 
 namespace App.Api
 {
@@ -30,6 +31,10 @@ namespace App.Api
                 option.UseMySQL(connectionStrings, op => op.MigrationsAssembly("Data.Context"));
             });
 
+            services.AddHttpContextAccessor();
+            services.AddAutoMapper(typeof(MapperProfile));
+            services.AddRepositories();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "API V1", Version = "v1" });
@@ -38,7 +43,7 @@ namespace App.Api
                     Url = "",
                     Description = "vvv"
                 });
-                c.CustomOperationIds(apiDesc =>
+               c.CustomOperationIds(apiDesc =>
                 {
                     var controllerAction = apiDesc.ActionDescriptor as ControllerActionDescriptor;
                     return controllerAction.ControllerName + "-" + controllerAction.ActionName;
