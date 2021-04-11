@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json;
 
 namespace App.Api
 {
@@ -24,8 +25,6 @@ namespace App.Api
         public void ConfigureServices(IServiceCollection services)
         {
             var connectionStrings = Configuration.GetConnectionString("Default");
-
-            services.AddControllers();
             services.AddDbContext<CoreContext>(option =>
             {
                 option.UseMySQL(connectionStrings, op => op.MigrationsAssembly("Data.Context"));
@@ -45,6 +44,12 @@ namespace App.Api
                     return controllerAction.ControllerName + "-" + controllerAction.ActionName;
                 });
             });
+
+            services.AddControllers().AddNewtonsoftJson(option =>
+            {
+                option.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
