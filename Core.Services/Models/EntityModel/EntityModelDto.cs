@@ -1,8 +1,13 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Core.Entity
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Core.Services.Models;
+using GT.Agreement.Models;
+using Core.Entity;
+namespace Core.Services.Models
 {
-    public class Entity : EntityBase
+    public class EntityModelDto
     {
         /// <summary>
         /// 实体名称
@@ -22,7 +27,10 @@ namespace Core.Entity
         /// <summary>
         /// 所属类库
         /// </summary>
-        public Lib Lib { get; set; }
-
+        // public LibDto Lib { get; set; }
+        [Key]
+        public Guid Id { get; set; }
+        public DateTimeOffset CreatedTime { get; set; }
+    
     }
 }

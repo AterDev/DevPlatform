@@ -1,5 +1,9 @@
 ﻿// 该文件由GT.CLI工具生成，请不要删除模板占位符。
 // Account;
+// Role;
+// Catalog;
+// Lib;
+// EntityModel;
 // {AlreadyMapedEntity}
 using AutoMapper;
 using Core.Entity;
@@ -22,6 +26,22 @@ namespace Core.Services.AutoMapper
             CreateMap<AccountUpdateDto, Account>();
             CreateMap<Account, AccountDto>();
             CreateMap<Account, AccountDetailDto>();        
+            CreateMap<RoleAddDto, Role>();
+            CreateMap<RoleUpdateDto, Role>();
+            CreateMap<Role, RoleDto>();
+            CreateMap<Role, RoleDetailDto>();        
+            CreateMap<CatalogAddDto, Catalog>();
+            CreateMap<CatalogUpdateDto, Catalog>();
+            CreateMap<Catalog, CatalogDto>();
+            CreateMap<Catalog, CatalogDetailDto>();        
+            CreateMap<LibAddDto, Lib>();
+            CreateMap<LibUpdateDto, Lib>();
+            CreateMap<Lib, LibDto>();
+            CreateMap<Lib, LibDetailDto>();        
+            CreateMap<EntityModelAddDto, EntityModel>();
+            CreateMap<EntityModelUpdateDto, EntityModel>();
+            CreateMap<EntityModel, EntityModelDto>();
+            CreateMap<EntityModel, EntityModelDetailDto>();        
 // {AppendMappers}
         }
     }

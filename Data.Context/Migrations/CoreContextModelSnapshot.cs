@@ -19,11 +19,11 @@ namespace Data.Context.Migrations
 
             modelBuilder.Entity("AccountRole", b =>
                 {
-                    b.Property<byte[]>("AccountsId")
-                        .HasColumnType("varbinary(16)");
+                    b.Property<string>("AccountsId")
+                        .HasColumnType("char(36)");
 
-                    b.Property<byte[]>("RolesId")
-                        .HasColumnType("varbinary(16)");
+                    b.Property<string>("RolesId")
+                        .HasColumnType("char(36)");
 
                     b.HasKey("AccountsId", "RolesId");
 
@@ -34,16 +34,16 @@ namespace Data.Context.Migrations
 
             modelBuilder.Entity("Core.Entity.Account", b =>
                 {
-                    b.Property<byte[]>("Id")
+                    b.Property<string>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("varbinary(16)");
+                        .HasColumnType("char(36)");
 
                     b.Property<string>("Avatar")
                         .HasMaxLength(200)
                         .HasColumnType("varchar(200)");
 
-                    b.Property<DateTimeOffset?>("CreatedTime")
-                        .HasColumnType("timestamp");
+                    b.Property<DateTimeOffset>("CreatedTime")
+                        .HasColumnType("datetime");
 
                     b.Property<string>("Email")
                         .HasMaxLength(120)
@@ -52,8 +52,8 @@ namespace Data.Context.Migrations
                     b.Property<bool>("EmailConfirm")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<byte[]>("ExtendId")
-                        .HasColumnType("varbinary(16)");
+                    b.Property<string>("ExtendId")
+                        .HasColumnType("char(36)");
 
                     b.Property<string>("HashSalt")
                         .HasMaxLength(40)
@@ -62,8 +62,8 @@ namespace Data.Context.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<DateTimeOffset>("LastLoginTime")
-                        .HasColumnType("timestamp");
+                    b.Property<DateTimeOffset?>("LastLoginTime")
+                        .HasColumnType("datetime");
 
                     b.Property<string>("Password")
                         .HasMaxLength(60)
@@ -82,8 +82,8 @@ namespace Data.Context.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<DateTimeOffset?>("UpdatedTime")
-                        .HasColumnType("timestamp");
+                    b.Property<DateTimeOffset>("UpdatedTime")
+                        .HasColumnType("datetime");
 
                     b.Property<string>("Username")
                         .HasMaxLength(100)
@@ -112,9 +112,9 @@ namespace Data.Context.Migrations
 
             modelBuilder.Entity("Core.Entity.AccountExtend", b =>
                 {
-                    b.Property<byte[]>("Id")
+                    b.Property<string>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("varbinary(16)");
+                        .HasColumnType("char(36)");
 
                     b.Property<string>("Address")
                         .HasMaxLength(100)
@@ -139,8 +139,8 @@ namespace Data.Context.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("varchar(20)");
 
-                    b.Property<DateTimeOffset?>("CreatedTime")
-                        .HasColumnType("timestamp");
+                    b.Property<DateTimeOffset>("CreatedTime")
+                        .HasColumnType("datetime");
 
                     b.Property<string>("NickName")
                         .HasMaxLength(40)
@@ -161,8 +161,8 @@ namespace Data.Context.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("varchar(20)");
 
-                    b.Property<DateTimeOffset?>("UpdatedTime")
-                        .HasColumnType("timestamp");
+                    b.Property<DateTimeOffset>("UpdatedTime")
+                        .HasColumnType("datetime");
 
                     b.Property<string>("WXAvatar")
                         .HasMaxLength(150)
@@ -191,15 +191,15 @@ namespace Data.Context.Migrations
 
             modelBuilder.Entity("Core.Entity.Catalog", b =>
                 {
-                    b.Property<byte[]>("Id")
+                    b.Property<string>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("varbinary(16)");
+                        .HasColumnType("char(36)");
 
-                    b.Property<byte[]>("AccountId")
-                        .HasColumnType("varbinary(16)");
+                    b.Property<string>("AccountId")
+                        .HasColumnType("char(36)");
 
-                    b.Property<DateTimeOffset?>("CreatedTime")
-                        .HasColumnType("timestamp");
+                    b.Property<DateTimeOffset>("CreatedTime")
+                        .HasColumnType("datetime");
 
                     b.Property<short>("Level")
                         .HasColumnType("smallint");
@@ -208,9 +208,9 @@ namespace Data.Context.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("varchar(50)");
 
-                    b.Property<byte[]>("ParentId")
+                    b.Property<string>("ParentId")
                         .IsRequired()
-                        .HasColumnType("varbinary(16)");
+                        .HasColumnType("char(36)");
 
                     b.Property<short>("Sort")
                         .HasColumnType("smallint");
@@ -222,8 +222,8 @@ namespace Data.Context.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("varchar(50)");
 
-                    b.Property<DateTimeOffset?>("UpdatedTime")
-                        .HasColumnType("timestamp");
+                    b.Property<DateTimeOffset>("UpdatedTime")
+                        .HasColumnType("datetime");
 
                     b.HasKey("Id");
 
@@ -242,25 +242,25 @@ namespace Data.Context.Migrations
                     b.ToTable("Catalogs");
                 });
 
-            modelBuilder.Entity("Core.Entity.Entity", b =>
+            modelBuilder.Entity("Core.Entity.EntityModel", b =>
                 {
-                    b.Property<byte[]>("Id")
+                    b.Property<string>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("varbinary(16)");
+                        .HasColumnType("char(36)");
 
                     b.Property<string>("Content")
                         .HasMaxLength(4000)
                         .HasColumnType("varchar(4000)");
 
-                    b.Property<DateTimeOffset?>("CreatedTime")
-                        .HasColumnType("timestamp");
+                    b.Property<DateTimeOffset>("CreatedTime")
+                        .HasColumnType("datetime");
 
                     b.Property<string>("Description")
                         .HasMaxLength(500)
                         .HasColumnType("varchar(500)");
 
-                    b.Property<byte[]>("LibId")
-                        .HasColumnType("varbinary(16)");
+                    b.Property<string>("LibId")
+                        .HasColumnType("char(36)");
 
                     b.Property<string>("Name")
                         .HasMaxLength(100)
@@ -269,8 +269,8 @@ namespace Data.Context.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<DateTimeOffset?>("UpdatedTime")
-                        .HasColumnType("timestamp");
+                    b.Property<DateTimeOffset>("UpdatedTime")
+                        .HasColumnType("datetime");
 
                     b.HasKey("Id");
 
@@ -287,15 +287,15 @@ namespace Data.Context.Migrations
 
             modelBuilder.Entity("Core.Entity.Lib", b =>
                 {
-                    b.Property<byte[]>("Id")
+                    b.Property<string>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("varbinary(16)");
+                        .HasColumnType("char(36)");
 
-                    b.Property<byte[]>("CatalogId")
-                        .HasColumnType("varbinary(16)");
+                    b.Property<string>("CatalogId")
+                        .HasColumnType("char(36)");
 
-                    b.Property<DateTimeOffset?>("CreatedTime")
-                        .HasColumnType("timestamp");
+                    b.Property<DateTimeOffset>("CreatedTime")
+                        .HasColumnType("datetime");
 
                     b.Property<string>("Description")
                         .HasMaxLength(500)
@@ -315,11 +315,11 @@ namespace Data.Context.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<DateTimeOffset?>("UpdatedTime")
-                        .HasColumnType("timestamp");
+                    b.Property<DateTimeOffset>("UpdatedTime")
+                        .HasColumnType("datetime");
 
-                    b.Property<byte[]>("UserId")
-                        .HasColumnType("varbinary(16)");
+                    b.Property<string>("UserId")
+                        .HasColumnType("char(36)");
 
                     b.HasKey("Id");
 
@@ -340,12 +340,12 @@ namespace Data.Context.Migrations
 
             modelBuilder.Entity("Core.Entity.Role", b =>
                 {
-                    b.Property<byte[]>("Id")
+                    b.Property<string>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("varbinary(16)");
+                        .HasColumnType("char(36)");
 
-                    b.Property<DateTimeOffset?>("CreatedTime")
-                        .HasColumnType("timestamp");
+                    b.Property<DateTimeOffset>("CreatedTime")
+                        .HasColumnType("datetime");
 
                     b.Property<string>("Icon")
                         .HasMaxLength(30)
@@ -358,8 +358,8 @@ namespace Data.Context.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<DateTimeOffset?>("UpdatedTime")
-                        .HasColumnType("timestamp");
+                    b.Property<DateTimeOffset>("UpdatedTime")
+                        .HasColumnType("datetime");
 
                     b.HasKey("Id");
 
@@ -411,7 +411,7 @@ namespace Data.Context.Migrations
                     b.Navigation("Parent");
                 });
 
-            modelBuilder.Entity("Core.Entity.Entity", b =>
+            modelBuilder.Entity("Core.Entity.EntityModel", b =>
                 {
                     b.HasOne("Core.Entity.Lib", "Lib")
                         .WithMany("Entities")

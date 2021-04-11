@@ -6,7 +6,7 @@ namespace Core.Entity
     /// <summary>
     /// 账号扩展表
     /// </summary>
-    public partial class AccountExtend : EntityBase
+    public partial class AccountExtend : BaseDB
     {
         /// <summary>
         /// 真实姓名

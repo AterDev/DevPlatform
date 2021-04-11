@@ -31,6 +31,114 @@
             <param name="form"></param>
             <returns></returns>
         </member>
+        <member name="T:App.Api.Controllers.CatalogController">
+            <summary>
+            Catalog
+            </summary>
+        </member>
+        <member name="M:App.Api.Controllers.CatalogController.AddAsync(Core.Services.Models.CatalogAddDto)">
+            <summary>
+            添加Catalog
+            </summary>
+            <param name="form"></param>
+            <returns></returns>
+        </member>
+        <member name="M:App.Api.Controllers.CatalogController.FilterAsync(Core.Services.Models.CatalogFilter)">
+            <summary>
+            分页筛选Catalog
+            </summary>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:App.Api.Controllers.CatalogController.UpdateAsync(System.Guid,Core.Services.Models.CatalogUpdateDto)">
+            <summary>
+            更新Catalog
+            </summary>
+            <param name="id"></param>
+            <param name="form"></param>
+            <returns></returns>
+        </member>
+        <member name="T:App.Api.Controllers.EntityModelController">
+            <summary>
+            EntityModel
+            </summary>
+        </member>
+        <member name="M:App.Api.Controllers.EntityModelController.AddAsync(Core.Services.Models.EntityModelAddDto)">
+            <summary>
+            添加EntityModel
+            </summary>
+            <param name="form"></param>
+            <returns></returns>
+        </member>
+        <member name="M:App.Api.Controllers.EntityModelController.FilterAsync(Core.Services.Models.EntityModelFilter)">
+            <summary>
+            分页筛选EntityModel
+            </summary>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:App.Api.Controllers.EntityModelController.UpdateAsync(System.Guid,Core.Services.Models.EntityModelUpdateDto)">
+            <summary>
+            更新EntityModel
+            </summary>
+            <param name="id"></param>
+            <param name="form"></param>
+            <returns></returns>
+        </member>
+        <member name="T:App.Api.Controllers.LibController">
+            <summary>
+            Lib
+            </summary>
+        </member>
+        <member name="M:App.Api.Controllers.LibController.AddAsync(Core.Services.Models.LibAddDto)">
+            <summary>
+            添加Lib
+            </summary>
+            <param name="form"></param>
+            <returns></returns>
+        </member>
+        <member name="M:App.Api.Controllers.LibController.FilterAsync(Core.Services.Models.LibFilter)">
+            <summary>
+            分页筛选Lib
+            </summary>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:App.Api.Controllers.LibController.UpdateAsync(System.Guid,Core.Services.Models.LibUpdateDto)">
+            <summary>
+            更新Lib
+            </summary>
+            <param name="id"></param>
+            <param name="form"></param>
+            <returns></returns>
+        </member>
+        <member name="T:App.Api.Controllers.RoleController">
+            <summary>
+            Role
+            </summary>
+        </member>
+        <member name="M:App.Api.Controllers.RoleController.AddAsync(Core.Services.Models.RoleAddDto)">
+            <summary>
+            添加Role
+            </summary>
+            <param name="form"></param>
+            <returns></returns>
+        </member>
+        <member name="M:App.Api.Controllers.RoleController.FilterAsync(Core.Services.Models.RoleFilter)">
+            <summary>
+            分页筛选Role
+            </summary>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:App.Api.Controllers.RoleController.UpdateAsync(System.Guid,Core.Services.Models.RoleUpdateDto)">
+            <summary>
+            更新Role
+            </summary>
+            <param name="id"></param>
+            <param name="form"></param>
+            <returns></returns>
+        </member>
         <member name="T:App.Api.RepositoryServiceExtensions">
             <summary>
             仓储注册服务

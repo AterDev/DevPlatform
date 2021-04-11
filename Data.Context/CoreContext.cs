@@ -13,7 +13,7 @@ namespace Data.Context
         public DbSet<AccountExtend> AccountExtends { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<Catalog> Catalogs { get; set; }
-        public DbSet<Entity> Entities { get; set; }
+        public DbSet<EntityModel> Entities { get; set; }
         public DbSet<Lib> Libs { get; set; }
 
 
@@ -67,7 +67,7 @@ namespace Data.Context
                 e.HasIndex(m => m.CreatedTime);
             });
 
-            builder.Entity<Entity>(e =>
+            builder.Entity<EntityModel>(e =>
             {
                 e.HasIndex(m => m.CreatedTime);
                 e.HasIndex(m => m.Name);

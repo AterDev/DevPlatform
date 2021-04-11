@@ -11,7 +11,7 @@ namespace Data.Context.Migrations
                 name: "AccountExtends",
                 columns: table => new
                 {
-                    Id = table.Column<byte[]>(type: "varbinary(16)", nullable: false),
+                    Id = table.Column<string>(type: "char(36)", nullable: false),
                     RealName = table.Column<string>(type: "varchar(40)", maxLength: 40, nullable: true),
                     NickName = table.Column<string>(type: "varchar(40)", maxLength: 40, nullable: true),
                     Birthday = table.Column<DateTimeOffset>(type: "timestamp", nullable: true),
@@ -25,9 +25,9 @@ namespace Data.Context.Migrations
                     WXOpenId = table.Column<string>(type: "varchar(40)", maxLength: 40, nullable: true),
                     WXAvatar = table.Column<string>(type: "varchar(150)", maxLength: 150, nullable: true),
                     WXUnionId = table.Column<string>(type: "varchar(40)", maxLength: 40, nullable: true),
-                    UpdatedTime = table.Column<DateTimeOffset>(type: "timestamp", nullable: true),
                     Status = table.Column<int>(type: "int", nullable: false),
-                    CreatedTime = table.Column<DateTimeOffset>(type: "timestamp", nullable: true)
+                    CreatedTime = table.Column<DateTimeOffset>(type: "datetime", nullable: false),
+                    UpdatedTime = table.Column<DateTimeOffset>(type: "datetime", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -38,12 +38,12 @@ namespace Data.Context.Migrations
                 name: "Roles",
                 columns: table => new
                 {
-                    Id = table.Column<byte[]>(type: "varbinary(16)", nullable: false),
+                    Id = table.Column<string>(type: "char(36)", nullable: false),
                     Name = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: true),
                     Icon = table.Column<string>(type: "varchar(30)", maxLength: 30, nullable: true),
-                    UpdatedTime = table.Column<DateTimeOffset>(type: "timestamp", nullable: true),
                     Status = table.Column<int>(type: "int", nullable: false),
-                    CreatedTime = table.Column<DateTimeOffset>(type: "timestamp", nullable: true)
+                    CreatedTime = table.Column<DateTimeOffset>(type: "datetime", nullable: false),
+                    UpdatedTime = table.Column<DateTimeOffset>(type: "datetime", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -54,22 +54,22 @@ namespace Data.Context.Migrations
                 name: "Accounts",
                 columns: table => new
                 {
-                    Id = table.Column<byte[]>(type: "varbinary(16)", nullable: false),
+                    Id = table.Column<string>(type: "char(36)", nullable: false),
                     Email = table.Column<string>(type: "varchar(120)", maxLength: 120, nullable: true),
                     Password = table.Column<string>(type: "varchar(60)", maxLength: 60, nullable: true),
                     Username = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: true),
                     HashSalt = table.Column<string>(type: "varchar(40)", maxLength: 40, nullable: true),
-                    LastLoginTime = table.Column<DateTimeOffset>(type: "timestamp", nullable: false),
+                    LastLoginTime = table.Column<DateTimeOffset>(type: "datetime", nullable: true),
                     IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     RetryCount = table.Column<int>(type: "int", nullable: false),
                     Phone = table.Column<string>(type: "varchar(16)", maxLength: 16, nullable: true),
                     PhoneConfirm = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     EmailConfirm = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     Avatar = table.Column<string>(type: "varchar(200)", maxLength: 200, nullable: true),
-                    ExtendId = table.Column<byte[]>(type: "varbinary(16)", nullable: true),
-                    UpdatedTime = table.Column<DateTimeOffset>(type: "timestamp", nullable: true),
+                    ExtendId = table.Column<string>(type: "char(36)", nullable: true),
                     Status = table.Column<int>(type: "int", nullable: false),
-                    CreatedTime = table.Column<DateTimeOffset>(type: "timestamp", nullable: true)
+                    CreatedTime = table.Column<DateTimeOffset>(type: "datetime", nullable: false),
+                    UpdatedTime = table.Column<DateTimeOffset>(type: "datetime", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -86,8 +86,8 @@ namespace Data.Context.Migrations
                 name: "AccountRole",
                 columns: table => new
                 {
-                    AccountsId = table.Column<byte[]>(type: "varbinary(16)", nullable: false),
-                    RolesId = table.Column<byte[]>(type: "varbinary(16)", nullable: false)
+                    AccountsId = table.Column<string>(type: "char(36)", nullable: false),
+                    RolesId = table.Column<string>(type: "char(36)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -110,16 +110,16 @@ namespace Data.Context.Migrations
                 name: "Catalogs",
                 columns: table => new
                 {
-                    Id = table.Column<byte[]>(type: "varbinary(16)", nullable: false),
+                    Id = table.Column<string>(type: "char(36)", nullable: false),
                     Name = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: true),
                     Type = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: true),
                     Sort = table.Column<short>(type: "smallint", nullable: false),
                     Level = table.Column<short>(type: "smallint", nullable: false),
-                    ParentId = table.Column<byte[]>(type: "varbinary(16)", nullable: false),
-                    AccountId = table.Column<byte[]>(type: "varbinary(16)", nullable: true),
-                    UpdatedTime = table.Column<DateTimeOffset>(type: "timestamp", nullable: true),
+                    ParentId = table.Column<string>(type: "char(36)", nullable: false),
+                    AccountId = table.Column<string>(type: "char(36)", nullable: true),
                     Status = table.Column<int>(type: "int", nullable: false),
-                    CreatedTime = table.Column<DateTimeOffset>(type: "timestamp", nullable: true)
+                    CreatedTime = table.Column<DateTimeOffset>(type: "datetime", nullable: false),
+                    UpdatedTime = table.Column<DateTimeOffset>(type: "datetime", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -142,16 +142,16 @@ namespace Data.Context.Migrations
                 name: "Libs",
                 columns: table => new
                 {
-                    Id = table.Column<byte[]>(type: "varbinary(16)", nullable: false),
+                    Id = table.Column<string>(type: "char(36)", nullable: false),
                     Namespace = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: true),
                     Description = table.Column<string>(type: "varchar(500)", maxLength: 500, nullable: true),
                     Language = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: true),
                     IsValid = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    UserId = table.Column<byte[]>(type: "varbinary(16)", nullable: true),
-                    CatalogId = table.Column<byte[]>(type: "varbinary(16)", nullable: true),
-                    UpdatedTime = table.Column<DateTimeOffset>(type: "timestamp", nullable: true),
+                    UserId = table.Column<string>(type: "char(36)", nullable: true),
+                    CatalogId = table.Column<string>(type: "char(36)", nullable: true),
                     Status = table.Column<int>(type: "int", nullable: false),
-                    CreatedTime = table.Column<DateTimeOffset>(type: "timestamp", nullable: true)
+                    CreatedTime = table.Column<DateTimeOffset>(type: "datetime", nullable: false),
+                    UpdatedTime = table.Column<DateTimeOffset>(type: "datetime", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -174,14 +174,14 @@ namespace Data.Context.Migrations
                 name: "Entities",
                 columns: table => new
                 {
-                    Id = table.Column<byte[]>(type: "varbinary(16)", nullable: false),
+                    Id = table.Column<string>(type: "char(36)", nullable: false),
                     Name = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: true),
                     Description = table.Column<string>(type: "varchar(500)", maxLength: 500, nullable: true),
                     Content = table.Column<string>(type: "varchar(4000)", maxLength: 4000, nullable: true),
-                    LibId = table.Column<byte[]>(type: "varbinary(16)", nullable: true),
-                    UpdatedTime = table.Column<DateTimeOffset>(type: "timestamp", nullable: true),
+                    LibId = table.Column<string>(type: "char(36)", nullable: true),
                     Status = table.Column<int>(type: "int", nullable: false),
-                    CreatedTime = table.Column<DateTimeOffset>(type: "timestamp", nullable: true)
+                    CreatedTime = table.Column<DateTimeOffset>(type: "datetime", nullable: false),
+                    UpdatedTime = table.Column<DateTimeOffset>(type: "datetime", nullable: false)
                 },
                 constraints: table =>
                 {

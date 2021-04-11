@@ -1,13 +1,15 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Core.Entity
 {
     /// <summary>
     /// 账号表
     /// </summary>
-    public class Account : EntityBase
+    public class Account : BaseDB
     {
         /// <summary>
         /// 邮箱
@@ -32,7 +34,8 @@ namespace Core.Entity
         /// <summary>
         /// 最后登录时间
         /// </summary>
-        public DateTimeOffset LastLoginTime { get; set; }
+        [Column(TypeName = "datetime")]
+        public DateTimeOffset? LastLoginTime { get; set; }
         /// <summary>
         /// 软删除
         /// </summary>

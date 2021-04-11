@@ -1,12 +1,13 @@
-﻿using System.Collections.Generic;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-
-namespace Core.Entity
+using System.ComponentModel.DataAnnotations.Schema;
+using Core.Services.Models;
+using GT.Agreement.Models;
+using Core.Entity;
+namespace Core.Services.Models
 {
-    /// <summary>
-    /// 角色表
-    /// </summary>
-    public class Role : BaseDB
+    public class RoleUpdateDto
     {
         /// <summary>
         /// 角色名称
@@ -18,11 +19,6 @@ namespace Core.Entity
         /// </summary>
         [MaxLength(30)]
         public string Icon { get; set; }
-
-        /// <summary>
-        /// 多对多关联账号
-        /// </summary>
-        public List<Account> Accounts { get; set; }
-
+    
     }
 }

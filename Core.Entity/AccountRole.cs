@@ -5,7 +5,7 @@ namespace Core.Entity
     /// <summary>
     /// 用户角色表
     /// </summary>
-    public partial class AccountRole : EntityBase
+    public partial class AccountRole : BaseDB
     {
         [ForeignKey("AccountId")]
         public Account Account { get; set; }

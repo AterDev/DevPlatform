@@ -1,12 +1,13 @@
-﻿using System.Collections.Generic;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-
-namespace Core.Entity
+using System.ComponentModel.DataAnnotations.Schema;
+using Core.Services.Models;
+using GT.Agreement.Models;
+using Core.Entity;
+namespace Core.Services.Models
 {
-    /// <summary>
-    /// 模型库
-    /// </summary>
-    public class Lib : BaseDB
+    public class LibAddDto
     {
         /// <summary>
         /// 库命名空间
@@ -27,8 +28,8 @@ namespace Core.Entity
         /// 是否有效
         /// </summary>
         public bool IsValid { get; set; }
-        public Account User { get; set; }
-        public Catalog Catalog { get; set; }
-        public List<EntityModel> Entities { get; set; }
+        public Guid? UserId { get; set; }
+        public Guid? CatalogId { get; set; }
+    
     }
 }

@@ -13,6 +13,10 @@ namespace App.Api
         public static void AddRepositories(this IServiceCollection services)
         {
             services.AddScoped(typeof(AccountRepository));
+            services.AddScoped(typeof(CatalogRepository));
+            services.AddScoped(typeof(EntityModelRepository));
+            services.AddScoped(typeof(LibRepository));
+            services.AddScoped(typeof(RoleRepository));
 
         }
     }

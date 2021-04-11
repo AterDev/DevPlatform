@@ -1,29 +1,32 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-
-namespace Core.Entity
+using System.ComponentModel.DataAnnotations.Schema;
+using Core.Services.Models;
+using GT.Agreement.Models;
+using Core.Entity;
+namespace Core.Services.Models
 {
-    /// <summary>
-    /// 目录/文件目录 / 自引用
-    /// </summary>
-    public partial class Catalog : BaseDB
+    public class CatalogDetailDto
     {
         [MaxLength(50)]
         public string Name { get; set; }
         [MaxLength(50)]
         public string Type { get; set; }
-        public short Sort { get; set; } = 0;
+        public short Sort { get; set; }
         public short Level { get; set; }
         public Guid ParentId { get; set; }
         public Catalog Parent { get; set; }
 
-        public Account Account { get; set; }
+        // public AccountDto Account { get; set; }
         public List<Catalog> Catalogs { get; set; }
         /// <summary>
         /// 模型库
         /// </summary>
         public List<Lib> Libs { get; set; }
-
+        [Key]
+        public Guid Id { get; set; }
+        public DateTimeOffset CreatedTime { get; set; }
+    
     }
 }
