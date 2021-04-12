@@ -6,7 +6,7 @@ namespace Core.Entity
     /// <summary>
     /// 模型库
     /// </summary>
-    public class Lib : BaseDB
+    public class Library : BaseDB
     {
         /// <summary>
         /// 库命名空间
@@ -27,8 +27,12 @@ namespace Core.Entity
         /// 是否有效
         /// </summary>
         public bool IsValid { get; set; }
+        /// <summary>
+        /// 是否公开
+        /// </summary>
+        public bool IsPublic { get; set; } = false;
         public Account User { get; set; }
         public Catalog Catalog { get; set; }
-        public List<EntityModel> Entities { get; set; }
+        public List<CodeSnippet> Snippets { get; set; }
     }
 }

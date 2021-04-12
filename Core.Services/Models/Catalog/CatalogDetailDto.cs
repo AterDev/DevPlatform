@@ -23,7 +23,7 @@ namespace Core.Services.Models
         /// <summary>
         /// 模型库
         /// </summary>
-        public List<Lib> Libs { get; set; }
+        public List<Library> Libs { get; set; }
         [Key]
         public Guid Id { get; set; }
         public DateTimeOffset CreatedTime { get; set; }

@@ -23,7 +23,7 @@ namespace Core.Entity
         /// <summary>
         /// 模型库
         /// </summary>
-        public List<Lib> Libs { get; set; }
+        public List<Library> Libs { get; set; }
 
     }
 }

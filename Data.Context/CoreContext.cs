@@ -13,8 +13,8 @@ namespace Data.Context
         public DbSet<AccountExtend> AccountExtends { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<Catalog> Catalogs { get; set; }
-        public DbSet<EntityModel> Entities { get; set; }
-        public DbSet<Lib> Libs { get; set; }
+        public DbSet<CodeSnippet> CodeSnippets { get; set; }
+        public DbSet<Library> Libraries { get; set; }
 
 
         public CoreContext([NotNull] DbContextOptions<CoreContext> options) : base(options)
@@ -59,19 +59,22 @@ namespace Data.Context
                 e.HasIndex(m => m.Level);
             });
 
-            builder.Entity<Lib>(e =>
+            builder.Entity<Library>(e =>
             {
                 e.HasIndex(m => m.Language);
                 e.HasIndex(m => m.IsValid);
                 e.HasIndex(m => m.Namespace);
+                e.HasIndex(m => m.IsPublic);
                 e.HasIndex(m => m.CreatedTime);
             });
 
-            builder.Entity<EntityModel>(e =>
+            builder.Entity<CodeSnippet>(e =>
             {
                 e.HasIndex(m => m.CreatedTime);
                 e.HasIndex(m => m.Name);
                 e.HasIndex(m => m.Status);
+                e.HasIndex(m => m.CodeType);
+                e.HasIndex(m => m.Language);
             });
 
             base.OnModelCreating(builder);
