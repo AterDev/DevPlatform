@@ -13,9 +13,8 @@ using System.Threading.Tasks;
 namespace App.Api.Controllers
 {
     /// <summary>
-    /// CodeSnippet
+    /// 代码片段
     /// </summary>
-    [OpenApiTag("CodeSnippet", Description = "CodeSnippet")]
     public class CodeSnippetController : ApiController<CodeSnippetRepository, CodeSnippet, CodeSnippetAddDto, CodeSnippetUpdateDto, CodeSnippetFilter, CodeSnippetDto>
     {
         public CodeSnippetController(

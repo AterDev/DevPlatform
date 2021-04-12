@@ -18,7 +18,7 @@ using Microsoft.Extensions.Configuration;
 namespace App.Api.Controllers
 {
     /// <summary>
-    /// Account
+    /// 账号
     /// </summary>
     [OpenApiTag("Account", Description = "Account")]
     public class AccountController : ApiController<AccountRepository, Account, AccountAddDto, AccountUpdateDto, AccountFilter, AccountDto>

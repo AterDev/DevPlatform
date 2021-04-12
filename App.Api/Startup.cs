@@ -14,6 +14,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using Services.AutoMapper;
+using System.IO;
 using System.Text;
 
 namespace App.Api
@@ -65,24 +66,6 @@ namespace App.Api
                     RequireExpirationTime = false,
                     ValidateIssuerSigningKey = true
                 };
-                /*                cfg.Events = new JwtBearerEvents
-                                {
-                                    OnAuthenticationFailed = context =>
-                                    {
-                                        Console.WriteLine("==OnTokenFailed: " + context.Exception);
-                                        return Task.CompletedTask;
-                                    },
-                                    OnChallenge = context =>
-                                    {
-                                        Console.WriteLine("==OnChallenge: " + context.ErrorDescription);
-                                        return Task.CompletedTask;
-                                    },
-                                    OnTokenValidated = context =>
-                                    {
-                                        Console.WriteLine("==OnTokenValidated: " + context.SecurityToken);
-                                        return Task.CompletedTask;
-                                    }
-                                };*/
             });
 
             // ¶¨Òåpolicy
@@ -109,23 +92,38 @@ namespace App.Api
             // OpenApi
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "API V1", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "API ÎÄµµ",
+                    Version = "v1",
+                    Description = "DevPlatform",
+                    Contact = new OpenApiContact
+                    {
+                        Email = "zpty@outlook.com",
+                        Name = "Niltor",
+                    }
+                });
                 c.AddServer(new OpenApiServer()
                 {
                     Url = "",
-                    Description = "vvv"
+                    Description = "DevPlatform"
                 });
                 c.CustomOperationIds(apiDesc =>
                  {
                      var controllerAction = apiDesc.ActionDescriptor as ControllerActionDescriptor;
                      return controllerAction.ControllerName + "-" + controllerAction.ActionName;
                  });
+
+                var filePath = Path.Combine(System.AppContext.BaseDirectory, "App.Api.xml");
+                c.IncludeXmlComments(filePath, true);
             });
 
             services.AddControllers().AddNewtonsoftJson(option =>
             {
                 option.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
             });
+
+
 
         }
 

@@ -13,9 +13,8 @@ using System.Threading.Tasks;
 namespace App.Api.Controllers
 {
     /// <summary>
-    /// Catalog
+    /// 文件目录
     /// </summary>
-    [OpenApiTag("Catalog", Description = "Catalog")]
     public class CatalogController : ApiController<CatalogRepository, Catalog, CatalogAddDto, CatalogUpdateDto, CatalogFilter, CatalogDto>
     {
         public CatalogController(
