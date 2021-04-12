@@ -2,6 +2,8 @@
 // Account;
 // Role;
 // Catalog;
+// CodeSnippet;
+// Library;
 // {AlreadyMapedEntity}
 using AutoMapper;
 using Core.Entity;
@@ -32,7 +34,15 @@ namespace Core.Services.AutoMapper
             CreateMap<CatalogUpdateDto, Catalog>();
             CreateMap<Catalog, CatalogDto>();
             CreateMap<Catalog, CatalogDetailDto>();
-            // {AppendMappers}
+                        CreateMap<CodeSnippetAddDto, CodeSnippet>();
+            CreateMap<CodeSnippetUpdateDto, CodeSnippet>();
+            CreateMap<CodeSnippet, CodeSnippetDto>();
+            CreateMap<CodeSnippet, CodeSnippetDetailDto>();        
+            CreateMap<LibraryAddDto, Library>();
+            CreateMap<LibraryUpdateDto, Library>();
+            CreateMap<Library, LibraryDto>();
+            CreateMap<Library, LibraryDetailDto>();        
+// {AppendMappers}
         }
     }
 

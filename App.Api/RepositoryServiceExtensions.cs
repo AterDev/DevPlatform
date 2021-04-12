@@ -14,7 +14,10 @@ namespace App.Api
         {
             services.AddScoped(typeof(AccountRepository));
             services.AddScoped(typeof(CatalogRepository));
+            services.AddScoped(typeof(CodeSnippetRepository));
+            services.AddScoped(typeof(LibraryRepository));
             services.AddScoped(typeof(RoleRepository));
+
         }
     }
 }

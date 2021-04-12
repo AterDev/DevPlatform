@@ -242,11 +242,14 @@ namespace Data.Context.Migrations
                     b.ToTable("Catalogs");
                 });
 
-            modelBuilder.Entity("Core.Entity.EntityModel", b =>
+            modelBuilder.Entity("Core.Entity.CodeSnippet", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
+
+                    b.Property<int>("CodeType")
+                        .HasColumnType("int");
 
                     b.Property<string>("Content")
                         .HasMaxLength(4000)
@@ -259,7 +262,10 @@ namespace Data.Context.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("varchar(500)");
 
-                    b.Property<string>("LibId")
+                    b.Property<int>("Language")
+                        .HasColumnType("int");
+
+                    b.Property<string>("LibraryId")
                         .HasColumnType("char(36)");
 
                     b.Property<string>("Name")
@@ -274,18 +280,22 @@ namespace Data.Context.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CodeType");
+
                     b.HasIndex("CreatedTime");
 
-                    b.HasIndex("LibId");
+                    b.HasIndex("Language");
+
+                    b.HasIndex("LibraryId");
 
                     b.HasIndex("Name");
 
                     b.HasIndex("Status");
 
-                    b.ToTable("Entities");
+                    b.ToTable("CodeSnippets");
                 });
 
-            modelBuilder.Entity("Core.Entity.Lib", b =>
+            modelBuilder.Entity("Core.Entity.Library", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd()
@@ -300,6 +310,9 @@ namespace Data.Context.Migrations
                     b.Property<string>("Description")
                         .HasMaxLength(500)
                         .HasColumnType("varchar(500)");
+
+                    b.Property<bool>("IsPublic")
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<bool>("IsValid")
                         .HasColumnType("tinyint(1)");
@@ -327,6 +340,8 @@ namespace Data.Context.Migrations
 
                     b.HasIndex("CreatedTime");
 
+                    b.HasIndex("IsPublic");
+
                     b.HasIndex("IsValid");
 
                     b.HasIndex("Language");
@@ -335,7 +350,7 @@ namespace Data.Context.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Libs");
+                    b.ToTable("Libraries");
                 });
 
             modelBuilder.Entity("Core.Entity.Role", b =>
@@ -411,16 +426,16 @@ namespace Data.Context.Migrations
                     b.Navigation("Parent");
                 });
 
-            modelBuilder.Entity("Core.Entity.EntityModel", b =>
+            modelBuilder.Entity("Core.Entity.CodeSnippet", b =>
                 {
-                    b.HasOne("Core.Entity.Lib", "Lib")
-                        .WithMany("Entities")
-                        .HasForeignKey("LibId");
+                    b.HasOne("Core.Entity.Library", "Library")
+                        .WithMany("Snippets")
+                        .HasForeignKey("LibraryId");
 
-                    b.Navigation("Lib");
+                    b.Navigation("Library");
                 });
 
-            modelBuilder.Entity("Core.Entity.Lib", b =>
+            modelBuilder.Entity("Core.Entity.Library", b =>
                 {
                     b.HasOne("Core.Entity.Catalog", "Catalog")
                         .WithMany("Libs")
@@ -447,9 +462,9 @@ namespace Data.Context.Migrations
                     b.Navigation("Libs");
                 });
 
-            modelBuilder.Entity("Core.Entity.Lib", b =>
+            modelBuilder.Entity("Core.Entity.Library", b =>
                 {
-                    b.Navigation("Entities");
+                    b.Navigation("Snippets");
                 });
 #pragma warning restore 612, 618
         }

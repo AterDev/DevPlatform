@@ -139,7 +139,7 @@ namespace Data.Context.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Libs",
+                name: "Libraries",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "char(36)", nullable: false),
@@ -147,6 +147,7 @@ namespace Data.Context.Migrations
                     Description = table.Column<string>(type: "varchar(500)", maxLength: 500, nullable: true),
                     Language = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: true),
                     IsValid = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    IsPublic = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     UserId = table.Column<string>(type: "char(36)", nullable: true),
                     CatalogId = table.Column<string>(type: "char(36)", nullable: true),
                     Status = table.Column<int>(type: "int", nullable: false),
@@ -155,15 +156,15 @@ namespace Data.Context.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Libs", x => x.Id);
+                    table.PrimaryKey("PK_Libraries", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Libs_Accounts_UserId",
+                        name: "FK_Libraries_Accounts_UserId",
                         column: x => x.UserId,
                         principalTable: "Accounts",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Libs_Catalogs_CatalogId",
+                        name: "FK_Libraries_Catalogs_CatalogId",
                         column: x => x.CatalogId,
                         principalTable: "Catalogs",
                         principalColumn: "Id",
@@ -171,25 +172,27 @@ namespace Data.Context.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Entities",
+                name: "CodeSnippets",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "char(36)", nullable: false),
                     Name = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: true),
                     Description = table.Column<string>(type: "varchar(500)", maxLength: 500, nullable: true),
                     Content = table.Column<string>(type: "varchar(4000)", maxLength: 4000, nullable: true),
-                    LibId = table.Column<string>(type: "char(36)", nullable: true),
+                    LibraryId = table.Column<string>(type: "char(36)", nullable: true),
+                    Language = table.Column<int>(type: "int", nullable: false),
+                    CodeType = table.Column<int>(type: "int", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
                     CreatedTime = table.Column<DateTimeOffset>(type: "datetime", nullable: false),
                     UpdatedTime = table.Column<DateTimeOffset>(type: "datetime", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Entities", x => x.Id);
+                    table.PrimaryKey("PK_CodeSnippets", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Entities_Libs_LibId",
-                        column: x => x.LibId,
-                        principalTable: "Libs",
+                        name: "FK_CodeSnippets_Libraries_LibraryId",
+                        column: x => x.LibraryId,
+                        principalTable: "Libraries",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -290,53 +293,68 @@ namespace Data.Context.Migrations
                 column: "Type");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Entities_CreatedTime",
-                table: "Entities",
+                name: "IX_CodeSnippets_CodeType",
+                table: "CodeSnippets",
+                column: "CodeType");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CodeSnippets_CreatedTime",
+                table: "CodeSnippets",
                 column: "CreatedTime");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Entities_LibId",
-                table: "Entities",
-                column: "LibId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Entities_Name",
-                table: "Entities",
-                column: "Name");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Entities_Status",
-                table: "Entities",
-                column: "Status");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Libs_CatalogId",
-                table: "Libs",
-                column: "CatalogId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Libs_CreatedTime",
-                table: "Libs",
-                column: "CreatedTime");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Libs_IsValid",
-                table: "Libs",
-                column: "IsValid");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Libs_Language",
-                table: "Libs",
+                name: "IX_CodeSnippets_Language",
+                table: "CodeSnippets",
                 column: "Language");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Libs_Namespace",
-                table: "Libs",
+                name: "IX_CodeSnippets_LibraryId",
+                table: "CodeSnippets",
+                column: "LibraryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CodeSnippets_Name",
+                table: "CodeSnippets",
+                column: "Name");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CodeSnippets_Status",
+                table: "CodeSnippets",
+                column: "Status");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Libraries_CatalogId",
+                table: "Libraries",
+                column: "CatalogId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Libraries_CreatedTime",
+                table: "Libraries",
+                column: "CreatedTime");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Libraries_IsPublic",
+                table: "Libraries",
+                column: "IsPublic");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Libraries_IsValid",
+                table: "Libraries",
+                column: "IsValid");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Libraries_Language",
+                table: "Libraries",
+                column: "Language");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Libraries_Namespace",
+                table: "Libraries",
                 column: "Namespace");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Libs_UserId",
-                table: "Libs",
+                name: "IX_Libraries_UserId",
+                table: "Libraries",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
@@ -356,13 +374,13 @@ namespace Data.Context.Migrations
                 name: "AccountRole");
 
             migrationBuilder.DropTable(
-                name: "Entities");
+                name: "CodeSnippets");
 
             migrationBuilder.DropTable(
                 name: "Roles");
 
             migrationBuilder.DropTable(
-                name: "Libs");
+                name: "Libraries");
 
             migrationBuilder.DropTable(
                 name: "Catalogs");
