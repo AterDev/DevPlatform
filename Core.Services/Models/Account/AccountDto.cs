@@ -57,6 +57,8 @@ namespace Core.Services.Models
         public Status Status { get; set; }
         [Key]
         public Guid Id { get; set; }
-    
+        public string Token { get; set; }
+        public string RoleName { get; set; }
+
     }
 }

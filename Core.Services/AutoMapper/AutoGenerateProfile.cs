@@ -22,10 +22,6 @@ namespace Core.Services.AutoMapper
             CreateMap<AccountUpdateDto, Account>();
             CreateMap<Account, AccountDto>();
             CreateMap<Account, AccountDetailDto>();
-            CreateMap<AccountAddDto, Account>();
-            CreateMap<AccountUpdateDto, Account>();
-            CreateMap<Account, AccountDto>();
-            CreateMap<Account, AccountDetailDto>();
             CreateMap<RoleAddDto, Role>();
             CreateMap<RoleUpdateDto, Role>();
             CreateMap<Role, RoleDto>();

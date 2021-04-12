@@ -1,5 +1,8 @@
+using Core.Services;
+using Core.Services.Option;
 using Data.Context;
 using IGeekFan.AspNetCore.Knife4jUI;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Controllers;
@@ -7,9 +10,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using Services.AutoMapper;
+using System.Text;
 
 namespace App.Api
 {
@@ -31,10 +36,77 @@ namespace App.Api
                 option.UseMySQL(connectionStrings, op => op.MigrationsAssembly("Data.Context"));
             });
 
+            // 配置和依赖注入
+            services.AddOptions();
+            services.Configure<MailOption>(Configuration.GetSection("Mail"));
             services.AddHttpContextAccessor();
             services.AddAutoMapper(typeof(MapperProfile));
+            services.AddSingleton(typeof(EmailService));
             services.AddRepositories();
 
+
+            // jwt
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(cfg =>
+            {
+                //cfg.RequireHttpsMetadata = true;
+                cfg.SaveToken = true;
+                cfg.TokenValidationParameters = new TokenValidationParameters()
+                {
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration.GetSection("Jwt")["Sign"])),
+                    ValidIssuer = Configuration.GetSection("Jwt")["Issuer"],
+                    ValidAudience = Configuration.GetSection("Jwt")["Audience"],
+                    ValidateIssuer = true,
+                    ValidateLifetime = true,
+                    RequireExpirationTime = false,
+                    ValidateIssuerSigningKey = true
+                };
+                /*                cfg.Events = new JwtBearerEvents
+                                {
+                                    OnAuthenticationFailed = context =>
+                                    {
+                                        Console.WriteLine("==OnTokenFailed: " + context.Exception);
+                                        return Task.CompletedTask;
+                                    },
+                                    OnChallenge = context =>
+                                    {
+                                        Console.WriteLine("==OnChallenge: " + context.ErrorDescription);
+                                        return Task.CompletedTask;
+                                    },
+                                    OnTokenValidated = context =>
+                                    {
+                                        Console.WriteLine("==OnTokenValidated: " + context.SecurityToken);
+                                        return Task.CompletedTask;
+                                    }
+                                };*/
+            });
+
+            // 定义policy
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("Admin", policy => policy.RequireRole("admin", "Admin"));
+                options.AddPolicy("User", policy =>
+                {
+                    policy.RequireRole("user", "User", "admin");
+                });
+                options.AddPolicy("Customer", policy => policy.RequireRole("customer"));
+            });
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll",
+                    builder =>
+                    {
+                        builder.AllowAnyOrigin()
+                            .AllowAnyMethod()
+                            .AllowAnyHeader();
+                    });
+            });
+
+            // OpenApi
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "API V1", Version = "v1" });
@@ -43,11 +115,11 @@ namespace App.Api
                     Url = "",
                     Description = "vvv"
                 });
-               c.CustomOperationIds(apiDesc =>
-                {
-                    var controllerAction = apiDesc.ActionDescriptor as ControllerActionDescriptor;
-                    return controllerAction.ControllerName + "-" + controllerAction.ActionName;
-                });
+                c.CustomOperationIds(apiDesc =>
+                 {
+                     var controllerAction = apiDesc.ActionDescriptor as ControllerActionDescriptor;
+                     return controllerAction.ControllerName + "-" + controllerAction.ActionName;
+                 });
             });
 
             services.AddControllers().AddNewtonsoftJson(option =>
@@ -70,15 +142,12 @@ namespace App.Api
                     c.RoutePrefix = "api/docs"; // serve the UI at root
                     c.SwaggerEndpoint("/v1/api-docs", "V1 Docs");
                 });
-
+                app.UseCors("AllowAll");
             }
 
             app.UseHttpsRedirection();
-
             app.UseRouting();
-
             app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
