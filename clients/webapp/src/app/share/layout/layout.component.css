@@ -1,0 +1,15 @@
+.fill-remaining-space {
+  flex: 1 1 auto;
+}
+
+.avatar {
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  font-size: 18px;
+  vertical-align: middle;
+  color: #fff;
+  background-color: #3f51b5;
+  display: inline-block;
+  line-height: 30px;
+}
