@@ -10,6 +10,7 @@
       <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
       <button class="btn btn-outline-success" type="submit">Search</button>
     </form>
+
     <span>
       @*TODO:login state*@
       <NavLink href="signUp">注册</NavLink>
@@ -21,15 +22,5 @@
 </nav>
 
 @*middle content*@
-<div class="row">
-  <div class="left-nav auto">
-    <NavMenu />
-  </div>
-  <div class="col">
-    @*main content*@
-    <div class="content px-4">
-      @Body
-    </div>
-  </div>
-</div>
+  @Body
 
