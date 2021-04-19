@@ -39,7 +39,7 @@ namespace App.Api
             var connectionString = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContextPool<ContextBase>(option =>
                 {
-                    option.UseMySQL(connectionString, sql => { sql.MigrationsAssembly("Data.Context"); });
+                    option.UseNpgsql(connectionString, sql => { sql.MigrationsAssembly("Data.Context"); });
                 });
 
             #region 接口相关内容:jwt/授权/cors

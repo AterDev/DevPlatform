@@ -98,6 +98,11 @@ namespace App.Api.Controllers
             var token = jwt.BuildToken(user.Id.ToString(), roles, issuerSign, audience, issuer);
             var result = new SignInDto
             {
+                Username = user.Username,
+                Email = user.Email,
+                Avatar = user.Avatar,
+                CreatedTime = user.CreatedTime,
+                Id = user.Id,
                 Token = token,
                 RoleName = roles
             };

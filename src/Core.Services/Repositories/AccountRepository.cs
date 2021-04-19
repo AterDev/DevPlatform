@@ -50,8 +50,8 @@ namespace Core.Services.Repositories
         /// <returns></returns>
         public AccountDetailDto SignIn(SignInForm dto)
         {
-            var user = _db.Where(u => u.Email == dto.Username || u.Username == dto.Username)
-                .Include(u => u.Roles)
+            var user = _db.Where(u => u.Email.Equals(dto.Username)
+                || u.Username.Equals(dto.Username))
                 .FirstOrDefault();
             if (user == null) return default;
             if (HashCrypto.Validate(dto.Password, user.HashSalt, user.Password))
