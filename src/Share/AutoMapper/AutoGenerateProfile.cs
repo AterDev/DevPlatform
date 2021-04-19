@@ -8,6 +8,7 @@
 using AutoMapper;
 using Core.Entity;
 using Share.Models;
+using Share.Models.Common;
 
 namespace Share.AutoMapper
 {
@@ -18,32 +19,33 @@ namespace Share.AutoMapper
     {
         public GenerateProfile()
         {
-                        CreateMap<AccountAddDto, Account>();
+            CreateMap<AccountAddDto, Account>();
             CreateMap<AccountUpdateDto, Account>();
             CreateMap<Account, AccountDto>();
             CreateMap<Account, AccountItemDto>();
-            CreateMap<Account, AccountDetailDto>();        
+            CreateMap<Account, AccountDetailDto>();
+            CreateMap<Account, SignInDto>();
             CreateMap<RoleAddDto, Role>();
             CreateMap<RoleUpdateDto, Role>();
             CreateMap<Role, RoleDto>();
             CreateMap<Role, RoleItemDto>();
-            CreateMap<Role, RoleDetailDto>();        
+            CreateMap<Role, RoleDetailDto>();
             CreateMap<CatalogAddDto, Catalog>();
             CreateMap<CatalogUpdateDto, Catalog>();
             CreateMap<Catalog, CatalogDto>();
             CreateMap<Catalog, CatalogItemDto>();
-            CreateMap<Catalog, CatalogDetailDto>();        
+            CreateMap<Catalog, CatalogDetailDto>();
             CreateMap<CodeSnippetAddDto, CodeSnippet>();
             CreateMap<CodeSnippetUpdateDto, CodeSnippet>();
             CreateMap<CodeSnippet, CodeSnippetDto>();
             CreateMap<CodeSnippet, CodeSnippetItemDto>();
-            CreateMap<CodeSnippet, CodeSnippetDetailDto>();        
+            CreateMap<CodeSnippet, CodeSnippetDetailDto>();
             CreateMap<LibraryAddDto, Library>();
             CreateMap<LibraryUpdateDto, Library>();
             CreateMap<Library, LibraryDto>();
             CreateMap<Library, LibraryItemDto>();
-            CreateMap<Library, LibraryDetailDto>();        
-// {AppendMappers}
+            CreateMap<Library, LibraryDetailDto>();
+            // {AppendMappers}
         }
     }
 

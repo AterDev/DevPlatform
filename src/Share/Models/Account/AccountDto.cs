@@ -45,7 +45,7 @@ namespace Share.Models
         /// </summary>
         [MaxLength(200)]
         public string Avatar { get; set; }
-
+        public List<Role> Roles { get; set; }
         // public AccountExtendDto Extend { get; set; }
         [Key]
         public Guid Id { get; set; }
@@ -55,6 +55,5 @@ namespace Share.Models
         public Status Status { get; set; }
         public DateTimeOffset CreatedTime { get; set; }
         public DateTimeOffset UpdatedTime { get; set; }
-    
     }
 }

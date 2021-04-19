@@ -17,7 +17,15 @@ namespace WebApp
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("#app");
 
-            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+            var baseAddress = builder.Configuration.GetValue<string>("BaseAddress");
+            if (string.IsNullOrEmpty(baseAddress))
+            {
+                baseAddress = builder.HostEnvironment.BaseAddress;
+            }
+            builder.Services.AddScoped(sp => new HttpClient
+            {
+                BaseAddress = new Uri(baseAddress)
+            });
 
             builder.Services.AddBootstrapBlazor();
             await builder.Build().RunAsync();

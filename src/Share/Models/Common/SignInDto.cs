@@ -1,12 +1,14 @@
+﻿using Core.Entity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using Share.Models;
-using Core.Entity;
-namespace Share.Models
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Share.Models.Common
 {
-    public class AccountDetailDto
+    public class SignInDto
     {
         /// <summary>
         /// 邮箱
@@ -14,24 +16,10 @@ namespace Share.Models
         [MaxLength(120)]
         public string Email { get; set; }
         /// <summary>
-        ///  密码
-        /// </summary>
-        [MaxLength(60)]
-        public string Password { get; set; }
-        /// <summary>
         /// 用户名
         /// </summary>
         [MaxLength(100)]
         public string Username { get; set; }
-        /// <summary>
-        /// 密码加盐
-        /// </summary>
-        [MaxLength(40)]
-        public string HashSalt { get; set; }
-        /// <summary>
-        /// 最后登录时间
-        /// </summary>
-        public DateTimeOffset? LastLoginTime { get; set; }
         /// <summary>
         /// 软删除
         /// </summary>
@@ -42,17 +30,13 @@ namespace Share.Models
         public int RetryCount { get; set; }
         [MaxLength(16)]
         public string Phone { get; set; }
-        public bool PhoneConfirm { get; set; }
-        public bool EmailConfirm { get; set; }
+        
         /// <summary>
         /// 头像url
         /// </summary>
         [MaxLength(200)]
         public string Avatar { get; set; }
-
-        //public AccountExtendDto Extend { get; set; }
-        public List<Role> Roles { get; set; }
-        public List<Catalog> Catalogs { get; set; }
+        // public AccountExtendDto Extend { get; set; }
         [Key]
         public Guid Id { get; set; }
         /// <summary>
@@ -61,6 +45,7 @@ namespace Share.Models
         public Status Status { get; set; }
         public DateTimeOffset CreatedTime { get; set; }
         public DateTimeOffset UpdatedTime { get; set; }
-    
+        public string Token { get; set; }
+        public string RoleName { get; set; }
     }
 }

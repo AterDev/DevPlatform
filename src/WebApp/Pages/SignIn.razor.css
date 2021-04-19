@@ -1,2 +1,12 @@
-﻿body {
+﻿.container {
+    display: flex;
+    width: 100%;
+    height: calc(100vh - 76px);
+    justify-content: center;
+}
+
+.signIn {
+    width: 400px;
+    display: flex;
+    align-items: center;
 }

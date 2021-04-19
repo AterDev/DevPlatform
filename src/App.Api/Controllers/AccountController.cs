@@ -8,6 +8,9 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using App.Agreement;
+using Microsoft.AspNetCore.Authorization;
+using Share.Models.Common;
+using Microsoft.Extensions.Configuration;
 
 namespace App.Api.Controllers
 {
@@ -16,10 +19,13 @@ namespace App.Api.Controllers
     /// </summary>
     public class AccountController : ApiController<AccountRepository, Account, AccountAddDto, AccountUpdateDto, AccountFilter, AccountDto>
     {
+        IConfiguration _config;
         public AccountController(
             ILogger<AccountController> logger,
-            AccountRepository repository) : base(logger, repository)
+            AccountRepository repository,
+            IConfiguration configuration) : base(logger, repository)
         {
+            _config = configuration;
         }
 
         /// <summary>
@@ -68,5 +74,37 @@ namespace App.Api.Controllers
             }
             return NotFound();
         }
+
+        /// <summary>
+        /// 登录
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns></returns>
+        [AllowAnonymous]
+        [HttpPost("signIn")]
+        public ActionResult<SignInDto> SignUp([FromBody] SignInForm dto)
+        {
+            var user = _repos.SignIn(dto);
+            if (user == null)
+            {
+                return NotFound("邮箱不存在或密码错误");
+            }
+            var jwt = new JwtService();
+            var issuerSign = _config.GetSection("Jwt")["Sign"];
+            var issuer = _config.GetSection("Jwt")["Issuer"];
+            var audience = _config.GetSection("Jwt")["Audience"];
+
+            var roles = string.Join(";", user.Roles.Select(r => r.Name).ToList());
+            var token = jwt.BuildToken(user.Id.ToString(), roles, issuerSign, audience, issuer);
+            var result = new SignInDto
+            {
+                Token = token,
+                RoleName = roles
+            };
+
+            return result;
+        }
+
+
     }
 }

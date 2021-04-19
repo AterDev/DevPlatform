@@ -1,14 +1,50 @@
 ﻿@page "/signIn"
 @layout BlankLayout
+@inject HttpClient Http
 
-<div class="row align-itmes-center justify-content-center">
-    <form action="">
-      <input type="text">
-      <button>登录</button>
-    </form>
+<div class="container">
+  <div class="signIn">
+    <ValidateForm Model="Model" @ref="Form" OnValidSubmit="@OnValidSubmit" style="width:100%">
+      <div class="form-group">
+        <BootstrapInput @bind-Value="@Model.Username" />
+      </div>
+      <div class="form-group ">
+        <BootstrapInput type="password" @bind-Value="@Model.Password" />
+      </div>
+      <div class="form-group">
+        <Button ButtonType="ButtonType.Submit" class="form-control" IsAsync="true" Text="登录" />
+      </div>
+
+    </ValidateForm>
+  </div>
 </div>
 
 
+
+
 @code {
+  public SignInForm Model = new SignInForm();
+  private ValidateForm Form { get; set; }
+
+  async Task OnValidSubmit(EditContext context)
+  {
+    if (context.Validate())
+    {
+      System.Console.WriteLine(Model.Username + ":" + Model.Password);
+      var res = await Http.PostAsJsonAsync("/api/account/signIn", Model);
+      if (res.IsSuccessStatusCode)
+      {
+        var json = await res.Content.ReadFromJsonAsync<SignInDto>();
+      }
+      else
+      {
+        System.Console.WriteLine(await res.Content.ReadAsStringAsync());
+      }
+    }
+    else
+    {
+
+    }
+  }
 
 }
