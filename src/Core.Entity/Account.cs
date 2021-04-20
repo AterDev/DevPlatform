@@ -33,7 +33,6 @@ namespace Core.Entity
         /// <summary>
         /// 最后登录时间
         /// </summary>
-        [Column(TypeName = "datetime")]
         public DateTimeOffset? LastLoginTime { get; set; }
         /// <summary>
         /// 软删除

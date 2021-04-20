@@ -11,23 +11,23 @@ namespace Data.Context.Migrations
                 name: "AccountExtends",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "char(36)", nullable: false),
-                    RealName = table.Column<string>(type: "varchar(40)", maxLength: 40, nullable: true),
-                    NickName = table.Column<string>(type: "varchar(40)", maxLength: 40, nullable: true),
-                    Birthday = table.Column<DateTimeOffset>(type: "timestamp", nullable: true),
-                    Address = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: true),
-                    Country = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: true),
-                    Province = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: true),
-                    City = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: true),
-                    County = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: true),
-                    Street = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: true),
-                    AddressDetail = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: true),
-                    WXOpenId = table.Column<string>(type: "varchar(40)", maxLength: 40, nullable: true),
-                    WXAvatar = table.Column<string>(type: "varchar(150)", maxLength: 150, nullable: true),
-                    WXUnionId = table.Column<string>(type: "varchar(40)", maxLength: 40, nullable: true),
-                    Status = table.Column<int>(type: "int", nullable: false),
-                    CreatedTime = table.Column<DateTimeOffset>(type: "datetime", nullable: false),
-                    UpdatedTime = table.Column<DateTimeOffset>(type: "datetime", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    RealName = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: true),
+                    NickName = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: true),
+                    Birthday = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    Address = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
+                    Country = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: true),
+                    Province = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: true),
+                    City = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: true),
+                    County = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: true),
+                    Street = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: true),
+                    AddressDetail = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true),
+                    WXOpenId = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: true),
+                    WXAvatar = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: true),
+                    WXUnionId = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: true),
+                    Status = table.Column<int>(type: "integer", nullable: false),
+                    CreatedTime = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    UpdatedTime = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -38,12 +38,12 @@ namespace Data.Context.Migrations
                 name: "Roles",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "char(36)", nullable: false),
-                    Name = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: true),
-                    Icon = table.Column<string>(type: "varchar(30)", maxLength: 30, nullable: true),
-                    Status = table.Column<int>(type: "int", nullable: false),
-                    CreatedTime = table.Column<DateTimeOffset>(type: "datetime", nullable: false),
-                    UpdatedTime = table.Column<DateTimeOffset>(type: "datetime", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true),
+                    Icon = table.Column<string>(type: "character varying(30)", maxLength: 30, nullable: true),
+                    Status = table.Column<int>(type: "integer", nullable: false),
+                    CreatedTime = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    UpdatedTime = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -54,22 +54,22 @@ namespace Data.Context.Migrations
                 name: "Accounts",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "char(36)", nullable: false),
-                    Email = table.Column<string>(type: "varchar(120)", maxLength: 120, nullable: true),
-                    Password = table.Column<string>(type: "varchar(60)", maxLength: 60, nullable: true),
-                    Username = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: true),
-                    HashSalt = table.Column<string>(type: "varchar(40)", maxLength: 40, nullable: true),
-                    LastLoginTime = table.Column<DateTimeOffset>(type: "datetime", nullable: true),
-                    IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    RetryCount = table.Column<int>(type: "int", nullable: false),
-                    Phone = table.Column<string>(type: "varchar(16)", maxLength: 16, nullable: true),
-                    PhoneConfirm = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    EmailConfirm = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    Avatar = table.Column<string>(type: "varchar(200)", maxLength: 200, nullable: true),
-                    ExtendId = table.Column<string>(type: "char(36)", nullable: true),
-                    Status = table.Column<int>(type: "int", nullable: false),
-                    CreatedTime = table.Column<DateTimeOffset>(type: "datetime", nullable: false),
-                    UpdatedTime = table.Column<DateTimeOffset>(type: "datetime", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Email = table.Column<string>(type: "character varying(120)", maxLength: 120, nullable: true),
+                    Password = table.Column<string>(type: "character varying(60)", maxLength: 60, nullable: true),
+                    Username = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
+                    HashSalt = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: true),
+                    LastLoginTime = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
+                    RetryCount = table.Column<int>(type: "integer", nullable: false),
+                    Phone = table.Column<string>(type: "character varying(16)", maxLength: 16, nullable: true),
+                    PhoneConfirm = table.Column<bool>(type: "boolean", nullable: false),
+                    EmailConfirm = table.Column<bool>(type: "boolean", nullable: false),
+                    Avatar = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: true),
+                    ExtendId = table.Column<Guid>(type: "uuid", nullable: true),
+                    Status = table.Column<int>(type: "integer", nullable: false),
+                    CreatedTime = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    UpdatedTime = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -86,8 +86,8 @@ namespace Data.Context.Migrations
                 name: "AccountRole",
                 columns: table => new
                 {
-                    AccountsId = table.Column<string>(type: "char(36)", nullable: false),
-                    RolesId = table.Column<string>(type: "char(36)", nullable: false)
+                    AccountsId = table.Column<Guid>(type: "uuid", nullable: false),
+                    RolesId = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -110,16 +110,16 @@ namespace Data.Context.Migrations
                 name: "Catalogs",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "char(36)", nullable: false),
-                    Name = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: true),
-                    Type = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: true),
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true),
+                    Type = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true),
                     Sort = table.Column<short>(type: "smallint", nullable: false),
                     Level = table.Column<short>(type: "smallint", nullable: false),
-                    ParentId = table.Column<string>(type: "char(36)", nullable: false),
-                    AccountId = table.Column<string>(type: "char(36)", nullable: true),
-                    Status = table.Column<int>(type: "int", nullable: false),
-                    CreatedTime = table.Column<DateTimeOffset>(type: "datetime", nullable: false),
-                    UpdatedTime = table.Column<DateTimeOffset>(type: "datetime", nullable: false)
+                    ParentId = table.Column<Guid>(type: "uuid", nullable: false),
+                    AccountId = table.Column<Guid>(type: "uuid", nullable: true),
+                    Status = table.Column<int>(type: "integer", nullable: false),
+                    CreatedTime = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    UpdatedTime = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -142,17 +142,17 @@ namespace Data.Context.Migrations
                 name: "Libraries",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "char(36)", nullable: false),
-                    Namespace = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: true),
-                    Description = table.Column<string>(type: "varchar(500)", maxLength: 500, nullable: true),
-                    Language = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: true),
-                    IsValid = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    IsPublic = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    UserId = table.Column<string>(type: "char(36)", nullable: true),
-                    CatalogId = table.Column<string>(type: "char(36)", nullable: true),
-                    Status = table.Column<int>(type: "int", nullable: false),
-                    CreatedTime = table.Column<DateTimeOffset>(type: "datetime", nullable: false),
-                    UpdatedTime = table.Column<DateTimeOffset>(type: "datetime", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Namespace = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
+                    Description = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
+                    Language = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
+                    IsValid = table.Column<bool>(type: "boolean", nullable: false),
+                    IsPublic = table.Column<bool>(type: "boolean", nullable: false),
+                    UserId = table.Column<Guid>(type: "uuid", nullable: true),
+                    CatalogId = table.Column<Guid>(type: "uuid", nullable: true),
+                    Status = table.Column<int>(type: "integer", nullable: false),
+                    CreatedTime = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    UpdatedTime = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -175,16 +175,16 @@ namespace Data.Context.Migrations
                 name: "CodeSnippets",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "char(36)", nullable: false),
-                    Name = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: true),
-                    Description = table.Column<string>(type: "varchar(500)", maxLength: 500, nullable: true),
-                    Content = table.Column<string>(type: "varchar(4000)", maxLength: 4000, nullable: true),
-                    LibraryId = table.Column<string>(type: "char(36)", nullable: true),
-                    Language = table.Column<int>(type: "int", nullable: false),
-                    CodeType = table.Column<int>(type: "int", nullable: false),
-                    Status = table.Column<int>(type: "int", nullable: false),
-                    CreatedTime = table.Column<DateTimeOffset>(type: "datetime", nullable: false),
-                    UpdatedTime = table.Column<DateTimeOffset>(type: "datetime", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
+                    Description = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
+                    Content = table.Column<string>(type: "character varying(4000)", maxLength: 4000, nullable: true),
+                    LibraryId = table.Column<Guid>(type: "uuid", nullable: true),
+                    Language = table.Column<int>(type: "integer", nullable: false),
+                    CodeType = table.Column<int>(type: "integer", nullable: false),
+                    Status = table.Column<int>(type: "integer", nullable: false),
+                    CreatedTime = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    UpdatedTime = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {

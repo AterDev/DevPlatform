@@ -11,15 +11,12 @@ namespace Core.Entity
     public class BaseDB
     {
         [Key]
-        [Column(TypeName = "char(36)")]
         public Guid Id { get; set; } = Guid.NewGuid();
         /// <summary>
         /// 状态
         /// </summary>
         public virtual Status Status { get; set; } = Status.Default;
-        [Column(TypeName = "datetime")]
         public DateTimeOffset CreatedTime { get; set; } = DateTimeOffset.UtcNow;
-        [Column(TypeName = "datetime")]
         public DateTimeOffset UpdatedTime { get; set; } = DateTimeOffset.UtcNow;
     }
 
