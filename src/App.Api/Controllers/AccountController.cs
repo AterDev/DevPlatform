@@ -36,10 +36,10 @@ namespace App.Api.Controllers
         [HttpPost]
         public override async Task<ActionResult<Account>> AddAsync([FromBody] AccountAddDto form)
         {
-            // if (_repos.Any(e => e.Name == form.Name))
-            // {
-            //     return Conflict();
-            // }
+            if (_repos.Any(e => e.Email == form.Email))
+            {
+                return Conflict();
+            }
             return await _repos.AddAsync(form);
         }
 
@@ -111,5 +111,26 @@ namespace App.Api.Controllers
         }
 
 
+        /// <summary>
+        /// 删除
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpDelete("{id}")]
+        public override Task<ActionResult<Account>> DeleteAsync([FromRoute] Guid id)
+        {
+            return base.DeleteAsync(id);
+        }
+
+        /// <summary>
+        /// 获取详情
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet("{id}")]
+        public override Task<ActionResult<Account>> GetDetailAsync([FromRoute] Guid id)
+        {
+            return base.GetDetailAsync(id);
+        }
     }
 }
