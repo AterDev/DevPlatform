@@ -32,7 +32,11 @@ namespace WebApp
             builder.Services.AddBootstrapBlazor();
             builder.Services.AddScoped(typeof(AuthService));
 
+            // 日志
+            builder.Logging.SetMinimumLevel(LogLevel.Debug);
+            
             var host = builder.Build();
+            // 初始验证
             var authService= host.Services.GetRequiredService<AuthService>();
             await authService.Initialize();
             await host.RunAsync();
