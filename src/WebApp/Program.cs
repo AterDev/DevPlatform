@@ -1,4 +1,5 @@
 using Blazored.LocalStorage;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -32,13 +33,18 @@ namespace WebApp
             builder.Services.AddBootstrapBlazor();
             builder.Services.AddScoped(typeof(AuthService));
 
+
+            builder.Services.AddOptions();
+            builder.Services.AddAuthorizationCore();
+
             // 日志
             builder.Logging.SetMinimumLevel(LogLevel.Debug);
-            
+
             var host = builder.Build();
             // 初始验证
-            var authService= host.Services.GetRequiredService<AuthService>();
+            var authService = host.Services.GetRequiredService<AuthService>();
             await authService.Initialize();
+
             await host.RunAsync();
         }
     }

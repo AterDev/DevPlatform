@@ -14,12 +14,15 @@ namespace Share.Models.Common
         public string Username { get; set; }
         public string Email { get; set; }
         public string Avatar { get; set; }
-        public LocalUserInfo(string username, string email, string avatar = null)
+        public string Role { get; set; }
+        public Guid Id { get; set; }
+        public LocalUserInfo(Guid id, string username, string email, string role = null, string avatar = null)
         {
-
+            Id = id;
             Username = username;
             Email = email;
             Avatar = avatar;
+            Role = role;
         }
     }
 }

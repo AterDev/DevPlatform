@@ -14,8 +14,9 @@ namespace WebApp.Services
     public class AuthService
     {
         public bool IsLogin { get; set; } = false;
-
         public string Username { get; set; }
+        public string Role { get; set; }
+        public Guid Id { get; set; }
 
         ILocalStorageService _localStorage;
         HttpClient _http;
@@ -34,6 +35,8 @@ namespace WebApp.Services
             {
                 IsLogin = true;
                 Username = info.Username;
+                Role = info.Role;
+                Id = info.Id;
             }
         }
 
@@ -42,7 +45,7 @@ namespace WebApp.Services
         /// </summary>
         /// <param name="userinfo"></param>
         /// <returns></returns>
-        public async Task<LocalUserInfo> UpdateStateAsync(LocalUserInfo userinfo)
+        public async Task<LocalUserInfo> UpdateStateAsync(LocalUserInfo userinfo = null)
         {
             if (userinfo != null)
             {
@@ -55,6 +58,9 @@ namespace WebApp.Services
             if (!string.IsNullOrEmpty(info.Username))
             {
                 IsLogin = true;
+                Username = info.Username;
+                Role = info.Role;
+                Id = info.Id;
             }
             return info;
         }

@@ -37,7 +37,7 @@
       {
         var dto = await res.Content.ReadFromJsonAsync<SignInDto>();
         // 保存到localStorage
-        var userInfo = new LocalUserInfo(dto.Username, dto.Email, dto.Avatar);
+        var userInfo = new LocalUserInfo(dto.Id, dto.Username, dto.Email, dto.RoleName, dto.Avatar);
         await authService.UpdateStateAsync(userInfo);
         // 更新token到请求
         authService.UpdateToken(dto.Token);

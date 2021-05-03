@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Rendering;
 using Microsoft.Extensions.Logging;
 using System;
@@ -16,7 +17,6 @@ namespace WebApp.Services
     {
         [Inject]
         public NavigationManager NavigationManager { get; set; }
-
         [Inject]
         public AuthService AuthenticationService { get; set; }
         [Inject]
@@ -32,13 +32,13 @@ namespace WebApp.Services
 
             if (noNeedAuthorizeRoutePath.Contains(localpath))
             {
-                Logger.LogInformation("no authorize"+localpath);
+                Logger.LogInformation("no authorize" + localpath);
                 base.Render(builder);
             }
             else
             {
                 var authorize = Attribute.GetCustomAttribute(RouteData.PageType, typeof(AuthorizeAttribute)) != null;
-                if (authorize && AuthenticationService.Username == null)
+                if (authorize && AuthenticationService.IsLogin)
                 {
                     var returnUrl = WebUtility.UrlEncode(new Uri(NavigationManager.Uri).PathAndQuery);
                     NavigationManager.NavigateTo($"signIn?returnUrl={returnUrl}");
