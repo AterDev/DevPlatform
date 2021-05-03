@@ -1,4 +1,7 @@
 ﻿@inherits LayoutComponentBase
+@inject AuthService auth
+@inject NavigationManager navigator
+
 @*top nav*@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid">
@@ -12,27 +15,53 @@
     </form>
     <span>
       @*TODO:login state*@
-      @* <NavLink href="signUp">注册</NavLink> *@
-      <NavLink href="signIn">
-        <span>登录</span>
-      </NavLink>
+
+      @if (IsLogin)
+      {
+        <NavLink>@auth.Username</NavLink>
+        <NavLink @onclick="SignOut">
+          <span>退出</span>
+        </NavLink>
+      }
+      else
+      {
+        <NavLink href="signIn">
+          <span>登录</span>
+        </NavLink>
+      }
     </span>
   </div>
 </nav>
 
 @*middle content*@
 <div class="container-fluid">
-<div class="row">
-  <div class="left-nav auto">
-    <NavMenu />
-  </div>
-  <div class="col">
-    @*main content*@
-    <div class="content px-4">
-      @Body
+  <div class="row">
+    <div class="left-nav auto">
+      <NavMenu></NavMenu>
+    </div>
+    <div class="col">
+      @*main content*@
+      <div class="content px-4">
+        @Body
+      </div>
     </div>
   </div>
 </div>
-</div>
+
+@code {
+  public bool IsLogin { get; set; }
+
+  protected override void OnInitialized()
+  {
+    IsLogin = auth.IsLogin;
+  }
+
+  async Task SignOut()
+  {
+    await auth.ClearAsync();
+    navigator.NavigateTo("index",true);
+  }
+
+}
 
 

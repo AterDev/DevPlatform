@@ -1,6 +1,8 @@
 ﻿@page "/signIn"
 @layout BlankLayout
 @inject HttpClient Http
+@inject AuthService authService
+@inject NavigationManager navigator
 
 <div class="container">
   <div class="signIn">
@@ -14,13 +16,12 @@
       <div class="form-group">
         <Button ButtonType="ButtonType.Submit" class="form-control" IsAsync="true" Text="登录" />
       </div>
-
     </ValidateForm>
   </div>
+
+
+  <Button OnClick="Test"> 测试请求</Button>
 </div>
-
-
-
 
 @code {
   public SignInForm Model = new SignInForm();
@@ -30,11 +31,17 @@
   {
     if (context.Validate())
     {
-      System.Console.WriteLine(Model.Username + ":" + Model.Password);
+
       var res = await Http.PostAsJsonAsync("/api/account/signIn", Model);
       if (res.IsSuccessStatusCode)
       {
-        var json = await res.Content.ReadFromJsonAsync<SignInDto>();
+        var dto = await res.Content.ReadFromJsonAsync<SignInDto>();
+        // 保存到localStorage
+        var userInfo = new LocalUserInfo(dto.Username, dto.Email, dto.Avatar);
+        await authService.UpdateStateAsync(userInfo);
+        // 更新token到请求
+        authService.UpdateToken(dto.Token);
+        navigator.NavigateTo("index");
       }
       else
       {
@@ -43,6 +50,20 @@
     }
     else
     {
+
+    }
+  }
+
+  async Task Test()
+  {
+    var res = await Http.PostAsJsonAsync("/api/account/filter", new AccountFilter
+    {
+      PageIndex = 1,
+      PageSize = 12
+    });
+    if (res.IsSuccessStatusCode)
+    {
+      var data = res.Content.ReadFromJsonAsync<PageResult<AccountDto>>();
 
     }
   }

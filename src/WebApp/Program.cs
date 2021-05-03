@@ -1,3 +1,4 @@
+using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -7,6 +8,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using WebApp.Services;
 
 namespace WebApp
 {
@@ -26,9 +28,14 @@ namespace WebApp
             {
                 BaseAddress = new Uri(baseAddress)
             });
-
+            builder.Services.AddBlazoredLocalStorage();
             builder.Services.AddBootstrapBlazor();
-            await builder.Build().RunAsync();
+            builder.Services.AddScoped(typeof(AuthService));
+
+            var host = builder.Build();
+            var authService= host.Services.GetRequiredService<AuthService>();
+            await authService.Initialize();
+            await host.RunAsync();
         }
     }
 }

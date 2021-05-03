@@ -24,7 +24,6 @@ namespace Core.Services.Repositories
             return base.GetListWithPageAsync(filter);
         }
 
-
         /// <summary>
         /// ÃÌº”’À∫≈
         /// </summary>
