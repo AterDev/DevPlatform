@@ -45,6 +45,7 @@ namespace WebApp
               })
                 .AddBootstrapProviders()
                 .AddFontAwesomeIcons();
+            // 富文本编辑器
 
             // 日志
             builder.Logging.SetMinimumLevel(LogLevel.Debug);

@@ -8,3 +8,7 @@ html, body {
     height: calc(100vh - 76px);
     border-right: 1px solid #eee;
 }
+.monaco-editor-container {
+    height: calc(100vh - 76px);
+    border: 1px solid gray;
+}

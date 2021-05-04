@@ -1,7 +1,19 @@
 ﻿@page "/entity"
 
-
-entity
-@code {
-
-}
+<Row>
+	<Column ColumnSize="ColumnSize.Is2">
+		<Button @onclick="Save" Color="Color.Primary">保存</Button>
+		<Select SelectedValue="CodeLanguage" SelectedValueChanged="ChangeLanguage" TValue="Language">
+			<SelectItem Value="Language.Csharp">C#</SelectItem>
+			<SelectItem Value="Language.Java">Java</SelectItem>
+			<SelectItem Value="Language.Typescript">Typescript</SelectItem>
+			<SelectItem Value="Language.Javascript">Javascript</SelectItem>
+			<SelectItem Value="Language.Dart">Dart</SelectItem>
+			<SelectItem Value="Language.Kotlin">Kotlin</SelectItem>
+			<SelectItem Value="Language.Golang">Golang</SelectItem>
+		</Select>
+	</Column>
+	<Column ColumnSize="ColumnSize.Is10">
+		<MonacoEditor @ref="_editor" Id="codeEditor" ConstructionOptions="EditorConstructionOptions" />
+	</Column>
+</Row>
