@@ -6,17 +6,17 @@
 
 <div class="container">
   <div class="signIn">
-    <ValidateForm Model="Model" @ref="Form" OnValidSubmit="@OnValidSubmit" style="width:100%">
+    <EditForm Model="Model" style="width:100%">
       <div class="form-group">
-        <BootstrapInput @bind-Value="@Model.Username" />
+        <TextEdit Text="@Model.Username" />
       </div>
       <div class="form-group ">
-        <BootstrapInput type="password" @bind-Value="@Model.Password" />
+        <TextEdit type="password" Text="@Model.Password" />
       </div>
       <div class="form-group">
         <Button ButtonType="ButtonType.Submit" class="form-control" IsAsync="true" Text="登录" />
       </div>
-    </ValidateForm>
+    </EditForm>
   </div>
 
 
@@ -25,7 +25,6 @@
 
 @code {
   public SignInForm Model = new SignInForm();
-  private ValidateForm Form { get; set; }
 
   async Task OnValidSubmit(EditContext context)
   {

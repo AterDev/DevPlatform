@@ -2,50 +2,53 @@
 @inject AuthService auth
 @inject NavigationManager navigator
 
-@*top nav*@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">DevPlatform</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <form class="d-flex">
-      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success" type="submit">Search</button>
-    </form>
-    <span>
-      @*TODO:login state*@
-      @if (IsLogin)
-      {
-        <NavLink>@auth.Username</NavLink>
-        <NavLink @onclick="SignOut">
-          <span>退出</span>
-        </NavLink>
-      }
-      else
-      {
-        <NavLink href="signIn">
-          <span>登录</span>
-        </NavLink>
-      }
-    </span>
-  </div>
-</nav>
-
-@*middle content*@
-<div class="container-fluid">
-  <div class="row">
-    <div class="left-nav auto">
-      <NavMenu></NavMenu>
-    </div>
-    <div class="col">
-      @*main content*@
-      <div class="content px-4">
-        @Body
+<Layout>
+  <LayoutHeader Fixed="true">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">DevPlatform</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <form class="d-flex">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+        <span>
+          @if (IsLogin)
+          {
+            <NavLink>@auth.Username</NavLink>
+            <NavLink @onclick="SignOut">
+              <span>退出</span>
+            </NavLink>
+          }
+          else
+          {
+            <NavLink href="signIn">
+              <span>登录</span>
+            </NavLink>
+          }
+        </span>
       </div>
-    </div>
-  </div>
-</div>
+    </nav>
+  </LayoutHeader>
+  <Layout Sider="true">
+    <LayoutSider>
+      <LayoutSiderContent>
+        <NavMenu></NavMenu>
+      </LayoutSiderContent>
+    </LayoutSider>
+    <Layout>
+      <LayoutContent>
+        <div class="content px-4">
+          @Body
+        </div>
+      </LayoutContent>
+    </Layout>
+  </Layout>
+</Layout>
+
+
 
 @code {
   public bool IsLogin { get; set; }

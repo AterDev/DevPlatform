@@ -1,23 +1,42 @@
-﻿<div class="@NavMenuCssClass">
-  <ul class="nav flex-column">
-    <li class="nav-item px-3">
-      <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-        <span class="oi oi-home" aria-hidden="true"></span>
-        主页
-      </NavLink>
-    </li>
-    <li class="nav-item px-3">
-      <NavLink class="nav-link" href="counter">
-        <span class="oi oi-plus" aria-hidden="true"></span>
-        资讯
-      </NavLink>
-    </li>
-    <li class="nav-item px-3">
+﻿<Bar Mode="BarMode.VerticalInline"
+     CollapseMode="BarCollapseMode.Small"
+     Breakpoint="Breakpoint.Desktop"
+     NavigationBreakpoint="Breakpoint.Tablet"
+     ThemeContrast="ThemeContrast.Light">
 
-      <NavLink class="nav-link" href="fetchdata">
-        <span class="oi oi-list-rich" aria-hidden="true"></span>
-        工具
-      </NavLink>
-    </li>
-  </ul>
-</div>
+  <BarToggler Mode="BarTogglerMode.Popout"></BarToggler>
+  <BarMenu>
+    <BarStart>
+      <BarItem>
+        <BarLink To="index">
+          <BarIcon IconName="IconName.Home" />
+          主页
+        </BarLink>
+      </BarItem>
+      <BarItem>
+        <BarLink To="news">
+          <BarIcon IconName="@("fa-newspaper")" />
+          资讯
+        </BarLink>
+      </BarItem>
+      <BarItem>
+        <BarDropdown>
+          <BarDropdownToggle>
+            <BarIcon IconName="@("fa-toolbox")" />
+            工具
+          </BarDropdownToggle>
+          <BarDropdownMenu>
+            <BarDropdownItem To="entity">
+              <BarIcon IconName="@("fa-archive")" />
+              实体构造
+            </BarDropdownItem>
+            <BarDropdownItem To="codesnipets">
+              <BarIcon IconName="@("fa-file-code")" />
+              代码片段
+            </BarDropdownItem>
+          </BarDropdownMenu>
+        </BarDropdown>
+      </BarItem>
+    </BarStart>
+  </BarMenu>
+</Bar>
