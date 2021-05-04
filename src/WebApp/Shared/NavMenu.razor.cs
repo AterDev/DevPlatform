@@ -9,9 +9,7 @@ namespace WebApp.Shared
         private bool collapseNavMenu = false;
         private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
 
-        protected override async Task OnInitializedAsync()
-        {
-        }
+
         private void ToggleNavMenu()
         {
             collapseNavMenu = !collapseNavMenu;

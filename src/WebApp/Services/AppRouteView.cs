@@ -38,7 +38,8 @@ namespace WebApp.Services
             else
             {
                 var authorize = Attribute.GetCustomAttribute(RouteData.PageType, typeof(AuthorizeAttribute)) != null;
-                if (authorize && AuthenticationService.IsLogin)
+                Logger.LogInformation(authorize.ToString());
+                if (authorize && !AuthenticationService.IsLogin)
                 {
                     var returnUrl = WebUtility.UrlEncode(new Uri(NavigationManager.Uri).PathAndQuery);
                     NavigationManager.NavigateTo($"signIn?returnUrl={returnUrl}");

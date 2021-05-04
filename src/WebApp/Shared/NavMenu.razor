@@ -8,13 +8,13 @@
   <BarMenu>
     <BarStart>
       <BarItem>
-        <BarLink To="index">
+        <BarLink To="/index">
           <BarIcon IconName="IconName.Home" />
           主页
         </BarLink>
       </BarItem>
       <BarItem>
-        <BarLink To="news">
+        <BarLink To="/news">
           <BarIcon IconName="@("fa-newspaper")" />
           资讯
         </BarLink>
@@ -26,11 +26,11 @@
             工具
           </BarDropdownToggle>
           <BarDropdownMenu>
-            <BarDropdownItem To="entity">
+            <BarDropdownItem To="/entity" Match="Match.All">
               <BarIcon IconName="@("fa-archive")" />
               实体构造
             </BarDropdownItem>
-            <BarDropdownItem To="codesnipets">
+            <BarDropdownItem To="/codeSnippet" >
               <BarIcon IconName="@("fa-file-code")" />
               代码片段
             </BarDropdownItem>

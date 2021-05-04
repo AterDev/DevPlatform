@@ -6,31 +6,54 @@
 
 <div class="container">
   <div class="signIn">
-    <EditForm Model="Model" style="width:100%">
-      <div class="form-group">
-        <TextEdit Text="@Model.Username" />
-      </div>
-      <div class="form-group ">
-        <TextEdit type="password" Text="@Model.Password" />
-      </div>
-      <div class="form-group">
-        <Button ButtonType="ButtonType.Submit" class="form-control" IsAsync="true" Text="登录" />
-      </div>
-    </EditForm>
+    <Validations @ref="validations" Mode="ValidationMode.Auto" Model="@Model" ValidateOnLoad="true">
+      <Column ColumnSize="ColumnSize.Is12">
+        <Validation>
+          <Field Horizontal="false">
+            <FieldLabel ColumnSize="ColumnSize.Is3">用户名</FieldLabel>
+            <FieldBody ColumnSize="ColumnSize.Is9">
+              <TextEdit @bind-Text="@Model.Username">
+                <Feedback>
+                  <ValidationError />
+                </Feedback>
+              </TextEdit>
+            </FieldBody>
+          </Field>
+        </Validation>
+
+        <Validation>
+          <Field Horizontal="false">
+            <FieldLabel ColumnSize="ColumnSize.Is3">密码</FieldLabel>
+            <FieldBody ColumnSize="ColumnSize.Is9">
+              <TextEdit type="password" @bind-Text="@Model.Password" Role="TextRole.Password">
+                <Feedback>
+                  <ValidationError />
+                </Feedback>
+              </TextEdit>
+            </FieldBody>
+          </Field>
+        </Validation>
+        <Field Horizontal="false">
+          <FieldBody ColumnSize="ColumnSize.Is9.Is3.WithOffset">
+            <Button Block="true" Type="ButtonType.Submit" Color="Color.Primary" Clicked="@OnValidSubmit">
+              登录
+            </Button>
+          </FieldBody>
+        </Field>
+      </Column>
+    </Validations>
   </div>
-
-
-  <Button OnClick="Test"> 测试请求</Button>
 </div>
 
 @code {
   public SignInForm Model = new SignInForm();
+  Validations validations;
 
-  async Task OnValidSubmit(EditContext context)
+  async Task OnValidSubmit()
   {
-    if (context.Validate())
+    if (validations.ValidateAll())
     {
-
+      validations.ClearAll();
       var res = await Http.PostAsJsonAsync("/api/account/signIn", Model);
       if (res.IsSuccessStatusCode)
       {
