@@ -251,6 +251,58 @@ namespace Data.Context.Migrations
                     b.ToTable("Articles");
                 });
 
+            modelBuilder.Entity("Core.Entity.ArticleCatalog", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("AccountId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTimeOffset>("CreatedTime")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<short>("Level")
+                        .HasColumnType("smallint");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<Guid?>("ParentId")
+                        .HasColumnType("uuid");
+
+                    b.Property<short>("Sort")
+                        .HasColumnType("smallint");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Type")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<DateTimeOffset>("UpdatedTime")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AccountId");
+
+                    b.HasIndex("Level");
+
+                    b.HasIndex("Name");
+
+                    b.HasIndex("ParentId");
+
+                    b.HasIndex("Sort");
+
+                    b.HasIndex("Type");
+
+                    b.ToTable("ArticleCatalog");
+                });
+
             modelBuilder.Entity("Core.Entity.ArticleExtend", b =>
                 {
                     b.Property<Guid>("Id")
@@ -272,49 +324,6 @@ namespace Data.Context.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ArticleExtends");
-                });
-
-            modelBuilder.Entity("Core.Entity.Catalog", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTimeOffset>("CreatedTime")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<short>("Level")
-                        .HasColumnType("smallint");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
-
-                    b.Property<Guid>("ParentId")
-                        .HasColumnType("uuid");
-
-                    b.Property<short>("Sort")
-                        .HasColumnType("smallint");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Type")
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
-
-                    b.Property<DateTimeOffset>("UpdatedTime")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Catalog");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("Catalog");
                 });
 
             modelBuilder.Entity("Core.Entity.CodeSnippet", b =>
@@ -464,6 +473,58 @@ namespace Data.Context.Migrations
                     b.ToTable("Libraries");
                 });
 
+            modelBuilder.Entity("Core.Entity.LibraryCatalog", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("AccountId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTimeOffset>("CreatedTime")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<short>("Level")
+                        .HasColumnType("smallint");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<Guid?>("ParentId")
+                        .HasColumnType("uuid");
+
+                    b.Property<short>("Sort")
+                        .HasColumnType("smallint");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Type")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<DateTimeOffset>("UpdatedTime")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AccountId");
+
+                    b.HasIndex("Level");
+
+                    b.HasIndex("Name");
+
+                    b.HasIndex("ParentId");
+
+                    b.HasIndex("Sort");
+
+                    b.HasIndex("Type");
+
+                    b.ToTable("LibraryCatalogs");
+                });
+
             modelBuilder.Entity("Core.Entity.Role", b =>
                 {
                     b.Property<Guid>("Id")
@@ -494,28 +555,6 @@ namespace Data.Context.Migrations
                     b.HasIndex("Status");
 
                     b.ToTable("Roles");
-                });
-
-            modelBuilder.Entity("Core.Entity.ArticleCatalog", b =>
-                {
-                    b.HasBaseType("Core.Entity.Catalog");
-
-                    b.Property<Guid?>("AccountId")
-                        .HasColumnType("uuid");
-
-                    b.HasIndex("AccountId");
-
-                    b.HasIndex("Level");
-
-                    b.HasIndex("Name");
-
-                    b.HasIndex("ParentId");
-
-                    b.HasIndex("Sort");
-
-                    b.HasIndex("Type");
-
-                    b.HasDiscriminator().HasValue("ArticleCatalog");
                 });
 
             modelBuilder.Entity("AccountRole", b =>
@@ -563,6 +602,23 @@ namespace Data.Context.Migrations
                     b.Navigation("Extend");
                 });
 
+            modelBuilder.Entity("Core.Entity.ArticleCatalog", b =>
+                {
+                    b.HasOne("Core.Entity.Account", "Account")
+                        .WithMany("ArticleCatalogs")
+                        .HasForeignKey("AccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Core.Entity.ArticleCatalog", "Parent")
+                        .WithMany("Catalogs")
+                        .HasForeignKey("ParentId");
+
+                    b.Navigation("Account");
+
+                    b.Navigation("Parent");
+                });
+
             modelBuilder.Entity("Core.Entity.CodeSnippet", b =>
                 {
                     b.HasOne("Core.Entity.Library", "Library")
@@ -589,7 +645,7 @@ namespace Data.Context.Migrations
 
             modelBuilder.Entity("Core.Entity.Library", b =>
                 {
-                    b.HasOne("Core.Entity.Catalog", "Catalog")
+                    b.HasOne("Core.Entity.LibraryCatalog", "Catalog")
                         .WithMany()
                         .HasForeignKey("CatalogId");
 
@@ -602,17 +658,17 @@ namespace Data.Context.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Core.Entity.ArticleCatalog", b =>
+            modelBuilder.Entity("Core.Entity.LibraryCatalog", b =>
                 {
                     b.HasOne("Core.Entity.Account", "Account")
-                        .WithMany("ArticleCatalogs")
-                        .HasForeignKey("AccountId");
-
-                    b.HasOne("Core.Entity.ArticleCatalog", "Parent")
-                        .WithMany("Catalogs")
-                        .HasForeignKey("ParentId")
+                        .WithMany()
+                        .HasForeignKey("AccountId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("Core.Entity.LibraryCatalog", "Parent")
+                        .WithMany("Catalogs")
+                        .HasForeignKey("ParentId");
 
                     b.Navigation("Account");
 
@@ -633,15 +689,20 @@ namespace Data.Context.Migrations
                     b.Navigation("Comments");
                 });
 
+            modelBuilder.Entity("Core.Entity.ArticleCatalog", b =>
+                {
+                    b.Navigation("Articles");
+
+                    b.Navigation("Catalogs");
+                });
+
             modelBuilder.Entity("Core.Entity.Library", b =>
                 {
                     b.Navigation("Snippets");
                 });
 
-            modelBuilder.Entity("Core.Entity.ArticleCatalog", b =>
+            modelBuilder.Entity("Core.Entity.LibraryCatalog", b =>
                 {
-                    b.Navigation("Articles");
-
                     b.Navigation("Catalogs");
                 });
 #pragma warning restore 612, 618

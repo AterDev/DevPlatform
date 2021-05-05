@@ -42,7 +42,7 @@ namespace Share.Models
 
         //public AccountExtendDto Extend { get; set; }
         public List<Role> Roles { get; set; }
-        public List<Catalog> Catalogs { get; set; }
+        public List<LibraryCatalog> Catalogs { get; set; }
         [Key]
         public Guid Id { get; set; }
         /// <summary>

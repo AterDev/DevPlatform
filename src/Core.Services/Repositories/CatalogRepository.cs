@@ -8,7 +8,7 @@ using Data.Context;
 
 namespace Core.Services.Repositories
 {
-    public class CatalogRepository : Repository<Catalog, CatalogAddDto, CatalogUpdateDto, CatalogFilter, CatalogDto>
+    public class CatalogRepository : Repository<LibraryCatalog, CatalogAddDto, CatalogUpdateDto, CatalogFilter, CatalogDto>
     {
         public CatalogRepository(ContextBase context, IMapper mapper) : base(context, mapper)
         {

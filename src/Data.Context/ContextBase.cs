@@ -11,6 +11,7 @@ namespace Data.Context
         public DbSet<Article> Articles { get; set; }
         public DbSet<ArticleExtend> ArticleExtends { get; set; }
         public DbSet<ArticleCatalog> ArticleCatalogs { get; set; }
+        public DbSet<LibraryCatalog> LibraryCatalogs { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<CodeSnippet> CodeSnippets { get; set; }
         public DbSet<Library> Libraries { get; set; }
@@ -75,6 +76,13 @@ namespace Data.Context
                 e.HasIndex(m => m.ArticleType);
             });
             builder.Entity<ArticleCatalog>(e =>
+            {
+                e.HasIndex(m => m.Name);
+                e.HasIndex(m => m.Type);
+                e.HasIndex(m => m.Sort);
+                e.HasIndex(m => m.Level);
+            });
+            builder.Entity<LibraryCatalog>(e =>
             {
                 e.HasIndex(m => m.Name);
                 e.HasIndex(m => m.Type);

@@ -5,8 +5,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Core.Entity
 {
-    [Table("ArticleCatalog")]
-    public class ArticleCatalog : BaseDB
+    /// <summary>
+    /// 目录/文件目录 / 自引用
+    /// </summary>
+    public partial class LibraryCatalog : BaseDB
     {
         [MaxLength(50)]
         public string Name { get; set; }
@@ -14,16 +16,8 @@ namespace Core.Entity
         public string Type { get; set; }
         public short Sort { get; set; } = 0;
         public short Level { get; set; }
-
-        /// <summary>
-        /// 该目录的文章
-        /// </summary>
-        public List<Article> Articles { get; set; }
-        /// <summary>
-        /// 父目录
-        /// </summary>
         [ForeignKey("ParentId")]
-        public ArticleCatalog Parent { get; set; }
+        public LibraryCatalog Parent { get; set; }
         public Guid? ParentId { get; set; }
         /// <summary>
         /// 所属用户
@@ -34,7 +28,6 @@ namespace Core.Entity
         /// <summary>
         /// 子目录
         /// </summary>
-        public List<ArticleCatalog> Catalogs { get; set; }
-
+        public List<LibraryCatalog> Catalogs { get; set; }
     }
 }

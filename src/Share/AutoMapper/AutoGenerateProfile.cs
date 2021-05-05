@@ -34,11 +34,11 @@ namespace Share.AutoMapper
             CreateMap<Role, RoleDto>();
             CreateMap<Role, RoleItemDto>();
             CreateMap<Role, RoleDetailDto>();
-            CreateMap<CatalogAddDto, Catalog>();
-            CreateMap<CatalogUpdateDto, Catalog>();
-            CreateMap<Catalog, CatalogDto>();
-            CreateMap<Catalog, CatalogItemDto>();
-            CreateMap<Catalog, CatalogDetailDto>();
+            CreateMap<CatalogAddDto, LibraryCatalog>();
+            CreateMap<CatalogUpdateDto, LibraryCatalog>();
+            CreateMap<LibraryCatalog, CatalogDto>();
+            CreateMap<LibraryCatalog, CatalogItemDto>();
+            CreateMap<LibraryCatalog, CatalogDetailDto>();
             CreateMap<CodeSnippetAddDto, CodeSnippet>();
             CreateMap<CodeSnippetUpdateDto, CodeSnippet>();
             CreateMap<CodeSnippet, CodeSnippetDto>();
