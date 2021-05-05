@@ -2,6 +2,7 @@ using System.IO;
 using System.Security.Claims;
 using System.Text;
 using AutoMapper;
+using Core.Services;
 using Data.Context;
 using IGeekFan.AspNetCore.Knife4jUI;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -30,11 +31,11 @@ namespace App.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
-            // 使用cli工具生成仓储，请取消以下注释
             services.AddRepositories();
             services.AddAutoMapper(typeof(MapperProfile));
             services.AddHttpContextAccessor();
             services.AddOptions();
+            services.AddScoped(typeof(WebService));
 
             var connectionString = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContextPool<ContextBase>(option =>

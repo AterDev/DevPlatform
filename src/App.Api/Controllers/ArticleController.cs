@@ -43,6 +43,11 @@ namespace App.Api.Controllers
             {
                 return Conflict();
             }
+            var catalog = _repos.ValidCatalog(form.CatalogId, UserId);
+            if (!catalog)
+            {
+                return NotFound("未找到相应的目录");
+            }
             form.AccountId = UserId;
             return await _repos.AddAsync(form);
         }
@@ -55,6 +60,7 @@ namespace App.Api.Controllers
         [HttpPost("filter")]
         public override async Task<ActionResult<PageResult<ArticleDto>>> FilterAsync(ArticleFilter filter)
         {
+            filter.AccountId = UserId;
             return await _repos.GetListWithPageAsync(filter);
         }
 
@@ -86,9 +92,13 @@ namespace App.Api.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpDelete("{id}")]
-        public override Task<ActionResult<Article>> DeleteAsync([FromRoute] Guid id)
+        public override async Task<ActionResult<Article>> DeleteAsync([FromRoute] Guid id)
         {
-            return base.DeleteAsync(id);
+            if (!_repos.ValidAccount(UserId))
+            {
+                return Forbid();
+            }
+            return await base.DeleteAsync(id);
         }
 
         /// <summary>
@@ -97,9 +107,13 @@ namespace App.Api.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("{id}")]
-        public override Task<ActionResult<Article>> GetDetailAsync([FromRoute] Guid id)
+        public override async Task<ActionResult<Article>> GetDetailAsync([FromRoute] Guid id)
         {
-            return base.GetDetailAsync(id);
+            if (!_repos.ValidAccount(UserId))
+            {
+                return Forbid();
+            }
+            return await base.GetDetailAsync(id);
         }
     }
 }

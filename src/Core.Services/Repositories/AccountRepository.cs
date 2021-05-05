@@ -9,6 +9,7 @@ using Share.Models.Common;
 using System;
 using Share.Utils;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 
 namespace Core.Services.Repositories
 {
@@ -37,6 +38,15 @@ namespace Core.Services.Repositories
             account.HashSalt = salt;
             account.Password = HashCrypto.Create(form.Password, salt);
             account.EmailConfirm = false;
+            // ´¦Àí½ÇÉ«
+            var role = _context.Roles.Where(r => r.Name.ToLower().Equals("user"))
+                .SingleOrDefault();
+            if (role == null)
+            {
+                role = new Role { Name = "User" };
+                await _context.AddAsync(role);
+            }
+            account.Roles = new List<Role> { role };
             await _context.AddAsync(account);
             await _context.SaveChangesAsync();
             return account;
@@ -51,6 +61,7 @@ namespace Core.Services.Repositories
         {
             var user = _db.Where(u => u.Email.Equals(dto.Username)
                 || u.Username.Equals(dto.Username))
+                .Include(u => u.Roles)
                 .FirstOrDefault();
             if (user == null) return default;
             if (HashCrypto.Validate(dto.Password, user.HashSalt, user.Password))

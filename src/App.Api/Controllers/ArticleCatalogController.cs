@@ -8,6 +8,8 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using App.Agreement;
+using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
 
 namespace App.Api.Controllers
 {
@@ -16,10 +18,16 @@ namespace App.Api.Controllers
     /// </summary>
     public class ArticleCatalogController : ApiController<ArticleCatalogRepository, ArticleCatalog, ArticleCatalogAddDto, ArticleCatalogUpdateDto, ArticleCatalogFilter, ArticleCatalogDto>
     {
+
+        protected Guid UserId = Guid.Empty;
         public ArticleCatalogController(
             ILogger<ArticleCatalogController> logger,
+                 IHttpContextAccessor accessor,
             ArticleCatalogRepository repository) : base(logger, repository)
         {
+            var context = accessor.HttpContext;
+            var id = context.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            UserId = new Guid(id);
         }
 
         /// <summary>
@@ -30,10 +38,25 @@ namespace App.Api.Controllers
         [HttpPost]
         public override async Task<ActionResult<ArticleCatalog>> AddAsync([FromBody] ArticleCatalogAddDto form)
         {
-            // if (_repos.Any(e => e.Name == form.Name))
-            // {
-            //     return Conflict();
-            // }
+            if (_repos.Any(e => e.Name == form.Name
+                && e.Account.Id == UserId))
+            {
+                return Conflict();
+            }
+            form.AccountId = UserId;
+            if (form.ParentId == null || form.ParentId == Guid.Empty)
+            {
+                form.Level = 0;
+            }
+            else
+            {
+                var parent = _repos.SingleOrDefault(p => p.Id == form.ParentId);
+                if (parent == null)
+                {
+                    return NotFound("错误的父类id");
+                }
+                form.Level = (short)(parent.Level + 1);
+            }
             return await _repos.AddAsync(form);
         }
 
@@ -45,7 +68,7 @@ namespace App.Api.Controllers
         [HttpPost("filter")]
         public override async Task<ActionResult<PageResult<ArticleCatalogDto>>> FilterAsync(ArticleCatalogFilter filter)
         {
-            return await _repos.GetListWithPageAsync(filter);
+            return await _repos.GetListWithPageAsync(UserId, filter);
         }
 
         /// <summary>

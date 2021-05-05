@@ -8,7 +8,5 @@ namespace Share.Models
 {
     public class ArticleCatalogFilter : FilterBase
     {
-        public Guid? AccountId { get; set; }
-    
     }
 }

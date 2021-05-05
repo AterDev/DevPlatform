@@ -15,25 +15,17 @@ namespace Core.Services.Repositories
         {
         }
 
-        public override Task<PageResult<ArticleCatalogDto>> GetListWithPageAsync(ArticleCatalogFilter filter)
+        public Task<PageResult<ArticleCatalogDto>> GetListWithPageAsync(Guid accountId, ArticleCatalogFilter filter)
         {
             _query = _query.OrderByDescending(q => q.CreatedTime);
+            _query = _query.Where(c => c.AccountId == accountId);
             return base.GetListWithPageAsync(filter);
         }
 
 
         public override Task<ArticleCatalog> AddAsync(ArticleCatalogAddDto form)
         {
-            if (form.ParentId == null || form.ParentId == Guid.Empty)
-            {
-                form.Level = 0;
-            }
-            else
-            {
-                var parent = _context.ArticleCatalogs.Find(form.ParentId);
-                form.Level = (short)(parent.Level + 1);
 
-            }
             return base.AddAsync(form);
         }
     }

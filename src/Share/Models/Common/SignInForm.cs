@@ -16,7 +16,7 @@ namespace Share.Models.Common
         /// 用户名/手机号/邮箱
         /// </summary>
         [Required]
-        [MinLength(6)]
+        [MinLength(4)]
         [MaxLength(50)]
         [Display(Name = "用户名")]
         public string Username { get; set; }

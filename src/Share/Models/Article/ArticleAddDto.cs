@@ -31,9 +31,8 @@ namespace Share.Models
         /// 文章内容
         /// </summary>
         public string Content { get; set; }
-        public Guid ExtendId { get; set; }
         public Guid AccountId { get; set; }
-        public Guid? CatalogId { get; set; }
+        public Guid CatalogId { get; set; }
 
     }
 }
