@@ -83,10 +83,14 @@ namespace App.Api.Controllers
             if (_repos.Any(e => e.Id == id))
             {
                 // 名称不可以修改成其他已经存在的名称
-                // if (_repos.Any(e => e.Name == form.Name && e.Id != id))
-                // {
-                //    return Conflict();
-                // }
+                if (_repos.Any(e => e.Name == form.Name && e.Id != id))
+                {
+                    return Conflict();
+                }
+                if (!_repos.ValidAccount(UserId))
+                {
+                    return Forbid();
+                }
                 return await _repos.UpdateAsync(id, form);
             }
             return NotFound();
@@ -99,9 +103,13 @@ namespace App.Api.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpDelete("{id}")]
-        public override Task<ActionResult<ArticleCatalog>> DeleteAsync([FromRoute] Guid id)
+        public override async Task<ActionResult<ArticleCatalog>> DeleteAsync([FromRoute] Guid id)
         {
-            return base.DeleteAsync(id);
+            if (!_repos.ValidAccount(UserId))
+            {
+                return Forbid();
+            }
+            return await base.DeleteAsync(id);
         }
 
         /// <summary>
@@ -110,9 +118,13 @@ namespace App.Api.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("{id}")]
-        public override Task<ActionResult<ArticleCatalog>> GetDetailAsync([FromRoute] Guid id)
+        public override async Task<ActionResult<ArticleCatalog>> GetDetailAsync([FromRoute] Guid id)
         {
-            return base.GetDetailAsync(id);
+            if (!_repos.ValidAccount(UserId))
+            {
+                return Forbid();
+            }
+            return await base.GetDetailAsync(id);
         }
     }
 }

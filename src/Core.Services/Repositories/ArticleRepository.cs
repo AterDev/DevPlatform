@@ -70,7 +70,6 @@ namespace Core.Services.Repositories
                 && ac.AccountId == accountId);
         }
 
-
         /// <summary>
         /// 验证用户
         /// </summary>

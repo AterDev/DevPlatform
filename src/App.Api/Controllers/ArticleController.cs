@@ -76,10 +76,14 @@ namespace App.Api.Controllers
             if (_repos.Any(e => e.Id == id))
             {
                 // 名称不可以修改成其他已经存在的名称
-                // if (_repos.Any(e => e.Name == form.Name && e.Id != id))
-                // {
-                //    return Conflict();
-                // }
+                if (_repos.Any(e => e.Title == form.Title && e.Id != id))
+                {
+                    return Conflict();
+                }
+                if (!_repos.ValidAccount(UserId))
+                {
+                    return Forbid();
+                }
                 return await _repos.UpdateAsync(id, form);
             }
             return NotFound();
