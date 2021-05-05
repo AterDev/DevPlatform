@@ -4,6 +4,9 @@
 // Catalog;
 // CodeSnippet;
 // Library;
+// Article;
+// Comment;
+// ArticleCatalog;
 // {AlreadyMapedEntity}
 using AutoMapper;
 using Core.Entity;
@@ -45,7 +48,22 @@ namespace Share.AutoMapper
             CreateMap<Library, LibraryDto>();
             CreateMap<Library, LibraryItemDto>();
             CreateMap<Library, LibraryDetailDto>();
-            // {AppendMappers}
+                        CreateMap<ArticleAddDto, Article>();
+            CreateMap<ArticleUpdateDto, Article>();
+            CreateMap<Article, ArticleDto>();
+            CreateMap<Article, ArticleItemDto>();
+            CreateMap<Article, ArticleDetailDto>();        
+            CreateMap<CommentAddDto, Comment>();
+            CreateMap<CommentUpdateDto, Comment>();
+            CreateMap<Comment, CommentDto>();
+            CreateMap<Comment, CommentItemDto>();
+            CreateMap<Comment, CommentDetailDto>();        
+            CreateMap<ArticleCatalogAddDto, ArticleCatalog>();
+            CreateMap<ArticleCatalogUpdateDto, ArticleCatalog>();
+            CreateMap<ArticleCatalog, ArticleCatalogDto>();
+            CreateMap<ArticleCatalog, ArticleCatalogItemDto>();
+            CreateMap<ArticleCatalog, ArticleCatalogDetailDto>();        
+// {AppendMappers}
         }
     }
 

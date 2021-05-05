@@ -1,0 +1,95 @@
+using Core.Entity;
+using Share.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using Core.Services;
+using Core.Services.Repositories;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
+using App.Agreement;
+
+namespace App.Api.Controllers
+{
+    /// <summary>
+    /// Article
+    /// </summary>
+    public class ArticleController : ApiController<ArticleRepository, Article, ArticleAddDto, ArticleUpdateDto, ArticleFilter, ArticleDto>
+    {
+        public ArticleController(
+            ILogger<ArticleController> logger,
+            ArticleRepository repository) : base(logger, repository)
+        {
+        }
+
+        /// <summary>
+        /// 添加Article
+        /// </summary>
+        /// <param name="form"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public override async Task<ActionResult<Article>> AddAsync([FromBody] ArticleAddDto form)
+        {
+            // if (_repos.Any(e => e.Name == form.Name))
+            // {
+            //     return Conflict();
+            // }
+            return await _repos.AddAsync(form);
+        }
+
+        /// <summary>
+        /// 分页筛选Article
+        /// </summary>
+        /// <param name="filter"></param>
+        /// <returns></returns>
+        [HttpPost("filter")]
+        public override async Task<ActionResult<PageResult<ArticleDto>>> FilterAsync(ArticleFilter filter)
+        {
+            return await _repos.GetListWithPageAsync(filter);
+        }
+
+        /// <summary>
+        /// 更新Article
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="form"></param>
+        /// <returns></returns>
+        [HttpPut("{id}")]
+        public override async Task<ActionResult<Article>> UpdateAsync([FromRoute] Guid id, [FromBody] ArticleUpdateDto form)
+        {
+            if (_repos.Any(e => e.Id == id))
+            {
+                // 名称不可以修改成其他已经存在的名称
+                // if (_repos.Any(e => e.Name == form.Name && e.Id != id))
+                // {
+                //    return Conflict();
+                // }
+                return await _repos.UpdateAsync(id, form);
+            }
+            return NotFound();
+        }
+
+
+        /// <summary>
+        /// 删除Article
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpDelete("{id}")]
+        public override Task<ActionResult<Article>> DeleteAsync([FromRoute] Guid id)
+        {
+            return base.DeleteAsync(id);
+        }
+
+        /// <summary>
+        /// 获取Article详情
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet("{id}")]
+        public override Task<ActionResult<Article>> GetDetailAsync([FromRoute] Guid id)
+        {
+            return base.GetDetailAsync(id);
+        }
+    }
+}
