@@ -19,11 +19,6 @@ namespace Share.Models
         [MaxLength(500)]
         public string Summary { get; set; }
         /// <summary>
-        /// 作者名称
-        /// </summary>
-        [MaxLength(100)]
-        public string AuthorName { get; set; }
-        /// <summary>
         /// 标签
         /// </summary>
         [MaxLength(100)]
@@ -33,13 +28,12 @@ namespace Share.Models
         /// </summary>
         public ArticleType ArticleType { get; set; }
         /// <summary>
-        /// 状态
+        /// 文章内容
         /// </summary>
-        public Status Status { get; set; }
-        public DateTimeOffset UpdatedTime { get; set; }
-        public Guid? AccountId { get; set; }
-        public Guid? ExtendId { get; set; }
+        public string Content { get; set; }
+        public Guid ExtendId { get; set; }
+        public Guid AccountId { get; set; }
         public Guid? CatalogId { get; set; }
-    
+
     }
 }

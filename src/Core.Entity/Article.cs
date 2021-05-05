@@ -37,7 +37,6 @@ namespace Core.Entity
         /// </summary>
         public ArticleType ArticleType { get; set; }
 
-
         public Account Account { get; set; }
         /// <summary>
         /// 文章扩展内容

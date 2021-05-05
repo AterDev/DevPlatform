@@ -15,7 +15,7 @@ namespace Core.Entity
         public string Type { get; set; }
         public short Sort { get; set; } = 0;
         public short Level { get; set; }
-        public Guid ParentId { get; set; }
-        
+        public Guid? ParentId { get; set; }
+
     }
 }

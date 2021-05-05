@@ -12,6 +12,7 @@ using AutoMapper;
 using Core.Entity;
 using Share.Models;
 using Share.Models.Common;
+using System;
 
 namespace Share.AutoMapper
 {
@@ -48,22 +49,34 @@ namespace Share.AutoMapper
             CreateMap<Library, LibraryDto>();
             CreateMap<Library, LibraryItemDto>();
             CreateMap<Library, LibraryDetailDto>();
-                        CreateMap<ArticleAddDto, Article>();
-            CreateMap<ArticleUpdateDto, Article>();
+            CreateMap<ArticleAddDto, Article>();
+            CreateMap<ArticleUpdateDto, Article>()
+                .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => NotNull(srcMember)));
             CreateMap<Article, ArticleDto>();
             CreateMap<Article, ArticleItemDto>();
-            CreateMap<Article, ArticleDetailDto>();        
+            CreateMap<Article, ArticleDetailDto>();
             CreateMap<CommentAddDto, Comment>();
             CreateMap<CommentUpdateDto, Comment>();
             CreateMap<Comment, CommentDto>();
             CreateMap<Comment, CommentItemDto>();
-            CreateMap<Comment, CommentDetailDto>();        
+            CreateMap<Comment, CommentDetailDto>();
             CreateMap<ArticleCatalogAddDto, ArticleCatalog>();
             CreateMap<ArticleCatalogUpdateDto, ArticleCatalog>();
             CreateMap<ArticleCatalog, ArticleCatalogDto>();
             CreateMap<ArticleCatalog, ArticleCatalogItemDto>();
-            CreateMap<ArticleCatalog, ArticleCatalogDetailDto>();        
-// {AppendMappers}
+            CreateMap<ArticleCatalog, ArticleCatalogDetailDto>();
+            // {AppendMappers}
+
+            bool NotNull(object src)
+            {
+                return src switch
+                {
+                    null => false,
+                    int @int when @int == 0 => false,
+                    Guid guid when guid == Guid.Empty => false,
+                    _ => true
+                };
+            }
         }
     }
 
