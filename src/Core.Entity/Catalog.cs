@@ -16,14 +16,6 @@ namespace Core.Entity
         public short Sort { get; set; } = 0;
         public short Level { get; set; }
         public Guid ParentId { get; set; }
-        public Catalog Parent { get; set; }
-
-        public Account Account { get; set; }
-        public List<Catalog> Catalogs { get; set; }
-        /// <summary>
-        /// 模型库
-        /// </summary>
-        public List<Library> Libs { get; set; }
-
+        
     }
 }
