@@ -8,34 +8,25 @@
   <BarMenu>
     <BarStart>
       <BarItem>
-        <BarLink To="/index">
-          <BarIcon IconName="IconName.Home" />
-          主页
+        <BarLink To="/portal/blog">
+          <BarIcon IconName="@("fa-blog")" />
+          <span>
+          博文  
+          </span>
+          
         </BarLink>
       </BarItem>
       <BarItem>
-        <BarLink To="/news">
-          <BarIcon IconName="@("fa-newspaper")" />
-          资讯
+        <BarLink To="/portal/entity">
+          <BarIcon IconName="@("fa-shapes")" />
+          实体模型
         </BarLink>
       </BarItem>
       <BarItem>
-        <BarDropdown>
-          <BarDropdownToggle>
-            <BarIcon IconName="@("fa-toolbox")" />
-            工具
-          </BarDropdownToggle>
-          <BarDropdownMenu>
-            <BarDropdownItem To="/entity" Match="Match.All">
-              <BarIcon IconName="@("fa-archive")" />
-              实体构造
-            </BarDropdownItem>
-            <BarDropdownItem To="/codeSnippet" >
-              <BarIcon IconName="@("fa-file-code")" />
-              代码片段
-            </BarDropdownItem>
-          </BarDropdownMenu>
-        </BarDropdown>
+        <BarLink To="/portal/codesnippet">
+          <BarIcon IconName="@("fa-file-code")" />
+          代码片段
+        </BarLink>
       </BarItem>
     </BarStart>
   </BarMenu>
