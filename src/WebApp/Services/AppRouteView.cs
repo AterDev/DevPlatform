@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using WebApp.Pages.Portal.Shared;
 
 namespace WebApp.Services
 {
@@ -26,10 +27,11 @@ namespace WebApp.Services
         {
             // 登录、注册、主页不需要验证
             var noNeedAuthorizeRoutePath = new string[] { "/signIn", "/index", "/", "/signUp", "/signOut" };
-
             var navigator = new Uri(NavigationManager.Uri);
             var localpath = navigator.LocalPath;
 
+
+            Console.WriteLine("path:"+localpath);
             if (noNeedAuthorizeRoutePath.Contains(localpath))
             {
                 Logger.LogInformation("no authorize" + localpath);
@@ -37,15 +39,23 @@ namespace WebApp.Services
             }
             else
             {
+                // 验证
                 var authorize = Attribute.GetCustomAttribute(RouteData.PageType, typeof(AuthorizeAttribute)) != null;
                 Logger.LogInformation(authorize.ToString());
                 if (authorize && !AuthenticationService.IsLogin)
                 {
+                    // 未验证跳转
                     var returnUrl = WebUtility.UrlEncode(new Uri(NavigationManager.Uri).PathAndQuery);
                     NavigationManager.NavigateTo($"signIn?returnUrl={returnUrl}");
                 }
                 else
                 {
+                    // Portal模块
+                    if (localpath.StartsWith("/portal"))
+                    {
+                        this.DefaultLayout = typeof(PortalLayout);
+                    }
+
                     base.Render(builder);
                 }
             }

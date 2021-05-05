@@ -27,7 +27,6 @@ namespace WebApp.Pages
         {
             CodeLanguage = value;
             var language = Enum.GetName(typeof(Language), CodeLanguage).ToLower();
-            Console.WriteLine(language);
 
             var model = await _editor.GetModel();
             await MonacoEditor.SetModelLanguage(model, language);

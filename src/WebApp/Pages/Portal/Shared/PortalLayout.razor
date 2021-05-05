@@ -12,12 +12,18 @@
       </div>
     </nav>
   </LayoutHeader>
-  <Layout>
+  <Layout Sider="true">
+    <LayoutSider>
+      <LayoutSiderContent>
+        <NavMenu></NavMenu>
+      </LayoutSiderContent>
+    </LayoutSider>
     <Layout>
       <LayoutContent>
-        <div class="content p-2">@Body</div>
+        <div class="content p-2">
+          @Body
+        </div>
       </LayoutContent>
     </Layout>
   </Layout>
 </Layout>
-

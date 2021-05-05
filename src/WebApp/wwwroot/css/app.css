@@ -10,5 +10,4 @@ html, body {
 }
 .monaco-editor-container {
     height: calc(100vh - 76px);
-    border: 1px solid gray;
 }
