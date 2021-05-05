@@ -69,7 +69,10 @@ namespace App.Api
             // 验证
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("User", policy => policy.RequireClaim(ClaimTypes.Name));
+                options.AddPolicy("User", policy =>
+                    policy.RequireRole("Admin", "User"));
+                options.AddPolicy("Admin", policy =>
+                    policy.RequireRole("Admin"));
             });
 
             // services.AddScoped(typeof(JwtService)); 

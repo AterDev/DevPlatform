@@ -18,6 +18,7 @@ namespace App.Api
             services.AddScoped(typeof(CatalogRepository));
             services.AddScoped(typeof(CodeSnippetRepository));
             services.AddScoped(typeof(CommentRepository));
+            services.AddScoped(typeof(LibraryCatalogRepository));
             services.AddScoped(typeof(LibraryRepository));
             services.AddScoped(typeof(RoleRepository));
 

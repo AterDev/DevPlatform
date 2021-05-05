@@ -5,6 +5,7 @@ using Core.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using Data.Context;
+using System;
 
 namespace Core.Services.Repositories
 {
@@ -18,6 +19,22 @@ namespace Core.Services.Repositories
         {
             _query = _query.OrderByDescending(q => q.CreatedTime);
             return base.GetListWithPageAsync(filter);
+        }
+
+
+        public override Task<ArticleCatalog> AddAsync(ArticleCatalogAddDto form)
+        {
+            if (form.ParentId == null || form.ParentId == Guid.Empty)
+            {
+                form.Level = 0;
+            }
+            else
+            {
+                var parent = _context.ArticleCatalogs.Find(form.ParentId);
+                form.Level = (short)(parent.Level + 1);
+
+            }
+            return base.AddAsync(form);
         }
     }
 }

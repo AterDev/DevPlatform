@@ -7,6 +7,7 @@
 // Article;
 // Comment;
 // ArticleCatalog;
+// LibraryCatalog;
 // {AlreadyMapedEntity}
 using AutoMapper;
 using Core.Entity;
@@ -65,7 +66,12 @@ namespace Share.AutoMapper
             CreateMap<ArticleCatalog, ArticleCatalogDto>();
             CreateMap<ArticleCatalog, ArticleCatalogItemDto>();
             CreateMap<ArticleCatalog, ArticleCatalogDetailDto>();
-            // {AppendMappers}
+                        CreateMap<LibraryCatalogAddDto, LibraryCatalog>();
+            CreateMap<LibraryCatalogUpdateDto, LibraryCatalog>();
+            CreateMap<LibraryCatalog, LibraryCatalogDto>();
+            CreateMap<LibraryCatalog, LibraryCatalogItemDto>();
+            CreateMap<LibraryCatalog, LibraryCatalogDetailDto>();        
+// {AppendMappers}
 
             bool NotNull(object src)
             {
