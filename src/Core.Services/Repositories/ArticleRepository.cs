@@ -19,5 +19,20 @@ namespace Core.Services.Repositories
             _query = _query.OrderByDescending(q => q.CreatedTime);
             return base.GetListWithPageAsync(filter);
         }
+
+        public override async Task<Article> AddAsync(ArticleAddDto form)
+        {
+            // Ìí¼ÓÎÄÕÂÄÚÈİ
+            var articleExtend = new ArticleExtend
+            {
+                Content = form.Content
+            };
+            var article = _mapper.Map<Article>(form);
+            article.Extend = articleExtend;
+
+            _context.Add(article);
+            await _context.SaveChangesAsync();
+            return article;
+        }
     }
 }

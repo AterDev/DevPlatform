@@ -15,7 +15,7 @@ using Microsoft.Extensions.Configuration;
 namespace App.Api.Controllers
 {
     /// <summary>
-    /// Account
+    /// 用户账号
     /// </summary>
     public class AccountController : ApiController<AccountRepository, Account, AccountAddDto, AccountUpdateDto, AccountFilter, AccountDto>
     {

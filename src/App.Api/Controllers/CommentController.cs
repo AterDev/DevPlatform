@@ -12,7 +12,7 @@ using App.Agreement;
 namespace App.Api.Controllers
 {
     /// <summary>
-    /// Comment
+    /// 评论
     /// </summary>
     public class CommentController : ApiController<CommentRepository, Comment, CommentAddDto, CommentUpdateDto, CommentFilter, CommentDto>
     {

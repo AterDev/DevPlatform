@@ -12,7 +12,7 @@ using App.Agreement;
 namespace App.Api.Controllers
 {
     /// <summary>
-    /// ArticleCatalog
+    /// 文章目录
     /// </summary>
     public class ArticleCatalogController : ApiController<ArticleCatalogRepository, ArticleCatalog, ArticleCatalogAddDto, ArticleCatalogUpdateDto, ArticleCatalogFilter, ArticleCatalogDto>
     {

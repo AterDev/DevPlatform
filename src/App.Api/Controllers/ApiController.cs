@@ -13,7 +13,6 @@ namespace App.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    //[ApiExplorerSettings(GroupName = "")]
     //[Authorize("Admin")]
     public class ApiController<TRepository, TEntity, TAddForm, TUpdateForm, TFilter, TDto>
         : ApiControllerBase<ContextBase, TRepository, TEntity, TAddForm, TUpdateForm, TFilter, TDto>

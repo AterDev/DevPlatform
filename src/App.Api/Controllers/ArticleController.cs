@@ -8,18 +8,26 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using App.Agreement;
+using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
 
 namespace App.Api.Controllers
 {
     /// <summary>
-    /// Article
+    /// 文章
     /// </summary>
     public class ArticleController : ApiController<ArticleRepository, Article, ArticleAddDto, ArticleUpdateDto, ArticleFilter, ArticleDto>
     {
+        protected Guid UserId = Guid.Empty;
         public ArticleController(
             ILogger<ArticleController> logger,
-            ArticleRepository repository) : base(logger, repository)
+            ArticleRepository repository,
+            IHttpContextAccessor accessor
+            ) : base(logger, repository)
         {
+            var context = accessor.HttpContext;
+            var id = context.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            UserId = new Guid(id);
         }
 
         /// <summary>
@@ -30,10 +38,12 @@ namespace App.Api.Controllers
         [HttpPost]
         public override async Task<ActionResult<Article>> AddAsync([FromBody] ArticleAddDto form)
         {
-            // if (_repos.Any(e => e.Name == form.Name))
-            // {
-            //     return Conflict();
-            // }
+            if (_repos.Any(e => e.Title == form.Title
+                && e.Account.Id == UserId))
+            {
+                return Conflict();
+            }
+            form.AccountId = UserId;
             return await _repos.AddAsync(form);
         }
 
