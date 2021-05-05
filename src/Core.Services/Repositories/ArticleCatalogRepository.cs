@@ -28,5 +28,16 @@ namespace Core.Services.Repositories
 
             return base.AddAsync(form);
         }
+
+
+        /// <summary>
+        /// 验证用户
+        /// </summary>
+        /// <param name="accountId"></param>
+        /// <returns></returns>
+        public bool ValidAccount(Guid accountId)
+        {
+            return _context.ArticleCatalogs.Any(a => a.Account.Id == accountId);
+        }
     }
 }
