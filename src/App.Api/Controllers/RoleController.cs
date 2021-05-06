@@ -12,7 +12,7 @@ using App.Agreement;
 namespace App.Api.Controllers
 {
     /// <summary>
-    /// Role
+    /// 角色
     /// </summary>
     public class RoleController : ApiController<RoleRepository, Role, RoleAddDto, RoleUpdateDto, RoleFilter, RoleDto>
     {
@@ -30,10 +30,10 @@ namespace App.Api.Controllers
         [HttpPost]
         public override async Task<ActionResult<Role>> AddAsync([FromBody] RoleAddDto form)
         {
-            // if (_repos.Any(e => e.Name == form.Name))
-            // {
-            //     return Conflict();
-            // }
+            if (_repos.Any(e => e.Name == form.Name))
+            {
+                return Conflict();
+            }
             return await _repos.AddAsync(form);
         }
 

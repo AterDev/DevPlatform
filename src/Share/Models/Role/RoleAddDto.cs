@@ -18,11 +18,5 @@ namespace Share.Models
         /// </summary>
         [MaxLength(30)]
         public string Icon { get; set; }
-        /// <summary>
-        /// 状态
-        /// </summary>
-        public Status Status { get; set; }
-        public DateTimeOffset UpdatedTime { get; set; }
-    
     }
 }

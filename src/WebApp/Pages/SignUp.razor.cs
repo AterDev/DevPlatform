@@ -1,5 +1,4 @@
-﻿using BootstrapBlazor.Components;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Share.Models.Common;
 using System;
@@ -18,7 +17,6 @@ namespace WebApp.Pages
         public HttpClient Http { get; set; }
 
         public SignInForm Model = new SignInForm();
-        private ValidateForm Form { get; set; }
 
         async Task OnValidSubmit(EditContext context)
         {

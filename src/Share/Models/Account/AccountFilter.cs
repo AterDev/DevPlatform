@@ -8,7 +8,5 @@ namespace Share.Models
 {
     public class AccountFilter : FilterBase
     {
-        public Guid? ExtendId { get; set; }
-    
     }
 }

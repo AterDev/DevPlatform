@@ -8,7 +8,11 @@ namespace Data.Context
         public DbSet<Account> Accounts { get; set; }
         public DbSet<AccountExtend> AccountExtends { get; set; }
         public DbSet<Role> Roles { get; set; }
-        public DbSet<Catalog> Catalogs { get; set; }
+        public DbSet<Article> Articles { get; set; }
+        public DbSet<ArticleExtend> ArticleExtends { get; set; }
+        public DbSet<ArticleCatalog> ArticleCatalogs { get; set; }
+        public DbSet<LibraryCatalog> LibraryCatalogs { get; set; }
+        public DbSet<Comment> Comments { get; set; }
         public DbSet<CodeSnippet> CodeSnippets { get; set; }
         public DbSet<Library> Libraries { get; set; }
         public ContextBase(DbContextOptions<ContextBase> options) : base(options)
@@ -47,14 +51,6 @@ namespace Data.Context
                 e.HasIndex(m => m.Status);
             });
 
-            builder.Entity<Catalog>(e =>
-            {
-                e.HasIndex(m => m.Name);
-                e.HasIndex(m => m.Type);
-                e.HasIndex(m => m.Sort);
-                e.HasIndex(m => m.Level);
-            });
-
             builder.Entity<Library>(e =>
             {
                 e.HasIndex(m => m.Language);
@@ -72,6 +68,32 @@ namespace Data.Context
                 e.HasIndex(m => m.CodeType);
                 e.HasIndex(m => m.Language);
             });
+
+            builder.Entity<Article>(e =>
+            {
+                e.HasIndex(m => m.Title);
+                e.HasIndex(m => m.CreatedTime);
+                e.HasIndex(m => m.ArticleType);
+            });
+            builder.Entity<ArticleCatalog>(e =>
+            {
+                e.HasIndex(m => m.Name);
+                e.HasIndex(m => m.Type);
+                e.HasIndex(m => m.Sort);
+                e.HasIndex(m => m.Level);
+            });
+            builder.Entity<LibraryCatalog>(e =>
+            {
+                e.HasIndex(m => m.Name);
+                e.HasIndex(m => m.Type);
+                e.HasIndex(m => m.Sort);
+                e.HasIndex(m => m.Level);
+            });
+            builder.Entity<Comment>(e =>
+            {
+                e.HasIndex(m => m.CreatedTime);
+            });
+
             base.OnModelCreating(builder);
         }
     }

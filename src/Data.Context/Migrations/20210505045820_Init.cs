@@ -35,6 +35,21 @@ namespace Data.Context.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ArticleExtends",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Content = table.Column<string>(type: "text", nullable: true),
+                    Status = table.Column<int>(type: "integer", nullable: false),
+                    CreatedTime = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    UpdatedTime = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ArticleExtends", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Roles",
                 columns: table => new
                 {
@@ -107,7 +122,7 @@ namespace Data.Context.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Catalogs",
+                name: "ArticleCatalog",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -115,27 +130,99 @@ namespace Data.Context.Migrations
                     Type = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true),
                     Sort = table.Column<short>(type: "smallint", nullable: false),
                     Level = table.Column<short>(type: "smallint", nullable: false),
-                    ParentId = table.Column<Guid>(type: "uuid", nullable: false),
-                    AccountId = table.Column<Guid>(type: "uuid", nullable: true),
+                    ParentId = table.Column<Guid>(type: "uuid", nullable: true),
+                    AccountId = table.Column<Guid>(type: "uuid", nullable: false),
                     Status = table.Column<int>(type: "integer", nullable: false),
                     CreatedTime = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
                     UpdatedTime = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Catalogs", x => x.Id);
+                    table.PrimaryKey("PK_ArticleCatalog", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Catalogs_Accounts_AccountId",
+                        name: "FK_ArticleCatalog_Accounts_AccountId",
+                        column: x => x.AccountId,
+                        principalTable: "Accounts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ArticleCatalog_ArticleCatalog_ParentId",
+                        column: x => x.ParentId,
+                        principalTable: "ArticleCatalog",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "LibraryCatalogs",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true),
+                    Type = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true),
+                    Sort = table.Column<short>(type: "smallint", nullable: false),
+                    Level = table.Column<short>(type: "smallint", nullable: false),
+                    ParentId = table.Column<Guid>(type: "uuid", nullable: true),
+                    AccountId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Status = table.Column<int>(type: "integer", nullable: false),
+                    CreatedTime = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    UpdatedTime = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_LibraryCatalogs", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_LibraryCatalogs_Accounts_AccountId",
+                        column: x => x.AccountId,
+                        principalTable: "Accounts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_LibraryCatalogs_LibraryCatalogs_ParentId",
+                        column: x => x.ParentId,
+                        principalTable: "LibraryCatalogs",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Articles",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Title = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
+                    Summary = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
+                    AuthorName = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
+                    Tags = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
+                    ArticleType = table.Column<int>(type: "integer", nullable: false),
+                    AccountId = table.Column<Guid>(type: "uuid", nullable: true),
+                    ExtendId = table.Column<Guid>(type: "uuid", nullable: true),
+                    CatalogId = table.Column<Guid>(type: "uuid", nullable: true),
+                    Status = table.Column<int>(type: "integer", nullable: false),
+                    CreatedTime = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    UpdatedTime = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Articles", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Articles_Accounts_AccountId",
                         column: x => x.AccountId,
                         principalTable: "Accounts",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Catalogs_Catalogs_ParentId",
-                        column: x => x.ParentId,
-                        principalTable: "Catalogs",
+                        name: "FK_Articles_ArticleCatalog_CatalogId",
+                        column: x => x.CatalogId,
+                        principalTable: "ArticleCatalog",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Articles_ArticleExtends_ExtendId",
+                        column: x => x.ExtendId,
+                        principalTable: "ArticleExtends",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -164,9 +251,38 @@ namespace Data.Context.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Libraries_Catalogs_CatalogId",
+                        name: "FK_Libraries_LibraryCatalogs_CatalogId",
                         column: x => x.CatalogId,
-                        principalTable: "Catalogs",
+                        principalTable: "LibraryCatalogs",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Comments",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    ArticleId = table.Column<Guid>(type: "uuid", nullable: true),
+                    AccountId = table.Column<Guid>(type: "uuid", nullable: true),
+                    Content = table.Column<string>(type: "character varying(2000)", maxLength: 2000, nullable: true),
+                    Status = table.Column<int>(type: "integer", nullable: false),
+                    CreatedTime = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    UpdatedTime = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Comments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Comments_Accounts_AccountId",
+                        column: x => x.AccountId,
+                        principalTable: "Accounts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Comments_Articles_ArticleId",
+                        column: x => x.ArticleId,
+                        principalTable: "Articles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -263,34 +379,64 @@ namespace Data.Context.Migrations
                 column: "Username");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Catalogs_AccountId",
-                table: "Catalogs",
+                name: "IX_ArticleCatalog_AccountId",
+                table: "ArticleCatalog",
                 column: "AccountId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Catalogs_Level",
-                table: "Catalogs",
+                name: "IX_ArticleCatalog_Level",
+                table: "ArticleCatalog",
                 column: "Level");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Catalogs_Name",
-                table: "Catalogs",
+                name: "IX_ArticleCatalog_Name",
+                table: "ArticleCatalog",
                 column: "Name");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Catalogs_ParentId",
-                table: "Catalogs",
+                name: "IX_ArticleCatalog_ParentId",
+                table: "ArticleCatalog",
                 column: "ParentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Catalogs_Sort",
-                table: "Catalogs",
+                name: "IX_ArticleCatalog_Sort",
+                table: "ArticleCatalog",
                 column: "Sort");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Catalogs_Type",
-                table: "Catalogs",
+                name: "IX_ArticleCatalog_Type",
+                table: "ArticleCatalog",
                 column: "Type");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Articles_AccountId",
+                table: "Articles",
+                column: "AccountId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Articles_ArticleType",
+                table: "Articles",
+                column: "ArticleType");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Articles_CatalogId",
+                table: "Articles",
+                column: "CatalogId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Articles_CreatedTime",
+                table: "Articles",
+                column: "CreatedTime");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Articles_ExtendId",
+                table: "Articles",
+                column: "ExtendId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Articles_Title",
+                table: "Articles",
+                column: "Title");
 
             migrationBuilder.CreateIndex(
                 name: "IX_CodeSnippets_CodeType",
@@ -321,6 +467,21 @@ namespace Data.Context.Migrations
                 name: "IX_CodeSnippets_Status",
                 table: "CodeSnippets",
                 column: "Status");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Comments_AccountId",
+                table: "Comments",
+                column: "AccountId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Comments_ArticleId",
+                table: "Comments",
+                column: "ArticleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Comments_CreatedTime",
+                table: "Comments",
+                column: "CreatedTime");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Libraries_CatalogId",
@@ -358,6 +519,36 @@ namespace Data.Context.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_LibraryCatalogs_AccountId",
+                table: "LibraryCatalogs",
+                column: "AccountId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LibraryCatalogs_Level",
+                table: "LibraryCatalogs",
+                column: "Level");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LibraryCatalogs_Name",
+                table: "LibraryCatalogs",
+                column: "Name");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LibraryCatalogs_ParentId",
+                table: "LibraryCatalogs",
+                column: "ParentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LibraryCatalogs_Sort",
+                table: "LibraryCatalogs",
+                column: "Sort");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LibraryCatalogs_Type",
+                table: "LibraryCatalogs",
+                column: "Type");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Roles_Name",
                 table: "Roles",
                 column: "Name");
@@ -377,13 +568,25 @@ namespace Data.Context.Migrations
                 name: "CodeSnippets");
 
             migrationBuilder.DropTable(
+                name: "Comments");
+
+            migrationBuilder.DropTable(
                 name: "Roles");
 
             migrationBuilder.DropTable(
                 name: "Libraries");
 
             migrationBuilder.DropTable(
-                name: "Catalogs");
+                name: "Articles");
+
+            migrationBuilder.DropTable(
+                name: "LibraryCatalogs");
+
+            migrationBuilder.DropTable(
+                name: "ArticleCatalog");
+
+            migrationBuilder.DropTable(
+                name: "ArticleExtends");
 
             migrationBuilder.DropTable(
                 name: "Accounts");

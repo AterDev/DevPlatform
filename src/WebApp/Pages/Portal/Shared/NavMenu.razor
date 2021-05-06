@@ -1,0 +1,33 @@
+﻿<Bar Mode="BarMode.VerticalInline"
+     CollapseMode="BarCollapseMode.Small"
+     Breakpoint="Breakpoint.Desktop"
+     NavigationBreakpoint="Breakpoint.Tablet"
+     ThemeContrast="ThemeContrast.Light">
+
+  <BarToggler Mode="BarTogglerMode.Popout"></BarToggler>
+  <BarMenu>
+    <BarStart>
+      <BarItem>
+        <BarLink To="/portal/blog">
+          <BarIcon IconName="@("fa-blog")" />
+          <span>
+          博文  
+          </span>
+          
+        </BarLink>
+      </BarItem>
+      <BarItem>
+        <BarLink To="/portal/entity">
+          <BarIcon IconName="@("fa-shapes")" />
+          实体模型
+        </BarLink>
+      </BarItem>
+      <BarItem>
+        <BarLink To="/portal/codesnippet">
+          <BarIcon IconName="@("fa-file-code")" />
+          代码片段
+        </BarLink>
+      </BarItem>
+    </BarStart>
+  </BarMenu>
+</Bar>

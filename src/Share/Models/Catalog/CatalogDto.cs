@@ -15,7 +15,7 @@ namespace Share.Models
         public short Sort { get; set; }
         public short Level { get; set; }
         public Guid ParentId { get; set; }
-        public Catalog Parent { get; set; }
+        public LibraryCatalog Parent { get; set; }
 
         // public AccountDto Account { get; set; }
         [Key]

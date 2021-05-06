@@ -1,0 +1,38 @@
+﻿@*顶部导航*@
+<Bar Mode="BarMode.Horizontal"
+	 CollapseMode="BarCollapseMode.Small"
+	 Breakpoint="Breakpoint.Desktop"
+	 NavigationBreakpoint="Breakpoint.Tablet"
+	 ThemeContrast="ThemeContrast.Light">
+
+	<BarToggler Mode="BarTogglerMode.Popout"></BarToggler>
+	<BarMenu>
+		<BarStart>
+			<BarItem>
+				<BarLink To="/index">
+					主页
+				</BarLink>
+			</BarItem>
+			<BarItem>
+				<BarLink To="/news">
+					关注
+				</BarLink>
+			</BarItem>
+			<BarItem>
+				<BarDropdown>
+					<BarDropdownToggle>
+						分享
+					</BarDropdownToggle>
+					<BarDropdownMenu>
+						<BarDropdownItem To="/entity" Match="Match.All">
+							实体构造
+						</BarDropdownItem>
+						<BarDropdownItem To="/codeSnippet">
+							代码片段
+						</BarDropdownItem>
+					</BarDropdownMenu>
+				</BarDropdown>
+			</BarItem>
+		</BarStart>
+	</BarMenu>
+</Bar>

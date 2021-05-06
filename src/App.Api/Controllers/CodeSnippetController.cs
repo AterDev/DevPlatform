@@ -12,7 +12,7 @@ using App.Agreement;
 namespace App.Api.Controllers
 {
     /// <summary>
-    /// CodeSnippet
+    /// 代码片段
     /// </summary>
     public class CodeSnippetController : ApiController<CodeSnippetRepository, CodeSnippet, CodeSnippetAddDto, CodeSnippetUpdateDto, CodeSnippetFilter, CodeSnippetDto>
     {

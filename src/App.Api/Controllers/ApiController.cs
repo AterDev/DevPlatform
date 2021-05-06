@@ -8,13 +8,13 @@ using Microsoft.Extensions.Logging;
 using System;
 using Data.Context;
 using App.Agreement;
+using Microsoft.AspNetCore.Authorization;
 
 namespace App.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    //[ApiExplorerSettings(GroupName = "")]
-    //[Authorize("Admin")]
+    [Authorize("User")]
     public class ApiController<TRepository, TEntity, TAddForm, TUpdateForm, TFilter, TDto>
         : ApiControllerBase<ContextBase, TRepository, TEntity, TAddForm, TUpdateForm, TFilter, TDto>
         where TRepository : RepositoryBase<ContextBase, TEntity, TAddForm, TUpdateForm, TFilter, TDto, Guid>

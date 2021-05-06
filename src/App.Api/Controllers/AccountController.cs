@@ -15,28 +15,32 @@ using Microsoft.Extensions.Configuration;
 namespace App.Api.Controllers
 {
     /// <summary>
-    /// Account
+    /// 用户账号
     /// </summary>
     public class AccountController : ApiController<AccountRepository, Account, AccountAddDto, AccountUpdateDto, AccountFilter, AccountDto>
     {
         IConfiguration _config;
+        WebService webService;
         public AccountController(
             ILogger<AccountController> logger,
             AccountRepository repository,
+            WebService service,
             IConfiguration configuration) : base(logger, repository)
         {
             _config = configuration;
+            webService = service;
         }
 
         /// <summary>
-        /// 添加Account
+        /// 注册账号
         /// </summary>
         /// <param name="form"></param>
         /// <returns></returns>
         [HttpPost]
         public override async Task<ActionResult<Account>> AddAsync([FromBody] AccountAddDto form)
         {
-            if (_repos.Any(e => e.Email == form.Email))
+            if (_repos.Any(e => e.Email == form.Email
+                || e.Username == form.Username))
             {
                 return Conflict();
             }
@@ -110,7 +114,6 @@ namespace App.Api.Controllers
             return result;
         }
 
-
         /// <summary>
         /// 删除
         /// </summary>
@@ -131,6 +134,19 @@ namespace App.Api.Controllers
         public override Task<ActionResult<Account>> GetDetailAsync([FromRoute] Guid id)
         {
             return base.GetDetailAsync(id);
+        }
+
+        /// <summary>
+        /// 初始化管理员账号
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        [HttpPost("initAdminUser")]
+        [AllowAnonymous]
+        public async Task<ActionResult<Account>> InitAdminUserAsync(string username, string password)
+        {
+            return await webService.InitAdminUserAccountAsync(username, password);
         }
     }
 }

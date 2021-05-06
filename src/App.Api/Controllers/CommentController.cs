@@ -12,23 +12,23 @@ using App.Agreement;
 namespace App.Api.Controllers
 {
     /// <summary>
-    /// Catalog
+    /// 评论
     /// </summary>
-    public class CatalogController : ApiController<CatalogRepository, Catalog, CatalogAddDto, CatalogUpdateDto, CatalogFilter, CatalogDto>
+    public class CommentController : ApiController<CommentRepository, Comment, CommentAddDto, CommentUpdateDto, CommentFilter, CommentDto>
     {
-        public CatalogController(
-            ILogger<CatalogController> logger,
-            CatalogRepository repository) : base(logger, repository)
+        public CommentController(
+            ILogger<CommentController> logger,
+            CommentRepository repository) : base(logger, repository)
         {
         }
 
         /// <summary>
-        /// 添加Catalog
+        /// 添加Comment
         /// </summary>
         /// <param name="form"></param>
         /// <returns></returns>
         [HttpPost]
-        public override async Task<ActionResult<Catalog>> AddAsync([FromBody] CatalogAddDto form)
+        public override async Task<ActionResult<Comment>> AddAsync([FromBody] CommentAddDto form)
         {
             // if (_repos.Any(e => e.Name == form.Name))
             // {
@@ -38,24 +38,24 @@ namespace App.Api.Controllers
         }
 
         /// <summary>
-        /// 分页筛选Catalog
+        /// 分页筛选Comment
         /// </summary>
         /// <param name="filter"></param>
         /// <returns></returns>
         [HttpPost("filter")]
-        public override async Task<ActionResult<PageResult<CatalogDto>>> FilterAsync(CatalogFilter filter)
+        public override async Task<ActionResult<PageResult<CommentDto>>> FilterAsync(CommentFilter filter)
         {
             return await _repos.GetListWithPageAsync(filter);
         }
 
         /// <summary>
-        /// 更新Catalog
+        /// 更新Comment
         /// </summary>
         /// <param name="id"></param>
         /// <param name="form"></param>
         /// <returns></returns>
         [HttpPut("{id}")]
-        public override async Task<ActionResult<Catalog>> UpdateAsync([FromRoute] Guid id, [FromBody] CatalogUpdateDto form)
+        public override async Task<ActionResult<Comment>> UpdateAsync([FromRoute] Guid id, [FromBody] CommentUpdateDto form)
         {
             if (_repos.Any(e => e.Id == id))
             {
@@ -67,6 +67,29 @@ namespace App.Api.Controllers
                 return await _repos.UpdateAsync(id, form);
             }
             return NotFound();
+        }
+
+
+        /// <summary>
+        /// 删除Comment
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpDelete("{id}")]
+        public override Task<ActionResult<Comment>> DeleteAsync([FromRoute] Guid id)
+        {
+            return base.DeleteAsync(id);
+        }
+
+        /// <summary>
+        /// 获取Comment详情
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet("{id}")]
+        public override Task<ActionResult<Comment>> GetDetailAsync([FromRoute] Guid id)
+        {
+            return base.GetDetailAsync(id);
         }
     }
 }

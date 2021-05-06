@@ -32,7 +32,7 @@ namespace Core.Entity
         /// </summary>
         public bool IsPublic { get; set; } = false;
         public Account User { get; set; }
-        public Catalog Catalog { get; set; }
+        public LibraryCatalog Catalog { get; set; }
         public List<CodeSnippet> Snippets { get; set; }
     }
 }

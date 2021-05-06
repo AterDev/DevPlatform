@@ -4,11 +4,16 @@
 // Catalog;
 // CodeSnippet;
 // Library;
+// Article;
+// Comment;
+// ArticleCatalog;
+// LibraryCatalog;
 // {AlreadyMapedEntity}
 using AutoMapper;
 using Core.Entity;
 using Share.Models;
 using Share.Models.Common;
+using System;
 
 namespace Share.AutoMapper
 {
@@ -30,11 +35,11 @@ namespace Share.AutoMapper
             CreateMap<Role, RoleDto>();
             CreateMap<Role, RoleItemDto>();
             CreateMap<Role, RoleDetailDto>();
-            CreateMap<CatalogAddDto, Catalog>();
-            CreateMap<CatalogUpdateDto, Catalog>();
-            CreateMap<Catalog, CatalogDto>();
-            CreateMap<Catalog, CatalogItemDto>();
-            CreateMap<Catalog, CatalogDetailDto>();
+            CreateMap<CatalogAddDto, LibraryCatalog>();
+            CreateMap<CatalogUpdateDto, LibraryCatalog>();
+            CreateMap<LibraryCatalog, CatalogDto>();
+            CreateMap<LibraryCatalog, CatalogItemDto>();
+            CreateMap<LibraryCatalog, CatalogDetailDto>();
             CreateMap<CodeSnippetAddDto, CodeSnippet>();
             CreateMap<CodeSnippetUpdateDto, CodeSnippet>();
             CreateMap<CodeSnippet, CodeSnippetDto>();
@@ -45,7 +50,39 @@ namespace Share.AutoMapper
             CreateMap<Library, LibraryDto>();
             CreateMap<Library, LibraryItemDto>();
             CreateMap<Library, LibraryDetailDto>();
-            // {AppendMappers}
+            CreateMap<ArticleAddDto, Article>();
+            CreateMap<ArticleUpdateDto, Article>()
+                .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => NotNull(srcMember)));
+            CreateMap<Article, ArticleDto>();
+            CreateMap<Article, ArticleItemDto>();
+            CreateMap<Article, ArticleDetailDto>();
+            CreateMap<CommentAddDto, Comment>();
+            CreateMap<CommentUpdateDto, Comment>();
+            CreateMap<Comment, CommentDto>();
+            CreateMap<Comment, CommentItemDto>();
+            CreateMap<Comment, CommentDetailDto>();
+            CreateMap<ArticleCatalogAddDto, ArticleCatalog>();
+            CreateMap<ArticleCatalogUpdateDto, ArticleCatalog>();
+            CreateMap<ArticleCatalog, ArticleCatalogDto>();
+            CreateMap<ArticleCatalog, ArticleCatalogItemDto>();
+            CreateMap<ArticleCatalog, ArticleCatalogDetailDto>();
+                        CreateMap<LibraryCatalogAddDto, LibraryCatalog>();
+            CreateMap<LibraryCatalogUpdateDto, LibraryCatalog>();
+            CreateMap<LibraryCatalog, LibraryCatalogDto>();
+            CreateMap<LibraryCatalog, LibraryCatalogItemDto>();
+            CreateMap<LibraryCatalog, LibraryCatalogDetailDto>();        
+// {AppendMappers}
+
+            bool NotNull(object src)
+            {
+                return src switch
+                {
+                    null => false,
+                    int @int when @int == 0 => false,
+                    Guid guid when guid == Guid.Empty => false,
+                    _ => true
+                };
+            }
         }
     }
 

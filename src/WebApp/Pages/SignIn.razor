@@ -1,40 +1,69 @@
 ﻿@page "/signIn"
 @layout BlankLayout
 @inject HttpClient Http
+@inject AuthService authService
+@inject NavigationManager navigator
 
 <div class="container">
   <div class="signIn">
-    <ValidateForm Model="Model" @ref="Form" OnValidSubmit="@OnValidSubmit" style="width:100%">
-      <div class="form-group">
-        <BootstrapInput @bind-Value="@Model.Username" />
-      </div>
-      <div class="form-group ">
-        <BootstrapInput type="password" @bind-Value="@Model.Password" />
-      </div>
-      <div class="form-group">
-        <Button ButtonType="ButtonType.Submit" class="form-control" IsAsync="true" Text="登录" />
-      </div>
+    <Validations @ref="validations" Mode="ValidationMode.Auto" Model="@Model" ValidateOnLoad="true">
+      <Column ColumnSize="ColumnSize.Is12">
+        <Validation>
+          <Field Horizontal="false">
+            <FieldLabel ColumnSize="ColumnSize.Is3">用户名</FieldLabel>
+            <FieldBody ColumnSize="ColumnSize.Is9">
+              <TextEdit @bind-Text="@Model.Username">
+                <Feedback>
+                  <ValidationError />
+                </Feedback>
+              </TextEdit>
+            </FieldBody>
+          </Field>
+        </Validation>
 
-    </ValidateForm>
+        <Validation>
+          <Field Horizontal="false">
+            <FieldLabel ColumnSize="ColumnSize.Is3">密码</FieldLabel>
+            <FieldBody ColumnSize="ColumnSize.Is9">
+              <TextEdit type="password" @bind-Text="@Model.Password" Role="TextRole.Password">
+                <Feedback>
+                  <ValidationError />
+                </Feedback>
+              </TextEdit>
+            </FieldBody>
+          </Field>
+        </Validation>
+        <Field Horizontal="false">
+          <FieldBody ColumnSize="ColumnSize.Is9.Is3.WithOffset">
+            <Button Block="true" Type="ButtonType.Submit" Color="Color.Primary" Clicked="@OnValidSubmit">
+              登录
+            </Button>
+          </FieldBody>
+        </Field>
+      </Column>
+    </Validations>
   </div>
 </div>
 
-
-
-
 @code {
   public SignInForm Model = new SignInForm();
-  private ValidateForm Form { get; set; }
+  Validations validations;
 
-  async Task OnValidSubmit(EditContext context)
+  async Task OnValidSubmit()
   {
-    if (context.Validate())
+    if (validations.ValidateAll())
     {
-      System.Console.WriteLine(Model.Username + ":" + Model.Password);
+      validations.ClearAll();
       var res = await Http.PostAsJsonAsync("/api/account/signIn", Model);
       if (res.IsSuccessStatusCode)
       {
-        var json = await res.Content.ReadFromJsonAsync<SignInDto>();
+        var dto = await res.Content.ReadFromJsonAsync<SignInDto>();
+        // 保存到localStorage
+        var userInfo = new LocalUserInfo(dto.Id, dto.Username, dto.Email, dto.RoleName, dto.Avatar);
+        await authService.UpdateStateAsync(userInfo);
+        // 更新token到请求
+        authService.UpdateToken(dto.Token);
+        navigator.NavigateTo("index");
       }
       else
       {
@@ -43,6 +72,20 @@
     }
     else
     {
+
+    }
+  }
+
+  async Task Test()
+  {
+    var res = await Http.PostAsJsonAsync("/api/account/filter", new AccountFilter
+    {
+      PageIndex = 1,
+      PageSize = 12
+    });
+    if (res.IsSuccessStatusCode)
+    {
+      var data = res.Content.ReadFromJsonAsync<PageResult<AccountDto>>();
 
     }
   }
