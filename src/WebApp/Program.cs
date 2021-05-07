@@ -2,6 +2,7 @@ using Blazored.LocalStorage;
 using Blazorise;
 using Blazorise.Bootstrap;
 using Blazorise.Icons.FontAwesome;
+using Blazorise.RichTextEdit;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -46,7 +47,6 @@ namespace WebApp
                 .AddBootstrapProviders()
                 .AddFontAwesomeIcons();
             // 富文本编辑器
-
             // 日志
             builder.Logging.SetMinimumLevel(LogLevel.Debug);
 

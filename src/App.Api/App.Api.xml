@@ -1,0 +1,365 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>App.Api</name>
+    </assembly>
+    <members>
+        <member name="T:App.Agreement.ApiServiceBase">
+            <summary>
+            api 服务基础类
+            </summary>
+        </member>
+        <member name="T:App.Agreement.IApiControllerBase`6">
+            <summary>
+            定义基本restful方法
+            </summary>
+            <typeparam name="TEntity"></typeparam>
+            <typeparam name="TAddForm"></typeparam>
+            <typeparam name="TUpdateForm"></typeparam>
+            <typeparam name="TFilter"></typeparam>
+            <typeparam name="TDto"></typeparam>
+            <typeparam name="Tkey"></typeparam>
+        </member>
+        <member name="M:App.Agreement.IApiControllerBase`6.AddAsync(`1)">
+            <summary>
+            添加实体
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:App.Agreement.IApiControllerBase`6.DeleteAsync(`5)">
+            <summary>
+            删除实体
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:App.Agreement.IApiControllerBase`6.FilterAsync(`3)">
+            <summary>
+            分页筛选
+            </summary>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:App.Agreement.IApiControllerBase`6.GetDetailAsync(`5)">
+            <summary>
+            详情
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:App.Agreement.IApiControllerBase`6.UpdateAsync(`5,`2)">
+            <summary>
+            更新
+            </summary>
+            <param name="id"></param>
+            <param name="form"></param>
+            <returns></returns>
+        </member>
+        <member name="T:App.Api.Controllers.AccountController">
+            <summary>
+            用户账号
+            </summary>
+        </member>
+        <member name="M:App.Api.Controllers.AccountController.AddAsync(Share.Models.AccountAddDto)">
+            <summary>
+            注册账号
+            </summary>
+            <param name="form"></param>
+            <returns></returns>
+        </member>
+        <member name="M:App.Api.Controllers.AccountController.FilterAsync(Share.Models.AccountFilter)">
+            <summary>
+            分页筛选Account
+            </summary>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:App.Api.Controllers.AccountController.UpdateAsync(System.Guid,Share.Models.AccountUpdateDto)">
+            <summary>
+            更新Account
+            </summary>
+            <param name="id"></param>
+            <param name="form"></param>
+            <returns></returns>
+        </member>
+        <member name="M:App.Api.Controllers.AccountController.SignUp(Share.Models.Common.SignInForm)">
+            <summary>
+            登录
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:App.Api.Controllers.AccountController.DeleteAsync(System.Guid)">
+            <summary>
+            删除
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:App.Api.Controllers.AccountController.GetDetailAsync(System.Guid)">
+            <summary>
+            获取详情
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:App.Api.Controllers.AccountController.InitAdminUserAsync(System.String,System.String)">
+            <summary>
+            初始化管理员账号
+            </summary>
+            <param name="username"></param>
+            <param name="password"></param>
+            <returns></returns>
+        </member>
+        <member name="T:App.Api.Controllers.ArticleCatalogController">
+            <summary>
+            文章目录
+            </summary>
+        </member>
+        <member name="M:App.Api.Controllers.ArticleCatalogController.AddAsync(Share.Models.ArticleCatalogAddDto)">
+            <summary>
+            添加ArticleCatalog
+            </summary>
+            <param name="form"></param>
+            <returns></returns>
+        </member>
+        <member name="M:App.Api.Controllers.ArticleCatalogController.FilterAsync(Share.Models.ArticleCatalogFilter)">
+            <summary>
+            分页筛选ArticleCatalog
+            </summary>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:App.Api.Controllers.ArticleCatalogController.UpdateAsync(System.Guid,Share.Models.ArticleCatalogUpdateDto)">
+            <summary>
+            更新ArticleCatalog
+            </summary>
+            <param name="id"></param>
+            <param name="form"></param>
+            <returns></returns>
+        </member>
+        <member name="M:App.Api.Controllers.ArticleCatalogController.DeleteAsync(System.Guid)">
+            <summary>
+            删除ArticleCatalog
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:App.Api.Controllers.ArticleCatalogController.GetDetailAsync(System.Guid)">
+            <summary>
+            获取ArticleCatalog详情
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="T:App.Api.Controllers.ArticleController">
+            <summary>
+            文章
+            </summary>
+        </member>
+        <member name="M:App.Api.Controllers.ArticleController.AddAsync(Share.Models.ArticleAddDto)">
+            <summary>
+            添加Article
+            </summary>
+            <param name="form"></param>
+            <returns></returns>
+        </member>
+        <member name="M:App.Api.Controllers.ArticleController.FilterAsync(Share.Models.ArticleFilter)">
+            <summary>
+            分页筛选Article
+            </summary>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:App.Api.Controllers.ArticleController.UpdateAsync(System.Guid,Share.Models.ArticleUpdateDto)">
+            <summary>
+            更新Article
+            </summary>
+            <param name="id"></param>
+            <param name="form"></param>
+            <returns></returns>
+        </member>
+        <member name="M:App.Api.Controllers.ArticleController.DeleteAsync(System.Guid)">
+            <summary>
+            删除Article
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:App.Api.Controllers.ArticleController.GetDetailAsync(System.Guid)">
+            <summary>
+            获取Article详情
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="T:App.Api.Controllers.CodeSnippetController">
+            <summary>
+            代码片段
+            </summary>
+        </member>
+        <member name="M:App.Api.Controllers.CodeSnippetController.AddAsync(Share.Models.CodeSnippetAddDto)">
+            <summary>
+            添加CodeSnippet
+            </summary>
+            <param name="form"></param>
+            <returns></returns>
+        </member>
+        <member name="M:App.Api.Controllers.CodeSnippetController.FilterAsync(Share.Models.CodeSnippetFilter)">
+            <summary>
+            分页筛选CodeSnippet
+            </summary>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:App.Api.Controllers.CodeSnippetController.UpdateAsync(System.Guid,Share.Models.CodeSnippetUpdateDto)">
+            <summary>
+            更新CodeSnippet
+            </summary>
+            <param name="id"></param>
+            <param name="form"></param>
+            <returns></returns>
+        </member>
+        <member name="T:App.Api.Controllers.CommentController">
+            <summary>
+            评论
+            </summary>
+        </member>
+        <member name="M:App.Api.Controllers.CommentController.AddAsync(Share.Models.CommentAddDto)">
+            <summary>
+            添加Comment
+            </summary>
+            <param name="form"></param>
+            <returns></returns>
+        </member>
+        <member name="M:App.Api.Controllers.CommentController.FilterAsync(Share.Models.CommentFilter)">
+            <summary>
+            分页筛选Comment
+            </summary>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:App.Api.Controllers.CommentController.UpdateAsync(System.Guid,Share.Models.CommentUpdateDto)">
+            <summary>
+            更新Comment
+            </summary>
+            <param name="id"></param>
+            <param name="form"></param>
+            <returns></returns>
+        </member>
+        <member name="M:App.Api.Controllers.CommentController.DeleteAsync(System.Guid)">
+            <summary>
+            删除Comment
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:App.Api.Controllers.CommentController.GetDetailAsync(System.Guid)">
+            <summary>
+            获取Comment详情
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="T:App.Api.Controllers.LibraryCatalogController">
+            <summary>
+            LibraryCatalog
+            </summary>
+        </member>
+        <member name="M:App.Api.Controllers.LibraryCatalogController.AddAsync(Share.Models.LibraryCatalogAddDto)">
+            <summary>
+            添加LibraryCatalog
+            </summary>
+            <param name="form"></param>
+            <returns></returns>
+        </member>
+        <member name="M:App.Api.Controllers.LibraryCatalogController.FilterAsync(Share.Models.LibraryCatalogFilter)">
+            <summary>
+            分页筛选LibraryCatalog
+            </summary>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:App.Api.Controllers.LibraryCatalogController.UpdateAsync(System.Guid,Share.Models.LibraryCatalogUpdateDto)">
+            <summary>
+            更新LibraryCatalog
+            </summary>
+            <param name="id"></param>
+            <param name="form"></param>
+            <returns></returns>
+        </member>
+        <member name="M:App.Api.Controllers.LibraryCatalogController.DeleteAsync(System.Guid)">
+            <summary>
+            删除LibraryCatalog
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:App.Api.Controllers.LibraryCatalogController.GetDetailAsync(System.Guid)">
+            <summary>
+            获取LibraryCatalog详情
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="T:App.Api.Controllers.LibraryController">
+            <summary>
+            Library
+            </summary>
+        </member>
+        <member name="M:App.Api.Controllers.LibraryController.AddAsync(Share.Models.LibraryAddDto)">
+            <summary>
+            添加Library
+            </summary>
+            <param name="form"></param>
+            <returns></returns>
+        </member>
+        <member name="M:App.Api.Controllers.LibraryController.FilterAsync(Share.Models.LibraryFilter)">
+            <summary>
+            分页筛选Library
+            </summary>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:App.Api.Controllers.LibraryController.UpdateAsync(System.Guid,Share.Models.LibraryUpdateDto)">
+            <summary>
+            更新Library
+            </summary>
+            <param name="id"></param>
+            <param name="form"></param>
+            <returns></returns>
+        </member>
+        <member name="T:App.Api.Controllers.RoleController">
+            <summary>
+            角色
+            </summary>
+        </member>
+        <member name="M:App.Api.Controllers.RoleController.AddAsync(Share.Models.RoleAddDto)">
+            <summary>
+            添加Role
+            </summary>
+            <param name="form"></param>
+            <returns></returns>
+        </member>
+        <member name="M:App.Api.Controllers.RoleController.FilterAsync(Share.Models.RoleFilter)">
+            <summary>
+            分页筛选Role
+            </summary>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:App.Api.Controllers.RoleController.UpdateAsync(System.Guid,Share.Models.RoleUpdateDto)">
+            <summary>
+            更新Role
+            </summary>
+            <param name="id"></param>
+            <param name="form"></param>
+            <returns></returns>
+        </member>
+        <member name="T:App.Api.RepositoryServiceExtensions">
+            <summary>
+            仓储注册服务
+            </summary>
+        </member>
+    </members>
+</doc>
