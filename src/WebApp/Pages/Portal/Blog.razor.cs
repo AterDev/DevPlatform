@@ -1,5 +1,4 @@
-﻿using Blazorise.RichTextEdit;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.Extensions.Options;
 using Microsoft.JSInterop;
@@ -13,23 +12,7 @@ namespace WebApp.Pages.Portal
     public partial class Blog
     {
 
-        
-
-        [Inject]
-        protected IJSRuntime JsRuntime { get; set; }
-
-        protected override Task OnInitializedAsync()
-        {
-
-            return base.OnInitializedAsync();
-        }
-
-        protected override async Task OnAfterRenderAsync(bool firstRender)
-        {
-            await base.OnAfterRenderAsync(firstRender);
-            
-        }
-
+        private string Language { get; set; }
 
  
     }
