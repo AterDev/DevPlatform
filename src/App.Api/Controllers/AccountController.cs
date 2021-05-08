@@ -148,5 +148,6 @@ namespace App.Api.Controllers
         {
             return await webService.InitAdminUserAccountAsync(username, password);
         }
+
     }
 }

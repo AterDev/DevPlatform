@@ -11,14 +11,14 @@
           <mat-form-field appearance="outline">
             <mat-label>邮箱</mat-label>
             <input matInput type="email" placeholder="user@daemon" formControlName="email" required>
-            <mat-error *ngIf="email.invalid">{{getValidatorMessage('email')}}</mat-error>
+            <mat-error *ngIf="email?.invalid">{{getValidatorMessage('email')}}</mat-error>
           </mat-form-field>
         </div>
         <div>
           <mat-form-field appearance="outline">
             <mat-label>密码</mat-label>
             <input type="password" matInput placeholder="密码长度6位(含6位)以上" formControlName="password" required>
-            <mat-error *ngIf="password.invalid">{{getValidatorMessage('password')}}
+            <mat-error *ngIf="password?.invalid">{{getValidatorMessage('password')}}
             </mat-error>
           </mat-form-field>
         </div>

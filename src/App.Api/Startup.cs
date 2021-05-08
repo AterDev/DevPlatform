@@ -14,7 +14,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using Share.AutoMapper;
 
@@ -90,32 +89,14 @@ namespace App.Api
             #endregion
 
             // api 接口文档设置
-            services.AddSwaggerGen(c =>
+            services.AddOpenApiDocument(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo
-                {
-                    Title = "API 文档",
-                    Version = "v1",
-                    Description = "Description",
-                    Contact = new OpenApiContact
-                    {
-                        Email = "YourEmail",
-                        Name = "Name",
-                    }
-                });
-                c.AddServer(new OpenApiServer()
-                {
-                    Url = "",
-                    Description = "Description"
-                });
-                c.CustomOperationIds(apiDesc =>
-                {
-                    var controllerAction = apiDesc.ActionDescriptor as ControllerActionDescriptor;
-                    return controllerAction.ControllerName + "-" + controllerAction.ActionName;
-                });
-
-                var filePath = Path.Combine(System.AppContext.BaseDirectory, "App.Api.xml");
-                c.IncludeXmlComments(filePath, true);
+                c.GenerateXmlObjects = true;
+                c.GenerateEnumMappingDescription = true;
+                c.UseControllerSummaryAsTagDescription = true;
+                c.Title = "API 文档";
+                c.Description = "接口文档 暂无描述";
+                c.Version = "v1";
             });
 
             services.AddControllers()
@@ -132,12 +113,19 @@ namespace App.Api
             {
                 app.UseCors("default");
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
+                app.UseOpenApi(settings =>
+                {
+                    settings.PostProcess = (document, request) =>
+                    {
+                        document.Info.Title = "My Project";
+                    };
+                });
+
 
                 app.UseKnife4UI(c =>
                 {
                     c.RoutePrefix = "api/docs"; // serve the UI at root
-                    c.SwaggerEndpoint("/v1/api-docs", "V1 Docs");
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "V1 Docs");
                 });
             }
             else
@@ -156,7 +144,6 @@ namespace App.Api
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-                endpoints.MapSwagger("{documentName}/api-docs");
             });
         }
     }
