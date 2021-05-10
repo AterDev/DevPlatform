@@ -15,9 +15,7 @@ import { Observable, throwError } from 'rxjs';
 @Injectable()
 export class CustomerHttpInterceptor implements HttpInterceptor {
 
-  constructor(
-    private snb: MatSnackBar
-  ) { }
+  constructor() { }
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(request)
       .pipe(
@@ -27,16 +25,26 @@ export class CustomerHttpInterceptor implements HttpInterceptor {
       );
   }
   handleError(error: HttpErrorResponse) {
+
     let errors = {
-      detail: '',
+      detail: error.error,
       status: 500,
     };
-    if (!error.error) {
-      errors.detail = error.message;
-      errors.status = error.status;
-    } else {
-      errors = error.error;
+
+    switch (error.status) {
+      case 404:
+        errors.detail = error.error;
+        break;
+      case 500:
+        errors.detail = error.message;
+        errors.status = error.status;
+        break;
+      default:
+        errors = error.error;
+        break;
     }
+    console.log(errors);
+
     return throwError(errors);
   }
 }

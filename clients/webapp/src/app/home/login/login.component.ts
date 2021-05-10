@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 // import { OAuthService, OAuthErrorEvent, UserInfo } from 'angular-oauth2-oidc';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { AccountService } from 'src/app/services/account.service';
+import { SignInForm } from 'src/app/share/models/sign-in-form.model';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-login',
@@ -10,39 +13,20 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 })
 export class LoginComponent implements OnInit {
   public loginForm!: FormGroup; constructor(
-    // private oauthService: OAuthService,
-    private router: Router
+    private service: AccountService,
+    private router: Router,
+    private snb: MatSnackBar
 
   ) {
   }
   get email() { return this.loginForm.get('email'); }
   get password() { return this.loginForm.get('password'); }
   ngOnInit(): void {
-    // const token = this.oauthService.getAccessToken();
-    // const cliams = this.oauthService.getIdentityClaims();
-    // if (token && cliams) {
-    //   this.router.navigateByUrl('/index');
-    // }
-
-    // this.oauthService.events.subscribe(event => {
-    //   if (event instanceof OAuthErrorEvent) {
-    //     // TODO:处理错误
-    //     console.error(event);
-    //   } else {
-    //     if (event.type === 'token_received' || event.type === 'token_refreshed') {
-    //       this.oauthService.loadUserProfile()
-    //         .then(() => {
-    //           this.router.navigateByUrl('/index');
-    //         });
-    //     }
-    //   }
-    // });
     this.loginForm = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(50)])
     });
   }
-
 
   /**
    * 错误信息
@@ -63,6 +47,22 @@ export class LoginComponent implements OnInit {
     return '';
   }
   doLogin(): void {
+    if (this.loginForm.valid) {
+      const signInForm: SignInForm = {
+        username: this.email?.value,
+        password: this.password?.value,
+        captcha: '0000'
+      }
+      this.service.signUp(signInForm)
+        .subscribe(res => {
+          if (res) {
+            this.snb.open('登录成功');
+            this.router.navigateByUrl('/home');
+          }
+        }, (error: any) => {
+          this.snb.open(error.detail);
+        });
+    }
 
   }
 

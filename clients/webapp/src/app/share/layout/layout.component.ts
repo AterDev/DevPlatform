@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 // import { OAuthService } from 'angular-oauth2-oidc';
 
 @Component({
@@ -11,7 +12,7 @@ export class LayoutComponent implements OnInit {
   isLogin = false;
   username = '';
   constructor(
-    // private service: OAuthService,
+    private service: AuthService,
     // private oauthService: OAuthService,
     private router: Router
   ) { }
@@ -24,6 +25,7 @@ export class LayoutComponent implements OnInit {
 
   login(): void {
     // this.oauthService.initCodeFlow();
+    this.router.navigateByUrl('/login');
   }
 
   logout(): void {

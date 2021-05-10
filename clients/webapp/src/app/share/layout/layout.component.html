@@ -1,26 +1,38 @@
 <mat-toolbar>
-  <a mat-button [routerLink]="['/index']" routerLinkActive="active">首页</a>
-  <span style="display:flex;flex:1 1 auto"></span>
-  <span *ngIf="isLogin">
-    <button [matMenuTriggerFor]="appMenu" mat-button>
-      {{username}}
-      <mat-icon>arrow_drop_down</mat-icon>
-    </button>
-    <mat-menu #appMenu="matMenu">
-      <span mat-menu-item>
-        你好,{{username}}
-      </span>
-      <button mat-menu-item routerLink="/account" disabled>
-        <mat-icon>assignment_ind</mat-icon>
-        <span>账号设置</span>
+  <div fxFlex="none">
+    <span>DevPlatform</span>
+  </div>
+
+  <div fxFlex="auto" fxLayoutAlign="center center">
+    <a mat-button [routerLink]="['/index']" routerLinkActive="active">推荐</a>
+    <a mat-button [routerLink]="['/trends']" routerLinkActive="active">动态</a>
+    <a mat-button [routerLink]="['/code-snippet']" routerLinkActive="active">代码片段</a>
+  </div>
+  <div fxFlex="none">
+    <span style="display:flex;flex:1 1 auto"></span>
+    <span *ngIf="isLogin">
+
+      <button [matMenuTriggerFor]="appMenu" mat-button>
+        {{username}}
+        <mat-icon>arrow_drop_down</mat-icon>
       </button>
-      <button mat-menu-item (click)="logout()">
-        <mat-icon>exit_to_app</mat-icon>
-        <span>登出</span>
-      </button>
-    </mat-menu>
-  </span>
-  <span *ngIf="!isLogin">
-    <a mat-button (click)="login()">登录</a>
-  </span>
+      <mat-menu #appMenu="matMenu">
+        <span mat-menu-item>
+          你好,{{username}}
+        </span>
+        <button mat-menu-item routerLink="/account" disabled>
+          <mat-icon>assignment_ind</mat-icon>
+          <span>账号设置</span>
+        </button>
+        <button mat-menu-item (click)="logout()">
+          <mat-icon>exit_to_app</mat-icon>
+          <span>登出</span>
+        </button>
+      </mat-menu>
+    </span>
+    <span *ngIf="!isLogin">
+      <a mat-button (click)="login()">登录</a>
+    </span>
+  </div>
+
 </mat-toolbar>
