@@ -25,28 +25,33 @@ namespace Share.AutoMapper
         public GenerateProfile()
         {
             CreateMap<AccountAddDto, Account>();
-            CreateMap<AccountUpdateDto, Account>();
+            CreateMap<AccountUpdateDto, Account>()
+                .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => NotNull(srcMember))); ;
             CreateMap<Account, AccountDto>();
             CreateMap<Account, AccountItemDto>();
             CreateMap<Account, AccountDetailDto>();
             CreateMap<Account, SignInDto>();
             CreateMap<RoleAddDto, Role>();
-            CreateMap<RoleUpdateDto, Role>();
+            CreateMap<RoleUpdateDto, Role>()
+                .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => NotNull(srcMember))); ;
             CreateMap<Role, RoleDto>();
             CreateMap<Role, RoleItemDto>();
             CreateMap<Role, RoleDetailDto>();
             CreateMap<CatalogAddDto, LibraryCatalog>();
-            CreateMap<CatalogUpdateDto, LibraryCatalog>();
+            CreateMap<CatalogUpdateDto, LibraryCatalog>()
+                .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => NotNull(srcMember))); ; ;
             CreateMap<LibraryCatalog, CatalogDto>();
             CreateMap<LibraryCatalog, CatalogItemDto>();
             CreateMap<LibraryCatalog, CatalogDetailDto>();
             CreateMap<CodeSnippetAddDto, CodeSnippet>();
-            CreateMap<CodeSnippetUpdateDto, CodeSnippet>();
+            CreateMap<CodeSnippetUpdateDto, CodeSnippet>()
+                .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => NotNull(srcMember))); ; ;
             CreateMap<CodeSnippet, CodeSnippetDto>();
             CreateMap<CodeSnippet, CodeSnippetItemDto>();
             CreateMap<CodeSnippet, CodeSnippetDetailDto>();
             CreateMap<LibraryAddDto, Library>();
-            CreateMap<LibraryUpdateDto, Library>();
+            CreateMap<LibraryUpdateDto, Library>()
+                .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => NotNull(srcMember))); ; ;
             CreateMap<Library, LibraryDto>();
             CreateMap<Library, LibraryItemDto>();
             CreateMap<Library, LibraryDetailDto>();
@@ -57,21 +62,24 @@ namespace Share.AutoMapper
             CreateMap<Article, ArticleItemDto>();
             CreateMap<Article, ArticleDetailDto>();
             CreateMap<CommentAddDto, Comment>();
-            CreateMap<CommentUpdateDto, Comment>();
+            CreateMap<CommentUpdateDto, Comment>()
+                .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => NotNull(srcMember))); ; ;
             CreateMap<Comment, CommentDto>();
             CreateMap<Comment, CommentItemDto>();
             CreateMap<Comment, CommentDetailDto>();
             CreateMap<ArticleCatalogAddDto, ArticleCatalog>();
-            CreateMap<ArticleCatalogUpdateDto, ArticleCatalog>();
+            CreateMap<ArticleCatalogUpdateDto, ArticleCatalog>()
+                .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => NotNull(srcMember))); ; ;
             CreateMap<ArticleCatalog, ArticleCatalogDto>();
             CreateMap<ArticleCatalog, ArticleCatalogItemDto>();
             CreateMap<ArticleCatalog, ArticleCatalogDetailDto>();
-                        CreateMap<LibraryCatalogAddDto, LibraryCatalog>();
-            CreateMap<LibraryCatalogUpdateDto, LibraryCatalog>();
+            CreateMap<LibraryCatalogAddDto, LibraryCatalog>();
+            CreateMap<LibraryCatalogUpdateDto, LibraryCatalog>()
+                .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => NotNull(srcMember))); ; ;
             CreateMap<LibraryCatalog, LibraryCatalogDto>();
             CreateMap<LibraryCatalog, LibraryCatalogItemDto>();
-            CreateMap<LibraryCatalog, LibraryCatalogDetailDto>();        
-// {AppendMappers}
+            CreateMap<LibraryCatalog, LibraryCatalogDetailDto>();
+            // {AppendMappers}
 
             bool NotNull(object src)
             {

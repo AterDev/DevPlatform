@@ -70,5 +70,16 @@ namespace Core.Services.Repositories
             }
             return default;
         }
+
+        public override Task<Account> UpdateAsync(Guid id, AccountUpdateDto form)
+        {
+            var account = _db.Find(id);
+            if (!string.IsNullOrEmpty(form.Password))
+            {
+                form.Password = HashCrypto.Create(form.Password, account.HashSalt);
+            }
+
+            return base.UpdateAsync(id, form);
+        }
     }
 }
