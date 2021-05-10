@@ -1,0 +1,27 @@
+<app-layout></app-layout>
+<div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="4px">
+  <div fxLayout="column" class="side_nav" fxLayoutAlign="start start" fxLayoutGap="0px" fxFlex="none">
+    <mat-toolbar color="primary">
+      <mat-toolbar-row>
+        <span>My App</span>
+        <span class="example-spacer"></span>
+        <button mat-icon-button>
+          <mat-icon>menu</mat-icon>
+        </button>
+      </mat-toolbar-row>
+      <mat-toolbar-row>
+        <span>Second Line</span>
+        <span class="example-spacer"></span>
+        <button mat-icon-button>
+          <mat-icon>favorite</mat-icon>
+        </button>
+        <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+          <mat-icon>share</mat-icon>
+        </button>
+      </mat-toolbar-row>
+    </mat-toolbar>
+  </div>
+  <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="8px" fxFlex="auto">
+    <router-outlet></router-outlet>
+  </div>
+</div>

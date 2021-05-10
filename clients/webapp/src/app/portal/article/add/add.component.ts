@@ -1,11 +1,10 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { ArticleService } from '../../services/article.service';
-import { ArticleAddDto } from '../../share/models/article-add-dto.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { ArticleService } from 'src/app/services/article.service';
+import { ArticleAddDto } from 'src/app/share/models/article-add-dto.model';
 import { Status } from 'src/app/share/models/status.model';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-add',

@@ -8,6 +8,7 @@ const routes: Routes = [
   { path: 'signout-callback-oidc', redirectTo: 'index', pathMatch: 'full' },
   { path: 'signout-oidc', redirectTo: 'index', pathMatch: 'full' },
   { path: 'login', redirectTo: 'login', pathMatch: 'full' },
+  { path: 'portal', redirectTo: 'portal', pathMatch: 'full' },
   { path: '*', redirectTo: '', pathMatch: 'full' },
 ];
 

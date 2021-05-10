@@ -107,9 +107,6 @@ img {
     color: #ff4081;
 }
 
-.mat-toolbar-row, .mat-toolbar-single-row {
-    border-bottom: 1px solid #eee;
-}
 
 .simple-dialog .mat-dialog-container {
     display: table;

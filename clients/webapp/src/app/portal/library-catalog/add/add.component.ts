@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { LibraryCatalogService } from '../../services/library-catalog.service';
-import { LibraryCatalogAddDto } from '../../share/models/library-catalog-add-dto.model';
+import { LibraryCatalogService } from 'src/app/services/library-catalog.service';
+import { LibraryCatalogAddDto } from 'src/app/share/models/library-catalog-add-dto.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Status } from 'src/app/share/models/status.model';
