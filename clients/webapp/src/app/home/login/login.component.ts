@@ -5,6 +5,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AccountService } from 'src/app/services/account.service';
 import { SignInForm } from 'src/app/share/models/sign-in-form.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -14,6 +15,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class LoginComponent implements OnInit {
   public loginForm!: FormGroup; constructor(
     private service: AccountService,
+    private authService: AuthService,
     private router: Router,
     private snb: MatSnackBar
 
@@ -56,8 +58,11 @@ export class LoginComponent implements OnInit {
       this.service.signUp(signInForm)
         .subscribe(res => {
           if (res) {
+            // 存储登录信息
+            this.authService.saveUserInfo(res);
+            // 添加token
             this.snb.open('登录成功');
-            this.router.navigateByUrl('/home');
+            this.router.navigateByUrl('/index');
           }
         }, (error: any) => {
           this.snb.open(error.detail);

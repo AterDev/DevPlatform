@@ -43,7 +43,6 @@ export class CustomerHttpInterceptor implements HttpInterceptor {
         errors = error.error;
         break;
     }
-    console.log(errors);
 
     return throwError(errors);
   }
