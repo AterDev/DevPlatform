@@ -1,5 +1,9 @@
 import { BaseDB } from './base-db.model';
 import { AccountExtend } from './account-extend.model';
+import { Role } from './role.model';
+import { Article } from './article.model';
+import { ArticleCatalog } from './article-catalog.model';
+import { Comment } from './comment.model';
 export interface Account extends BaseDB {
   /**
    * 邮箱
@@ -7,7 +11,6 @@ export interface Account extends BaseDB {
   email?: string | null;
   /**
    * 密码
-            
    */
   password?: string | null;
   /**

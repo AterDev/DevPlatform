@@ -1,0 +1,33 @@
+<legend>
+  <h2>编辑LibraryCatalog</h2>
+</legend>
+<form *ngIf="!isLoading" [formGroup]="formGroup" (ngSubmit)="edit()">
+  <div fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="8px">
+  <mat-form-field>
+    <mat-label>Name</mat-label>
+    <input matInput placeholder="Name" formControlName="name"   minlength="" maxlength="50">
+    <mat-error *ngIf="name?.invalid">
+    {{getValidatorMessage('name')}}
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Type</mat-label>
+    <input matInput placeholder="Type" formControlName="type"   minlength="" maxlength="50">
+    <mat-error *ngIf="type?.invalid">
+    {{getValidatorMessage('type')}}
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>UpdatedTime</mat-label>
+    <input matInput [matDatepicker]="updatedTimePicker" placeholder="UpdatedTime" formControlName="updatedTime">
+    <mat-datepicker-toggle matSuffix [for]="updatedTimePicker"></mat-datepicker-toggle>
+    <mat-datepicker #updatedTimePicker startView="multi-year"></mat-datepicker>
+    <mat-error *ngIf="updatedTime?.invalid">
+    {{getValidatorMessage('updatedTime')}}
+    </mat-error>
+  </mat-form-field>
+  </div>
+  <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="8px" class="mt-2">
+    <button mat-flat-button color="primary" type="submit">更新</button>
+  </div>
+</form>

@@ -1,0 +1,47 @@
+<legend>
+  <h2>编辑Article</h2>
+</legend>
+<form *ngIf="!isLoading" [formGroup]="formGroup" (ngSubmit)="edit()">
+  <div fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="8px">
+  <mat-form-field>
+    <mat-label>Title</mat-label>
+    <input matInput placeholder="Title" formControlName="title"   minlength="" maxlength="100">
+    <mat-error *ngIf="title?.invalid">
+    {{getValidatorMessage('title')}}
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Summary</mat-label>
+    <input matInput placeholder="Summary" formControlName="summary"   minlength="" maxlength="500">
+    <mat-error *ngIf="summary?.invalid">
+    {{getValidatorMessage('summary')}}
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>AuthorName</mat-label>
+    <input matInput placeholder="AuthorName" formControlName="authorName"   minlength="" maxlength="100">
+    <mat-error *ngIf="authorName?.invalid">
+    {{getValidatorMessage('authorName')}}
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Tags</mat-label>
+    <input matInput placeholder="Tags" formControlName="tags"   minlength="" maxlength="100">
+    <mat-error *ngIf="tags?.invalid">
+    {{getValidatorMessage('tags')}}
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>UpdatedTime</mat-label>
+    <input matInput [matDatepicker]="updatedTimePicker" placeholder="UpdatedTime" formControlName="updatedTime">
+    <mat-datepicker-toggle matSuffix [for]="updatedTimePicker"></mat-datepicker-toggle>
+    <mat-datepicker #updatedTimePicker startView="multi-year"></mat-datepicker>
+    <mat-error *ngIf="updatedTime?.invalid">
+    {{getValidatorMessage('updatedTime')}}
+    </mat-error>
+  </mat-form-field>
+  </div>
+  <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="8px" class="mt-2">
+    <button mat-flat-button color="primary" type="submit">更新</button>
+  </div>
+</form>

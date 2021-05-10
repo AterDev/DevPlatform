@@ -1,0 +1,25 @@
+<legend>
+  <h2>添加ArticleCatalog</h2>
+</legend>
+<form [formGroup]="formGroup" (ngSubmit)="add()">
+  <div fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="8px">
+  <mat-form-field>
+    <mat-label>Name</mat-label>
+    <input matInput placeholder="Name" formControlName="name"   minlength="" maxlength="50">
+    <mat-error *ngIf="name?.invalid">
+    {{getValidatorMessage('name')}}
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Type</mat-label>
+    <input matInput placeholder="Type" formControlName="type"   minlength="" maxlength="50">
+    <mat-error *ngIf="type?.invalid">
+    {{getValidatorMessage('type')}}
+    </mat-error>
+  </mat-form-field>
+
+  </div>
+  <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="8px" class="mt-2">
+    <button mat-flat-button color="primary" type="submit">添加</button>
+  </div>
+</form>
