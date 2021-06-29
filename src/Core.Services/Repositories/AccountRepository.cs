@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Data.Context;
 using Share.Models.Common;
 using System;
-using Share.Utils;
+using Core.Share.Utils;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 

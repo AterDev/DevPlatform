@@ -9,7 +9,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <NoWarn>1701;1702;1591</NoWarn>
-    <DocumentationFile></DocumentationFile>
+    <DocumentationFile>E:\geethin\DevPlatform\src\App.Api\App.Api.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

@@ -1,7 +1,7 @@
 using System.Linq;
 using System.Text;
 
-namespace Share.Utils
+namespace Core.Share.Utils
 {
     public static class StringExtenstion
     {

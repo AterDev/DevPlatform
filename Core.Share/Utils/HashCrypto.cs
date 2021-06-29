@@ -3,7 +3,7 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace Share.Utils
+namespace Core.Share.Utils
 {
     /// <summary>
     /// hash加密
