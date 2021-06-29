@@ -10,6 +10,7 @@ namespace Core.Share.Utils
     /// </summary>
     public class HashCrypto
     {
+        private static readonly RandomNumberGenerator Rng = RandomNumberGenerator.Create();
         public static string Create(string value, string salt)
         {
             var encrpty = new Rfc2898DeriveBytes(value, Encoding.UTF8.GetBytes(salt), 100, HashAlgorithmName.SHA512);
@@ -74,16 +75,22 @@ namespace Core.Share.Utils
         public static string GetRnd(int length = 4, bool useNum = true, bool useLow = false, bool useUpp = true, bool useSpe = false, string custom = "")
         {
             byte[] b = new byte[4];
-            new RNGCryptoServiceProvider().GetBytes(b);
-            Random r = new Random(BitConverter.ToInt32(b, 0));
+            
             string s = null, str = custom;
             if (useNum) { str += "0123456789"; }
             if (useLow) { str += "abcdefghijklmnopqrstuvwxyz"; }
             if (useUpp) { str += "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; }
             if (useSpe) { str += "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~"; }
+            // 范围
+            var range = str.Length - 1;
             for (int i = 0; i < length; i++)
             {
-                s += str.Substring(r.Next(0, str.Length - 1), 1);
+                Rng.GetBytes(b);
+                // 随机数
+                var rn = BitConverter.ToUInt32(b, 0) / ((double)UInt32.MaxValue + 1);
+                // 位置
+                var position = (int)(rn * range);
+                s += str.Substring(position, 1);
             }
             return s;
         }

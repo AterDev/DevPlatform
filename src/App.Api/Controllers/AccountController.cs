@@ -11,6 +11,7 @@ using App.Agreement;
 using Microsoft.AspNetCore.Authorization;
 using Share.Models.Common;
 using Microsoft.Extensions.Configuration;
+using NSwag.Annotations;
 
 namespace App.Api.Controllers
 {

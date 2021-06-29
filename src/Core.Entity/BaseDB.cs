@@ -2,12 +2,14 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace Core.Entity
 {
     /// <summary>
     /// 数据加基础字段模型
     /// </summary>
+    /// <inheritdoc/>
     public class BaseDB
     {
         [Key]

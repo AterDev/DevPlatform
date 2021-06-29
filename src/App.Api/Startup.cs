@@ -4,7 +4,6 @@ using System.Text;
 using AutoMapper;
 using Core.Services;
 using Data.Context;
-using IGeekFan.AspNetCore.Knife4jUI;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -98,7 +97,6 @@ namespace App.Api
                 c.Description = "接口文档 暂无描述";
                 c.Version = "v1";
             });
-
             services.AddControllers()
             .AddNewtonsoftJson(options =>
             {
@@ -120,13 +118,7 @@ namespace App.Api
                         document.Info.Title = "My Project";
                     };
                 });
-
-
-                app.UseKnife4UI(c =>
-                {
-                    c.RoutePrefix = "api/docs"; // serve the UI at root
-                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "V1 Docs");
-                });
+                app.UseReDoc();
             }
             else
             {
