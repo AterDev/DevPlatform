@@ -93,9 +93,12 @@ namespace App.Api
                 c.GenerateXmlObjects = true;
                 c.GenerateEnumMappingDescription = true;
                 c.UseControllerSummaryAsTagDescription = true;
-                c.Title = "API 文档";
-                c.Description = "接口文档 暂无描述";
-                c.Version = "v1";
+                c.PostProcess = (document) =>
+                {
+                    document.Info.Title = "Dev Platform";
+                    document.Info.Description = "Api 文档";
+                    document.Info.Version = "1.0";
+                };
             });
             services.AddControllers()
             .AddNewtonsoftJson(options =>
@@ -111,14 +114,8 @@ namespace App.Api
             {
                 app.UseCors("default");
                 app.UseDeveloperExceptionPage();
-                app.UseOpenApi(settings =>
-                {
-                    settings.PostProcess = (document, request) =>
-                    {
-                        document.Info.Title = "My Project";
-                    };
-                });
-                app.UseReDoc();
+                app.UseOpenApi();
+                app.UseSwaggerUi3(c => { c.DocumentTitle = "文档"; });
             }
             else
             {
