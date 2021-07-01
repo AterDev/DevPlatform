@@ -21,7 +21,7 @@
   </ItemGroup>
   
   <ItemGroup>
-    <ProjectReference Include="..\Data.Context\Data.Context.csproj" />
+    <ProjectReference Include="..\Data.Context\EntityFrameworkCore.csproj" />
     <ProjectReference Include="..\Share\Share.csproj" />
   </ItemGroup>
 

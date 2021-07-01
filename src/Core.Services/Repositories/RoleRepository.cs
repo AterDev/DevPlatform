@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Data.Context;
 
-namespace Core.Services.Repositories
+namespace Services.Repositories
 {
     public class RoleRepository : Repository<Role, RoleAddDto, RoleUpdateDto, RoleFilter, RoleDto>
     {

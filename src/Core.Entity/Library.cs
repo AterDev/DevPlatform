@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Core.Entity
+namespace Entity
 {
     /// <summary>
     /// 模型库

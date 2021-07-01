@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Core.Entity
+namespace Entity
 {
     [Table("ArticleCatalog")]
     public class ArticleCatalog : BaseDB

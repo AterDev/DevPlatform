@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 using Data.Context;
 using Share.Models.Common;
 using System;
-using Core.Share.Utils;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using Assist.Utils;
 
 namespace Core.Services.Repositories
 {

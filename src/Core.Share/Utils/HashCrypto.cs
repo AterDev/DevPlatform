@@ -3,7 +3,7 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace Core.Share.Utils
+namespace Assist.Utils
 {
     /// <summary>
     /// hash加密
@@ -75,7 +75,7 @@ namespace Core.Share.Utils
         public static string GetRnd(int length = 4, bool useNum = true, bool useLow = false, bool useUpp = true, bool useSpe = false, string custom = "")
         {
             byte[] b = new byte[4];
-            
+
             string s = null, str = custom;
             if (useNum) { str += "0123456789"; }
             if (useLow) { str += "abcdefghijklmnopqrstuvwxyz"; }
@@ -87,7 +87,7 @@ namespace Core.Share.Utils
             {
                 Rng.GetBytes(b);
                 // 随机数
-                var rn = BitConverter.ToUInt32(b, 0) / ((double)UInt32.MaxValue + 1);
+                var rn = BitConverter.ToUInt32(b, 0) / ((double)uint.MaxValue + 1);
                 // 位置
                 var position = (int)(rn * range);
                 s += str.Substring(position, 1);

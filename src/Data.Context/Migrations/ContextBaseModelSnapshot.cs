@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace Data.Context.Migrations
+namespace EntityFrameworkCore.Migrations
 {
     [DbContext(typeof(ContextBase))]
     partial class ContextBaseModelSnapshot : ModelSnapshot
