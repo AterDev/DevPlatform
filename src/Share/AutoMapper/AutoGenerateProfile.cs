@@ -10,7 +10,7 @@
 // LibraryCatalog;
 // {AlreadyMapedEntity}
 using AutoMapper;
-using Core.Entity;
+using Entity;
 using Share.Models;
 using Share.Models.Common;
 using System;

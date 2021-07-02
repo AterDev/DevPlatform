@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Share.Models;
-using Core.Entity;
+using Entity;
 namespace Share.Models
 {
     public class LibraryCatalogDetailDto
