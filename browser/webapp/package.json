@@ -23,8 +23,10 @@
     "@angular/platform-browser": "~12.1.1",
     "@angular/platform-browser-dynamic": "~12.1.1",
     "@angular/router": "~12.1.1",
+    "@materia-ui/ngx-monaco-editor": "^5.1.0",
     "angular-oauth2-oidc": "^10.0.3",
     "linqts": "^1.14.4",
+    "monaco-editor": "^0.25.2",
     "rxjs": "~6.5.5",
     "tslib": "^2.0.0",
     "zone.js": "~0.11.4"

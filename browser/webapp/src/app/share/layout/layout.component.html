@@ -1,8 +1,7 @@
 <mat-toolbar>
   <div fxFlex="none">
-    <span>DevPlatform</span>
+    <span routerLink="/index">DevPlatform</span>
   </div>
-
   <div fxFlex="auto" fxLayoutAlign="center center">
     <a mat-button [routerLink]="['/index']" routerLinkActive="active">推荐</a>
     <a mat-button [routerLink]="['/trends']" routerLinkActive="active">动态</a>
@@ -11,7 +10,6 @@
   <div fxFlex="none">
     <span style="display:flex;flex:1 1 auto"></span>
     <span *ngIf="isLogin">
-
       <button mat-icon-button routerLink="/portal/index" matTooltip="控制面板">
         <mat-icon>widgets</mat-icon>
       </button>
@@ -37,5 +35,4 @@
       <a mat-button (click)="login()">登录</a>
     </span>
   </div>
-
 </mat-toolbar>

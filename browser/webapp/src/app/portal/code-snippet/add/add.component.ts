@@ -1,11 +1,11 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { CodeSnippetService } from '../../services/code-snippet.service';
-import { CodeSnippetAddDto } from '../../share/models/code-snippet-add-dto.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Status } from 'src/app/share/models/status.model';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { CodeSnippetService } from 'src/app/services/code-snippet.service';
+import { CodeSnippetAddDto } from 'src/app/share/models/code-snippet-add-dto.model';
 
 @Component({
   selector: 'app-add',
@@ -28,10 +28,10 @@ export class AddComponent implements OnInit {
 
   }
 
-    get name() { return this.formGroup.get('name'); }
-    get description() { return this.formGroup.get('description'); }
-    get content() { return this.formGroup.get('content'); }
-    get updatedTime() { return this.formGroup.get('updatedTime'); }
+  get name() { return this.formGroup.get('name'); }
+  get description() { return this.formGroup.get('description'); }
+  get content() { return this.formGroup.get('content'); }
+  get updatedTime() { return this.formGroup.get('updatedTime'); }
 
 
   ngOnInit(): void {
@@ -73,9 +73,9 @@ export class AddComponent implements OnInit {
   }
 
   add(): void {
-    if(this.formGroup.valid) {
+    if (this.formGroup.valid) {
       const data = this.formGroup.value as CodeSnippetAddDto;
-      this.data = {...data, ...this.data};
+      this.data = { ...data, ...this.data };
       this.service.add(this.data)
         .subscribe(res => {
           this.snb.open('添加成功');
@@ -85,17 +85,17 @@ export class AddComponent implements OnInit {
     }
   }
 
-  upload(event: any, type ?: string): void {
+  upload(event: any, type?: string): void {
     const files = event.target.files;
-    if(files[0]) {
+    if (files[0]) {
       const formdata = new FormData();
       formdata.append('file', files[0]);
-  /*    this.service.uploadFile('agent-info' + type, formdata)
-        .subscribe(res => {
-          this.data.logoUrl = res.url;
-        }, error => {
-          this.snb.open(error?.detail);
-        }); */
+      /*    this.service.uploadFile('agent-info' + type, formdata)
+            .subscribe(res => {
+              this.data.logoUrl = res.url;
+            }, error => {
+              this.snb.open(error?.detail);
+            }); */
     } else {
 
     }

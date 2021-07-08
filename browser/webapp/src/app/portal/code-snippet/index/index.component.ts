@@ -2,12 +2,12 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { CodeSnippetService } from 'src/app/services/code-snippet.service';
 import { Router } from '@angular/router';
 import { ConfirmDialogComponent } from 'src/app/share/confirm-dialog/confirm-dialog.component';
-import { CodeSnippetDto } from '../../share/models/code-snippet-dto.model';
-import { CodeSnippetFilter } from '../../share/models/code-snippet-filter.model';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
+import { CodeSnippetDto } from 'src/app/share/models/code-snippet-dto.model';
+import { CodeSnippetFilter } from 'src/app/share/models/code-snippet-filter.model';
 
 @Component({
   selector: 'app-index',
@@ -19,7 +19,7 @@ export class IndexComponent implements OnInit {
   isLoading = true;
   total = 0;
   data: CodeSnippetDto[] = [];
-  columns: string[] = ['name',　'description',　'content',　'actions'];
+  columns: string[] = ['name', 'description', 'content', 'actions'];
   dataSource!: MatTableDataSource<CodeSnippetDto>;
   filter: CodeSnippetFilter;
   pageSizeOption = [12, 20, 50];
@@ -41,7 +41,7 @@ export class IndexComponent implements OnInit {
   }
 
   getList(event?: PageEvent): void {
-    if(event) {
+    if (event) {
       this.filter.pageIndex = event.pageIndex + 1;
       this.filter.pageSize = event.pageSize;
     }
@@ -78,47 +78,47 @@ export class IndexComponent implements OnInit {
         this.dataSource.data = this.data;
         this.snb.open('删除成功');
       });
-}
+  }
 
-/*
-openAddDialog(): void {
-  const ref = this.dialog.open(AddComponent, {
-    hasBackdrop: true,
-    disableClose: false,
-    data: {
-    }
-  });
-  ref.afterClosed().subscribe(res => {
-    if (res) {
-      this.snb.open('添加成功');
-      this.getList();
-    }
-  });
-}
-openDetailDialog(id: string): void {
-  const ref = this.dialog.open(DetailComponent, {
-    hasBackdrop: true,
-    disableClose: false,
-    data: { id }
-  });
-  ref.afterClosed().subscribe(res => {
-    if (res) { }
-  });
-}
+  /*
+  openAddDialog(): void {
+    const ref = this.dialog.open(AddComponent, {
+      hasBackdrop: true,
+      disableClose: false,
+      data: {
+      }
+    });
+    ref.afterClosed().subscribe(res => {
+      if (res) {
+        this.snb.open('添加成功');
+        this.getList();
+      }
+    });
+  }
+  openDetailDialog(id: string): void {
+    const ref = this.dialog.open(DetailComponent, {
+      hasBackdrop: true,
+      disableClose: false,
+      data: { id }
+    });
+    ref.afterClosed().subscribe(res => {
+      if (res) { }
+    });
+  }
 
-openEditDialog(id: string): void {
-  const ref = this.dialog.open(EditComponent, {
-    hasBackdrop: true,
-    disableClose: false,
-    data: { id }
-  });
-  ref.afterClosed().subscribe(res => {
-    if (res) {
-      this.snb.open('修改成功');
-      this.getList();
-    }
-  });
-}*/
+  openEditDialog(id: string): void {
+    const ref = this.dialog.open(EditComponent, {
+      hasBackdrop: true,
+      disableClose: false,
+      data: { id }
+    });
+    ref.afterClosed().subscribe(res => {
+      if (res) {
+        this.snb.open('修改成功');
+        this.getList();
+      }
+    });
+  }*/
 
   /**
    * 编辑
