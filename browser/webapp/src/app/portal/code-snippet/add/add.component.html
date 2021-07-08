@@ -1,38 +1,42 @@
 <legend>
-  <h2>添加CodeSnippet</h2>
+  <h2>添加代码片段</h2>
 </legend>
 <form [formGroup]="formGroup" (ngSubmit)="add()">
   <div fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="8px">
-  <mat-form-field>
-    <mat-label>Name</mat-label>
-    <input matInput placeholder="Name" formControlName="name"   minlength="" maxlength="100">
-    <mat-error *ngIf="name?.invalid">
-    {{getValidatorMessage('name')}}
-    </mat-error>
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label>Description</mat-label>
-    <input matInput placeholder="Description" formControlName="description"   minlength="" maxlength="500">
-    <mat-error *ngIf="description?.invalid">
-    {{getValidatorMessage('description')}}
-    </mat-error>
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label>Content</mat-label>
-    <input matInput placeholder="Content" formControlName="content"   minlength="" maxlength="4000">
-    <mat-error *ngIf="content?.invalid">
-    {{getValidatorMessage('content')}}
-    </mat-error>
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label>UpdatedTime</mat-label>
-    <input matInput [matDatepicker]="updatedTimePicker" placeholder="UpdatedTime" formControlName="updatedTime">
-    <mat-datepicker-toggle matSuffix [for]="updatedTimePicker"></mat-datepicker-toggle>
-    <mat-datepicker #updatedTimePicker startView="multi-year"></mat-datepicker>
-    <mat-error *ngIf="updatedTime?.invalid">
-    {{getValidatorMessage('updatedTime')}}
-    </mat-error>
-  </mat-form-field>
+    <mat-form-field>
+      <mat-label>实体名称</mat-label>
+      <input matInput placeholder="Entity Name" formControlName="name" minlength="" maxlength="100">
+      <mat-error *ngIf="name?.invalid">
+        {{getValidatorMessage('name')}}
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>描述</mat-label>
+      <input matInput placeholder="Description" formControlName="description" minlength="" maxlength="500">
+      <mat-error *ngIf="description?.invalid">
+        {{getValidatorMessage('description')}}
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>语言</mat-label>
+      <mat-select placeholder="Language" formControlName="language" (selectionChange)="changeLanguage($event)">
+        <mat-option *ngFor="let item of languageSelection" [value]="item.value">
+          {{item.key}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>类型</mat-label>
+      <mat-select placeholder="codeType" formControlName="codeType">
+        <mat-option *ngFor="let item of codeTypeSelection" [value]="item.value">
+          {{item.key}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="8px">
+    <ngx-monaco-editor [options]="editorOptions" formControlName="content" class="editor">
+    </ngx-monaco-editor>
   </div>
   <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="8px" class="mt-2">
     <button mat-flat-button color="primary" type="submit">添加</button>

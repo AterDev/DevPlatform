@@ -8,6 +8,10 @@ import { CodeEditorComponent } from './code-editor/code-editor.component';
   imports: [
     ShareModule,
     MonacoEditorModule
+  ],
+  exports: [
+    MonacoEditorModule,
+    CodeEditorComponent
   ]
 })
 export class ComponentsModule { }

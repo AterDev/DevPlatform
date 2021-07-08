@@ -4,7 +4,6 @@ import { LoginComponent } from './login/login.component';
 import { ShareModule } from '../share/share.module';
 import { IndexComponent } from './index/index.component';
 
-
 @NgModule({
   declarations: [LoginComponent, IndexComponent],
   imports: [

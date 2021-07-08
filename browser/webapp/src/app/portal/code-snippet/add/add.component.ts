@@ -3,9 +3,13 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Status } from 'src/app/share/models/status.model';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CodeSnippetService } from 'src/app/services/code-snippet.service';
 import { CodeSnippetAddDto } from 'src/app/share/models/code-snippet-add-dto.model';
+import { Language } from 'src/app/share/models/language.model';
+import { CodeType } from 'src/app/share/models/code-type.model';
+import { KeyValue, Util } from 'src/app/share/util';
+import { MonacoEditorConstructionOptions } from '@materia-ui/ngx-monaco-editor';
+import { MatSelectChange } from '@angular/material/select';
 
 @Component({
   selector: 'app-add',
@@ -18,6 +22,13 @@ export class AddComponent implements OnInit {
   data = {} as CodeSnippetAddDto;
   isLoading = true;
   status = Status;
+
+  languageSelection: KeyValue<number>[];
+  codeTypeSelection: KeyValue<number>[];
+  editorOptions: MonacoEditorConstructionOptions = {
+    theme: 'vs-dark', language: 'csharp',
+  };
+
   constructor(
     private service: CodeSnippetService,
     public snb: MatSnackBar,
@@ -25,28 +36,37 @@ export class AddComponent implements OnInit {
     // public dialogRef: MatDialogRef<AddComponent>,
     // @Inject(MAT_DIALOG_DATA) public dlgData: { id: '' }
   ) {
-
+    this.languageSelection = Util.enumToArray<number>(Language);
+    this.codeTypeSelection = Util.enumToArray<number>(Language);
   }
 
   get name() { return this.formGroup.get('name'); }
   get description() { return this.formGroup.get('description'); }
+  get language() { return this.formGroup.get('language'); }
+  get codeType() { return this.formGroup.get('codeType'); }
   get content() { return this.formGroup.get('content'); }
-  get updatedTime() { return this.formGroup.get('updatedTime'); }
-
 
   ngOnInit(): void {
     this.initForm();
-    // TODO:获取其他相关数据
+    // 获取其他相关数据
+
   }
 
   initForm(): void {
     this.formGroup = new FormGroup({
       name: new FormControl(null, [Validators.maxLength(100)]),
       description: new FormControl(null, [Validators.maxLength(500)]),
-      content: new FormControl(null, [Validators.maxLength(4000)]),
-      updatedTime: new FormControl(null, []),
-
+      language: new FormControl(Language.Csharp, [Validators.required]),
+      codeType: new FormControl(CodeType.Entity, [Validators.required]),
+      content: new FormControl('', [Validators.required]),
     });
+  }
+  changeLanguage(event: MatSelectChange): void {
+    console.log(event);
+    console.log(Language[event.value]);
+
+    this.editorOptions.language = Language[event.value];
+
   }
   getValidatorMessage(type: string): string {
     switch (type) {
@@ -58,15 +78,6 @@ export class AddComponent implements OnInit {
         return this.description?.errors?.required ? 'Description必填' :
           this.description?.errors?.minlength ? 'Description长度最少位' :
             this.description?.errors?.maxlength ? 'Description长度最多500位' : '';
-      case 'content':
-        return this.content?.errors?.required ? 'Content必填' :
-          this.content?.errors?.minlength ? 'Content长度最少位' :
-            this.content?.errors?.maxlength ? 'Content长度最多4000位' : '';
-      case 'updatedTime':
-        return this.updatedTime?.errors?.required ? 'UpdatedTime必填' :
-          this.updatedTime?.errors?.minlength ? 'UpdatedTime长度最少位' :
-            this.updatedTime?.errors?.maxlength ? 'UpdatedTime长度最多位' : '';
-
       default:
         return '';
     }

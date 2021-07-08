@@ -1,1 +1,3 @@
-<ngx-monaco-editor [options]="editorOptions" [(ngModel)]="code"></ngx-monaco-editor>
+<ngx-monaco-editor [options]="editorOptions" [(ngModel)]="codeSnippet" (init)="editorInit($event)">
+
+</ngx-monaco-editor>

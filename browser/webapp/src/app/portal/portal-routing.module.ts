@@ -8,12 +8,11 @@ const routes: Routes = [
   {
     path: 'portal',
     canActivate: [AuthGuard],
-
+    component: PortalLayoutComponent,
     children: [
       {
         path: '',
         canActivateChild: [AuthGuard],
-        component: PortalLayoutComponent,
         children: [
           { path: '', pathMatch: 'full', redirectTo: 'index' },
           { path: 'index', component: IndexComponent },
