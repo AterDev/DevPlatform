@@ -15,7 +15,7 @@
   </ItemGroup>
   
   <ItemGroup>
-    <ProjectReference Include="..\Core.Share\Assist.csproj" />
+    <ProjectReference Include="..\Assist\Assist.csproj" />
   </ItemGroup>
 
 </Project>
