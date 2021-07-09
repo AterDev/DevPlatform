@@ -8,7 +8,7 @@ import { CodeSnippetAddDto } from 'src/app/share/models/code-snippet-add-dto.mod
 import { Language } from 'src/app/share/models/language.model';
 import { CodeType } from 'src/app/share/models/code-type.model';
 import { KeyValue, Util } from 'src/app/share/util';
-import { MonacoEditorConstructionOptions } from '@materia-ui/ngx-monaco-editor';
+import { MonacoEditorConstructionOptions, MonacoStandaloneCodeEditor } from '@materia-ui/ngx-monaco-editor';
 import { MatSelectChange } from '@angular/material/select';
 
 @Component({
@@ -17,17 +17,16 @@ import { MatSelectChange } from '@angular/material/select';
   styleUrls: ['./add.component.css']
 })
 export class AddComponent implements OnInit {
-
   formGroup!: FormGroup;
   data = {} as CodeSnippetAddDto;
   isLoading = true;
   status = Status;
-
   languageSelection: KeyValue<number>[];
   codeTypeSelection: KeyValue<number>[];
   editorOptions: MonacoEditorConstructionOptions = {
     theme: 'vs-dark', language: 'csharp',
   };
+  editor: MonacoStandaloneCodeEditor | null = null;
 
   constructor(
     private service: CodeSnippetService,
@@ -37,7 +36,7 @@ export class AddComponent implements OnInit {
     // @Inject(MAT_DIALOG_DATA) public dlgData: { id: '' }
   ) {
     this.languageSelection = Util.enumToArray<number>(Language);
-    this.codeTypeSelection = Util.enumToArray<number>(Language);
+    this.codeTypeSelection = Util.enumToArray<number>(CodeType);
   }
 
   get name() { return this.formGroup.get('name'); }
@@ -62,11 +61,13 @@ export class AddComponent implements OnInit {
     });
   }
   changeLanguage(event: MatSelectChange): void {
-    console.log(event);
-    console.log(Language[event.value]);
-
+    if (this.editor) {
+      monaco.editor.setModelLanguage(this.editor.getModel()!, Language[event.value].toLowerCase());
+    }
     this.editorOptions.language = Language[event.value];
-
+  }
+  editorInit(editor: MonacoStandaloneCodeEditor): void {
+    this.editor = editor;
   }
   getValidatorMessage(type: string): string {
     switch (type) {

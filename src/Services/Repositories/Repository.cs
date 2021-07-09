@@ -9,6 +9,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Entity;
 using EntityFrameworkCore;
+using System.Linq.Expressions;
+using System.Reflection.Metadata;
+using System.Data.Common;
 
 namespace Services.Repositories
 {
@@ -56,16 +59,34 @@ namespace Services.Repositories
         }
 
         /// <summary>
-        /// 默认以id判断
+        /// 是否存在
         /// </summary>
-        /// <param name="o"></param>
+        /// <param name="entity"></param>
         /// <returns></returns>
-        public override async Task<TEntity> Exist(object o)
+        public bool Exist<TUnique>(TUnique entity)
         {
-            var pi = o.GetType().GetProperty("Id");
-            var id = (Guid)pi.GetValue(o, null);
-            var exist = await _db.FindAsync(id);
-            return exist;
+            Expression body = null;
+            var type = typeof(TUnique);
+            var notNullProps = type.GetProperties()
+                .Where(p => p.GetValue(entity) != null)
+                .ToList();
+
+            var parameter = Expression.Parameter(type, "debug");
+
+            notNullProps.ForEach(prop =>
+            {
+                var memberExpression = Expression.Property(parameter, prop.Name);
+                var equalValue = Expression.Constant(prop.GetValue(entity));
+
+                var equal = Expression.Equal(equalValue, memberExpression);
+                body = body == null ? equal : Expression.AndAlso(body, equal);
+            });
+            if (body != null)
+            {
+                var conditions = Expression.Lambda<Func<TEntity, bool>>(body, new[] { parameter });
+                return _db.Any(conditions);
+            }
+            return false;
         }
 
         public override async Task<TEntity> GetDetailAsync(Guid id)

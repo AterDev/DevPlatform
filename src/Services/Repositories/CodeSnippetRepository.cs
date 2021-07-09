@@ -19,5 +19,6 @@ namespace Services.Repositories
             _query = _query.OrderByDescending(q => q.CreatedTime);
             return base.GetListWithPageAsync(filter);
         }
+        
     }
 }

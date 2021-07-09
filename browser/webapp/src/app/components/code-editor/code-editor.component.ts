@@ -21,6 +21,7 @@ export class CodeEditorComponent implements OnInit {
       take(1),
     ).subscribe(() => {
       // here, we retrieve monaco-editor instance
+
     });
   }
 

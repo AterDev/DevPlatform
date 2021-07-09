@@ -19,10 +19,7 @@ export class Util {
       const item: KeyValue<T> = { key: v, value: enumType[v] };
       keyValue.push(item);
     });
-    console.log(keyValue);
-
     return keyValue;
-
   }
 }
 

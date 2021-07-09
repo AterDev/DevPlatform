@@ -53,7 +53,6 @@ namespace Entity
         public string Avatar { get; set; }
         public AccountExtend Extend { get; set; }
         public List<Role> Roles { get; set; }
-
         /// <summary>
         /// 文章
         /// </summary>

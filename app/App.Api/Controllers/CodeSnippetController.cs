@@ -68,5 +68,11 @@ namespace App.Api.Controllers
             }
             return NotFound();
         }
+
+        [HttpGet("exist")]
+        public ActionResult<bool> ExistAsync([FromQuery] CodeSnippetUnique dto)
+        {
+            return _repos.Exist(dto);
+        }
     }
 }

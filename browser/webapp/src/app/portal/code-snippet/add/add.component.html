@@ -1,10 +1,8 @@
-<legend>
-  <h2>添加代码片段</h2>
-</legend>
-<form [formGroup]="formGroup" (ngSubmit)="add()">
-  <div fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="8px">
+<form fxLayout="row wrap" [formGroup]="formGroup" (ngSubmit)="add()">
+  <div class="px-1" fxLayout="column" fxFlex="none" fxLayoutAlign="start start" fxLayoutGap="8px">
+    <h2>添加代码片段</h2>
     <mat-form-field>
-      <mat-label>实体名称</mat-label>
+      <mat-label>名称</mat-label>
       <input matInput placeholder="Entity Name" formControlName="name" minlength="" maxlength="100">
       <mat-error *ngIf="name?.invalid">
         {{getValidatorMessage('name')}}
@@ -12,7 +10,8 @@
     </mat-form-field>
     <mat-form-field>
       <mat-label>描述</mat-label>
-      <input matInput placeholder="Description" formControlName="description" minlength="" maxlength="500">
+      <textarea matInput placeholder="Description" formControlName="description" minlength="" maxlength="500"
+        rows="3"></textarea>
       <mat-error *ngIf="description?.invalid">
         {{getValidatorMessage('description')}}
       </mat-error>
@@ -33,12 +32,10 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
-  </div>
-  <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="8px">
-    <ngx-monaco-editor [options]="editorOptions" formControlName="content" class="editor">
-    </ngx-monaco-editor>
-  </div>
-  <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="8px" class="mt-2">
     <button mat-flat-button color="primary" type="submit">添加</button>
+  </div>
+  <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="8px" fxFlex="auto">
+    <ngx-monaco-editor [options]="editorOptions" formControlName="content" class="editor" (init)="editorInit($event)">
+    </ngx-monaco-editor>
   </div>
 </form>
