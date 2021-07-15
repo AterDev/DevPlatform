@@ -2,9 +2,12 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { CKEditor5 } from '@ckeditor/ckeditor5-angular';
+import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
 import { ArticleService } from 'src/app/services/article.service';
 import { ArticleAddDto } from 'src/app/share/models/article-add-dto.model';
 import { Status } from 'src/app/share/models/status.model';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-add',
@@ -17,6 +20,8 @@ export class AddComponent implements OnInit {
   data = {} as ArticleAddDto;
   isLoading = true;
   status = Status;
+  public editorConfig!: CKEditor5.Config;
+  public editor: CKEditor5.EditorConstructor = DecoupledEditor;
   constructor(
     private service: ArticleService,
     public snb: MatSnackBar,
@@ -27,12 +32,12 @@ export class AddComponent implements OnInit {
 
   }
 
-    get title() { return this.formGroup.get('title'); }
-    get summary() { return this.formGroup.get('summary'); }
-    get tags() { return this.formGroup.get('tags'); }
-    get content() { return this.formGroup.get('content'); }
-    get accountId() { return this.formGroup.get('accountId'); }
-    get catalogId() { return this.formGroup.get('catalogId'); }
+  get title() { return this.formGroup.get('title'); }
+  get summary() { return this.formGroup.get('summary'); }
+  get tags() { return this.formGroup.get('tags'); }
+  get content() { return this.formGroup.get('content'); }
+  get accountId() { return this.formGroup.get('accountId'); }
+  get catalogId() { return this.formGroup.get('catalogId'); }
 
 
   ngOnInit(): void {
@@ -50,6 +55,17 @@ export class AddComponent implements OnInit {
       catalogId: new FormControl(null, []),
 
     });
+    this.editorConfig = {
+      // placeholder: '请添加图文信息提供证据，也可以直接从Word文档中复制',
+      simpleUpload: {
+        uploadUrl: environment.api_daemon + '/api/CourseProduct/UploadEditorFile',
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token')
+        }
+      },
+      height: '600px',
+      language: 'zh-cn'
+    };
   }
   getValidatorMessage(type: string): string {
     switch (type) {
@@ -82,11 +98,16 @@ export class AddComponent implements OnInit {
         return '';
     }
   }
-
+  public onReady(editor: any) {
+    editor.ui.getEditableElement().parentElement.insertBefore(
+      editor.ui.view.toolbar.element,
+      editor.ui.getEditableElement()
+    );
+  }
   add(): void {
-    if(this.formGroup.valid) {
+    if (this.formGroup.valid) {
       const data = this.formGroup.value as ArticleAddDto;
-      this.data = {...data, ...this.data};
+      this.data = { ...data, ...this.data };
       this.service.add(this.data)
         .subscribe(res => {
           this.snb.open('添加成功');
@@ -96,17 +117,17 @@ export class AddComponent implements OnInit {
     }
   }
 
-  upload(event: any, type ?: string): void {
+  upload(event: any, type?: string): void {
     const files = event.target.files;
-    if(files[0]) {
+    if (files[0]) {
       const formdata = new FormData();
       formdata.append('file', files[0]);
-  /*    this.service.uploadFile('agent-info' + type, formdata)
-        .subscribe(res => {
-          this.data.logoUrl = res.url;
-        }, error => {
-          this.snb.open(error?.detail);
-        }); */
+      /*    this.service.uploadFile('agent-info' + type, formdata)
+            .subscribe(res => {
+              this.data.logoUrl = res.url;
+            }, error => {
+              this.snb.open(error?.detail);
+            }); */
     } else {
 
     }
