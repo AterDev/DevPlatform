@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 using Share.Models.Common;
 using Microsoft.Extensions.Configuration;
 using NSwag.Annotations;
+using Microsoft.AspNetCore.Http;
 
 namespace App.Api.Controllers
 {
@@ -26,7 +27,8 @@ namespace App.Api.Controllers
             ILogger<AccountController> logger,
             AccountRepository repository,
             WebService service,
-            IConfiguration configuration) : base(logger, repository)
+            IConfiguration configuration,
+             IHttpContextAccessor accessor) : base(logger, repository, accessor)
         {
             _config = configuration;
             webService = service;

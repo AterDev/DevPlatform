@@ -1,10 +1,5 @@
 ﻿using Entity;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Share.Models
 {
@@ -25,10 +20,10 @@ namespace Share.Models
         /// <summary>
         /// 语言类型
         /// </summary>
-        public Language? Language { get; set; }
+        public Language Language { get; set; }
         /// <summary>
         /// 类型
         /// </summary>
-        public CodeType? CodeType { get; set; }
+        public CodeType CodeType { get; set; }
     }
 }

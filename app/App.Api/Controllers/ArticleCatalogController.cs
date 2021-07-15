@@ -23,7 +23,7 @@ namespace App.Api.Controllers
         public ArticleCatalogController(
             ILogger<ArticleCatalogController> logger,
                  IHttpContextAccessor accessor,
-            ArticleCatalogRepository repository) : base(logger, repository)
+            ArticleCatalogRepository repository) : base(logger, repository, accessor)
         {
             var context = accessor.HttpContext;
             var id = context.User.FindFirstValue(ClaimTypes.NameIdentifier);

@@ -8,6 +8,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using App.Agreement;
+using Microsoft.AspNetCore.Http;
 
 namespace App.Api.Controllers
 {
@@ -18,7 +19,8 @@ namespace App.Api.Controllers
     {
         public CodeSnippetController(
             ILogger<CodeSnippetController> logger,
-            CodeSnippetRepository repository) : base(logger, repository)
+            CodeSnippetRepository repository,
+             IHttpContextAccessor accessor) : base(logger, repository, accessor)
         {
         }
 
@@ -30,10 +32,10 @@ namespace App.Api.Controllers
         [HttpPost]
         public override async Task<ActionResult<CodeSnippet>> AddAsync([FromBody] CodeSnippetAddDto form)
         {
-            // if (_repos.Any(e => e.Name == form.Name))
-            // {
-            //     return Conflict();
-            // }
+            if (_repos.Any(_userId, form.Name, form.CodeType, form.Language))
+            {
+                return Conflict();
+            }
             return await _repos.AddAsync(form);
         }
 

@@ -63,7 +63,7 @@ namespace Services.Repositories
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        public bool Exist<TUnique>(TUnique entity)
+        public virtual  bool Exist<TUnique>(TUnique entity)
         {
             Expression body = null;
             var type = typeof(TUnique);

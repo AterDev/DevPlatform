@@ -8,6 +8,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { CodeSnippetDto } from 'src/app/share/models/code-snippet-dto.model';
 import { CodeSnippetFilter } from 'src/app/share/models/code-snippet-filter.model';
+import { Language } from 'src/app/share/models/language.model';
+import { CodeType } from 'src/app/share/models/code-type.model';
 
 @Component({
   selector: 'app-index',
@@ -23,6 +25,8 @@ export class IndexComponent implements OnInit {
   dataSource!: MatTableDataSource<CodeSnippetDto>;
   filter: CodeSnippetFilter;
   pageSizeOption = [12, 20, 50];
+  languageEnum = Language;
+  codeTypeEnum = CodeType;
   constructor(
     private service: CodeSnippetService,
     private snb: MatSnackBar,
@@ -125,7 +129,7 @@ export class IndexComponent implements OnInit {
    */
   edit(id: string): void {
     console.log(id);
-    this.router.navigateByUrl('/code-snippet/edit/' + id);
+    this.router.navigateByUrl('/portal/code-snippet/edit/' + id);
   }
 
 }

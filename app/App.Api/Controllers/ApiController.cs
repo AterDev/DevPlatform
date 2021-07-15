@@ -9,6 +9,8 @@ using System;
 using EntityFrameworkCore;
 using App.Agreement;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
 
 namespace App.Api.Controllers
 {
@@ -21,11 +23,17 @@ namespace App.Api.Controllers
         where TFilter : FilterBase
         where TEntity : BaseDB
     {
-        public ApiController(ILogger logger, TRepository repos) : base(logger, repos)
+        protected readonly HttpContext _httpContext;
+        protected readonly Guid _userId;
+        public ApiController(ILogger logger, TRepository repos,
+            IHttpContextAccessor accessor
+            ) : base(logger, repos)
         {
-            //accessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            _httpContext = accessor.HttpContext;
+            var uid = _httpContext.User?.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (uid != null) _userId = new Guid(uid);
         }
 
-         // 自定义逻辑及方法
+        // 自定义逻辑及方法
     }
 }

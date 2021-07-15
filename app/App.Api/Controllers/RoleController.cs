@@ -8,6 +8,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using App.Agreement;
+using Microsoft.AspNetCore.Http;
 
 namespace App.Api.Controllers
 {
@@ -18,7 +19,8 @@ namespace App.Api.Controllers
     {
         public RoleController(
             ILogger<RoleController> logger,
-            RoleRepository repository) : base(logger, repository)
+            RoleRepository repository,
+             IHttpContextAccessor accessor) : base(logger, repository, accessor)
         {
         }
 
