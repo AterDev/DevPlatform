@@ -16,7 +16,7 @@ const routes: Routes = [
         children: [
           { path: '', pathMatch: 'full', redirectTo: 'index' },
           { path: 'index', component: IndexComponent },
-          { path: 'article', pathMatch: 'full', redirectTo: 'article' },
+          { path: 'think', pathMatch: 'full', redirectTo: 'think' },
           { path: 'code-snippet', pathMatch: 'full', redirectTo: 'code-snippet' },
         ]
       }

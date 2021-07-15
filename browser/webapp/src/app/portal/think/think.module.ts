@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { ArticleRoutingModule } from './article-routing.module';
+import { ThinkRoutingModule } from './think-routing.module';
 import { ShareModule } from 'src/app/share/share.module';
 import { IndexComponent } from './index/index.component';
 import { DetailComponent } from './detail/detail.component';
@@ -11,7 +11,7 @@ import { EditComponent } from './edit/edit.component';
   declarations: [IndexComponent, DetailComponent, LayoutComponent, AddComponent, EditComponent],
   imports: [
     ShareModule,
-    ArticleRoutingModule
+    ThinkRoutingModule
   ]
 })
-export class ArticleModule { }
+export class ThinkModule { }

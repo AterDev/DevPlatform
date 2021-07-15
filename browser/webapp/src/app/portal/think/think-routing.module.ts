@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { LayoutComponent } from './layout/layout.component';
 import { AuthGuard } from 'src/app/auth.guard';
 import { IndexComponent } from './index/index.component';
 import { AddComponent } from './add/add.component';
 import { DetailComponent } from './detail/detail.component';
 import { EditComponent } from './edit/edit.component';
+import { PortalLayoutComponent } from '../portal-layout/portal-layout.component';
 
 const routes: Routes = [
   {
-    path: 'article',
-    component: LayoutComponent,
+    path: 'portal/think',
+    component: PortalLayoutComponent,
     canActivate: [AuthGuard],
     children:
       [
@@ -33,4 +33,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class ArticleRoutingModule { }
+export class ThinkRoutingModule { }
