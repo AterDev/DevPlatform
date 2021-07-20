@@ -7,7 +7,6 @@ using Services.Repositories;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using App.Agreement;
 using Microsoft.AspNetCore.Http;
 
 namespace App.Api.Controllers

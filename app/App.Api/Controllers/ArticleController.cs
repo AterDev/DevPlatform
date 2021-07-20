@@ -10,6 +10,9 @@ using System.Threading.Tasks;
 using App.Agreement;
 using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
+using System.IO;
+using Assist.Utils;
+using Microsoft.AspNetCore.Hosting;
 
 namespace App.Api.Controllers
 {
@@ -19,15 +22,19 @@ namespace App.Api.Controllers
     public class ArticleController : ApiController<ArticleRepository, Article, ArticleAddDto, ArticleUpdateDto, ArticleFilter, ArticleDto>
     {
         protected Guid UserId = Guid.Empty;
+
+        FileService _fileService;
         public ArticleController(
             ILogger<ArticleController> logger,
             ArticleRepository repository,
-            IHttpContextAccessor accessor
+            IHttpContextAccessor accessor,
+            FileService fileService
             ) : base(logger, repository, accessor)
         {
             var context = accessor.HttpContext;
             var id = context.User.FindFirstValue(ClaimTypes.NameIdentifier);
             UserId = new Guid(id);
+            _fileService = fileService;
         }
 
         /// <summary>
@@ -118,6 +125,39 @@ namespace App.Api.Controllers
                 return Forbid();
             }
             return await base.GetDetailAsync(id);
+        }
+
+
+        /// <summary>
+        /// 文本编辑器上传文件
+        /// </summary>
+        /// <param name="upload"></param>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        [RequestSizeLimit(300_000_000)]
+        [HttpPost("UploadEditorFile")]
+        public async Task<IActionResult> UploadEditorFile(IFormFile upload, string type = "editor")
+        {
+            string dirPath = type;
+            var filePath = Path.GetTempFileName();
+            var url = "";
+            if (upload.Length > 0)
+            {
+                using var stream = new MemoryStream();
+                await upload.CopyToAsync(stream);
+                var fileExt = upload.FileName.Split(".").LastOrDefault();
+                var fileName = Path.GetFileName(HashCrypto.Md5Hash(DateTime.Now.ToString()) + $".{fileExt ?? "png"}");
+                // 保存到本地
+                var localPath = Path.Combine(dirPath, fileName);
+                _fileService.SaveFile(localPath, stream);
+
+                // 删除临时文件
+                System.IO.File.Delete(filePath);
+            }
+            return Ok(new
+            {
+                Url = url
+            });
         }
     }
 }

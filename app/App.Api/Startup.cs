@@ -34,6 +34,7 @@ namespace App.Api
             services.AddHttpContextAccessor();
             services.AddOptions();
             services.AddScoped(typeof(WebService));
+            services.AddScoped(typeof(FileService));
 
             var connectionString = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContextPool<ContextBase>(option =>

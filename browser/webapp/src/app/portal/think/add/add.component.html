@@ -1,40 +1,33 @@
 <legend>
-  <h2>添加Article</h2>
+  <h2>撰写文章</h2>
 </legend>
 <form [formGroup]="formGroup" (ngSubmit)="add()">
   <div fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="8px">
     <mat-form-field>
-      <mat-label>Title</mat-label>
+      <mat-label>标题</mat-label>
       <input matInput placeholder="Title" formControlName="title" minlength="" maxlength="100">
       <mat-error *ngIf="title?.invalid">
         {{getValidatorMessage('title')}}
       </mat-error>
     </mat-form-field>
     <mat-form-field>
-      <mat-label>Summary</mat-label>
+      <mat-label>概要</mat-label>
       <input matInput placeholder="Summary" formControlName="summary" minlength="" maxlength="500">
       <mat-error *ngIf="summary?.invalid">
         {{getValidatorMessage('summary')}}
       </mat-error>
     </mat-form-field>
     <mat-form-field>
-      <mat-label>Tags</mat-label>
-      <input matInput placeholder="Tags" formControlName="tags" minlength="" maxlength="100">
+      <mat-label>关键词</mat-label>
+      <input matInput placeholder="关键词，使用;相隔" formControlName="tags" minlength="" maxlength="100">
       <mat-error *ngIf="tags?.invalid">
         {{getValidatorMessage('tags')}}
       </mat-error>
     </mat-form-field>
-    <mat-form-field>
-      <mat-label>Content</mat-label>
-      <input matInput placeholder="Content" formControlName="content" minlength="" maxlength="">
-      <mat-error *ngIf="content?.invalid">
-        {{getValidatorMessage('content')}}
-      </mat-error>
-    </mat-form-field>
-
+  </div>
+  <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="8px">
     <ckeditor [editor]="editor" [config]="editorConfig" formControlName="content" (ready)="onReady($event)">
     </ckeditor>
-
   </div>
   <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="8px" class="mt-2">
     <button mat-flat-button color="primary" type="submit">添加</button>

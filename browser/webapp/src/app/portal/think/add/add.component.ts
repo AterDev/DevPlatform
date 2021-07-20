@@ -58,12 +58,12 @@ export class AddComponent implements OnInit {
     this.editorConfig = {
       // placeholder: '请添加图文信息提供证据，也可以直接从Word文档中复制',
       simpleUpload: {
-        uploadUrl: environment.api_daemon + '/api/CourseProduct/UploadEditorFile',
+        uploadUrl: environment.api_daemon + '/api/Article/UploadEditorFile',
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem('token')
         }
       },
-      height: '600px',
+      innerHeight: '800px',
       language: 'zh-cn'
     };
   }
