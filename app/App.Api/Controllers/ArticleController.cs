@@ -137,7 +137,7 @@ namespace App.Api.Controllers
         /// <param name="upload"></param>
         /// <param name="type"></param>
         /// <returns></returns>
-        [RequestSizeLimit(300_000_000)]
+        [RequestSizeLimit(10_000_000)]
         [HttpPost("UploadEditorFile")]
         public async Task<IActionResult> UploadEditorFile(IFormFile upload, string type = "editor")
         {

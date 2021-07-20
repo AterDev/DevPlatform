@@ -47,6 +47,21 @@ namespace Services.Repositories
             return article;
         }
 
+
+        public override async Task<Article> UpdateAsync(Guid id, ArticleUpdateDto form)
+        {
+            var article = await _context.Articles.Where(a => a.Id == id)
+                .Include(a => a.Extend)
+                .SingleOrDefaultAsync();
+
+            var extend = article.Extend;
+            article = _mapper.Map<Article>(form);
+            extend.Content = form.Content;
+            article.Extend = extend;    
+            await _context.SaveChangesAsync();
+            return article;
+        }
+
         /// <summary>
         /// ªÒ»°œÍ«È
         /// </summary>

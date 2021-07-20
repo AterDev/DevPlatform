@@ -120,6 +120,7 @@ export class EditComponent implements OnInit {
     if (this.formGroup.valid) {
       const data = this.formGroup.value as ArticleUpdateDto;
       this.updateData = { ...this.updateData, ...data };
+
       this.service.update(this.id, this.updateData)
         .subscribe(res => {
           this.snb.open('修改成功');

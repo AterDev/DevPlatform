@@ -36,6 +36,7 @@ namespace Share.Models
         /// 状态
         /// </summary>
         public Status Status { get; set; }
+        public string Content { get; set; }
         public DateTimeOffset UpdatedTime { get; set; }
     
     }
