@@ -25,6 +25,7 @@ export interface ArticleUpdateDto {
    * 状态
    */
   status?: Status;
+  content?: string | null;
   updatedTime: Date;
 
 }

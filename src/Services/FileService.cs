@@ -19,7 +19,7 @@ namespace Services
             IHostEnvironment env)
         {
             _env = env;
-            LocalPath = Path.Combine(_env.ContentRootPath, "Uploads");
+            LocalPath = Path.Combine(_env.ContentRootPath, "wwwroot","Uploads");
         }
 
 
@@ -44,6 +44,17 @@ namespace Services
             stream.CopyTo(fileStream);
             return filePath;
 
+        }
+
+        /// <summary>
+        /// 保存到第三方云服务
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="stream"></param>
+        /// <returns></returns>
+        public string SaveToCloud(string path, Stream stream)
+        {
+            return default;
         }
     }
 }

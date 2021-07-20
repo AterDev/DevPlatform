@@ -2,12 +2,12 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { CKEditor5 } from '@ckeditor/ckeditor5-angular';
-import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
 import { ArticleService } from 'src/app/services/article.service';
 import { ArticleAddDto } from 'src/app/share/models/article-add-dto.model';
 import { Status } from 'src/app/share/models/status.model';
 import { environment } from 'src/environments/environment';
+import { CKEditor5 } from '@ckeditor/ckeditor5-angular';
+import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
 
 @Component({
   selector: 'app-add',
@@ -36,7 +36,6 @@ export class AddComponent implements OnInit {
   get summary() { return this.formGroup.get('summary'); }
   get tags() { return this.formGroup.get('tags'); }
   get content() { return this.formGroup.get('content'); }
-  get accountId() { return this.formGroup.get('accountId'); }
   get catalogId() { return this.formGroup.get('catalogId'); }
 
 
@@ -50,8 +49,7 @@ export class AddComponent implements OnInit {
       title: new FormControl(null, [Validators.maxLength(100)]),
       summary: new FormControl(null, [Validators.maxLength(500)]),
       tags: new FormControl(null, [Validators.maxLength(100)]),
-      content: new FormControl(null, []),
-      accountId: new FormControl(null, []),
+      content: new FormControl(null, [Validators.required]),
       catalogId: new FormControl(null, []),
 
     });
@@ -63,7 +61,6 @@ export class AddComponent implements OnInit {
           Authorization: 'Bearer ' + localStorage.getItem('token')
         }
       },
-      innerHeight: '800px',
       language: 'zh-cn'
     };
   }
@@ -85,10 +82,6 @@ export class AddComponent implements OnInit {
         return this.content?.errors?.required ? 'Content必填' :
           this.content?.errors?.minlength ? 'Content长度最少位' :
             this.content?.errors?.maxlength ? 'Content长度最多位' : '';
-      case 'accountId':
-        return this.accountId?.errors?.required ? 'AccountId必填' :
-          this.accountId?.errors?.minlength ? 'AccountId长度最少位' :
-            this.accountId?.errors?.maxlength ? 'AccountId长度最多位' : '';
       case 'catalogId':
         return this.catalogId?.errors?.required ? 'CatalogId必填' :
           this.catalogId?.errors?.minlength ? 'CatalogId长度最少位' :

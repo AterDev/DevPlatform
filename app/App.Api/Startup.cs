@@ -117,6 +117,7 @@ namespace App.Api
                 app.UseDeveloperExceptionPage();
                 app.UseOpenApi();
                 app.UseSwaggerUi3(c => { c.DocumentTitle = "文档"; });
+                app.UseStaticFiles();
             }
             else
             {

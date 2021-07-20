@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ArticleService } from 'src/app/services/article.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmDialogComponent } from 'src/app/share/confirm-dialog/confirm-dialog.component';
 import { ArticleDto } from 'src/app/share/models/article-dto.model';
 import { ArticleFilter } from 'src/app/share/models/article-filter.model';
@@ -19,7 +19,7 @@ export class IndexComponent implements OnInit {
   isLoading = true;
   total = 0;
   data: ArticleDto[] = [];
-  columns: string[] = ['title',　'summary',　'authorName',　'actions'];
+  columns: string[] = ['title', 'summary', 'authorName', 'actions'];
   dataSource!: MatTableDataSource<ArticleDto>;
   filter: ArticleFilter;
   pageSizeOption = [12, 20, 50];
@@ -28,6 +28,7 @@ export class IndexComponent implements OnInit {
     private snb: MatSnackBar,
     private dialog: MatDialog,
     private router: Router,
+    private activeRoute: ActivatedRoute
   ) {
 
     this.filter = {
@@ -41,7 +42,7 @@ export class IndexComponent implements OnInit {
   }
 
   getList(event?: PageEvent): void {
-    if(event) {
+    if (event) {
       this.filter.pageIndex = event.pageIndex + 1;
       this.filter.pageSize = event.pageSize;
     }
@@ -78,54 +79,53 @@ export class IndexComponent implements OnInit {
         this.dataSource.data = this.data;
         this.snb.open('删除成功');
       });
-}
+  }
 
-/*
-openAddDialog(): void {
-  const ref = this.dialog.open(AddComponent, {
-    hasBackdrop: true,
-    disableClose: false,
-    data: {
-    }
-  });
-  ref.afterClosed().subscribe(res => {
-    if (res) {
-      this.snb.open('添加成功');
-      this.getList();
-    }
-  });
-}
-openDetailDialog(id: string): void {
-  const ref = this.dialog.open(DetailComponent, {
-    hasBackdrop: true,
-    disableClose: false,
-    data: { id }
-  });
-  ref.afterClosed().subscribe(res => {
-    if (res) { }
-  });
-}
+  /*
+  openAddDialog(): void {
+    const ref = this.dialog.open(AddComponent, {
+      hasBackdrop: true,
+      disableClose: false,
+      data: {
+      }
+    });
+    ref.afterClosed().subscribe(res => {
+      if (res) {
+        this.snb.open('添加成功');
+        this.getList();
+      }
+    });
+  }
+  openDetailDialog(id: string): void {
+    const ref = this.dialog.open(DetailComponent, {
+      hasBackdrop: true,
+      disableClose: false,
+      data: { id }
+    });
+    ref.afterClosed().subscribe(res => {
+      if (res) { }
+    });
+  }
 
-openEditDialog(id: string): void {
-  const ref = this.dialog.open(EditComponent, {
-    hasBackdrop: true,
-    disableClose: false,
-    data: { id }
-  });
-  ref.afterClosed().subscribe(res => {
-    if (res) {
-      this.snb.open('修改成功');
-      this.getList();
-    }
-  });
-}*/
+  openEditDialog(id: string): void {
+    const ref = this.dialog.open(EditComponent, {
+      hasBackdrop: true,
+      disableClose: false,
+      data: { id }
+    });
+    ref.afterClosed().subscribe(res => {
+      if (res) {
+        this.snb.open('修改成功');
+        this.getList();
+      }
+    });
+  }*/
 
   /**
    * 编辑
    */
   edit(id: string): void {
-    console.log(id);
-    this.router.navigateByUrl('/article/edit/' + id);
+    this.router.navigate(['../edit/' + id], { relativeTo: this.activeRoute });
   }
 
 }

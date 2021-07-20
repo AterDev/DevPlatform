@@ -50,10 +50,13 @@ namespace App.Api.Controllers
             {
                 return Conflict();
             }
-            var catalog = _repos.ValidCatalog(form.CatalogId, UserId);
-            if (!catalog)
+            if (form.CatalogId.HasValue)
             {
-                return NotFound("未找到相应的目录");
+                var catalog = _repos.ValidCatalog(form.CatalogId.Value, UserId);
+                if (!catalog)
+                {
+                    return NotFound("未找到相应的目录");
+                }
             }
             form.AccountId = UserId;
             return await _repos.AddAsync(form);
@@ -141,6 +144,7 @@ namespace App.Api.Controllers
             string dirPath = type;
             var filePath = Path.GetTempFileName();
             var url = "";
+            var localPath = "";
             if (upload.Length > 0)
             {
                 using var stream = new MemoryStream();
@@ -148,15 +152,19 @@ namespace App.Api.Controllers
                 var fileExt = upload.FileName.Split(".").LastOrDefault();
                 var fileName = Path.GetFileName(HashCrypto.Md5Hash(DateTime.Now.ToString()) + $".{fileExt ?? "png"}");
                 // 保存到本地
-                var localPath = Path.Combine(dirPath, fileName);
+                localPath = Path.Combine(dirPath, fileName);
                 _fileService.SaveFile(localPath, stream);
-
                 // 删除临时文件
                 System.IO.File.Delete(filePath);
+
+                // 拼成本地host链接
+                string myHostUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}";
+                url = $@" {myHostUrl}/Uploads/{localPath}";
             }
             return Ok(new
             {
-                Url = url
+                Url = url,
+                LocalUrl = url
             });
         }
     }
