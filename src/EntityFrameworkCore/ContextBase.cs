@@ -25,8 +25,11 @@ namespace EntityFrameworkCore
                 // 默认配置
             }
         }
+        
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
+
             builder.Entity<Account>(e =>
             {
                 e.HasIndex(a => a.Email);
@@ -74,6 +77,9 @@ namespace EntityFrameworkCore
                 e.HasIndex(m => m.Title);
                 e.HasIndex(m => m.CreatedTime);
                 e.HasIndex(m => m.ArticleType);
+                e.Property(b => b.UpdatedTime)
+                 .HasDefaultValueSql("getdate()")
+                 .ValueGeneratedOnAddOrUpdate();
             });
             builder.Entity<ArticleCatalog>(e =>
             {

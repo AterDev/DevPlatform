@@ -53,7 +53,6 @@ namespace Services.Repositories
             var article = await _context.Articles.Where(a => a.Id == id)
                 .Include(a => a.Extend)
                 .SingleOrDefaultAsync();
-
             var extend = article.Extend;
             article = _mapper.Map<Article>(form);
             extend.Content = form.Content;

@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
@@ -19,6 +20,7 @@ namespace Entity
         /// </summary>
         public virtual Status Status { get; set; } = Status.Default;
         public DateTimeOffset CreatedTime { get; set; } = DateTimeOffset.UtcNow;
+
         public DateTimeOffset UpdatedTime { get; set; } = DateTimeOffset.UtcNow;
     }
 
