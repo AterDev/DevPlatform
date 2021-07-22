@@ -52,7 +52,7 @@ namespace App.Api.Controllers
             }
             if (form.CatalogId.HasValue)
             {
-                var catalog = _repos.ValidCatalog(form.CatalogId.Value, UserId);
+                var catalog = _repos.ValidCatalog(form.CatalogId.Value);
                 if (!catalog)
                 {
                     return NotFound("未找到相应的目录");
@@ -90,7 +90,7 @@ namespace App.Api.Controllers
                 {
                     return Conflict();
                 }
-                if (!_repos.ValidAccount(UserId))
+                if (!_repos.ValidAccount())
                 {
                     return Forbid();
                 }
@@ -108,7 +108,7 @@ namespace App.Api.Controllers
         [HttpDelete("{id}")]
         public override async Task<ActionResult<Article>> DeleteAsync([FromRoute] Guid id)
         {
-            if (!_repos.ValidAccount(UserId))
+            if (!_repos.ValidAccount())
             {
                 return Forbid();
             }
@@ -123,10 +123,6 @@ namespace App.Api.Controllers
         [HttpGet("{id}")]
         public override async Task<ActionResult<Article>> GetDetailAsync([FromRoute] Guid id)
         {
-            if (!_repos.ValidAccount(UserId))
-            {
-                return Forbid();
-            }
             return await base.GetDetailAsync(id);
         }
 

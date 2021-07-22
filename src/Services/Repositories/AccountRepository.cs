@@ -11,12 +11,14 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using Assist.Utils;
 using Services.Repositories;
+using Microsoft.Extensions.Logging;
 
 namespace Services.Repositories
 {
     public class AccountRepository : Repository<Account, AccountAddDto, AccountUpdateDto, AccountFilter, AccountDto>
     {
-        public AccountRepository(ContextBase context, IMapper mapper) : base(context, mapper)
+
+        public AccountRepository(ContextBase context, ILogger<AccountRepository> logger, IMapper mapper) : base(context, logger, mapper)
         {
         }
 
@@ -58,7 +60,7 @@ namespace Services.Repositories
         /// </summary>
         /// <param name="dto"></param>
         /// <returns></returns>
-        public AccountDetailDto SignIn(SignInForm dto)
+        public Account SignIn(SignInForm dto)
         {
             var user = _db.Where(u => u.Email.Equals(dto.Username)
                 || u.Username.Equals(dto.Username))
@@ -67,7 +69,7 @@ namespace Services.Repositories
             if (user == null) return default;
             if (HashCrypto.Validate(dto.Password, user.HashSalt, user.Password))
             {
-                return _mapper.Map<AccountDetailDto>(user);
+                return user;
             }
             return default;
         }

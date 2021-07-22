@@ -5,12 +5,14 @@ using Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using System;
 
 namespace Services.Repositories
 {
     public class RoleRepository : Repository<Role, RoleAddDto, RoleUpdateDto, RoleFilter, RoleDto>
     {
-        public RoleRepository(ContextBase context, IMapper mapper) : base(context, mapper)
+        public RoleRepository(ContextBase context, ILogger<RoleRepository> logger, IMapper mapper) : base(context, logger, mapper)
         {
         }
 
@@ -19,5 +21,6 @@ namespace Services.Repositories
             _query = _query.OrderByDescending(q => q.CreatedTime);
             return base.GetListWithPageAsync(filter);
         }
+
     }
 }

@@ -1,6 +1,7 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Entity;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Services
@@ -27,6 +28,24 @@ namespace Services
             {
                 // 此处自定义claims
                 new Claim(ClaimTypes.NameIdentifier, id),
+                new Claim(ClaimTypes.Role, role)
+            };
+            var jwt = new JwtSecurityToken(issuer, audience, claims, signingCredentials: signingCredentials);
+            var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
+            return encodedJwt;
+        }
+
+
+        public string BuildToken(Account account, string role, string sign, string audience, string issuer)
+        {
+            var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(sign));
+            var signingCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256);
+            var claims = new Claim[]
+            {
+                // 此处自定义claims
+                new Claim(ClaimTypes.NameIdentifier, account.Id.ToString()),
+                new Claim(ClaimTypes.Email, account.Email),
+                new Claim(ClaimTypes.Name, account.Username),
                 new Claim(ClaimTypes.Role, role)
             };
             var jwt = new JwtSecurityToken(issuer, audience, claims, signingCredentials: signingCredentials);

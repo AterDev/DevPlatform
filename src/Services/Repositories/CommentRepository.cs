@@ -5,12 +5,13 @@ using Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace Services.Repositories
 {
     public class CommentRepository : Repository<Comment, CommentAddDto, CommentUpdateDto, CommentFilter, CommentDto>
     {
-        public CommentRepository(ContextBase context, IMapper mapper) : base(context, mapper)
+        public CommentRepository(ContextBase context, ILogger<CommentRepository> logger, IMapper mapper) : base(context, logger, mapper)
         {
         }
 

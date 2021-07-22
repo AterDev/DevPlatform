@@ -9,6 +9,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CKEditor5 } from '@ckeditor/ckeditor5-angular';
 import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
 import { environment } from 'src/environments/environment';
+import { Article } from 'src/app/share/models/article.model';
 
 @Component({
   selector: 'app-edit',
@@ -18,7 +19,7 @@ import { environment } from 'src/environments/environment';
 export class EditComponent implements OnInit {
   id!: string;
   isLoading = true;
-  // data = {} as Article;
+  data = {} as Article;
   updateData = {} as ArticleUpdateDto;
   formGroup!: FormGroup;
   public editorConfig!: CKEditor5.Config;
@@ -54,7 +55,7 @@ export class EditComponent implements OnInit {
   getDetail(): void {
     this.service.getDetail(this.id)
       .subscribe(res => {
-        this.updateData = res as ArticleUpdateDto;
+        this.data = res;
         this.updateData.content = res.extend?.content;
         this.initForm();
         this.isLoading = false;
@@ -65,10 +66,10 @@ export class EditComponent implements OnInit {
 
   initForm(): void {
     this.formGroup = new FormGroup({
-      title: new FormControl(this.updateData.title, [Validators.maxLength(100)]),
-      summary: new FormControl(this.updateData.summary, [Validators.maxLength(500)]),
-      tags: new FormControl(this.updateData.tags, [Validators.maxLength(100)]),
-      content: new FormControl(this.updateData.content, [Validators.required]),
+      title: new FormControl(this.data.title, [Validators.maxLength(100)]),
+      summary: new FormControl(this.data.summary, [Validators.maxLength(500)]),
+      tags: new FormControl(this.data.tags, [Validators.maxLength(100)]),
+      content: new FormControl(this.data.extend?.content, [Validators.required]),
     });
 
     this.editorConfig = {

@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Http;
 namespace App.Api.Controllers
 {
     /// <summary>
-    /// LibraryCatalog
+    /// 类库目录
     /// </summary>
     public class LibraryCatalogController : ApiController<LibraryCatalogRepository, LibraryCatalog, LibraryCatalogAddDto, LibraryCatalogUpdateDto, LibraryCatalogFilter, LibraryCatalogDto>
     {

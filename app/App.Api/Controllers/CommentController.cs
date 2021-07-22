@@ -9,12 +9,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using App.Agreement;
 using Microsoft.AspNetCore.Http;
+using NSwag.Annotations;
 
 namespace App.Api.Controllers
 {
     /// <summary>
     /// 评论
     /// </summary>
+    [OpenApiTag("Comment",Description ="评论")]
     public class CommentController : ApiController<CommentRepository, Comment, CommentAddDto, CommentUpdateDto, CommentFilter, CommentDto>
     {
         public CommentController(

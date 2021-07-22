@@ -7,13 +7,21 @@ using System.Threading.Tasks;
 using EntityFrameworkCore;
 using System;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using Services.Agreement;
 
 namespace Services.Repositories
 {
     public class ArticleRepository : Repository<Article, ArticleAddDto, ArticleUpdateDto, ArticleFilter, ArticleDto>
     {
-        public ArticleRepository(ContextBase context, IMapper mapper) : base(context, mapper)
+        IUserContext _userCtx;
+        public ArticleRepository(
+            ContextBase context,
+            IUserContext userContext,
+            ILogger<ArticleRepository> logger,
+            IMapper mapper) : base(context, logger, mapper)
         {
+            _userCtx = userContext;
         }
 
         public override Task<PageResult<ArticleDto>> GetListWithPageAsync(ArticleFilter filter)
@@ -56,7 +64,8 @@ namespace Services.Repositories
             var extend = article.Extend;
             article = _mapper.Map<Article>(form);
             extend.Content = form.Content;
-            article.Extend = extend;    
+            article.Extend = extend;
+            article.UpdatedTime = DateTimeOffset.UtcNow;
             await _context.SaveChangesAsync();
             return article;
         }
@@ -78,20 +87,19 @@ namespace Services.Repositories
         /// </summary>
         /// <param name="catalogId"></param>
         /// <returns></returns>
-        public bool ValidCatalog(Guid catalogId, Guid accountId)
+        public bool ValidCatalog(Guid catalogId)
         {
             return _context.ArticleCatalogs.Any(ac => ac.Id == catalogId
-                && ac.AccountId == accountId);
+                && ac.AccountId == _userCtx.UserId);
         }
 
         /// <summary>
         /// 验证用户
         /// </summary>
-        /// <param name="accountId"></param>
         /// <returns></returns>
-        public bool ValidAccount(Guid accountId)
+        public bool ValidAccount()
         {
-            return _context.Articles.Any(a => a.Account.Id == accountId);
+            return _context.Articles.Any(a => a.Account.Id == _userCtx.UserId);
         }
     }
 }

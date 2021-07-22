@@ -7,12 +7,13 @@ using System.Threading.Tasks;
 using EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
+using Microsoft.Extensions.Logging;
 
 namespace Services.Repositories
 {
     public class CodeSnippetRepository : Repository<CodeSnippet, CodeSnippetAddDto, CodeSnippetUpdateDto, CodeSnippetFilter, CodeSnippetDto>
     {
-        public CodeSnippetRepository(ContextBase context, IMapper mapper) : base(context, mapper)
+        public CodeSnippetRepository(ContextBase context, ILogger<CodeSnippetRepository> logger, IMapper mapper) : base(context, logger, mapper)
         {
         }
 

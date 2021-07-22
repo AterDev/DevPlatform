@@ -12,6 +12,7 @@ using EntityFrameworkCore;
 using System.Linq.Expressions;
 using System.Reflection.Metadata;
 using System.Data.Common;
+using Microsoft.Extensions.Logging;
 
 namespace Services.Repositories
 {
@@ -28,8 +29,10 @@ namespace Services.Repositories
         where TEntity : BaseDB
         where TFilter : FilterBase
     {
-        public Repository(ContextBase context, IMapper mapper) : base(context, mapper)
+        ILogger _logger;
+        public Repository(ContextBase context, ILogger logger, IMapper mapper) : base(context, mapper)
         {
+            _logger = logger;
         }
 
         /// <summary>
@@ -54,8 +57,17 @@ namespace Services.Repositories
         {
             var data = await _db.FindAsync(id);
             _db.Remove(data);
-            await _context.SaveChangesAsync();
-            return data;
+            try
+            {
+                await _context.SaveChangesAsync();
+                return data;
+            }
+            catch (Exception)
+            {
+                // TODO:删除处理
+                throw;
+            }
+
         }
 
         /// <summary>
@@ -63,7 +75,7 @@ namespace Services.Repositories
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        public virtual  bool Exist<TUnique>(TUnique entity)
+        public virtual bool Exist<TUnique>(TUnique entity)
         {
             Expression body = null;
             var type = typeof(TUnique);
@@ -136,8 +148,16 @@ namespace Services.Repositories
         {
             var currentData = await _db.FindAsync(id);
             _mapper.Map(form, currentData);
-            await _context.SaveChangesAsync();
-            return currentData;
+            try
+            {
+                await _context.SaveChangesAsync();
+                return currentData;
+            }
+            catch (Exception)
+            {
+                // TODO: 异常处理
+                throw;
+            }
         }
     }
 }

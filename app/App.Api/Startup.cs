@@ -15,6 +15,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using Share.AutoMapper;
+using Services.Agreement;
 
 namespace App.Api
 {
@@ -32,6 +33,7 @@ namespace App.Api
             services.AddRepositories();
             services.AddAutoMapper(typeof(MapperProfile));
             services.AddHttpContextAccessor();
+            services.AddTransient<IUserContext, UserContext>();
             services.AddOptions();
             services.AddScoped(typeof(WebService));
             services.AddScoped(typeof(FileService));
