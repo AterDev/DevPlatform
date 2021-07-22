@@ -18,12 +18,17 @@ namespace Services.Agreement
         public List<string> Roles { get; set; }
         public Guid? GroupId { get; init; }
 
-        private readonly HttpContext _httpContext;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+
+        public UserContext()
+        {
+
+        }
         public UserContext(
             IHttpContextAccessor httpContextAccessor
             )
         {
-            _httpContext = httpContextAccessor.HttpContext;
+            _httpContextAccessor = httpContextAccessor;
             if (Guid.TryParse(FindClaim(ClaimTypes.NameIdentifier)?.Value, out Guid userId) && userId != Guid.Empty)
             {
                 UserId = userId;
@@ -39,7 +44,7 @@ namespace Services.Agreement
 
         public Claim FindClaim(string claimType)
         {
-            return _httpContext.User?.FindFirst(claimType);
+            return _httpContextAccessor?.HttpContext?.User?.FindFirst(claimType);
         }
 
     }

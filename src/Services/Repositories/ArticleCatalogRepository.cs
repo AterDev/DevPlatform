@@ -7,12 +7,13 @@ using System.Threading.Tasks;
 using EntityFrameworkCore;
 using System;
 using Microsoft.Extensions.Logging;
+using Services.Agreement;
 
 namespace Services.Repositories
 {
     public class ArticleCatalogRepository : Repository<ArticleCatalog, ArticleCatalogAddDto, ArticleCatalogUpdateDto, ArticleCatalogFilter, ArticleCatalogDto>
     {
-        public ArticleCatalogRepository(ContextBase context, ILogger<ArticleCatalogRepository> logger, IMapper mapper) : base(context, logger, mapper)
+        public ArticleCatalogRepository(ContextBase context, ILogger<ArticleCatalogRepository> logger, IUserContext userContext, IMapper mapper) : base(context, logger, userContext, mapper)
         {
         }
 

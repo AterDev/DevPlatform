@@ -16,6 +16,8 @@ using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using Share.AutoMapper;
 using Services.Agreement;
+using App.Api.Controllers;
+using Services.Repositories;
 
 namespace App.Api
 {
@@ -30,10 +32,10 @@ namespace App.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddRepositories();
-            services.AddAutoMapper(typeof(MapperProfile));
             services.AddHttpContextAccessor();
-            services.AddTransient<IUserContext, UserContext>();
+            services.AddAutoMapper(typeof(MapperProfile));
+            services.AddScoped<IUserContext, UserContext>();
+            services.AddRepositories();
             services.AddOptions();
             services.AddScoped(typeof(WebService));
             services.AddScoped(typeof(FileService));

@@ -37,7 +37,7 @@ namespace App.Agreement
         [HttpDelete("{id}")]
         public virtual async Task<ActionResult<TEntity>> DeleteAsync([FromRoute] Guid id)
         {
-            if (_repos.Any(d => d.Id == id))
+            if (_repos._db.Any(d => d.Id == id))
             {
                 return await _repos.DeleteAsync(id);
             }
@@ -59,7 +59,7 @@ namespace App.Agreement
         [HttpPut("{id}")]
         public virtual async Task<ActionResult<TEntity>> UpdateAsync([FromRoute] Guid id, TUpdateForm form)
         {
-            if (_repos.Any(d => d.Id == id))
+            if (_repos._db.Any(d => d.Id == id))
             {
                 return await _repos.UpdateAsync(id, form);
             }

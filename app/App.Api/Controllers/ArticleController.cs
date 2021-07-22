@@ -13,6 +13,7 @@ using System.Security.Claims;
 using System.IO;
 using Assist.Utils;
 using Microsoft.AspNetCore.Hosting;
+using Services.Agreement;
 
 namespace App.Api.Controllers
 {
@@ -24,16 +25,15 @@ namespace App.Api.Controllers
         protected Guid UserId = Guid.Empty;
 
         FileService _fileService;
+
         public ArticleController(
             ILogger<ArticleController> logger,
             ArticleRepository repository,
-            IHttpContextAccessor accessor,
+            IUserContext accessor,
+            ArticleRepository articleRepository,
             FileService fileService
             ) : base(logger, repository, accessor)
         {
-            var context = accessor.HttpContext;
-            var id = context.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            UserId = new Guid(id);
             _fileService = fileService;
         }
 
@@ -45,7 +45,7 @@ namespace App.Api.Controllers
         [HttpPost]
         public override async Task<ActionResult<Article>> AddAsync([FromBody] ArticleAddDto form)
         {
-            if (_repos.Any(e => e.Title == form.Title
+            if (_repos._db.Any(e => e.Title == form.Title
                 && e.Account.Id == UserId))
             {
                 return Conflict();
@@ -83,10 +83,10 @@ namespace App.Api.Controllers
         [HttpPut("{id}")]
         public override async Task<ActionResult<Article>> UpdateAsync([FromRoute] Guid id, [FromBody] ArticleUpdateDto form)
         {
-            if (_repos.Any(e => e.Id == id))
+            if (_repos._db.Any(e => e.Id == id))
             {
                 // 名称不可以修改成其他已经存在的名称
-                if (_repos.Any(e => e.Title == form.Title && e.Id != id))
+                if (_repos._db.Any(e => e.Title == form.Title && e.Id != id))
                 {
                     return Conflict();
                 }

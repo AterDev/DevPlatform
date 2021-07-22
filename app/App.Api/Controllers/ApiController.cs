@@ -11,6 +11,7 @@ using App.Agreement;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
+using Services.Agreement;
 
 namespace App.Api.Controllers
 {
@@ -24,14 +25,12 @@ namespace App.Api.Controllers
         where TEntity : BaseDB
     {
         protected readonly HttpContext _httpContext;
-        protected readonly Guid _userId;
+        protected readonly IUserContext _usrCtx;
         public ApiController(ILogger logger, TRepository repos,
-            IHttpContextAccessor accessor
+            IUserContext userContext
             ) : base(logger, repos)
         {
-            _httpContext = accessor.HttpContext;
-            var uid = _httpContext.User?.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (uid != null) _userId = new Guid(uid);
+            _usrCtx = userContext;
         }
 
         // 自定义逻辑及方法

@@ -13,6 +13,7 @@ using Share.Models.Common;
 using Microsoft.Extensions.Configuration;
 using NSwag.Annotations;
 using Microsoft.AspNetCore.Http;
+using Services.Agreement;
 
 namespace App.Api.Controllers
 {
@@ -28,7 +29,7 @@ namespace App.Api.Controllers
             AccountRepository repository,
             WebService service,
             IConfiguration configuration,
-             IHttpContextAccessor accessor) : base(logger, repository, accessor)
+             IUserContext userContext) : base(logger, repository, userContext)
         {
             _config = configuration;
             webService = service;
@@ -42,7 +43,7 @@ namespace App.Api.Controllers
         [HttpPost]
         public override async Task<ActionResult<Account>> AddAsync([FromBody] AccountAddDto form)
         {
-            if (_repos.Any(e => e.Email == form.Email
+            if (_repos._db.Any(e => e.Email == form.Email
                 || e.Username == form.Username))
             {
                 return Conflict();
@@ -70,7 +71,7 @@ namespace App.Api.Controllers
         [HttpPut("{id}")]
         public override async Task<ActionResult<Account>> UpdateAsync([FromRoute] Guid id, [FromBody] AccountUpdateDto form)
         {
-            if (_repos.Any(e => e.Id == id))
+            if (_repos._db.Any(e => e.Id == id))
             {
                 // 名称不可以修改成其他已经存在的名称
                 // if (_repos.Any(e => e.Name == form.Name && e.Id != id))

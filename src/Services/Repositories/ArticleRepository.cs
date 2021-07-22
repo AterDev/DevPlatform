@@ -14,14 +14,13 @@ namespace Services.Repositories
 {
     public class ArticleRepository : Repository<Article, ArticleAddDto, ArticleUpdateDto, ArticleFilter, ArticleDto>
     {
-        IUserContext _userCtx;
+
         public ArticleRepository(
             ContextBase context,
             IUserContext userContext,
             ILogger<ArticleRepository> logger,
-            IMapper mapper) : base(context, logger, mapper)
+        IMapper mapper) : base(context, logger, userContext, mapper)
         {
-            _userCtx = userContext;
         }
 
         public override Task<PageResult<ArticleDto>> GetListWithPageAsync(ArticleFilter filter)
@@ -90,7 +89,7 @@ namespace Services.Repositories
         public bool ValidCatalog(Guid catalogId)
         {
             return _context.ArticleCatalogs.Any(ac => ac.Id == catalogId
-                && ac.AccountId == _userCtx.UserId);
+                && ac.AccountId == _userId.Value);
         }
 
         /// <summary>
@@ -99,7 +98,9 @@ namespace Services.Repositories
         /// <returns></returns>
         public bool ValidAccount()
         {
-            return _context.Articles.Any(a => a.Account.Id == _userCtx.UserId);
+            var userId = _userId;
+            return _db.Any(a => a.AccountId == _usrCtx.UserId);
+
         }
     }
 }

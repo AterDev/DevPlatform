@@ -8,12 +8,13 @@ using EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using Microsoft.Extensions.Logging;
+using Services.Agreement;
 
 namespace Services.Repositories
 {
     public class CodeSnippetRepository : Repository<CodeSnippet, CodeSnippetAddDto, CodeSnippetUpdateDto, CodeSnippetFilter, CodeSnippetDto>
     {
-        public CodeSnippetRepository(ContextBase context, ILogger<CodeSnippetRepository> logger, IMapper mapper) : base(context, logger, mapper)
+        public CodeSnippetRepository(ContextBase context, ILogger<CodeSnippetRepository> logger, IUserContext userContext, IMapper mapper) : base(context, logger, userContext, mapper)
         {
         }
 

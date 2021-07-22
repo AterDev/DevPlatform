@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using App.Agreement;
 using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
+using Services.Agreement;
 
 namespace App.Api.Controllers
 {
@@ -22,12 +23,9 @@ namespace App.Api.Controllers
         protected Guid UserId = Guid.Empty;
         public ArticleCatalogController(
             ILogger<ArticleCatalogController> logger,
-                 IHttpContextAccessor accessor,
-            ArticleCatalogRepository repository) : base(logger, repository, accessor)
+                 IUserContext userContext,
+            ArticleCatalogRepository repository) : base(logger, repository, userContext)
         {
-            var context = accessor.HttpContext;
-            var id = context.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            UserId = new Guid(id);
         }
 
         /// <summary>
@@ -38,7 +36,7 @@ namespace App.Api.Controllers
         [HttpPost]
         public override async Task<ActionResult<ArticleCatalog>> AddAsync([FromBody] ArticleCatalogAddDto form)
         {
-            if (_repos.Any(e => e.Name == form.Name
+            if (_repos._db.Any(e => e.Name == form.Name
                 && e.Account.Id == UserId))
             {
                 return Conflict();
@@ -50,7 +48,7 @@ namespace App.Api.Controllers
             }
             else
             {
-                var parent = _repos.SingleOrDefault(p => p.Id == form.ParentId);
+                var parent = _repos._db.SingleOrDefault(p => p.Id == form.ParentId);
                 if (parent == null)
                 {
                     return NotFound("错误的父类id");
@@ -80,10 +78,10 @@ namespace App.Api.Controllers
         [HttpPut("{id}")]
         public override async Task<ActionResult<ArticleCatalog>> UpdateAsync([FromRoute] Guid id, [FromBody] ArticleCatalogUpdateDto form)
         {
-            if (_repos.Any(e => e.Id == id))
+            if (_repos._db.Any(e => e.Id == id))
             {
                 // 名称不可以修改成其他已经存在的名称
-                if (_repos.Any(e => e.Name == form.Name && e.Id != id))
+                if (_repos._db.Any(e => e.Name == form.Name && e.Id != id))
                 {
                     return Conflict();
                 }

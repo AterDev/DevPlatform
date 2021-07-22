@@ -6,12 +6,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Services.Agreement;
 
 namespace Services.Repositories
 {
     public class LibraryRepository : Repository<Library, LibraryAddDto, LibraryUpdateDto, LibraryFilter, LibraryDto>
     {
-        public LibraryRepository(ContextBase context, ILogger<LibraryRepository> logger, IMapper mapper) : base(context, logger, mapper)
+        public LibraryRepository(ContextBase context, ILogger<LibraryRepository> logger, IUserContext userContext, IMapper mapper) : base(context, logger, userContext, mapper)
         {
         }
 

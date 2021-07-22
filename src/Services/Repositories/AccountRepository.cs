@@ -12,14 +12,16 @@ using System.Collections.Generic;
 using Assist.Utils;
 using Services.Repositories;
 using Microsoft.Extensions.Logging;
+using Services.Agreement;
 
 namespace Services.Repositories
 {
     public class AccountRepository : Repository<Account, AccountAddDto, AccountUpdateDto, AccountFilter, AccountDto>
     {
 
-        public AccountRepository(ContextBase context, ILogger<AccountRepository> logger, IMapper mapper) : base(context, logger, mapper)
+        public AccountRepository(ContextBase context, ILogger<AccountRepository> logger, IUserContext userContext, IMapper mapper) : base(context, logger, userContext, mapper)
         {
+
         }
 
         public override Task<PageResult<AccountDto>> GetListWithPageAsync(AccountFilter filter)

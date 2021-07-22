@@ -13,6 +13,7 @@ using System.Linq.Expressions;
 using System.Reflection.Metadata;
 using System.Data.Common;
 using Microsoft.Extensions.Logging;
+using Services.Agreement;
 
 namespace Services.Repositories
 {
@@ -29,12 +30,14 @@ namespace Services.Repositories
         where TEntity : BaseDB
         where TFilter : FilterBase
     {
-        ILogger _logger;
-        public Repository(ContextBase context, ILogger logger, IMapper mapper) : base(context, mapper)
+        protected ILogger _logger;
+        public Guid? _userId;
+
+        public Repository(ContextBase context, ILogger logger, IUserContext userContext, IMapper mapper) : base(context, mapper, userContext)
         {
             _logger = logger;
         }
-
+        
         /// <summary>
         /// 默认添加
         /// </summary>

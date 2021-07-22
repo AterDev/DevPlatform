@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -37,7 +38,9 @@ namespace Entity
         /// </summary>
         public ArticleType ArticleType { get; set; }
 
+        [ForeignKey("AccountId")]
         public Account Account { get; set; }
+        public Guid AccountId { get; set; }
         /// <summary>
         /// 文章扩展内容
         /// </summary>

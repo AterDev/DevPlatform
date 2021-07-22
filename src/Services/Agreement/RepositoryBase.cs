@@ -1,5 +1,7 @@
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using SendGrid.Helpers.Mail;
+using Services.Agreement;
 using Share.Models;
 using System;
 using System.Collections;
@@ -20,7 +22,7 @@ namespace Core.Agreement
     /// <typeparam name="TData"></typeparam> 
     /// <typeparam name="TKey"></typeparam>
     public class RepositoryBase<TContext, TEntity, TAddForm, TUpdatForm, TFilter, TData, TKey>
-        : IQueryable<TEntity>,
+        : RepositoryBase,
         IRepositoryBase<TEntity, TAddForm, TUpdatForm, TFilter, TData, TKey>
         where TContext : DbContext
         where TEntity : class
@@ -28,22 +30,16 @@ namespace Core.Agreement
     {
         public TContext _context;
         public DbSet<TEntity> _db;
-        protected IMapper _mapper;
         protected IQueryable<TEntity> _query;
 
-        public RepositoryBase(TContext context, IMapper mapper)
+        public RepositoryBase(TContext context, IMapper mapper, IUserContext userContext) : base(mapper, userContext)
         {
             _context = context;
             _mapper = mapper;
+            _usrCtx = userContext;
             _db = _context.Set<TEntity>();
             _query = _db.AsQueryable();
         }
-
-        public Type ElementType => _query.ElementType;
-
-        public Expression Expression => _query.Expression;
-
-        public IQueryProvider Provider => _query.Provider;
 
         /// <summary>
         /// 默认添加
@@ -90,11 +86,6 @@ namespace Core.Agreement
             return data;
         }
 
-        public IEnumerator<TEntity> GetEnumerator()
-        {
-            return _query.GetEnumerator();
-        }
-
         public virtual Task<List<TData>> GetListAsync(TFilter filter)
         {
             throw new NotImplementedException();
@@ -118,10 +109,17 @@ namespace Core.Agreement
             await _context.SaveChangesAsync();
             return currentData;
         }
+    }
 
-        IEnumerator IEnumerable.GetEnumerator()
+    public class RepositoryBase
+    {
+        protected IUserContext _usrCtx;
+        protected IMapper _mapper;
+
+        public RepositoryBase(IMapper mapper, IUserContext userContext)
         {
-            return ((IEnumerable)_query).GetEnumerator();
+            _mapper = mapper;
+            _usrCtx = userContext;
         }
     }
 }

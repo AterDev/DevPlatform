@@ -7,12 +7,13 @@ using System.Threading.Tasks;
 using EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
+using Services.Agreement;
 
 namespace Services.Repositories
 {
     public class RoleRepository : Repository<Role, RoleAddDto, RoleUpdateDto, RoleFilter, RoleDto>
     {
-        public RoleRepository(ContextBase context, ILogger<RoleRepository> logger, IMapper mapper) : base(context, logger, mapper)
+        public RoleRepository(ContextBase context, ILogger<RoleRepository> logger, IUserContext userContext, IMapper mapper) : base(context, logger, userContext, mapper)
         {
         }
 

@@ -6,12 +6,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Services.Agreement;
 
 namespace Services.Repositories
 {
     public class CatalogRepository : Repository<LibraryCatalog, CatalogAddDto, CatalogUpdateDto, CatalogFilter, CatalogDto>
     {
-        public CatalogRepository(ContextBase context, ILogger<CatalogRepository> logger, IMapper mapper) : base(context, logger, mapper)
+        public CatalogRepository(ContextBase context, ILogger<CatalogRepository> logger, IUserContext userContext, IMapper mapper) : base(context, logger, userContext, mapper)
         {
         }
 

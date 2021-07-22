@@ -9,6 +9,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using App.Agreement;
 using Microsoft.AspNetCore.Http;
+using Services.Agreement;
 
 namespace App.Api.Controllers
 {
@@ -20,7 +21,7 @@ namespace App.Api.Controllers
         public RoleController(
             ILogger<RoleController> logger,
             RoleRepository repository,
-             IHttpContextAccessor accessor) : base(logger, repository, accessor)
+             IUserContext accessor) : base(logger, repository, accessor)
         {
         }
 
@@ -32,7 +33,7 @@ namespace App.Api.Controllers
         [HttpPost]
         public override async Task<ActionResult<Role>> AddAsync([FromBody] RoleAddDto form)
         {
-            if (_repos.Any(e => e.Name == form.Name))
+            if (_repos._db.Any(e => e.Name == form.Name))
             {
                 return Conflict();
             }
@@ -59,7 +60,7 @@ namespace App.Api.Controllers
         [HttpPut("{id}")]
         public override async Task<ActionResult<Role>> UpdateAsync([FromRoute] Guid id, [FromBody] RoleUpdateDto form)
         {
-            if (_repos.Any(e => e.Id == id))
+            if (_repos._db.Any(e => e.Id == id))
             {
                 // 名称不可以修改成其他已经存在的名称
                 // if (_repos.Any(e => e.Name == form.Name && e.Id != id))
