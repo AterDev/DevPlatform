@@ -22,17 +22,14 @@ namespace App.Api.Controllers
     /// </summary>
     public class ArticleController : ApiController<ArticleRepository, Article, ArticleAddDto, ArticleUpdateDto, ArticleFilter, ArticleDto>
     {
-        protected Guid UserId = Guid.Empty;
 
         FileService _fileService;
-
         public ArticleController(
             ILogger<ArticleController> logger,
             ArticleRepository repository,
-            IUserContext accessor,
-            ArticleRepository articleRepository,
+            IUserContext userContext,
             FileService fileService
-            ) : base(logger, repository, accessor)
+            ) : base(logger, repository, userContext)
         {
             _fileService = fileService;
         }
@@ -45,11 +42,16 @@ namespace App.Api.Controllers
         [HttpPost]
         public override async Task<ActionResult<Article>> AddAsync([FromBody] ArticleAddDto form)
         {
-            if (_repos._db.Any(e => e.Title == form.Title
-                && e.Account.Id == UserId))
+            if (_repos.Any(e => e.Title == form.Title
+                && e.Account.Id == _usrCtx.UserId))
             {
                 return Conflict();
             }
+            if (!_repos.ValidAccount())
+            {
+                return Forbid();
+            }
+            // 上录是否合法
             if (form.CatalogId.HasValue)
             {
                 var catalog = _repos.ValidCatalog(form.CatalogId.Value);
@@ -58,7 +60,6 @@ namespace App.Api.Controllers
                     return NotFound("未找到相应的目录");
                 }
             }
-            form.AccountId = UserId;
             return await _repos.AddAsync(form);
         }
 
@@ -70,7 +71,6 @@ namespace App.Api.Controllers
         [HttpPost("filter")]
         public override async Task<ActionResult<PageResult<ArticleDto>>> FilterAsync(ArticleFilter filter)
         {
-            filter.AccountId = UserId;
             return await _repos.GetListWithPageAsync(filter);
         }
 

@@ -14,6 +14,7 @@ namespace Services.Agreement
         public Guid? SessionId { get; init; }
         public string Username { get; init; }
         public string Email { get; set; }
+        public bool IsAdmin { get; init; }
         public string CurrentRole { get; set; }
         public List<string> Roles { get; set; }
         public Guid? GroupId { get; init; }
@@ -40,6 +41,14 @@ namespace Services.Agreement
             Username = FindClaim(ClaimTypes.Name)?.Value;
             Email = FindClaim(ClaimTypes.Email)?.Value;
             CurrentRole = FindClaim(ClaimTypes.Role)?.Value;
+            if (CurrentRole != null && CurrentRole.ToLower() == "admin")
+            {
+                IsAdmin = true;
+            }
+            else
+            {
+                IsAdmin = false;
+            }
         }
 
         public Claim FindClaim(string claimType)

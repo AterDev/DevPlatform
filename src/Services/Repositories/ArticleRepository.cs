@@ -14,7 +14,6 @@ namespace Services.Repositories
 {
     public class ArticleRepository : Repository<Article, ArticleAddDto, ArticleUpdateDto, ArticleFilter, ArticleDto>
     {
-
         public ArticleRepository(
             ContextBase context,
             IUserContext userContext,
@@ -39,13 +38,18 @@ namespace Services.Repositories
 
         public override async Task<Article> AddAsync(ArticleAddDto form)
         {
+            var account = _context.Accounts.Find(_userId);
+            if (account == null)
+            {
+                return default;
+            }
             // ÃÌº”Œƒ’¬ƒ⁄»›
             var articleExtend = new ArticleExtend
             {
                 Content = form.Content
             };
             var article = _mapper.Map<Article>(form);
-            var account = _context.Accounts.Find(form.AccountId);
+
             article.Extend = articleExtend;
             article.Account = account;
             article.AuthorName = account.Username;
@@ -88,8 +92,7 @@ namespace Services.Repositories
         /// <returns></returns>
         public bool ValidCatalog(Guid catalogId)
         {
-            return _context.ArticleCatalogs.Any(ac => ac.Id == catalogId
-                && ac.AccountId == _userId.Value);
+            return _context.ArticleCatalogs.Any(ac => ac.Id == catalogId);
         }
 
         /// <summary>
@@ -98,9 +101,7 @@ namespace Services.Repositories
         /// <returns></returns>
         public bool ValidAccount()
         {
-            var userId = _userId;
-            return _db.Any(a => a.AccountId == _usrCtx.UserId);
-
+            return _context.Accounts.Any(a => a.Id == _userId);
         }
     }
 }

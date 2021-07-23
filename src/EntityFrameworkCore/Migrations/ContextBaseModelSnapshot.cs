@@ -3,7 +3,7 @@ using System;
 using EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace EntityFrameworkCore.Migrations
@@ -31,7 +31,7 @@ namespace EntityFrameworkCore.Migrations
 
                     b.HasIndex("RolesId");
 
-                    b.ToTable("AccountRole");
+                    b.ToTable("AccountRole", (string)null);
                 });
 
             modelBuilder.Entity("Core.Entity.Account", b =>
@@ -109,7 +109,7 @@ namespace EntityFrameworkCore.Migrations
 
                     b.HasIndex("Username");
 
-                    b.ToTable("Accounts");
+                    b.ToTable("Accounts", (string)null);
                 });
 
             modelBuilder.Entity("Core.Entity.AccountExtend", b =>
@@ -188,7 +188,7 @@ namespace EntityFrameworkCore.Migrations
 
                     b.HasIndex("RealName");
 
-                    b.ToTable("AccountExtends");
+                    b.ToTable("AccountExtends", (string)null);
                 });
 
             modelBuilder.Entity("Core.Entity.Article", b =>
@@ -248,7 +248,7 @@ namespace EntityFrameworkCore.Migrations
 
                     b.HasIndex("Title");
 
-                    b.ToTable("Articles");
+                    b.ToTable("Articles", (string)null);
                 });
 
             modelBuilder.Entity("Core.Entity.ArticleCatalog", b =>
@@ -300,7 +300,7 @@ namespace EntityFrameworkCore.Migrations
 
                     b.HasIndex("Type");
 
-                    b.ToTable("ArticleCatalog");
+                    b.ToTable("ArticleCatalog", (string)null);
                 });
 
             modelBuilder.Entity("Core.Entity.ArticleExtend", b =>
@@ -323,7 +323,7 @@ namespace EntityFrameworkCore.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ArticleExtends");
+                    b.ToTable("ArticleExtends", (string)null);
                 });
 
             modelBuilder.Entity("Core.Entity.CodeSnippet", b =>
@@ -376,7 +376,7 @@ namespace EntityFrameworkCore.Migrations
 
                     b.HasIndex("Status");
 
-                    b.ToTable("CodeSnippets");
+                    b.ToTable("CodeSnippets", (string)null);
                 });
 
             modelBuilder.Entity("Core.Entity.Comment", b =>
@@ -412,7 +412,7 @@ namespace EntityFrameworkCore.Migrations
 
                     b.HasIndex("CreatedTime");
 
-                    b.ToTable("Comments");
+                    b.ToTable("Comments", (string)null);
                 });
 
             modelBuilder.Entity("Core.Entity.Library", b =>
@@ -470,7 +470,7 @@ namespace EntityFrameworkCore.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Libraries");
+                    b.ToTable("Libraries", (string)null);
                 });
 
             modelBuilder.Entity("Core.Entity.LibraryCatalog", b =>
@@ -522,7 +522,7 @@ namespace EntityFrameworkCore.Migrations
 
                     b.HasIndex("Type");
 
-                    b.ToTable("LibraryCatalogs");
+                    b.ToTable("LibraryCatalogs", (string)null);
                 });
 
             modelBuilder.Entity("Core.Entity.Role", b =>
@@ -554,7 +554,7 @@ namespace EntityFrameworkCore.Migrations
 
                     b.HasIndex("Status");
 
-                    b.ToTable("Roles");
+                    b.ToTable("Roles", (string)null);
                 });
 
             modelBuilder.Entity("AccountRole", b =>

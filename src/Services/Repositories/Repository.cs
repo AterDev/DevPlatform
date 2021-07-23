@@ -26,7 +26,7 @@ namespace Services.Repositories
     /// <typeparam name="TFilter"></typeparam>
     /// <typeparam name="TDto"></typeparam>
     public class Repository<TEntity, TAddForm, TUpdatedForm, TFilter, TDto> :
-        RepositoryBase<ContextBase, TEntity, TAddForm, TUpdatedForm, TFilter, TDto, Guid>
+        RepositoryBase<ContextBase, TEntity, TFilter, TDto, Guid>
         where TEntity : BaseDB
         where TFilter : FilterBase
     {
@@ -36,16 +36,18 @@ namespace Services.Repositories
         public Repository(ContextBase context, ILogger logger, IUserContext userContext, IMapper mapper) : base(context, mapper, userContext)
         {
             _logger = logger;
+            _userId = _usrCtx.UserId;
         }
-        
+
         /// <summary>
         /// 默认添加
         /// </summary>
         /// <param name="form"></param>
         /// <returns></returns>
-        public override async Task<TEntity> AddAsync(TAddForm form)
+        public virtual async Task<TEntity> AddAsync(TAddForm form)
         {
             var data = _mapper.Map<TAddForm, TEntity>(form);
+            data.UpdatedTime = DateTimeOffset.UtcNow;
             _db.Add(data);
             await _context.SaveChangesAsync();
             return data;
@@ -147,10 +149,11 @@ namespace Services.Repositories
         /// <param name="id"></param>
         /// <param name="form"></param>
         /// <returns></returns>
-        public override async Task<TEntity> UpdateAsync(Guid id, TUpdatedForm form)
+        public virtual async Task<TEntity> UpdateAsync(Guid id, TUpdatedForm form)
         {
             var currentData = await _db.FindAsync(id);
             _mapper.Map(form, currentData);
+            currentData.UpdatedTime = DateTimeOffset.UtcNow;
             try
             {
                 await _context.SaveChangesAsync();
@@ -161,6 +164,11 @@ namespace Services.Repositories
                 // TODO: 异常处理
                 throw;
             }
+        }
+
+        public override bool Any(Func<TEntity, bool> predicate)
+        {
+            return _db.Any(predicate);
         }
     }
 }

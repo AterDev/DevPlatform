@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
 using Services.Agreement;
+using Services.Repositories;
 
 namespace App.Api.Controllers
 {
@@ -20,7 +21,7 @@ namespace App.Api.Controllers
     [Authorize("User")]
     public class ApiController<TRepository, TEntity, TAddForm, TUpdateForm, TFilter, TDto>
         : ApiControllerBase<ContextBase, TRepository, TEntity, TAddForm, TUpdateForm, TFilter, TDto>
-        where TRepository : RepositoryBase<ContextBase, TEntity, TAddForm, TUpdateForm, TFilter, TDto, Guid>
+        where TRepository : Repository<TEntity, TAddForm, TUpdateForm, TFilter, TDto>
         where TFilter : FilterBase
         where TEntity : BaseDB
     {

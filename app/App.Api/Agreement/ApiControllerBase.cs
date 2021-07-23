@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Entity;
 using Core.Agreement;
+using Services.Repositories;
 
 namespace App.Agreement
 {
@@ -14,7 +15,7 @@ namespace App.Agreement
     [Route("api/[controller]")]
     public class ApiControllerBase<TContext, TRepository, TEntity, TAddForm, TUpdateForm, TFilter, TDto>
         : ApiServiceBase, IApiControllerBase<TEntity, TAddForm, TUpdateForm, TFilter, TDto, Guid>
-        where TRepository : RepositoryBase<TContext, TEntity, TAddForm, TUpdateForm, TFilter, TDto, Guid>
+        where TRepository : Repository<TEntity, TAddForm, TUpdateForm, TFilter, TDto>
         where TContext : DbContext
         where TFilter : FilterBase
         where TEntity : BaseDB

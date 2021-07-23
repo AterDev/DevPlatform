@@ -4,10 +4,8 @@ using SendGrid.Helpers.Mail;
 using Services.Agreement;
 using Share.Models;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 namespace Core.Agreement
 {
@@ -21,9 +19,9 @@ namespace Core.Agreement
     /// <typeparam name="TFilter"></typeparam>
     /// <typeparam name="TData"></typeparam> 
     /// <typeparam name="TKey"></typeparam>
-    public class RepositoryBase<TContext, TEntity, TAddForm, TUpdatForm, TFilter, TData, TKey>
+    public class RepositoryBase<TContext, TEntity, TFilter, TData, TKey>
         : RepositoryBase,
-        IRepositoryBase<TEntity, TAddForm, TUpdatForm, TFilter, TData, TKey>
+        IRepositoryBase<TEntity, TFilter, TData, TKey>
         where TContext : DbContext
         where TEntity : class
         where TFilter : class
@@ -35,8 +33,6 @@ namespace Core.Agreement
         public RepositoryBase(TContext context, IMapper mapper, IUserContext userContext) : base(mapper, userContext)
         {
             _context = context;
-            _mapper = mapper;
-            _usrCtx = userContext;
             _db = _context.Set<TEntity>();
             _query = _db.AsQueryable();
         }
@@ -44,11 +40,10 @@ namespace Core.Agreement
         /// <summary>
         /// 默认添加
         /// </summary>
-        /// <param name="form"></param>
+        /// <param name="data"></param>
         /// <returns></returns>
-        public virtual async Task<TEntity> AddAsync(TAddForm form)
+        public virtual async Task<TEntity> AddAsync(TEntity data)
         {
-            var data = _mapper.Map<TAddForm, TEntity>(form);
             _db.Add(data);
             await _context.SaveChangesAsync();
             return data;
@@ -100,14 +95,19 @@ namespace Core.Agreement
         /// 仅更新实体
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="form"></param>
+        /// <param name="data"></param>
         /// <returns></returns>
-        public virtual async Task<TEntity> UpdateAsync(TKey id, TUpdatForm form)
+        public virtual async Task<TEntity> UpdateAsync(TKey id, TEntity data)
         {
             var currentData = await _db.FindAsync(id);
-            _context.Entry(currentData).CurrentValues.SetValues(form);
+            _context.Entry(currentData).CurrentValues.SetValues(data);
             await _context.SaveChangesAsync();
             return currentData;
+        }
+
+        public virtual bool Any(Func<TEntity, bool> predicate)
+        {
+            return _db.Any(predicate);
         }
     }
 
@@ -115,7 +115,6 @@ namespace Core.Agreement
     {
         protected IUserContext _usrCtx;
         protected IMapper _mapper;
-
         public RepositoryBase(IMapper mapper, IUserContext userContext)
         {
             _mapper = mapper;

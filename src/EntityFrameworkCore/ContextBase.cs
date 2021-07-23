@@ -77,9 +77,6 @@ namespace EntityFrameworkCore
                 e.HasIndex(m => m.Title);
                 e.HasIndex(m => m.CreatedTime);
                 e.HasIndex(m => m.ArticleType);
-                e.Property(b => b.UpdatedTime)
-                 .HasDefaultValueSql("getdate()")
-                 .ValueGeneratedOnAddOrUpdate();
             });
             builder.Entity<ArticleCatalog>(e =>
             {
