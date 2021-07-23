@@ -15,13 +15,16 @@
     </mat-card-header> -->
     <!-- <img mat-card-image src="" alt=""> -->
     <mat-card-content>
-      <p>Title: <span class="text-primary">{{data.title}}</span></p>
-      <p>Summary: <span class="text-primary">{{data.summary}}</span></p>
-      <p>AuthorName: <span class="text-primary">{{data.authorName}}</span></p>
-      <p>Tags: <span class="text-primary">{{data.tags}}</span></p>
       <p>Id: <span class="text-primary">{{data.id}}</span></p>
-      <p>CreatedTime: <span class="text-primary">{{data.createdTime}}</span></p>
-      <p>UpdatedTime: <span class="text-primary">{{data.updatedTime}}</span></p>
+      <p>
+        Title: <span class="text-primary">{{data.title}}</span>
+        AuthorName: <span class="text-primary">{{data.authorName}}</span>
+        CreatedTime: <span class="text-primary">{{data.createdTime}}</span>
+      </p>
+      <p>Tags: <span class="text-primary">{{data.tags}}</span></p>
+      <p>Summary: <span class="text-primary">{{data.summary}}</span></p>
+      <p></p>
+      <div class="code-block" [innerHtml]="data.extend?.content" highlight-js mode="default"></div>
 
     </mat-card-content>
     <mat-card-actions>

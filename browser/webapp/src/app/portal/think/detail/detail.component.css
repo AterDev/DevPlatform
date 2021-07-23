@@ -1,0 +1,3 @@
+::ng-deep .code-block pre code {
+  font-family: 'Cascadia Code', 'Cascadia Code PL', 'Consolas', 'Segoe UI' !important;
+}

@@ -43,7 +43,7 @@ namespace App.Api.Controllers
         public override async Task<ActionResult<Article>> AddAsync([FromBody] ArticleAddDto form)
         {
             if (_repos.Any(e => e.Title == form.Title
-                && e.Account.Id == _usrCtx.UserId))
+                && e.AccountId == _usrCtx.UserId))
             {
                 return Conflict();
             }

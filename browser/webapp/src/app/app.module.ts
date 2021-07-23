@@ -31,7 +31,7 @@ const appModules = [
   ],
   providers: [
     { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 2500 } },
-    { provide: HTTP_INTERCEPTORS, useClass: CustomerHttpInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: CustomerHttpInterceptor, multi: true },
   ],
   bootstrap: [AppComponent]
 })

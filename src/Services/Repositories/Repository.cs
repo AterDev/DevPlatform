@@ -47,10 +47,7 @@ namespace Services.Repositories
         public virtual async Task<TEntity> AddAsync(TAddForm form)
         {
             var data = _mapper.Map<TAddForm, TEntity>(form);
-            data.UpdatedTime = DateTimeOffset.UtcNow;
-            _db.Add(data);
-            await _context.SaveChangesAsync();
-            return data;
+            return await base.AddAsync(data);
         }
 
         /// <summary>

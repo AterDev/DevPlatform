@@ -4,6 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ArticleDto } from 'src/app/share/models/article-dto.model';
 import { Location } from '@angular/common';
+import { Article } from 'src/app/share/models/article.model';
 
 @Component({
   selector: 'app-detail',
@@ -13,7 +14,7 @@ import { Location } from '@angular/common';
 export class DetailComponent implements OnInit {
   id!: string;
   isLoading = true;
-  data = {} as ArticleDto;
+  data = {} as Article;
   constructor(
     private service: ArticleService,
     private snb: MatSnackBar,
@@ -46,6 +47,6 @@ export class DetailComponent implements OnInit {
   }
 
   edit(): void {
-    this.router.navigateByUrl('/Article/edit/' + this.id);
+    this.router.navigate(['../edit/' + this.id], { relativeTo: this.route });
   }
 }
