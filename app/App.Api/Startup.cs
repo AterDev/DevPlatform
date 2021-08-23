@@ -18,6 +18,7 @@ using Share.AutoMapper;
 using Services.Agreement;
 using App.Api.Controllers;
 using Services.Repositories;
+using Services.Azure;
 
 namespace App.Api
 {
@@ -36,6 +37,7 @@ namespace App.Api
             services.AddAutoMapper(typeof(MapperProfile));
             services.AddScoped<IUserContext, UserContext>();
             services.AddRepositories();
+            services.Configure<AzureOptions>(Configuration.GetSection("Azure"));
             services.AddOptions();
             services.AddScoped(typeof(WebService));
             services.AddScoped(typeof(FileService));
