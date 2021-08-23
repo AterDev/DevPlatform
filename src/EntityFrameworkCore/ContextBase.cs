@@ -15,6 +15,9 @@ public class ContextBase : DbContext
     public DbSet<Comment> Comments { get; set; }
     public DbSet<CodeSnippet> CodeSnippets { get; set; }
     public DbSet<Library> Libraries { get; set; }
+
+    public DbSet<ThirdNews> ThirdNews { get; set; }
+
     public ContextBase(DbContextOptions<ContextBase> options) : base(options)
     {
     }
@@ -26,10 +29,8 @@ public class ContextBase : DbContext
         }
     }
 
-
     protected override void OnModelCreating(ModelBuilder builder)
     {
-
         builder.Entity<Account>(e =>
         {
             e.HasIndex(a => a.Email);
@@ -97,6 +98,12 @@ public class ContextBase : DbContext
             e.HasIndex(m => m.CreatedTime);
         });
 
+        builder.Entity<ThirdNews>(e =>
+        {
+            e.HasIndex(m => m.Title);
+            e.HasIndex(m => m.Provider);
+            e.HasIndex(m => m.Category);
+        });
         base.OnModelCreating(builder);
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace Entity
 {
-    public class BingNews
+    public class ThirdNews : BaseDB
     {
         [MaxLength(100)]
         public string Title { get; set; }
@@ -13,6 +13,8 @@
         [MaxLength(30)]
         public string Provider { get; set; }
         public DateTime DatePublished { get; set; }
+        [MaxLength(6000)]
+        public string Content { get; set; }
         [MaxLength(40)]
         public string Category { get; set; }
     }
