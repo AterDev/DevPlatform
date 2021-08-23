@@ -12,6 +12,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Controllers\LibraryController.cs~RF1392c5d.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Aliyun.OSS.SDK.NetCore" Version="2.13.0" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.0-preview.6.21355.2" />
