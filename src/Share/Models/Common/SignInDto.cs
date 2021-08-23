@@ -1,10 +1,4 @@
-﻿using Entity;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Share.Models.Common
 {
@@ -30,7 +24,7 @@ namespace Share.Models.Common
         public int RetryCount { get; set; }
         [MaxLength(16)]
         public string Phone { get; set; }
-        
+
         /// <summary>
         /// 头像url
         /// </summary>

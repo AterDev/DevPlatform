@@ -2,9 +2,6 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the demo root for license information.
 
 
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 using IdentityModel;
 using IdentityServer4;
 using IdentityServer4.Events;
@@ -17,6 +14,9 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace IdentityServerHost.Quickstart.UI
 {

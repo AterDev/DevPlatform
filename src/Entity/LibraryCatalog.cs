@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace Entity
+﻿namespace Entity
 {
     /// <summary>
     /// 目录/文件目录 / 自引用

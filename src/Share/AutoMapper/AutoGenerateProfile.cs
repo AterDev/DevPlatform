@@ -10,10 +10,6 @@
 // LibraryCatalog;
 // {AlreadyMapedEntity}
 using AutoMapper;
-using Entity;
-using Share.Models;
-using Share.Models.Common;
-using System;
 
 namespace Share.AutoMapper
 {

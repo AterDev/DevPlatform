@@ -1,13 +1,5 @@
-using AutoMapper;
-using Core.Agreement;
-using Share.Models;
-using Entity;
-using System.Linq;
-using System.Threading.Tasks;
 using EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using System;
-using Services.Agreement;
 
 namespace Services.Repositories
 {

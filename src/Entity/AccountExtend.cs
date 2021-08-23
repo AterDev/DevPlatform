@@ -1,7 +1,4 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-
-namespace Entity
+﻿namespace Entity
 {
     /// <summary>
     /// 账号扩展表

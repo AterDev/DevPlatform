@@ -6,6 +6,6 @@
     public class ArticleExtend : BaseDB
     {
         public string Content { get; set; }
- 
+
     }
 }

@@ -1,23 +1,11 @@
-using Entity;
-using Share.Models;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using Services;
-using Services.Repositories;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
-using App.Agreement;
-using Microsoft.AspNetCore.Http;
 using NSwag.Annotations;
-using Services.Agreement;
 
 namespace App.Api.Controllers
 {
     /// <summary>
     /// 评论
     /// </summary>
-    [OpenApiTag("Comment",Description ="评论")]
+    [OpenApiTag("Comment", Description = "评论")]
     public class CommentController : ApiController<CommentRepository, Comment, CommentAddDto, CommentUpdateDto, CommentFilter, CommentDto>
     {
         public CommentController(

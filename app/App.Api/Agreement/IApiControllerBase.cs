@@ -1,7 +1,3 @@
-using Share.Models;
-using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
-
 namespace App.Agreement
 {
     /// <summary>

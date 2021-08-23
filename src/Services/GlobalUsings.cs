@@ -1,0 +1,9 @@
+﻿global using Assist.Utils;
+global using AutoMapper;
+global using Entity;
+global using Microsoft.EntityFrameworkCore;
+global using Microsoft.Extensions.Hosting;
+global using Services.Agreement;
+global using Services.Models;
+global using Share.Models;
+global using System.Text;

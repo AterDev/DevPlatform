@@ -1,9 +1,4 @@
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using Share.Models;
-using Entity;
 namespace Share.Models
 {
     public class CatalogDetailDto
@@ -31,6 +26,6 @@ namespace Share.Models
         public Status Status { get; set; }
         public DateTimeOffset CreatedTime { get; set; }
         public DateTimeOffset UpdatedTime { get; set; }
-    
+
     }
 }

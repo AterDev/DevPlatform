@@ -1,6 +1,4 @@
 using HtmlAgilityPack;
-using System;
-using System.Net.Http;
 using System.Web;
 using System.Xml.Linq;
 

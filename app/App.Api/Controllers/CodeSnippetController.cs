@@ -1,15 +1,3 @@
-using Entity;
-using Share.Models;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using Services;
-using Services.Repositories;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Services.Agreement;
-
 namespace App.Api.Controllers
 {
     /// <summary>

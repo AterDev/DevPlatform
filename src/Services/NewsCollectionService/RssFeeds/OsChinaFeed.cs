@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Services.NewsCollectionService.RssFeeds
+﻿namespace Services.NewsCollectionService.RssFeeds
 {
     public class OsChinaFeed : BaseFeed
     {

@@ -1,11 +1,8 @@
-﻿using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Options;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 using Share.Options;
-using System;
 using System.Net;
-using System.Threading.Tasks;
 
 namespace Services
 {

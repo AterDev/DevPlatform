@@ -1,8 +1,5 @@
 // 该文件由GT.CLI 工具生成
 
-using Microsoft.Extensions.DependencyInjection;
-using Services.Repositories;
-
 namespace App.Api
 {
     /// <summary>

@@ -1,5 +1,3 @@
-using System;
-
 namespace Entity
 {
     public class Rss

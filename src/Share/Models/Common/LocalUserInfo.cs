@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Share.Models.Common
+﻿namespace Share.Models.Common
 {
     /// <summary>
     /// 本地用户信息

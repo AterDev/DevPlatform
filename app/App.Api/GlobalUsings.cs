@@ -1,0 +1,9 @@
+﻿global using Entity;
+global using Microsoft.AspNetCore.Authorization;
+global using Microsoft.AspNetCore.Mvc;
+global using Microsoft.EntityFrameworkCore;
+global using Services;
+global using Services.Agreement;
+global using Services.Repositories;
+global using Share.Models;
+global using Share.Models.Common;

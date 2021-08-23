@@ -1,6 +1,4 @@
-using System;
 using System.ComponentModel.DataAnnotations;
-using Entity;
 namespace Share.Models
 {
     public class CodeSnippetDto
@@ -40,6 +38,6 @@ namespace Share.Models
         public Status Status { get; set; }
         public DateTimeOffset CreatedTime { get; set; }
         public DateTimeOffset UpdatedTime { get; set; }
-    
+
     }
 }

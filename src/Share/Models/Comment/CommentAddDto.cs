@@ -1,9 +1,4 @@
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using Share.Models;
-using Entity;
 namespace Share.Models
 {
     public class CommentAddDto
@@ -20,6 +15,6 @@ namespace Share.Models
         public DateTimeOffset UpdatedTime { get; set; }
         public Guid? ArticleId { get; set; }
         public Guid? AccountId { get; set; }
-    
+
     }
 }

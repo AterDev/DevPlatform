@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Entity
+﻿namespace Entity
 {
     public class Comment : BaseDB
     {

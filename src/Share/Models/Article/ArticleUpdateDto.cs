@@ -1,9 +1,4 @@
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using Share.Models;
-using Entity;
 namespace Share.Models
 {
     public class ArticleUpdateDto
@@ -37,6 +32,6 @@ namespace Share.Models
         /// </summary>
         public Status Status { get; set; }
         public string Content { get; set; }
-    
+
     }
 }

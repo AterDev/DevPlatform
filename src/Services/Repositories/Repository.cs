@@ -1,19 +1,8 @@
-using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Core.Agreement;
-using Share.Models;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Entity;
 using EntityFrameworkCore;
-using System.Linq.Expressions;
-using System.Reflection.Metadata;
-using System.Data.Common;
 using Microsoft.Extensions.Logging;
-using Services.Agreement;
+using System.Linq.Expressions;
 
 namespace Services.Repositories
 {

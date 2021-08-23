@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Entity
+﻿namespace Entity
 {
     /// <summary>
     /// 代码片段
