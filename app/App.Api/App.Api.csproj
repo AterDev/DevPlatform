@@ -1,5 +1,4 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
-
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <AssemblyName>App.Api</AssemblyName>
@@ -11,6 +10,13 @@
     <NoWarn>1701;1702;1591</NoWarn>
     <DocumentationFile></DocumentationFile>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="services\**" />
+    <Content Remove="services\**" />
+    <EmbeddedResource Remove="services\**" />
+    <None Remove="services\**" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Aliyun.OSS.SDK.NetCore" Version="2.13.0" />
@@ -30,7 +36,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="services\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 
