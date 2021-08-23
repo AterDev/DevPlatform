@@ -41,6 +41,11 @@ namespace Entity
         [ForeignKey("AccountId")]
         public Account Account { get; set; }
         public Guid AccountId { get; set; }
+
+        /// <summary>
+        /// 仅个人查看
+        /// </summary>
+        public bool? IsPrivate { get; set; }
         /// <summary>
         /// 文章扩展内容
         /// </summary>
