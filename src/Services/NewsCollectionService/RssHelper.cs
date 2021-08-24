@@ -46,8 +46,8 @@ namespace Services.NewsCollectionService
             var osChinaFeed = new OsChinaFeed();
             result.AddRange(osChinaFeed.GetBlogs(5).Result);
 
-            //var infoWorldFeed = new InfoWorldFeed();
-            //result.AddRange(infoWorldFeed.GetBlogs().Result);
+            var infoWorldFeed = new InfoWorldFeed();
+            result.AddRange(infoWorldFeed.GetBlogs(5).Result);
 
             // 过滤旧数据
             result = result.Where(r => r.CreateTime >= DateTime.Now.AddDays(1)).ToList();
