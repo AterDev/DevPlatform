@@ -31,7 +31,7 @@ namespace Services.NewsCollectionService
         /// 获取所有rss内容
         /// </summary>
         /// <returns></returns>
-        public List<Rss> GetAllBlogs(ILogger log)
+        public List<Rss> GetAllBlogs()
         {
             var result = new List<Rss>();
 
@@ -39,11 +39,10 @@ namespace Services.NewsCollectionService
             result.AddRange(msFeed.GetBlogs(5).Result);
 
             var osChinaFeed = new OsChinaFeed();
-            result.AddRange(osChinaFeed.GetBlogs().Result);
+            result.AddRange(osChinaFeed.GetBlogs(5).Result);
 
-            var infoWorldFeed = new InfoWorldFeed();
-            result.AddRange(infoWorldFeed.GetBlogs().Result);
-
+            //var infoWorldFeed = new InfoWorldFeed();
+            //result.AddRange(infoWorldFeed.GetBlogs().Result);
 
             var blogs = new List<Rss>();
             foreach (var blog in result)

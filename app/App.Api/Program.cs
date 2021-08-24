@@ -1,3 +1,5 @@
+using App.Api.BackgroundTask;
+
 namespace App.Api;
 
 public class Program
@@ -13,6 +15,10 @@ public class Program
         .ConfigureWebHostDefaults(webBuilder =>
         {
             webBuilder.UseStartup<Startup>();
+        })
+        .ConfigureServices(services =>
+        {
+            services.AddHostedService<NewsTimerService>();
         });
     }
 }

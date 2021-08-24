@@ -65,9 +65,7 @@ namespace Services.NewsCollectionService.RssFeeds
                         xmlDoc = XDocument.Parse(xmlString);
                         IEnumerable<XElement> xmlList = xmlDoc.Root.Element(RootName)?.Elements(ItemName);
 
-                        var blogs = xmlList.Where(i => IsContainKey(Authorfilter, i.Element(Creator)?.Value)
-                                && IsContainKey(HtmlTagFilter, i.Element(Content)?.Value))
-                            .Select(x =>
+                        var blogs = xmlList.Select(x =>
                             {
                                 DateTime createTime = DateTime.Now;
                                 string createTimeString = x.Element(PubDate)?.Value;

@@ -1,4 +1,4 @@
-namespace App.Agreement
+namespace App.Api.Agreement
 {
     /// <summary>
     /// api 服务基础类

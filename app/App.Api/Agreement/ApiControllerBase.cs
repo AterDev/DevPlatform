@@ -1,4 +1,4 @@
-namespace App.Agreement
+namespace App.Api.Agreement
 {
     [ApiController]
     [Route("api/[controller]")]

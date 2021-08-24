@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using Services.Azure;
+using Services.NewsCollectionService;
 using Share.AutoMapper;
 using System.Text;
 
@@ -25,6 +26,7 @@ public class Startup
         services.AddRepositories();
         services.Configure<AzureOptions>(Configuration.GetSection("Azure"));
         services.AddOptions();
+        services.AddSingleton<NewsCollectionService>();
         services.AddScoped(typeof(WebService));
         services.AddScoped(typeof(FileService));
 
@@ -43,20 +45,20 @@ public class Startup
         })
         .AddJwtBearer(cfg =>
         {
-                //cfg.RequireHttpsMetadata = true;
-                cfg.SaveToken = true;
+            //cfg.RequireHttpsMetadata = true;
+            cfg.SaveToken = true;
             cfg.TokenValidationParameters = new TokenValidationParameters()
             {
-                    // 如果不如果jwt，可注释掉，你可能会使用IdentityServer
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration.GetSection("Jwt")["Sign"])),
+                // 如果不如果jwt，可注释掉，你可能会使用IdentityServer
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration.GetSection("Jwt")["Sign"])),
                 ValidIssuer = Configuration.GetSection("Jwt")["Issuer"],
                 ValidAudience = Configuration.GetSection("Jwt")["Audience"],
                 ValidateIssuer = true,
                 ValidateLifetime = false,
                 RequireExpirationTime = false,
                 ValidateAudience = false,
-                    //ValidateIssuerSigningKey = true
-                };
+                //ValidateIssuerSigningKey = true
+            };
         });
         // 验证
         services.AddAuthorization(options =>

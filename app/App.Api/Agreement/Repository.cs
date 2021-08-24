@@ -1,4 +1,4 @@
-﻿namespace App.Agreement
+﻿namespace App.Api.Agreement
 {
     public class Repository<TContext, TEntity, TAddForm, TUpdateForm, TFilter, TDto, T>
         where TContext : DbContext

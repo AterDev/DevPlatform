@@ -7,3 +7,5 @@ global using Services.Agreement;
 global using Services.Repositories;
 global using Share.Models;
 global using Share.Models.Common;
+global using System;
+global using System.Linq;

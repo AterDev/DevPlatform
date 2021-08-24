@@ -17,7 +17,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "Host.Api": {
+    "App.Api": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "swagger",
