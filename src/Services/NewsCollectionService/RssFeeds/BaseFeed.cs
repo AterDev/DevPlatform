@@ -41,7 +41,7 @@ namespace Services.NewsCollectionService.RssFeeds
         public bool HasContent { get; set; } = true;
         protected XDocument xmlDoc;
 
-        protected HttpClient _httpClient = new HttpClient();
+        protected HttpClient httpClient = new();
 
         public BaseFeed()
         {
@@ -59,7 +59,7 @@ namespace Services.NewsCollectionService.RssFeeds
             {
                 try
                 {
-                    string xmlString = await _httpClient.GetStringAsync(url);
+                    string xmlString = await httpClient.GetStringAsync(url);
                     if (!string.IsNullOrEmpty(xmlString))
                     {
                         xmlDoc = XDocument.Parse(xmlString);

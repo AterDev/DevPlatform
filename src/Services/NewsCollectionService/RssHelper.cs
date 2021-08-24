@@ -1,5 +1,6 @@
 using Microsoft.Extensions.Logging;
 using Services.NewsCollectionService.RssFeeds;
+using Services.NewsCollectionService.WebSites;
 
 namespace Services.NewsCollectionService
 {
@@ -35,6 +36,10 @@ namespace Services.NewsCollectionService
         {
             var result = new List<Rss>();
 
+            var zhidingWeb = new ZhidingSoft();
+            var list = zhidingWeb.GetListAsync(5).Result;
+            result.AddRange(list);
+
             var msFeed = new MicrosoftFeed();
             result.AddRange(msFeed.GetBlogs(5).Result);
 
@@ -43,6 +48,9 @@ namespace Services.NewsCollectionService
 
             //var infoWorldFeed = new InfoWorldFeed();
             //result.AddRange(infoWorldFeed.GetBlogs().Result);
+
+            // 过滤旧数据
+            result = result.Where(r => r.CreateTime >= DateTime.Now.AddDays(1)).ToList();
 
             var blogs = new List<Rss>();
             foreach (var blog in result)
