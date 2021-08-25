@@ -15,7 +15,6 @@ public class ContextBase : DbContext
     public DbSet<Comment> Comments { get; set; }
     public DbSet<CodeSnippet> CodeSnippets { get; set; }
     public DbSet<Library> Libraries { get; set; }
-
     public DbSet<ThirdNews> ThirdNews { get; set; }
 
     public ContextBase(DbContextOptions<ContextBase> options) : base(options)
@@ -101,6 +100,7 @@ public class ContextBase : DbContext
         builder.Entity<ThirdNews>(e =>
         {
             e.HasIndex(m => m.Title);
+            e.HasIndex(m => m.DatePublished);
             e.HasIndex(m => m.Provider);
             e.HasIndex(m => m.Category);
         });

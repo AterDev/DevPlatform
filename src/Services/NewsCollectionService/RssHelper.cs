@@ -1,4 +1,3 @@
-using Microsoft.Extensions.Logging;
 using Services.NewsCollectionService.RssFeeds;
 using Services.NewsCollectionService.WebSites;
 
@@ -6,16 +5,10 @@ namespace Services.NewsCollectionService
 {
     public class RssHelper
     {
-        private readonly HttpClient _httpClient;
         public RssHelper()
         {
-            if (_httpClient == null)
-            {
-                _httpClient = new HttpClient();
-            }
         }
-
-        public bool IsContainKey(string[] strArray, string key)
+        public static bool IsContainKey(string[] strArray, string key)
         {
             foreach (string item in strArray)
             {
@@ -24,7 +17,6 @@ namespace Services.NewsCollectionService
                     return true;
                 }
             }
-
             return false;
         }
 
@@ -32,7 +24,7 @@ namespace Services.NewsCollectionService
         /// 获取所有rss内容
         /// </summary>
         /// <returns></returns>
-        public List<Rss> GetAllBlogs()
+        public static async Task<List<Rss>> GetAllBlogsAsync()
         {
             var result = new List<Rss>();
 
@@ -41,13 +33,13 @@ namespace Services.NewsCollectionService
             result.AddRange(list);
 
             var msFeed = new MicrosoftFeed();
-            result.AddRange(msFeed.GetBlogs(5).Result);
+            result.AddRange(await msFeed.GetBlogsAsync(5));
 
             var osChinaFeed = new OsChinaFeed();
-            result.AddRange(osChinaFeed.GetBlogs(5).Result);
+            result.AddRange(await osChinaFeed.GetBlogsAsync(5));
 
             var infoWorldFeed = new InfoWorldFeed();
-            result.AddRange(infoWorldFeed.GetBlogs(5).Result);
+            result.AddRange(await infoWorldFeed.GetBlogsAsync(5));
 
             // 过滤旧数据
             result = result.Where(r => r.CreateTime >= DateTime.Now.AddDays(1)).ToList();

@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace Services.NewsCollectionService;
 
@@ -8,17 +9,57 @@ namespace Services.NewsCollectionService;
 public class NewsCollectionService
 {
     readonly ILogger _logger;
-    public NewsCollectionService(ILogger<NewsCollectionService> logger)
+
+    readonly ContextBase _context;
+    public NewsCollectionService(ILogger<NewsCollectionService> logger, ContextBase context)
     {
         _logger = logger;
+        _context = context;
     }
 
-    public void Start()
+    public async Task<List<ThirdNews>> GetThirdNewsAsync()
     {
-        var helper = new RssHelper();
-        var news = helper.GetAllBlogs();
+        var news = await RssHelper.GetAllBlogsAsync();
+        var result = new List<ThirdNews>();
+        news.ForEach(news =>
+        {
+            var thirdNews = new ThirdNews
+            {
+                Category = news.Categories,
+                Description = news.Description,
+                Provider = news.Author,
+                Title = news.Title,
+                Url = news.Link,
+                ThumbnailUrl = news.ThumbUrl
+            };
+            result.Add(thirdNews);
+        });
+        _logger.LogInformation("get all news!");
+        return result;
+    }
 
-        _logger.LogInformation("finish");
+    public async Task AddThirdNewsAsync(List<ThirdNews> list)
+    {
+        var result = new List<ThirdNews>(list);
+        var news = await _context.ThirdNews.OrderByDescending(n => n.DatePublished)
+            .Take(20).ToListAsync();
+
+        _logger.LogInformation("today total news:" + list.Count);
+
+        foreach (var item in list)
+        {
+            if (news.Any(n => n.Title.Similarity(item.Title) >= 0.8 || n.Title.Equals(item.Title)))
+            {
+                result.Remove(item);
+            }
+        }
+        _logger.LogInformation("added news:" + result.Count);
+
+        if (result.Count > 0)
+        {
+            await _context.AddRangeAsync(result);
+            await _context.SaveChangesAsync();
+        }
     }
 }
 
