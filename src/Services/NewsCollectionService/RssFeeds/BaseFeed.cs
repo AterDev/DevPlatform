@@ -148,8 +148,6 @@ public class BaseFeed
     /// <summary>
     /// 获取缩略图
     /// </summary>
-    /// <param name="url"></param>
-    /// <param name="xpath"></param>
     /// <returns></returns>
     protected virtual string GetThumb(XElement x)
     {

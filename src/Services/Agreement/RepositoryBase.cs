@@ -5,8 +5,6 @@ namespace Core.Agreement
     /// </summary>
     /// <typeparam name="TContext"></typeparam>
     /// <typeparam name="TEntity"></typeparam>
-    /// <typeparam name="TAddForm"></typeparam>
-    /// <typeparam name="TUpdatForm"></typeparam>
     /// <typeparam name="TFilter"></typeparam>
     /// <typeparam name="TData"></typeparam> 
     /// <typeparam name="TKey"></typeparam>

@@ -25,8 +25,6 @@ namespace Services.NewsCollectionService.RssFeeds
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="url"></param>
-        /// <param name="xpath"></param>
         /// <returns></returns>
         protected override string GetThumb(XElement x)
         {

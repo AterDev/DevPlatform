@@ -22,19 +22,20 @@ public class Startup
     {
         services.AddHttpContextAccessor();
         services.AddAutoMapper(typeof(MapperProfile));
-        services.AddScoped<IUserContext, UserContext>();
-        services.AddRepositories();
         services.Configure<AzureOptions>(Configuration.GetSection("Azure"));
-        services.AddOptions();
-        services.AddSingleton<NewsCollectionService>();
-        services.AddScoped(typeof(WebService));
-        services.AddScoped(typeof(FileService));
-
         var connectionString = Configuration.GetConnectionString("DefaultConnection");
         services.AddDbContextPool<ContextBase>(option =>
-            {
-                option.UseNpgsql(connectionString, sql => { sql.MigrationsAssembly("EntityFrameworkCore"); });
-            });
+        {
+            option.UseNpgsql(connectionString, sql => { sql.MigrationsAssembly("EntityFrameworkCore"); });
+        });
+
+        services.AddScoped<IUserContext, UserContext>();
+        services.AddRepositories();
+        services.AddOptions();
+
+        services.AddScoped<NewsCollectionService>();
+        services.AddScoped(typeof(WebService));
+        services.AddScoped(typeof(FileService));
 
         #region 接口相关内容:jwt/授权/cors
         // jwt
