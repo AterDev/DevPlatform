@@ -145,6 +145,7 @@ public class BaseFeed
             .ToArray();
         return string.Join(";", categories);
     }
+    
     /// <summary>
     /// 获取缩略图
     /// </summary>
