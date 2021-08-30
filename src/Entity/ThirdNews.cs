@@ -18,6 +18,10 @@
                 {
                     _description = value.Substring(0, 5000);
                 }
+                else
+                {
+                    _description = value;
+                }
             }
         }
         [MaxLength(200)]
@@ -36,6 +40,10 @@
                 if (value.Length > 8000)
                 {
                     _content = value.Substring(0, 8000);
+                }
+                else
+                {
+                    _content = value;
                 }
             }
         }

@@ -17,6 +17,16 @@ public class NewsCollectionService
         _context = context;
     }
 
+    public async Task Start()
+    {
+        _logger.LogInformation("===Start=== Collect news");
+        var list = await GetThirdNewsAsync();
+        _logger.LogInformation("===Result=== collect news: " + list.Count);
+        _logger.LogInformation("===Start=== Add news");
+        await AddThirdNewsAsync(list);
+        _logger.LogInformation("===Result=== finish!");
+    }
+
     public async Task<List<ThirdNews>> GetThirdNewsAsync()
     {
         var news = await RssHelper.GetAllBlogsAsync();
@@ -44,7 +54,7 @@ public class NewsCollectionService
         var news = await _context.ThirdNews.OrderByDescending(n => n.DatePublished)
             .Take(20).ToListAsync();
 
-        _logger.LogInformation("today total news:" + list.Count);
+        _logger.LogInformation("today total news: " + list.Count);
 
         foreach (var item in list)
         {
@@ -53,7 +63,7 @@ public class NewsCollectionService
                 result.Remove(item);
             }
         }
-        _logger.LogInformation("added news:" + result.Count);
+        _logger.LogInformation("added news: " + result.Count);
 
         if (result.Count > 0)
         {

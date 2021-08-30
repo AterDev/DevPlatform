@@ -33,16 +33,19 @@ namespace Services.NewsCollectionService
             result.AddRange(list);
 
             var msFeed = new MicrosoftFeed();
-            result.AddRange(await msFeed.GetBlogsAsync(5));
+            list = await msFeed.GetBlogsAsync();
+            result.AddRange(list);
 
             var osChinaFeed = new OsChinaFeed();
-            result.AddRange(await osChinaFeed.GetBlogsAsync(5));
+            list = await osChinaFeed.GetBlogsAsync(6);
+            result.AddRange(list);
 
             var infoWorldFeed = new InfoWorldFeed();
-            result.AddRange(await infoWorldFeed.GetBlogsAsync(5));
+            list = await infoWorldFeed.GetBlogsAsync(5);
+            result.AddRange(list);
 
             // 过滤旧数据
-            result = result.Where(r => r.CreateTime >= DateTime.Now.AddDays(1)).ToList();
+            result = result.Where(r => r.CreateTime >= DateTime.Now.AddDays(-1)).ToList();
 
             var blogs = new List<Rss>();
             foreach (var blog in result)

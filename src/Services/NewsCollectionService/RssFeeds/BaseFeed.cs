@@ -75,10 +75,10 @@ public class BaseFeed
                             }
 
                             var description = x.Element(Description)?.Value;
-                                // 去除html标签
-                                //description = Regex.Replace(description, "<.*?>", String.Empty);
+                            // 去除html标签
+                            //description = Regex.Replace(description, "<.*?>", String.Empty);
 
-                                if (!string.IsNullOrEmpty(description))
+                            if (!string.IsNullOrEmpty(description))
                             {
                                 if (description.Length > 999)
                                 {
@@ -122,9 +122,7 @@ public class BaseFeed
                 item.Content = GetContent(item.Link);
             });
 
-        return result.Where(r => !string.IsNullOrEmpty(r.Content))
-            .Distinct()
-            .ToList();
+        return result;
     }
 
     /// <summary>
@@ -145,7 +143,7 @@ public class BaseFeed
             .ToArray();
         return string.Join(";", categories);
     }
-    
+
     /// <summary>
     /// 获取缩略图
     /// </summary>

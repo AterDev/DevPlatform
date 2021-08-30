@@ -2,9 +2,8 @@
 using Services.NewsCollectionService;
 
 namespace App.Api.BackgroundTask;
-public class NewsTimerService:IHostedService,IDisposable
+public class NewsTimerService : IHostedService, IDisposable
 {
-    private int executionCount = 0;
     private readonly ILogger<NewsTimerService> _logger;
     private Timer _timer;
 
@@ -20,8 +19,7 @@ public class NewsTimerService:IHostedService,IDisposable
     {
         _logger.LogInformation("News collection service start.");
 
-        _timer = new Timer(DoWork, null, TimeSpan.Zero,
-            TimeSpan.FromHours(4));
+        _timer = new Timer(DoWork, null, TimeSpan.Zero, TimeSpan.FromHours(4));
         return Task.CompletedTask;
     }
 
@@ -29,7 +27,7 @@ public class NewsTimerService:IHostedService,IDisposable
     {
         using var scope = Services.CreateScope();
         var newsService = scope.ServiceProvider.GetRequiredService<NewsCollectionService>();
-        await newsService.GetThirdNewsAsync();
+        await newsService.Start();
     }
 
     public Task StopAsync(CancellationToken stoppingToken)

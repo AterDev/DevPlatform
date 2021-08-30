@@ -11,7 +11,7 @@ namespace Services.NewsCollectionService.WebSites
             Url = "http://soft.zhiding.cn/";
             RootName = "//div[@class='information']";
             ItemName = "//div[@class='information_content ']";
-            Description = "//div[@class='right']/p[@class='right_content']";
+            Description = ".//div[@class='right']/p[@class='right_content']";
             Title = ".//div[@class='right']/h3[@class='right_title']/a";
             PubDate = ".//div[@class='right']/div[@class='bottom']/div[@class='time']";
             Category = ".//div[@class='right']/div[@class='bottom']/div[@class='keyWord']/h3/a[1]";

@@ -12,8 +12,6 @@
 
         protected override string GetContent(string url)
         {
-
-
             return base.GetContent(url);
         }
     }
