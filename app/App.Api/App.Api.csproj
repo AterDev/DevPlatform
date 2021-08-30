@@ -3,6 +3,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <AssemblyName>App.Api</AssemblyName>
     <RootNamespace>App.Api</RootNamespace>
+    <UserSecretsId>94802c6f-ec5e-41f2-9c61-0403ff5ab431</UserSecretsId>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
