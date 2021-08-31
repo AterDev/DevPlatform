@@ -6,7 +6,7 @@
     <UserSecretsId>94802c6f-ec5e-41f2-9c61-0403ff5ab431</UserSecretsId>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+  <PropertyGroup>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <NoWarn>1701;1702;1591</NoWarn>
     <DocumentationFile></DocumentationFile>
