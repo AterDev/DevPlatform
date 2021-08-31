@@ -15,14 +15,7 @@
             get => _title;
             set
             {
-                if (value.Length > 200)
-                {
-                    _title = value.Substring(0, 200);
-                }
-                else
-                {
-                    _title = value;
-                }
+                _title = value != null && value.Length > 200 ? value.Substring(0, 200) : value;
             }
         }
 
@@ -32,14 +25,7 @@
             get => _description;
             set
             {
-                if (value.Length > 5000)
-                {
-                    _description = value.Substring(0, 5000);
-                }
-                else
-                {
-                    _description = value;
-                }
+                _description = value != null && value.Length > 5000 ? value.Substring(0, 5000) : value;
             }
         }
         [MaxLength(300)]
@@ -48,31 +34,18 @@
             get => _url;
             set
             {
-                if (value.Length > 300)
-                {
-                    _url = value.Substring(0, 300);
-                }
-                else
-                {
-                    _url = value;
-                }
+                _url = value != null && value.Length > 300 ? value.Substring(0, 300) : value;
             }
         }
         [MaxLength(300)]
         public string ThumbnailUrl { get; set; }
         [MaxLength(50)]
-        public string Provider {
+        public string Provider
+        {
             get => _provider;
             set
             {
-                if (value.Length > 300)
-                {
-                    _provider = value.Substring(0, 50);
-                }
-                else
-                {
-                    _provider = value;
-                }
+                _provider = value != null && value.Length > 50 ? value.Substring(0, 50) : value;
             }
         }
         public DateTime DatePublished { get; set; }
@@ -82,29 +55,16 @@
             get => _content;
             set
             {
-                if (value.Length > 8000)
-                {
-                    _content = value.Substring(0, 8000);
-                }
-                else
-                {
-                    _content = value;
-                }
+                _content = value != null && value.Length > 8000 ? value.Substring(0, 8000) : value;
             }
         }
         [MaxLength(50)]
-        public string Category {
+        public string Category
+        {
             get => _category;
             set
             {
-                if (value.Length > 50)
-                {
-                    _category = value.Substring(0, 50);
-                }
-                else
-                {
-                    _category = value;
-                }
+                _category = value != null && value.Length > 50 ? value.Substring(0, 50) : value;
             }
         }
     }
