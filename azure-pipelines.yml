@@ -10,14 +10,25 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
-
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
 - task: SSH@0
   inputs:
-    runOptions: 'commands'
+    sshEndpoint: 'ali-hu'
+    runOptions: 'inline'
+    inline: |
+      cd /var/source/DevPlatform
+      # 获取新代码
+      sudo git checkout .
+      # 分支
+      sudo git checkout master
+      sudo git pull
+      # 还原包
+      cd /var/source/DevPlatform/app/App.Api
+      sudo dotnet restore -r ubuntu.16.04-x64
+      
+      # 发布
+      cd /var/source/OnlineTeaching/src/App.Api
+      sudo dotnet publish -c release -r ubuntu.16.04-x64 -o  /var/publish/onlineTeach
+      cd /var/publish/onlineTeach
+      sudo cp -rf . /var/web/onlineTeach
+    failOnStdErr: false
     readyTimeout: '20000'
