@@ -1,6 +1,4 @@
 ﻿using HtmlAgilityPack;
-using Services.NewsCollectionService.RssFeeds;
-using System.Net;
 
 namespace Services.NewsCollectionService.WebSites
 {

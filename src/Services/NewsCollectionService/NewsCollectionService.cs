@@ -1,7 +1,4 @@
-﻿using EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-
-namespace Services.NewsCollectionService;
+﻿namespace Services.NewsCollectionService;
 
 /// <summary>
 /// 采集服务

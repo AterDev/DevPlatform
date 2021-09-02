@@ -1,6 +1,4 @@
-﻿using HtmlAgilityPack;
-using System.Net;
-using System.Xml.Linq;
+﻿using System.Xml.Linq;
 
 namespace Services.NewsCollectionService.RssFeeds
 {

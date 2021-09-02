@@ -1,5 +1,3 @@
-using EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 
 namespace Services.Repositories
 {

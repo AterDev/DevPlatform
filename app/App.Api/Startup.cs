@@ -1,11 +1,3 @@
-using EntityFrameworkCore;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using Newtonsoft.Json;
-using Services.Azure;
-using Services.NewsCollectionService;
-using Share.AutoMapper;
-using System.Text;
 
 namespace App.Api;
 

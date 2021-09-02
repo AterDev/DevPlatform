@@ -1,8 +1,4 @@
 using AutoMapper.QueryableExtensions;
-using Core.Agreement;
-using EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using System.Linq.Expressions;
 
 namespace Services.Repositories
 {
@@ -15,17 +11,16 @@ namespace Services.Repositories
     /// <typeparam name="TFilter"></typeparam>
     /// <typeparam name="TDto"></typeparam>
     public class Repository<TEntity, TAddForm, TUpdatedForm, TFilter, TDto> :
-        RepositoryBase<ContextBase, TEntity, TFilter, TDto, Guid>
+        RepositoryBase<ContextBase, TEntity, TAddForm, TUpdatedForm, TFilter, TDto, Guid>
         where TEntity : BaseDB
         where TFilter : FilterBase
     {
-        protected ILogger _logger;
-        public Guid? _userId;
-
+        ILogger _logger;
+        IUserContext _userCtx;
         public Repository(ContextBase context, ILogger logger, IUserContext userContext, IMapper mapper) : base(context, mapper, userContext)
         {
             _logger = logger;
-            _userId = _usrCtx.UserId;
+            _userCtx = userContext;
         }
 
         /// <summary>
@@ -33,10 +28,12 @@ namespace Services.Repositories
         /// </summary>
         /// <param name="form"></param>
         /// <returns></returns>
-        public virtual async Task<TEntity> AddAsync(TAddForm form)
+        public override async Task<TEntity> AddAsync(TAddForm form)
         {
             var data = _mapper.Map<TAddForm, TEntity>(form);
-            return await base.AddAsync(data);
+            _db.Add(data);
+            await _context.SaveChangesAsync();
+            return data;
         }
 
         /// <summary>
@@ -58,38 +55,19 @@ namespace Services.Repositories
                 // TODO:删除处理
                 throw;
             }
-
         }
 
         /// <summary>
-        /// 是否存在
+        /// 默认以id判断
         /// </summary>
-        /// <param name="entity"></param>
+        /// <param name="o"></param>
         /// <returns></returns>
-        public virtual bool Exist<TUnique>(TUnique entity)
+        public override async Task<TEntity> Exist(object o)
         {
-            Expression body = null;
-            var type = typeof(TUnique);
-            var notNullProps = type.GetProperties()
-                .Where(p => p.GetValue(entity) != null)
-                .ToList();
-
-            var parameter = Expression.Parameter(type, "debug");
-
-            notNullProps.ForEach(prop =>
-            {
-                var memberExpression = Expression.Property(parameter, prop.Name);
-                var equalValue = Expression.Constant(prop.GetValue(entity));
-
-                var equal = Expression.Equal(equalValue, memberExpression);
-                body = body == null ? equal : Expression.AndAlso(body, equal);
-            });
-            if (body != null)
-            {
-                var conditions = Expression.Lambda<Func<TEntity, bool>>(body, new[] { parameter });
-                return _db.Any(conditions);
-            }
-            return false;
+            var pi = o.GetType().GetProperty("Id");
+            var id = (Guid)pi.GetValue(o, null);
+            var exist = await _db.FindAsync(id);
+            return exist;
         }
 
         public override async Task<TEntity> GetDetailAsync(Guid id)
@@ -135,11 +113,10 @@ namespace Services.Repositories
         /// <param name="id"></param>
         /// <param name="form"></param>
         /// <returns></returns>
-        public virtual async Task<TEntity> UpdateAsync(Guid id, TUpdatedForm form)
+        public override async Task<TEntity> UpdateAsync(Guid id, TUpdatedForm form)
         {
             var currentData = await _db.FindAsync(id);
             _mapper.Map(form, currentData);
-            currentData.UpdatedTime = DateTimeOffset.UtcNow;
             try
             {
                 await _context.SaveChangesAsync();
@@ -150,11 +127,6 @@ namespace Services.Repositories
                 // TODO: 异常处理
                 throw;
             }
-        }
-
-        public override bool Any(Func<TEntity, bool> predicate)
-        {
-            return _db.Any(predicate);
         }
     }
 }

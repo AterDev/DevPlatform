@@ -1,6 +1,3 @@
-using EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-
 namespace Services.Repositories
 {
     public class CatalogRepository : Repository<LibraryCatalog, CatalogAddDto, CatalogUpdateDto, CatalogFilter, CatalogDto>

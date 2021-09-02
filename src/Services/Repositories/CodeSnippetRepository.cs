@@ -1,6 +1,3 @@
-using EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-
 namespace Services.Repositories
 {
     public class CodeSnippetRepository : Repository<CodeSnippet, CodeSnippetAddDto, CodeSnippetUpdateDto, CodeSnippetFilter, CodeSnippetDto>
@@ -22,6 +19,13 @@ namespace Services.Repositories
             && o.CodeType == codeType
             && o.Language == language
             && o.Library.User.Id == userId);
+        }
+
+        public bool Exist(CodeSnippetUnique dto)
+        {
+            return _db.Any(d => d.Name == dto.Name
+                && d.Language == dto.Language
+                && d.CodeType == dto.CodeType);
         }
     }
 }

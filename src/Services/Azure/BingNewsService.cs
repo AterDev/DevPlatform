@@ -1,6 +1,5 @@
 ﻿using HtmlAgilityPack;
 using Microsoft.Azure.CognitiveServices.Search.NewsSearch;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
 namespace Services.Azure;

@@ -1,6 +1,3 @@
-using EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-
 namespace Services.Repositories
 {
     public class LibraryRepository : Repository<Library, LibraryAddDto, LibraryUpdateDto, LibraryFilter, LibraryDto>

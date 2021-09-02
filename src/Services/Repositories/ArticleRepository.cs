@@ -1,6 +1,3 @@
-using EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-
 namespace Services.Repositories
 {
     public class ArticleRepository : Repository<Article, ArticleAddDto, ArticleUpdateDto, ArticleFilter, ArticleDto>
@@ -29,7 +26,7 @@ namespace Services.Repositories
 
         public override async Task<Article> AddAsync(ArticleAddDto form)
         {
-            var account = _context.Accounts.Find(_userId);
+            var account = _context.Accounts.Find(_usrCtx.UserId);
             if (account == null)
             {
                 return default;
@@ -92,7 +89,7 @@ namespace Services.Repositories
         /// <returns></returns>
         public bool ValidAccount()
         {
-            return _context.Accounts.Any(a => a.Id == _userId);
+            return _context.Accounts.Any(a => a.Id == _usrCtx.UserId);
         }
     }
 }

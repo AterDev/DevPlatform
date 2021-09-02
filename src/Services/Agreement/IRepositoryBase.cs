@@ -1,4 +1,4 @@
-namespace Core.Agreement
+namespace Services.Agreement
 {
     /// <summary>
     /// 仓储接口
@@ -7,7 +7,7 @@ namespace Core.Agreement
     /// <typeparam name="TFilter">筛选对象</typeparam>
     /// <typeparam name="TDto">返回信息对象</typeparam>
     /// <typeparam name="Tkey">主键类型</typeparam>
-    public interface IRepositoryBase<TEntity, TFilter, TDto, Tkey>
+    public interface IRepositoryBase<TEntity, TAddForm, TUpdateForm, TFilter, TDto, Tkey>
     {
         /// <summary>
         /// 获取详情
@@ -38,14 +38,14 @@ namespace Core.Agreement
         /// </summary>
         /// <param name="form"></param>
         /// <returns></returns>
-        Task<TEntity> AddAsync(TEntity form);
+        Task<TEntity> AddAsync(TAddForm form);
         /// <summary>
         /// 更新
         /// </summary>
         /// <param name="id"></param>
         /// <param name="form"></param>
         /// <returns></returns>
-        Task<TEntity> UpdateAsync(Tkey id, TEntity form);
+        Task<TEntity> UpdateAsync(Tkey id, TUpdateForm form);
         /// <summary>
         /// 判断实体是否存在
         /// </summary>

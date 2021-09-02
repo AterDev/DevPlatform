@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-namespace Entity
+﻿namespace Entity
 {
     /// <summary>
     /// 用户角色表

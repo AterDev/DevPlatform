@@ -1,6 +1,4 @@
-﻿using EntityFrameworkCore;
-
-namespace Services
+﻿namespace Services
 {
     /// <summary>
     ///  站点维护

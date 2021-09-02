@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace Entity
+﻿namespace Entity
 {
     [Table("ArticleCatalog")]
     public class ArticleCatalog : BaseDB

@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace Entity
+﻿namespace Entity
 {
     /// <summary>
     /// 文章内容

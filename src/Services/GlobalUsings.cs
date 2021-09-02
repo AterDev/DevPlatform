@@ -1,9 +1,16 @@
 ﻿global using Assist.Utils;
 global using AutoMapper;
 global using Entity;
+global using EntityFrameworkCore;
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.Extensions.Hosting;
+global using Microsoft.Extensions.Logging;
 global using Services.Agreement;
 global using Services.Models;
 global using Share.Models;
+global using System.Linq;
 global using System.Text;
+global using System.Threading.Tasks;
+global using System.Collections.Generic;
+global using System.Net;
+global using System.Net.Http;
