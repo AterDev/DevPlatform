@@ -37,7 +37,8 @@ public class NewsCollectionService
                 Provider = news.Author,
                 Title = news.Title,
                 Url = news.Link,
-                ThumbnailUrl = news.ThumbUrl
+                ThumbnailUrl = news.ThumbUrl,
+                DatePublished = news.CreateTime
             };
             result.Add(thirdNews);
         });

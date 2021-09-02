@@ -26,6 +26,13 @@ namespace Services.Repositories
         {
             return base.UpdateAsync(id, form);
         }
+
+        public async Task<List<ThirdNews>> GetWeekNewsAsync()
+        {
+            return await _db.Where(n => n.CreatedTime >= DateTime.Now.AddDays(-7))
+                .ToListAsync();
+        }
+
         public override Task<ThirdNews> DeleteAsync(Guid id)
         {
             return base.DeleteAsync(id);

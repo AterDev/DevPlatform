@@ -5,6 +5,8 @@ namespace Services.Agreement
     /// </summary>
     /// <typeparam name="TEntity">实体类型</typeparam>
     /// <typeparam name="TFilter">筛选对象</typeparam>
+    /// <typeparam name="TAddForm"></typeparam>
+    /// <typeparam name="TUpdateForm"></typeparam>
     /// <typeparam name="TDto">返回信息对象</typeparam>
     /// <typeparam name="Tkey">主键类型</typeparam>
     public interface IRepositoryBase<TEntity, TAddForm, TUpdateForm, TFilter, TDto, Tkey>

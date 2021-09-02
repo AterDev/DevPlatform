@@ -6,6 +6,8 @@ namespace Services.Agreement;
 /// <typeparam name="TContext"></typeparam>
 /// <typeparam name="TEntity"></typeparam>
 /// <typeparam name="TFilter"></typeparam>
+/// <typeparam name="TUpdateForm"></typeparam>
+/// <typeparam name="TAddForm"></typeparam>
 /// <typeparam name="TData"></typeparam> 
 /// <typeparam name="TKey"></typeparam>
 public class RepositoryBase<TContext, TEntity, TAddForm, TUpdateForm, TFilter, TData, TKey>
