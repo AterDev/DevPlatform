@@ -1,4 +1,5 @@
 ﻿using DevNews.Models;
+using DevNews.Share;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -14,7 +15,6 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
 namespace DevNews
 {
@@ -24,17 +24,22 @@ namespace DevNews
     public sealed partial class MainPage : Page
     {
 
-        protected List<ThirdNews> News { get; set; } = new List<ThirdNews>();
+        private List<ThirdNews> News { get; set; } = new List<ThirdNews>();
 
         public MainPage()
         {
-            
-            this.InitializeComponent();
-            News.Add(new ThirdNews
-            {
-                Title = "test"
-            });
-            NewsListView.ItemsSource = News;
+            InitializeComponent();
+            Loaded += LoadData;
         }
+
+        private async void LoadData(object sender, RoutedEventArgs e)
+        {
+            var newsService = new NewsService();
+            News = await newsService.GetNewsAsync();
+            NewsListView.ItemsSource = News;
+
+        }
+
+
     }
 }
