@@ -77,9 +77,10 @@ public class ThirdNewsController : ApiController<ThirdNewsRepository, ThirdNews,
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpDelete("{id}")]
-    public override Task<ActionResult<ThirdNews>> DeleteAsync([FromRoute] Guid id)
+    [AllowAnonymous]
+    public override async Task<ActionResult<ThirdNews>> DeleteAsync([FromRoute] Guid id)
     {
-        return base.DeleteAsync(id);
+        return await _repos.DeleteAsync(id);
     }
 
     /// <summary>

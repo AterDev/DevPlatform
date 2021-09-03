@@ -9,20 +9,43 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
-        <ListView
-            x:Name="NewsListView">
+    <ScrollViewer >
+        <ListView x:Name="NewsListView" MinWidth="720" ItemsSource="{x:Bind News,Mode=OneWay}">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                </Style>
+            </ListView.ItemContainerStyle>
             <ListView.ItemTemplate>
                 <DataTemplate  x:DataType="models:ThirdNews">
-                    <StackPanel Orientation="Vertical">
-                        <TextBlock Text="{x:Bind Title}">
+                    <Grid HorizontalAlignment="Stretch" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="auto"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Text="{x:Bind Title}" VerticalAlignment="Center" Grid.Column="0" Grid.Row="0">
                         </TextBlock>
-                    </StackPanel>
+
+                        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal"  Grid.Column="1" Grid.Row="0">
+                            <Button Name="OpenBtn" Click="OpenBtn_Click">
+                                <SymbolIcon Symbol="NewWindow"></SymbolIcon>
+                            </Button>
+                            <Button Name="DeleteBtn" Click="DeleteBtn_Click">
+                                <SymbolIcon Symbol="Delete"></SymbolIcon>
+                            </Button>
+                        </StackPanel>
+                        <Grid.Background>
+                            <SolidColorBrush Opacity="0.5" Color="Black">
+                            </SolidColorBrush>
+                        </Grid.Background>
+                    </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
-            <ListView.Background>
-                <AcrylicBrush/>
+            <ListView.Background >
+                <SolidColorBrush Opacity="0.5" Color="Black">
+                </SolidColorBrush>
             </ListView.Background>
         </ListView>
-    </Grid>
+    </ScrollViewer>
 </Page>

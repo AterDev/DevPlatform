@@ -1,4 +1,5 @@
 ﻿using DevNews.Models;
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Json;
@@ -20,9 +21,37 @@ namespace DevNews.Share
         public async Task<List<ThirdNews>> GetNewsAsync()
         {
             string url = BaseUrl + "api/ThirdNews/week";
-            var response = await httpClient.GetFromJsonAsync<List<ThirdNews>>(url);
-            return response;
+            try
+            {
+                var response = await httpClient.GetFromJsonAsync<List<ThirdNews>>(url); return response;
+            }
+            catch (Exception)
+            {
+                return default;
+            }
         }
 
+
+        public async Task<bool> DeleteAsync(Guid id)
+        {
+            string url = BaseUrl + "api/ThirdNews/" + id;
+            try
+            {
+                var response = await httpClient.DeleteAsync(url);
+                if (response.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+                
+            }
+            catch (Exception)
+            {
+                return default;
+            }
+        }
     }
 }

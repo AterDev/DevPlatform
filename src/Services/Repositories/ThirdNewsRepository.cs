@@ -30,12 +30,16 @@ namespace Services.Repositories
         public async Task<List<ThirdNews>> GetWeekNewsAsync()
         {
             return await _db.Where(n => n.CreatedTime >= DateTime.Now.AddDays(-7))
+                .Where(n => n.Status != Status.Deleted)
+                .OrderByDescending(n => n.CreatedTime)
                 .ToListAsync();
         }
 
-        public override Task<ThirdNews> DeleteAsync(Guid id)
+        public override async Task<ThirdNews> DeleteAsync(Guid id)
         {
-            return base.DeleteAsync(id);
+            var news = await _db.FindAsync(id);
+            news.Status = Status.Deleted;
+            return news;
         }
         public override Task<ThirdNews> GetDetailAsync(Guid id)
         {

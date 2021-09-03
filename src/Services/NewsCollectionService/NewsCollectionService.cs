@@ -50,13 +50,13 @@ public class NewsCollectionService
     {
         var result = new List<ThirdNews>(list);
         var news = await _context.ThirdNews.OrderByDescending(n => n.DatePublished)
-            .Take(20).ToListAsync();
+            .Take(30).ToListAsync();
 
         _logger.LogInformation("today total news: " + list.Count);
 
         foreach (var item in list)
         {
-            if (news.Any(n => n.Title.Similarity(item.Title) >= 0.8 || n.Title.Equals(item.Title)))
+            if (news.Any(n => n.Title.Similarity(item.Title) >= 0.6 || n.Title.Equals(item.Title)))
             {
                 result.Remove(item);
             }
