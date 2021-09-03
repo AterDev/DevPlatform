@@ -8,6 +8,10 @@
         private string _url;
         private string _provider;
         private string _category;
+        [MaxLength(100)]
+        public string AuthorName { get; set; }
+        [MaxLength(300)]
+        public string AuthorAvatar { get; set; }
 
         [MaxLength(200)]
         public string Title
@@ -18,7 +22,6 @@
                 _title = value != null && value.Length > 200 ? value.Substring(0, 200) : value;
             }
         }
-
         [MaxLength(5000)]
         public string Description
         {
@@ -67,5 +70,16 @@
                 _category = value != null && value.Length > 50 ? value.Substring(0, 50) : value;
             }
         }
+        [MaxLength(50)]
+        public string IdentityId { get; set; }
+        public NewsType Type { get; set; } = NewsType.News;
+
+    }
+    public enum NewsType
+    {
+        News,
+        Tweet,
+        Weibo,
+        Rss
     }
 }

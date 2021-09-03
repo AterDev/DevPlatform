@@ -11,7 +11,7 @@ namespace DevNews.Share
     {
 
         HttpClient httpClient;
-        static readonly string BaseUrl = "http://localhost:5002/";
+        static readonly string BaseUrl = "http://39.104.70.89:9002/";
         public NewsService()
         {
             httpClient = new HttpClient();

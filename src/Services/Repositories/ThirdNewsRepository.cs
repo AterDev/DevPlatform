@@ -31,6 +31,7 @@ namespace Services.Repositories
         {
             return await _db.Where(n => n.CreatedTime >= DateTime.Now.AddDays(-7))
                 .Where(n => n.Status != Status.Deleted)
+                .Where(n => n.Type == NewsType.News)
                 .OrderByDescending(n => n.CreatedTime)
                 .ToListAsync();
         }

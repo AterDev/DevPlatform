@@ -31,9 +31,13 @@ public class NewsTimerService : IHostedService, IDisposable
 
     private async void DoWork(object state)
     {
+
+        var twService = new TwitterService();
+        var twitters = await twService.GetLastTweetsAsync();
+
         using var scope = Services.CreateScope();
-        var newsService = scope.ServiceProvider.GetRequiredService<NewsCollectionService>();
-        await newsService.Start();
+        //var newsService = scope.ServiceProvider.GetRequiredService<NewsCollectionService>();
+        //await newsService.Start();
     }
 
     public Task StopAsync(CancellationToken stoppingToken)
