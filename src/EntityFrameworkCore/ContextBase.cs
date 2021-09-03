@@ -103,6 +103,7 @@ public class ContextBase : DbContext
             e.HasIndex(m => m.DatePublished);
             e.HasIndex(m => m.Provider);
             e.HasIndex(m => m.Category);
+            e.HasIndex(m => m.IdentityId);
         });
         base.OnModelCreating(builder);
     }

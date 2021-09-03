@@ -52,7 +52,8 @@ namespace Services.NewsCollectionService
 
             foreach (var item in list)
             {
-                if (news.Any(n => n.IdentityId == item.IdentityId))
+                if (news.Any(n => n.IdentityId == item.IdentityId
+                    || n.Title.Similarity(item.Title) >= 0.6))
                 {
                     result.Remove(item);
                 }
@@ -62,6 +63,7 @@ namespace Services.NewsCollectionService
             {
                 await _context.AddRangeAsync(result);
                 await _context.SaveChangesAsync();
+                _logger.LogInformation("===Start=== Add tweets " + result.Count);
             }
         }
 

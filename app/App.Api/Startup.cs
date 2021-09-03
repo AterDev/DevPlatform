@@ -26,6 +26,7 @@ public class Startup
         services.AddOptions();
 
         services.AddScoped<NewsCollectionService>();
+        services.AddScoped<TwitterService>();
         services.AddScoped(typeof(WebService));
         services.AddScoped(typeof(FileService));
 

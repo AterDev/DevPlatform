@@ -47,9 +47,5 @@ namespace Services.Repositories
             return base.GetDetailAsync(id);
         }
 
-
-
-
-
     }
 }
