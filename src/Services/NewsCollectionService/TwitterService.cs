@@ -53,7 +53,7 @@ namespace Services.NewsCollectionService
             foreach (var item in list)
             {
                 if (news.Any(n => n.IdentityId == item.IdentityId
-                    || n.Title.Similarity(item.Title) >= 0.6))
+                    || n.Title.GetSimilar(item.Title) >= 0.6))
                 {
                     result.Remove(item);
                 }

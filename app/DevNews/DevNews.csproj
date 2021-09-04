@@ -171,13 +171,6 @@
   <ItemGroup>
     <Folder Include="Compnents\" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="OpenAPIs\swagger.json">
-      <Namespace>DevApi</Namespace>
-      <CodeGenerator>NSwagCSharp</CodeGenerator>
-      <SourceUri>http://localhost:5002/swagger/v1/swagger.json</SourceUri>
-    </None>
-  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

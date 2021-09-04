@@ -58,7 +58,7 @@ public class NewsCollectionService
 
         foreach (var item in list)
         {
-            if (news.Any(n => n.Title.Similarity(item.Title) >= 0.6 || n.Title.Equals(item.Title)))
+            if (news.Any(n => n.Title.GetSimilar(item.Title) >= 0.6 || n.Title.Equals(item.Title)))
             {
                 result.Remove(item);
             }
