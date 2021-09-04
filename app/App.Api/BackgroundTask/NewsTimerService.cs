@@ -33,8 +33,8 @@ public class NewsTimerService : IHostedService, IDisposable
     {
         using var scope = Services.CreateScope();
 
-        var twService = scope.ServiceProvider.GetRequiredService<TwitterService>();
-        await twService.StartAsync();
+        //var twService = scope.ServiceProvider.GetRequiredService<TwitterService>();
+        //await twService.StartAsync();
 
         var newsService = scope.ServiceProvider.GetRequiredService<NewsCollectionService>();
         await newsService.Start();

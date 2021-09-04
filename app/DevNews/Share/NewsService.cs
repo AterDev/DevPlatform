@@ -30,7 +30,7 @@ namespace DevNews.Share
             }
             catch (Exception)
             {
-                return default;
+                return new List<ThirdNews>();
             }
         }
 

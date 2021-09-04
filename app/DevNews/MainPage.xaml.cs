@@ -39,7 +39,8 @@ namespace DevNews
         private async void LoadData(object sender, RoutedEventArgs e)
         {
             var newsService = new NewsService();
-            News = new ObservableCollection<ThirdNews>(await newsService.GetNewsAsync());
+            var news = await newsService.GetNewsAsync();
+            News = new ObservableCollection<ThirdNews>(news);
             NewsListView.ItemsSource = News;
         }
 
