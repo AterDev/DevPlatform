@@ -26,15 +26,16 @@ namespace DevNews
     public sealed partial class MainPage : Page
     {
 
-        public ObservableCollection<ThirdNews> News { get; set; } = new ObservableCollection<ThirdNews>();
-
-
+        private ObservableCollection<ThirdNews> News { get; set; } = new ObservableCollection<ThirdNews>();
+        public readonly List<NewsTypeChose> TypeChoses = new List<NewsTypeChose>();
         readonly NewsService newsService = new NewsService();
+
         public MainPage()
         {
             InitializeComponent();
             Loaded += LoadData;
             MinWidth = 720;
+            TypeChoses = new NewsTypeChose().GetDefaultList();
         }
 
         private async void LoadData(object sender, RoutedEventArgs e)
@@ -69,17 +70,52 @@ namespace DevNews
             {
                 // 删除失败
             }
-
         }
 
-        private void DeleteAllBtn_Click(object sender, RoutedEventArgs e)
+        private async void DeleteAllBtn_Click(object sender, RoutedEventArgs e)
         {
             var items = NewsListView.SelectedItems as List<ThirdNews>;
             var ids = items.Select(x => x.Id).ToList();
-            newsService.DeleteAsync(ids);
+            var res = await newsService.SetAsDelteAsync(ids);
+            if (res)
+            {
+                NewsListView.SelectedItems.Clear();
+                items.ForEach(item =>
+                {
+                    News.Remove(item);
+                });
+            }
         }
 
-        private void MoveBtn_Click(object sender, RoutedEventArgs e)
+
+        private async void GridView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var currentItem = (NewsTypeChose)e.AddedItems[0];
+            // TODO: 调用内容
+            var items = NewsListView.SelectedItems as List<ThirdNews>;
+            var ids = items.Select(x => x.Id).ToList();
+
+
+            NewsType btnValue = currentItem.NewsType;
+            var res = await newsService.MoveNewsAsync(ids, btnValue);
+            if (res)
+            {
+                for (int i = 0; i < News.Count; i++)
+                {
+                    if (items.Contains(News[i]))
+                    {
+                        News[i].NewsType = btnValue;
+                    }
+                }
+            }
+            else
+            {
+
+            }
+
+        }
+
+        private void SplitButton_Click(SplitButton sender, SplitButtonClickEventArgs args)
         {
 
         }

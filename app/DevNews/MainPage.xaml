@@ -13,6 +13,22 @@
             <Button Name="MoveBtn" Click="MoveBtn_Click">
                 <SymbolIcon Symbol="MoveToFolder"></SymbolIcon>
             </Button>
+            <SplitButton Click="SplitButton_Click">
+                Move to
+                <SplitButton.Flyout>
+                    <Flyout>
+                        <GridView ItemsSource="{x:Bind TypeChoses}"
+                                  SelectionChanged="GridView_SelectionChanged"
+                                  SelectedIndex="0">
+                            <GridView.ItemTemplate>
+                                <DataTemplate x:DataType="models:NewsTypeChose">
+                                    <TextBlock Text="{x:Bind DisplayName}"></TextBlock>
+                                </DataTemplate>
+                            </GridView.ItemTemplate>
+                        </GridView>
+                    </Flyout>
+                </SplitButton.Flyout>
+            </SplitButton>
             <Button Name="DeleteAllBtn" Click="DeleteAllBtn_Click">
                 <SymbolIcon Symbol="Delete"></SymbolIcon>
             </Button>
@@ -33,9 +49,14 @@
                                 <ColumnDefinition Width="*"></ColumnDefinition>
                                 <ColumnDefinition Width="auto"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
 
                             <TextBlock Text="{x:Bind Title}" VerticalAlignment="Center" Grid.Column="0" Grid.Row="0">
                             </TextBlock>
+                            <TextBlock Text="{x:Bind NewsType}" Grid.Column="0" Grid.Row="1"></TextBlock>
 
                             <StackPanel HorizontalAlignment="Right" Orientation="Horizontal"  Grid.Column="1" Grid.Row="0">
                                 <Button Name="OpenBtn" Click="OpenBtn_Click">

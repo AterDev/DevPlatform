@@ -59,7 +59,8 @@ public class ThirdNewsRepository : Repository<ThirdNews, ThirdNewsAddDto, ThirdN
     /// </summary>
     /// <param name="ids"></param>
     /// <returns></returns>
-    public async Task<int> RemoveAsync(List<Guid> ids)
+    public async Task<int> RemoveAsync
+        (List<Guid> ids)
     {
         return await _db.Where(n => ids.Contains(n.Id))
             .BatchUpdateAsync(n => new ThirdNews { Status = Status.Deleted });
