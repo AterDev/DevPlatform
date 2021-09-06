@@ -30,6 +30,7 @@ namespace DevNews
         public readonly List<NewsTypeChose> TypeChoses = new List<NewsTypeChose>();
         readonly NewsService newsService = new NewsService();
 
+        List<ThirdNews> selectedNewsItems = null;
         public MainPage()
         {
             InitializeComponent();
@@ -74,7 +75,12 @@ namespace DevNews
 
         private async void DeleteAllBtn_Click(object sender, RoutedEventArgs e)
         {
-            var items = NewsListView.SelectedItems as List<ThirdNews>;
+            var items = new List<ThirdNews>();
+            foreach (ThirdNews item in NewsListView.SelectedItems)
+            {
+                items.Add(item);
+            }
+
             var ids = items.Select(x => x.Id).ToList();
             var res = await newsService.SetAsDelteAsync(ids);
             if (res)
@@ -91,33 +97,46 @@ namespace DevNews
         private async void GridView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var currentItem = (NewsTypeChose)e.AddedItems[0];
-            // TODO: 调用内容
-            var items = NewsListView.SelectedItems as List<ThirdNews>;
-            var ids = items.Select(x => x.Id).ToList();
-
-
-            NewsType btnValue = currentItem.NewsType;
-            var res = await newsService.MoveNewsAsync(ids, btnValue);
-            if (res)
+            // 调用内容
+            var items = new List<ThirdNews>();
+            foreach (ThirdNews item in NewsListView.SelectedItems)
             {
-                for (int i = 0; i < News.Count; i++)
+                items.Add(item);
+            }
+
+            if (items != null && items.Count > 0)
+            {
+                var ids = items.Select(x => x.Id).ToList();
+                NewsType btnValue = currentItem.NewsType;
+                var res = await newsService.MoveNewsAsync(ids, btnValue);
+                if (res)
                 {
-                    if (items.Contains(News[i]))
+                    for (int i = 0; i < News.Count; i++)
                     {
-                        News[i].NewsType = btnValue;
+                        if (items.Contains(News[i]))
+                        {
+                            News[i].NewsType = btnValue;
+                        }
                     }
                 }
-            }
-            else
-            {
+                else
+                {
 
+                }
             }
-
         }
 
         private void SplitButton_Click(SplitButton sender, SplitButtonClickEventArgs args)
         {
 
+        }
+
+        private void NewsListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var seletec = e.AddedItems[0];
+
+            var aaa = NewsListView.SelectedItems.ToList();
+            Console.WriteLine();
         }
     }
 }

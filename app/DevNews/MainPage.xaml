@@ -9,22 +9,31 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <StackPanel Orientation="Vertical">
-        <StackPanel Orientation="Horizontal">
-            <Button Name="MoveBtn" Click="MoveBtn_Click">
-                <SymbolIcon Symbol="MoveToFolder"></SymbolIcon>
-            </Button>
+        <!--顶部操作栏-->
+        <StackPanel Orientation="Horizontal" Margin="0,10,0,10" HorizontalAlignment="Right" Width="auto">
             <SplitButton Click="SplitButton_Click">
-                Move to
+                移动到
                 <SplitButton.Flyout>
                     <Flyout>
                         <GridView ItemsSource="{x:Bind TypeChoses}"
-                                  SelectionChanged="GridView_SelectionChanged"
-                                  SelectedIndex="0">
+                                  SelectionMode="Single"
+                                  SelectionChanged="GridView_SelectionChanged">
+                            <GridView.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <ItemsWrapGrid MaximumRowsOrColumns="1" Orientation="Horizontal">
+                                    </ItemsWrapGrid>
+                                </ItemsPanelTemplate>
+                            </GridView.ItemsPanel>
                             <GridView.ItemTemplate>
                                 <DataTemplate x:DataType="models:NewsTypeChose">
-                                    <TextBlock Text="{x:Bind DisplayName}"></TextBlock>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Height="auto" Width="auto">
+                                        <TextBlock Text="{x:Bind DisplayName}" 
+                                                   MinWidth="80"
+                                                   Margin="10,0,0,0"/>
+                                    </StackPanel>
                                 </DataTemplate>
                             </GridView.ItemTemplate>
+
                         </GridView>
                     </Flyout>
                 </SplitButton.Flyout>
@@ -36,7 +45,8 @@
         <ScrollViewer>
             <ListView x:Name="NewsListView" MinWidth="720" 
                   ItemsSource="{x:Bind News,Mode=OneWay}"
-                  SelectionMode="Extended">
+                  SelectionMode="Extended"
+                  SelectionChanged="NewsListView_SelectionChanged">
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">
                         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
@@ -54,11 +64,12 @@
                                 <RowDefinition></RowDefinition>
                             </Grid.RowDefinitions>
 
-                            <TextBlock Text="{x:Bind Title}" VerticalAlignment="Center" Grid.Column="0" Grid.Row="0">
+                            <TextBlock Text="{x:Bind Title}" VerticalAlignment="Center" Grid.Column="0" Grid.Row="0"
+                                       FontSize="20">
                             </TextBlock>
                             <TextBlock Text="{x:Bind NewsType}" Grid.Column="0" Grid.Row="1"></TextBlock>
 
-                            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal"  Grid.Column="1" Grid.Row="0">
+                            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal"  Grid.Column="1" Grid.Row="0" Grid.RowSpan="2">
                                 <Button Name="OpenBtn" Click="OpenBtn_Click">
                                     <SymbolIcon Symbol="NewWindow"></SymbolIcon>
                                 </Button>
@@ -67,14 +78,14 @@
                                 </Button>
                             </StackPanel>
                             <Grid.Background>
-                                <SolidColorBrush Opacity="0.5" Color="Black">
+                                <SolidColorBrush Opacity="0.2" Color="Black">
                                 </SolidColorBrush>
                             </Grid.Background>
                         </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>
                 <ListView.Background >
-                    <SolidColorBrush Opacity="0.5" Color="Black">
+                    <SolidColorBrush Opacity="0.2" Color="Black">
                     </SolidColorBrush>
                 </ListView.Background>
             </ListView>
