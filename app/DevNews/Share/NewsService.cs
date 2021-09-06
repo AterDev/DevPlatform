@@ -1,6 +1,7 @@
 ﻿using DevNews.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
@@ -23,11 +24,13 @@ namespace DevNews.Share
             string url = BaseUrl + "api/ThirdNews/week";
             try
             {
-                var response = await httpClient.GetFromJsonAsync<List<ThirdNews>>(url); return response;
+                var response = await httpClient.GetFromJsonAsync<List<ThirdNews>>(url);
+                response = response.GroupBy(n => n.Title).Select(n => n.FirstOrDefault()).ToList();
+                return response;
             }
             catch (Exception)
             {
-                return default;
+                return new List<ThirdNews>();
             }
         }
 
@@ -46,7 +49,7 @@ namespace DevNews.Share
                 {
                     return false;
                 }
-                
+
             }
             catch (Exception)
             {

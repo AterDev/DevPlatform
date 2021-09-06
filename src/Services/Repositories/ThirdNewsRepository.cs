@@ -52,6 +52,7 @@ namespace Services.Repositories
         {
             var news = await _db.FindAsync(id);
             news.Status = Status.Deleted;
+            await _context.SaveChangesAsync();
             return news;
         }
 
