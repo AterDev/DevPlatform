@@ -47,7 +47,7 @@ namespace Services.NewsCollectionService
         {
             var result = new List<ThirdNews>(list);
             var news = await _context.ThirdNews.OrderByDescending(n => n.DatePublished)
-                .Where(n => n.Type == NewsType.Tweet)
+                .Where(n => n.Type == NewsSource.Tweet)
                 .Take(50).ToListAsync();
 
             foreach (var item in list)
@@ -85,7 +85,7 @@ namespace Services.NewsCollectionService
                     Url = s.Url,
                     Category = s.Hashtags.Count > 0 ? s.Hashtags.Select(t => t.Text).FirstOrDefault() : null,
                     ThumbnailUrl = s.Media.FirstOrDefault()?.MediaURL,
-                    Type = NewsType.Tweet
+                    Type = NewsSource.Tweet
                 }).ToList();
                 messages.AddRange(messageSets);
             }

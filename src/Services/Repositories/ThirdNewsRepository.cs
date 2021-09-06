@@ -1,3 +1,5 @@
+using EFCore.BulkExtensions;
+
 namespace Services.Repositories
 {
 
@@ -29,11 +31,21 @@ namespace Services.Repositories
 
         public async Task<List<ThirdNews>> GetWeekNewsAsync()
         {
-            return await _db.Where(n => n.CreatedTime >= DateTime.Now.AddDays(-7))
+            var offset = (int)DateTime.Now.Date.DayOfWeek;
+            if (offset == 0) offset = 7;
+            return await _db.Where(n => n.CreatedTime >= DateTime.Now.AddDays(-offset))
                 .Where(n => n.Status != Status.Deleted)
-                .Where(n => n.Type == NewsType.News)
+                .Where(n => n.Type == NewsSource.News)
                 .OrderByDescending(n => n.CreatedTime)
                 .ToListAsync();
+        }
+
+
+        public async Task<int> SetNewsTypeAsync(List<Guid> ids, NewsType newsType)
+        {
+            return await _db.Where(n => ids.Contains(n.Id))
+                .BatchUpdateAsync(n => new ThirdNews { NewsType = newsType });
+
         }
 
         public override async Task<ThirdNews> DeleteAsync(Guid id)
@@ -42,6 +54,8 @@ namespace Services.Repositories
             news.Status = Status.Deleted;
             return news;
         }
+
+
         public override Task<ThirdNews> GetDetailAsync(Guid id)
         {
             return base.GetDetailAsync(id);

@@ -72,14 +72,37 @@
         }
         [MaxLength(50)]
         public string IdentityId { get; set; }
-        public NewsType Type { get; set; } = NewsType.News;
+        public NewsSource Type { get; set; } = NewsSource.News;
+        public NewsType NewsType { get; set; } = NewsType.Default;
 
     }
-    public enum NewsType
+    public enum NewsSource
     {
         News,
         Tweet,
         Weibo,
         Rss
+    }
+
+    public enum NewsType
+    {
+        Default,
+        /// <summary>
+        /// 大公司
+        /// </summary>
+        Company,
+        /// <summary>
+        /// 开源
+        /// </summary>
+        OpenSource,
+        /// <summary>
+        /// 语言及框架
+        /// </summary>
+        LanguageAndFramework,
+        /// <summary>
+        /// 数据和AI
+        /// </summary>
+        DataAndAI,
+        Else
     }
 }

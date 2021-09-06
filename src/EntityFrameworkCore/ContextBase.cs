@@ -104,6 +104,8 @@ public class ContextBase : DbContext
             e.HasIndex(m => m.Provider);
             e.HasIndex(m => m.Category);
             e.HasIndex(m => m.IdentityId);
+            e.HasIndex(m => m.NewsType);
+            e.HasIndex(m => m.Type);
         });
         base.OnModelCreating(builder);
     }

@@ -93,4 +93,17 @@ public class ThirdNewsController : ApiController<ThirdNewsRepository, ThirdNews,
     {
         return base.GetDetailAsync(id);
     }
+
+    /// <summary>
+    /// 资讯分类处理
+    /// </summary>
+    /// <param name="ids"></param>
+    /// <param name="newsType"></param>
+    /// <returns></returns>
+    [HttpPut("type")]
+    [AllowAnonymous]
+    public async Task<int> SetNewsTypeAsync([FromBody] List<Guid> ids, [FromQuery] NewsType newsType)
+    {
+        return await _repos.SetNewsTypeAsync(ids, newsType);
+    }
 }

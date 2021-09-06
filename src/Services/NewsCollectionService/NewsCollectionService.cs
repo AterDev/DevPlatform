@@ -39,7 +39,7 @@ public class NewsCollectionService
                 Url = news.Link,
                 ThumbnailUrl = news.ThumbUrl,
                 DatePublished = news.CreateTime,
-                Type = NewsType.News
+                Type = NewsSource.News
             };
             result.Add(thirdNews);
         });
@@ -51,7 +51,7 @@ public class NewsCollectionService
     {
         var result = new List<ThirdNews>(list);
         var news = await _context.ThirdNews.OrderByDescending(n => n.DatePublished)
-            .Where(n => n.Type == NewsType.News)
+            .Where(n => n.Type == NewsSource.News)
             .Take(50).ToListAsync();
 
         _logger.LogInformation("today total news: " + list.Count);
