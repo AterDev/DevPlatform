@@ -28,17 +28,17 @@ namespace DevNews
 
         public ObservableCollection<ThirdNews> News { get; set; } = new ObservableCollection<ThirdNews>();
 
+
+        readonly NewsService newsService = new NewsService();
         public MainPage()
         {
             InitializeComponent();
             Loaded += LoadData;
             MinWidth = 720;
-            Width = 720;
         }
 
         private async void LoadData(object sender, RoutedEventArgs e)
         {
-            var newsService = new NewsService();
             var news = await newsService.GetNewsAsync();
             News = new ObservableCollection<ThirdNews>(news);
             NewsListView.ItemsSource = News;
@@ -61,8 +61,7 @@ namespace DevNews
             var button = (Button)sender;
             var item = (ThirdNews)button.DataContext;
 
-            var newService = new NewsService();
-            if (await newService.DeleteAsync(item.Id))
+            if (await newsService.DeleteAsync(item.Id))
             {
                 var success = News.Remove(item);
             }
@@ -70,6 +69,18 @@ namespace DevNews
             {
                 // 删除失败
             }
+
+        }
+
+        private void DeleteAllBtn_Click(object sender, RoutedEventArgs e)
+        {
+            var items = NewsListView.SelectedItems as List<ThirdNews>;
+            var ids = items.Select(x => x.Id).ToList();
+            newsService.DeleteAsync(ids);
+        }
+
+        private void MoveBtn_Click(object sender, RoutedEventArgs e)
+        {
 
         }
     }

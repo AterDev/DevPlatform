@@ -8,45 +8,56 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <ScrollViewer >
-        <ListView x:Name="NewsListView" MinWidth="720" 
+    <StackPanel Orientation="Vertical">
+        <StackPanel Orientation="Horizontal">
+            <Button Name="MoveBtn" Click="MoveBtn_Click">
+                <SymbolIcon Symbol="MoveToFolder"></SymbolIcon>
+            </Button>
+            <Button Name="DeleteAllBtn" Click="DeleteAllBtn_Click">
+                <SymbolIcon Symbol="Delete"></SymbolIcon>
+            </Button>
+        </StackPanel>
+        <ScrollViewer>
+            <ListView x:Name="NewsListView" MinWidth="720" 
                   ItemsSource="{x:Bind News,Mode=OneWay}"
                   SelectionMode="Extended">
-            <ListView.ItemContainerStyle>
-                <Style TargetType="ListViewItem">
-                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                </Style>
-            </ListView.ItemContainerStyle>
-            <ListView.ItemTemplate>
-                <DataTemplate  x:DataType="models:ThirdNews">
-                    <Grid HorizontalAlignment="Stretch" >
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"></ColumnDefinition>
-                            <ColumnDefinition Width="auto"></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.ItemTemplate>
+                    <DataTemplate  x:DataType="models:ThirdNews">
+                        <Grid HorizontalAlignment="Stretch" >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="auto"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
 
-                        <TextBlock Text="{x:Bind Title}" VerticalAlignment="Center" Grid.Column="0" Grid.Row="0">
-                        </TextBlock>
+                            <TextBlock Text="{x:Bind Title}" VerticalAlignment="Center" Grid.Column="0" Grid.Row="0">
+                            </TextBlock>
 
-                        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal"  Grid.Column="1" Grid.Row="0">
-                            <Button Name="OpenBtn" Click="OpenBtn_Click">
-                                <SymbolIcon Symbol="NewWindow"></SymbolIcon>
-                            </Button>
-                            <Button Name="DeleteBtn" Click="DeleteBtn_Click">
-                                <SymbolIcon Symbol="Delete"></SymbolIcon>
-                            </Button>
-                        </StackPanel>
-                        <Grid.Background>
-                            <SolidColorBrush Opacity="0.5" Color="Black">
-                            </SolidColorBrush>
-                        </Grid.Background>
-                    </Grid>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-            <ListView.Background >
-                <SolidColorBrush Opacity="0.5" Color="Black">
-                </SolidColorBrush>
-            </ListView.Background>
-        </ListView>
-    </ScrollViewer>
+                            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal"  Grid.Column="1" Grid.Row="0">
+                                <Button Name="OpenBtn" Click="OpenBtn_Click">
+                                    <SymbolIcon Symbol="NewWindow"></SymbolIcon>
+                                </Button>
+                                <Button Name="DeleteBtn" Click="DeleteBtn_Click">
+                                    <SymbolIcon Symbol="Delete"></SymbolIcon>
+                                </Button>
+                            </StackPanel>
+                            <Grid.Background>
+                                <SolidColorBrush Opacity="0.5" Color="Black">
+                                </SolidColorBrush>
+                            </Grid.Background>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                <ListView.Background >
+                    <SolidColorBrush Opacity="0.5" Color="Black">
+                    </SolidColorBrush>
+                </ListView.Background>
+            </ListView>
+        </ScrollViewer>
+    </StackPanel>
+
 </Page>

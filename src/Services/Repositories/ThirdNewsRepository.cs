@@ -1,66 +1,73 @@
 using EFCore.BulkExtensions;
 
-namespace Services.Repositories
+namespace Services.Repositories;
+
+public class ThirdNewsRepository : Repository<ThirdNews, ThirdNewsAddDto, ThirdNewsUpdateDto, ThirdNewsFilter, ThirdNewsDto>
 {
 
-    public class ThirdNewsRepository : Repository<ThirdNews, ThirdNewsAddDto, ThirdNewsUpdateDto, ThirdNewsFilter, ThirdNewsDto>
+    ILogger _logger;
+    public ThirdNewsRepository(ContextBase context, ILogger<ThirdNewsRepository> logger, IUserContext userContext, IMapper mapper)
+    : base(context, logger, userContext, mapper)
     {
 
-        ILogger _logger;
-        public ThirdNewsRepository(ContextBase context, ILogger<ThirdNewsRepository> logger, IUserContext userContext, IMapper mapper)
-        : base(context, logger, userContext, mapper)
-        {
-
-        }
-
-        public override Task<PageResult<ThirdNewsDto>> GetListWithPageAsync(ThirdNewsFilter filter)
-        {
-            _query = _query.OrderByDescending(q => q.CreatedTime);
-            return base.GetListWithPageAsync(filter);
-        }
-
-        public override Task<ThirdNews> AddAsync(ThirdNewsAddDto form)
-        {
-            return base.AddAsync(form);
-        }
-
-        public override Task<ThirdNews> UpdateAsync(Guid id, ThirdNewsUpdateDto form)
-        {
-            return base.UpdateAsync(id, form);
-        }
-
-        public async Task<List<ThirdNews>> GetWeekNewsAsync()
-        {
-            var offset = (int)DateTime.Now.Date.DayOfWeek;
-            if (offset == 0) offset = 7;
-            return await _db.Where(n => n.CreatedTime >= DateTime.Now.AddDays(-offset))
-                .Where(n => n.Status != Status.Deleted)
-                .Where(n => n.Type == NewsSource.News)
-                .OrderByDescending(n => n.CreatedTime)
-                .ToListAsync();
-        }
-
-
-        public async Task<int> SetNewsTypeAsync(List<Guid> ids, NewsType newsType)
-        {
-            return await _db.Where(n => ids.Contains(n.Id))
-                .BatchUpdateAsync(n => new ThirdNews { NewsType = newsType });
-
-        }
-
-        public override async Task<ThirdNews> DeleteAsync(Guid id)
-        {
-            var news = await _db.FindAsync(id);
-            news.Status = Status.Deleted;
-            await _context.SaveChangesAsync();
-            return news;
-        }
-
-
-        public override Task<ThirdNews> GetDetailAsync(Guid id)
-        {
-            return base.GetDetailAsync(id);
-        }
-
     }
+
+    public override Task<PageResult<ThirdNewsDto>> GetListWithPageAsync(ThirdNewsFilter filter)
+    {
+        _query = _query.OrderByDescending(q => q.CreatedTime);
+        return base.GetListWithPageAsync(filter);
+    }
+
+    public override Task<ThirdNews> AddAsync(ThirdNewsAddDto form)
+    {
+        return base.AddAsync(form);
+    }
+
+    public override Task<ThirdNews> UpdateAsync(Guid id, ThirdNewsUpdateDto form)
+    {
+        return base.UpdateAsync(id, form);
+    }
+
+    public async Task<List<ThirdNews>> GetWeekNewsAsync()
+    {
+        var offset = (int)DateTime.Now.Date.DayOfWeek;
+        if (offset == 0) offset = 7;
+        return await _db.Where(n => n.CreatedTime >= DateTime.Now.AddDays(-offset))
+            .Where(n => n.Status != Status.Deleted)
+            .Where(n => n.Type == NewsSource.News)
+            .OrderByDescending(n => n.CreatedTime)
+            .ToListAsync();
+    }
+
+
+    public async Task<int> SetNewsTypeAsync(List<Guid> ids, NewsType newsType)
+    {
+        return await _db.Where(n => ids.Contains(n.Id))
+            .BatchUpdateAsync(n => new ThirdNews { NewsType = newsType });
+    }
+
+    public override async Task<ThirdNews> DeleteAsync(Guid id)
+    {
+        var news = await _db.FindAsync(id);
+        news.Status = Status.Deleted;
+        await _context.SaveChangesAsync();
+        return news;
+    }
+
+    /// <summary>
+    /// set news as deleted
+    /// </summary>
+    /// <param name="ids"></param>
+    /// <returns></returns>
+    public async Task<int> RemoveAsync(List<Guid> ids)
+    {
+        return await _db.Where(n => ids.Contains(n.Id))
+            .BatchUpdateAsync(n => new ThirdNews { Status = Status.Deleted });
+    }
+
+    public override Task<ThirdNews> GetDetailAsync(Guid id)
+    {
+        return base.GetDetailAsync(id);
+    }
+
 }

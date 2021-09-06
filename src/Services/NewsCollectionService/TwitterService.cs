@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Configuration;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,23 +12,32 @@ namespace Services.NewsCollectionService
 {
     public class TwitterService
     {
-        readonly string ConsumerKey = "yIODhSD86nZmZAJNEjTjEV3e2";
-        readonly string ConsumerSecretKey = "LMMNULBLjv5bxtuaFnRQwHIu3oD2P0BwApjanAv5cheqQAxObx";
-        readonly string AccessToken = "1073272833810169856-0JrCoEWLbPWXCTSpChtqtP2GgGzPcw";
-        readonly string AccessSecretToken = "FnXjy66QYuKaKw1ADbRDpHK6CeFEGgyvVoMSZk1DKsiC0";
+        readonly string ConsumerKey = "";
+        readonly string ConsumerSecretKey = "";
+        readonly string AccessToken = "";
+        readonly string AccessSecretToken = "";
 
         readonly TwitterClient client;
 
         readonly ILogger _logger;
+        readonly IConfiguration _config;
         readonly ContextBase _context;
         /// <summary>
         /// 需要关注的twitters
         /// </summary>
         public string[] Twitters { get; set; }
-        public TwitterService(ILogger<TwitterService> logger, ContextBase context)
+        public TwitterService(ILogger<TwitterService> logger, ContextBase context, IConfiguration configuration)
         {
             _logger = logger;
             _context = context;
+            _config = configuration;
+
+            var twitterConfig = _config.GetSection("Twitter");
+            ConsumerKey = twitterConfig["ConsumerKey"];
+            ConsumerKey = twitterConfig["ConsumerSecretKey"];
+            ConsumerKey = twitterConfig["AccessToken"];
+            ConsumerKey = twitterConfig["AccessSecretToken"];
+
             var userCredentials = new TwitterCredentials(ConsumerKey, ConsumerSecretKey, AccessToken, AccessSecretToken);
             client = new TwitterClient(userCredentials);
             Twitters = new string[] { "dotnet", "msdev", "googledevs", "BBCTech" };
