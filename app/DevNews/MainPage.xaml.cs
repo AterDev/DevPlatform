@@ -179,7 +179,8 @@ namespace DevNews
                     break;
             }
             var filterNews = News.Where(n => n.NewsType == newsType).ToList();
-            News = new ObservableCollection<ThirdNews>(filterNews);
+            var obsFilterNews = new ObservableCollection<ThirdNews>(filterNews);
+            NewsListView.ItemsSource = obsFilterNews;
         }
 
     }
