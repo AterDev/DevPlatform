@@ -112,6 +112,7 @@ public class ThirdNewsController : ApiController<ThirdNewsRepository, ThirdNews,
     /// <param name="ids"></param>
     /// <returns></returns>
     [HttpPut("deleted")]
+    [AllowAnonymous]
     public async Task<int> RemoveAsync([FromBody] List<Guid> ids)
     {
         return await _repos.RemoveAsync(ids);

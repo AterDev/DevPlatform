@@ -8,16 +8,28 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <StackPanel Orientation="Vertical">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
         <!--顶部操作栏-->
-        <StackPanel Orientation="Horizontal" Margin="0,10,0,10" HorizontalAlignment="Right" Width="auto">
+        <StackPanel 
+            Grid.Row="0"
+            Height="auto"
+            Orientation="Horizontal" Margin="0,10,0,10" HorizontalAlignment="Right" Width="auto">
+            <Button x:Name="RefreshBtn" Click="RefreshBtn_Click">
+                <SymbolIcon Symbol="Refresh"></SymbolIcon>
+            </Button>
             <SplitButton Click="SplitButton_Click">
                 移动到
                 <SplitButton.Flyout>
                     <Flyout>
                         <GridView ItemsSource="{x:Bind TypeChoses}"
                                   SelectionMode="Single"
-                                  SelectionChanged="GridView_SelectionChanged">
+                                  IsItemClickEnabled="True"
+                                  ItemClick="GridView_ItemClick"
+                                  >
                             <GridView.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <ItemsWrapGrid MaximumRowsOrColumns="1" Orientation="Horizontal">
@@ -42,7 +54,9 @@
                 <SymbolIcon Symbol="Delete"></SymbolIcon>
             </Button>
         </StackPanel>
-        <ScrollViewer>
+        <ScrollViewer 
+            Grid.Row="1"
+            MinHeight="700">
             <ListView x:Name="NewsListView" MinWidth="720" 
                   ItemsSource="{x:Bind News,Mode=OneWay}"
                   SelectionMode="Extended"
@@ -90,6 +104,6 @@
                 </ListView.Background>
             </ListView>
         </ScrollViewer>
-    </StackPanel>
+    </Grid>
 
 </Page>

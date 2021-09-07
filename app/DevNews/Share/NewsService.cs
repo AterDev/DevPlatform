@@ -43,7 +43,7 @@ namespace DevNews.Share
         /// <returns></returns>
         public async Task<bool> MoveNewsAsync(List<Guid> ids, NewsType newsType)
         {
-            string url = BaseUrl + "api/ThirdNews?newsType=" + newsType;
+            string url = BaseUrl + "api/ThirdNews/type?newsType=" + newsType;
             try
             {
                 var response = await httpClient.PutAsJsonAsync(url, ids);

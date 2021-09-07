@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.System;
@@ -30,7 +31,6 @@ namespace DevNews
         public readonly List<NewsTypeChose> TypeChoses = new List<NewsTypeChose>();
         readonly NewsService newsService = new NewsService();
 
-        List<ThirdNews> selectedNewsItems = null;
         public MainPage()
         {
             InitializeComponent();
@@ -39,11 +39,9 @@ namespace DevNews
             TypeChoses = new NewsTypeChose().GetDefaultList();
         }
 
-        private async void LoadData(object sender, RoutedEventArgs e)
+        private void LoadData(object sender, RoutedEventArgs e)
         {
-            var news = await newsService.GetNewsAsync();
-            News = new ObservableCollection<ThirdNews>(news);
-            NewsListView.ItemsSource = News;
+            ReloadNews();
         }
 
         private async void OpenBtn_Click(object sender, RoutedEventArgs e)
@@ -60,10 +58,13 @@ namespace DevNews
 
         private async void DeleteBtn_Click(object sender, RoutedEventArgs e)
         {
+
             var button = (Button)sender;
             var item = (ThirdNews)button.DataContext;
 
-            if (await newsService.DeleteAsync(item.Id))
+            var ids = new List<Guid>();
+            ids.Add(item.Id);
+            if (await newsService.SetAsDelteAsync(ids))
             {
                 var success = News.Remove(item);
             }
@@ -93,22 +94,36 @@ namespace DevNews
             }
         }
 
-
-        private async void GridView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async Task<bool> SetNewsTypeAsync(List<Guid> ids, NewsType newsType)
         {
-            var currentItem = (NewsTypeChose)e.AddedItems[0];
+            var res = await newsService.MoveNewsAsync(ids, newsType);
+            return res;
+        }
+        private void SplitButton_Click(SplitButton sender, SplitButtonClickEventArgs args)
+        {
+
+            Console.WriteLine("click");
+        }
+
+        private void NewsListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private async void GridView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            var currentItem = (NewsTypeChose)e.ClickedItem;
             // 调用内容
             var items = new List<ThirdNews>();
             foreach (ThirdNews item in NewsListView.SelectedItems)
             {
                 items.Add(item);
             }
-
             if (items != null && items.Count > 0)
             {
                 var ids = items.Select(x => x.Id).ToList();
                 NewsType btnValue = currentItem.NewsType;
-                var res = await newsService.MoveNewsAsync(ids, btnValue);
+                var res = await SetNewsTypeAsync(ids, btnValue);
                 if (res)
                 {
                     for (int i = 0; i < News.Count; i++)
@@ -126,17 +141,16 @@ namespace DevNews
             }
         }
 
-        private void SplitButton_Click(SplitButton sender, SplitButtonClickEventArgs args)
+        private void RefreshBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            ReloadNews();
         }
 
-        private void NewsListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void ReloadNews()
         {
-            var seletec = e.AddedItems[0];
-
-            var aaa = NewsListView.SelectedItems.ToList();
-            Console.WriteLine();
+            var news = await newsService.GetNewsAsync();
+            News = new ObservableCollection<ThirdNews>(news);
+            NewsListView.ItemsSource = News;
         }
     }
 }

@@ -1,4 +1,4 @@
-using EFCore.BulkExtensions;
+﻿using EFCore.BulkExtensions;
 
 namespace Services.Repositories;
 
@@ -39,11 +39,20 @@ public class ThirdNewsRepository : Repository<ThirdNews, ThirdNewsAddDto, ThirdN
             .ToListAsync();
     }
 
-
+    /// <summary>
+    /// TODO:批量更新
+    /// </summary>
+    /// <param name="ids"></param>
+    /// <param name="newsType"></param>
+    /// <returns></returns>
     public async Task<int> SetNewsTypeAsync(List<Guid> ids, NewsType newsType)
     {
-        return await _db.Where(n => ids.Contains(n.Id))
-            .BatchUpdateAsync(n => new ThirdNews { NewsType = newsType });
+        var news = await _db.Where(n => ids.Contains(n.Id)).ToListAsync();
+        for (int i = 0; i < news.Count; i++)
+        {
+            news[i].NewsType = newsType;
+        }
+        return await _context.SaveChangesAsync();
     }
 
     public override async Task<ThirdNews> DeleteAsync(Guid id)
@@ -59,11 +68,14 @@ public class ThirdNewsRepository : Repository<ThirdNews, ThirdNewsAddDto, ThirdN
     /// </summary>
     /// <param name="ids"></param>
     /// <returns></returns>
-    public async Task<int> RemoveAsync
-        (List<Guid> ids)
+    public async Task<int> RemoveAsync(List<Guid> ids)
     {
-        return await _db.Where(n => ids.Contains(n.Id))
-            .BatchUpdateAsync(n => new ThirdNews { Status = Status.Deleted });
+        var news = await _db.Where(n => ids.Contains(n.Id)).ToListAsync();
+        for (int i = 0; i < news.Count; i++)
+        {
+            news[i].Status = Status.Deleted;
+        }
+        return await _context.SaveChangesAsync();
     }
 
     public override Task<ThirdNews> GetDetailAsync(Guid id)
