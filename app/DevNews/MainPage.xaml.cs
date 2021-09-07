@@ -99,11 +99,7 @@ namespace DevNews
             var res = await newsService.MoveNewsAsync(ids, newsType);
             return res;
         }
-        private void SplitButton_Click(SplitButton sender, SplitButtonClickEventArgs args)
-        {
 
-            Console.WriteLine("click");
-        }
 
         private void NewsListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -152,5 +148,39 @@ namespace DevNews
             News = new ObservableCollection<ThirdNews>(news);
             NewsListView.ItemsSource = News;
         }
+
+        /// <summary>
+        /// 按分类筛选
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void FilterBtn_Click(object sender, RoutedEventArgs e)
+        {
+            var button = (Button)sender;
+            NewsType newsType = NewsType.Default;
+            switch (button.Name)
+            {
+                case "CompanyFilter":
+                    newsType = NewsType.Company;
+                    break;
+                case "OpenSourceFilter":
+                    newsType = NewsType.OpenSource;
+                    break;
+                case "FrameworkFilter":
+                    newsType = NewsType.LanguageAndFramework;
+                    break;
+                case "DataFilter":
+                    newsType = NewsType.DataAndAI;
+                    break;
+                case "ElseFilter":
+                    newsType = NewsType.Else;
+                    break;
+                default:
+                    break;
+            }
+            var filterNews = News.Where(n => n.NewsType == newsType).ToList();
+            News = new ObservableCollection<ThirdNews>(filterNews);
+        }
+
     }
 }

@@ -14,46 +14,63 @@
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         <!--顶部操作栏-->
-        <StackPanel 
-            Grid.Row="0"
-            Height="auto"
-            Orientation="Horizontal" Margin="0,10,0,10" HorizontalAlignment="Right" Width="auto">
-            <Button x:Name="RefreshBtn" Click="RefreshBtn_Click">
-                <SymbolIcon Symbol="Refresh"></SymbolIcon>
-            </Button>
-            <SplitButton Click="SplitButton_Click">
-                移动到
-                <SplitButton.Flyout>
-                    <Flyout>
-                        <GridView ItemsSource="{x:Bind TypeChoses}"
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="auto"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <!--分类选择-->
+            <StackPanel Orientation="Horizontal">
+                <Button Content="未分类" x:Name="UnFiledFilter" Click="FilterBtn_Click"></Button>
+                <Button Content="大公司" x:Name="CompanyFilter" Click="FilterBtn_Click"></Button>
+                <Button Content="开源" x:Name="OpenSourceFilter" Click="FilterBtn_Click"></Button>
+                <Button Content="语言及框架" x:Name="FrameworkFilter" Click="FilterBtn_Click"></Button>
+                <Button Content="数据及AI" x:Name="DataFilter" Click="FilterBtn_Click"></Button>
+                <Button Content="其他" x:Name="ElseFilter" Click="FilterBtn_Click"></Button>
+            </StackPanel>
+
+            <!--右边批量操作-->
+            <StackPanel Grid.Column="1"
+                Height="auto"
+                Orientation="Horizontal" Margin="0,10,0,10" HorizontalAlignment="Stretch">
+                <Button x:Name="RefreshBtn" Click="RefreshBtn_Click">
+                    <SymbolIcon Symbol="Refresh"></SymbolIcon>
+                </Button>
+                <DropDownButton>
+                    移动到
+                    <DropDownButton.Flyout>
+                        <Flyout>
+                            <GridView ItemsSource="{x:Bind TypeChoses}"
                                   SelectionMode="Single"
                                   IsItemClickEnabled="True"
                                   ItemClick="GridView_ItemClick"
                                   >
-                            <GridView.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <ItemsWrapGrid MaximumRowsOrColumns="1" Orientation="Horizontal">
-                                    </ItemsWrapGrid>
-                                </ItemsPanelTemplate>
-                            </GridView.ItemsPanel>
-                            <GridView.ItemTemplate>
-                                <DataTemplate x:DataType="models:NewsTypeChose">
-                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Height="auto" Width="auto">
-                                        <TextBlock Text="{x:Bind DisplayName}" 
+                                <GridView.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <ItemsWrapGrid MaximumRowsOrColumns="1" Orientation="Horizontal">
+                                        </ItemsWrapGrid>
+                                    </ItemsPanelTemplate>
+                                </GridView.ItemsPanel>
+                                <GridView.ItemTemplate>
+                                    <DataTemplate x:DataType="models:NewsTypeChose">
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Height="auto" Width="auto">
+                                            <TextBlock Text="{x:Bind DisplayName}" 
                                                    MinWidth="80"
                                                    Margin="10,0,0,0"/>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </GridView.ItemTemplate>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridView.ItemTemplate>
 
-                        </GridView>
-                    </Flyout>
-                </SplitButton.Flyout>
-            </SplitButton>
-            <Button Name="DeleteAllBtn" Click="DeleteAllBtn_Click">
-                <SymbolIcon Symbol="Delete"></SymbolIcon>
-            </Button>
-        </StackPanel>
+                            </GridView>
+                        </Flyout>
+                    </DropDownButton.Flyout>
+                </DropDownButton>
+                <Button Name="DeleteAllBtn" Click="DeleteAllBtn_Click">
+                    <SymbolIcon Symbol="Delete"></SymbolIcon>
+                </Button>
+            </StackPanel>
+        </Grid>
+
         <ScrollViewer 
             Grid.Row="1"
             MinHeight="700">

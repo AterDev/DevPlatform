@@ -13,9 +13,7 @@ namespace DevNews.Models
 
         public NewsTypeChose()
         {
-
         }
-
         public List<NewsTypeChose> GetDefaultList()
         {
             return new List<NewsTypeChose>
@@ -27,8 +25,8 @@ namespace DevNews.Models
                 },
                 new NewsTypeChose
                 {
-                    DisplayName = "数据与AI",
-                    NewsType = NewsType.DataAndAI
+                    DisplayName = "开源",
+                    NewsType= NewsType.OpenSource
                 },
                 new NewsTypeChose{
                     DisplayName = "语言与框架",
@@ -36,8 +34,8 @@ namespace DevNews.Models
                 },
                 new NewsTypeChose
                 {
-                    DisplayName = "开源",
-                    NewsType= NewsType.OpenSource
+                    DisplayName = "数据与AI",
+                    NewsType = NewsType.DataAndAI
                 },
                 new NewsTypeChose
                 {
