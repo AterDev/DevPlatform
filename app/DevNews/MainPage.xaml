@@ -36,7 +36,7 @@
                 <Button x:Name="RefreshBtn" Click="RefreshBtn_Click">
                     <SymbolIcon Symbol="Refresh"></SymbolIcon>
                 </Button>
-                <DropDownButton>
+                <DropDownButton x:Name="MoveDownBtn">
                     移动到
                     <DropDownButton.Flyout>
                         <Flyout>

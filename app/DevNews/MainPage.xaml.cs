@@ -19,7 +19,10 @@ namespace DevNews
     {
 
         private ObservableCollection<ThirdNews> News { get; set; } = new ObservableCollection<ThirdNews>();
-        public readonly List<NewsTypeChose> TypeChoses = new List<NewsTypeChose>();
+        private ObservableCollection<ThirdNews> NewsCurrentDisplay { get; set; } = new ObservableCollection<ThirdNews>();
+        private readonly List<NewsTypeChose> TypeChoses = new List<NewsTypeChose>();
+        private NewsType CurrentNewsType = NewsType.Default;
+
         readonly NewsService newsService = new NewsService();
 
         public MainPage()
@@ -49,7 +52,6 @@ namespace DevNews
 
         private async void DeleteBtn_Click(object sender, RoutedEventArgs e)
         {
-
             var button = (Button)sender;
             var item = (ThirdNews)button.DataContext;
 
@@ -58,6 +60,7 @@ namespace DevNews
             if (await newsService.SetAsDelteAsync(ids))
             {
                 var success = News.Remove(item);
+                NewsCurrentDisplay.Remove(item);
             }
             else
             {
@@ -81,6 +84,7 @@ namespace DevNews
                 items.ForEach(item =>
                 {
                     News.Remove(item);
+                    NewsCurrentDisplay.Remove(item);
                 });
             }
         }
@@ -97,6 +101,11 @@ namespace DevNews
 
         }
 
+        /// <summary>
+        /// 移动分类
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void GridView_ItemClick(object sender, ItemClickEventArgs e)
         {
             var currentItem = (NewsTypeChose)e.ClickedItem;
@@ -109,23 +118,33 @@ namespace DevNews
             if (items != null && items.Count > 0)
             {
                 var ids = items.Select(x => x.Id).ToList();
-                NewsType btnValue = currentItem.NewsType;
-                var res = await SetNewsTypeAsync(ids, btnValue);
+                NewsType newsType = currentItem.NewsType;
+                var res = await SetNewsTypeAsync(ids, newsType);
                 if (res)
                 {
                     for (int i = 0; i < News.Count; i++)
                     {
                         if (items.Contains(News[i]))
                         {
-                            News[i].NewsType = btnValue;
+                            News[i].NewsType = newsType;
                         }
                     }
+                    ShowCurrentTypeNews(CurrentNewsType);
                 }
                 else
                 {
 
                 }
             }
+            MoveDownBtn.Flyout.Hide();
+        }
+
+
+        private void ShowCurrentTypeNews(NewsType type)
+        {
+            var currentNews = News.Where(n => n.NewsType == type).ToList();
+            NewsCurrentDisplay = new ObservableCollection<ThirdNews>(currentNews);
+            NewsListView.ItemsSource = NewsCurrentDisplay;
         }
 
         private void RefreshBtn_Click(object sender, RoutedEventArgs e)
@@ -137,7 +156,8 @@ namespace DevNews
         {
             var news = await newsService.GetNewsAsync();
             News = new ObservableCollection<ThirdNews>(news);
-            NewsListView.ItemsSource = News;
+            NewsCurrentDisplay = News;
+            NewsListView.ItemsSource = NewsCurrentDisplay;
         }
 
         /// <summary>
@@ -169,9 +189,11 @@ namespace DevNews
                 default:
                     break;
             }
+            CurrentNewsType = newsType;
             var filterNews = News.Where(n => n.NewsType == newsType).ToList();
             var obsFilterNews = new ObservableCollection<ThirdNews>(filterNews);
-            NewsListView.ItemsSource = obsFilterNews;
+            NewsCurrentDisplay = obsFilterNews;
+            NewsListView.ItemsSource = NewsCurrentDisplay;
         }
 
     }
