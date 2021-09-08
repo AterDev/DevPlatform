@@ -95,10 +95,14 @@
                                 <RowDefinition></RowDefinition>
                             </Grid.RowDefinitions>
 
-                            <TextBlock Text="{x:Bind Title}" VerticalAlignment="Center" Grid.Column="0" Grid.Row="0"
+                            <TextBlock Text="{x:Bind Title}" 
+                                       VerticalAlignment="Center" 
+                                       Grid.Column="0" 
+                                       Grid.Row="0"
+                                       Grid.RowSpan="2"
                                        FontSize="20">
                             </TextBlock>
-                            <TextBlock Text="{x:Bind NewsType}" Grid.Column="0" Grid.Row="1"></TextBlock>
+                            
 
                             <StackPanel HorizontalAlignment="Right" Orientation="Horizontal"  Grid.Column="1" Grid.Row="0" Grid.RowSpan="2">
                                 <Button Name="OpenBtn" Click="OpenBtn_Click">
