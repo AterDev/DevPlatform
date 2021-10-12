@@ -1,4 +1,7 @@
-﻿global using Entity;
+﻿global using System;
+global using System.Linq;
+global using System.Text;
+global using Entity;
 global using EntityFrameworkCore;
 global using Microsoft.AspNetCore.Authentication.JwtBearer;
 global using Microsoft.AspNetCore.Authorization;
@@ -16,6 +19,3 @@ global using Services.Repositories;
 global using Share.AutoMapper;
 global using Share.Models;
 global using Share.Models.Common;
-global using System;
-global using System.Linq;
-global using System.Text;

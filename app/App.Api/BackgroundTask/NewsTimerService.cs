@@ -1,10 +1,7 @@
-﻿
-using Microsoft.Extensions.DependencyInjection;
+﻿using System.Threading;
+using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Services.NewsCollectionService;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace App.Api.BackgroundTask;
 public class NewsTimerService : IHostedService, IDisposable
