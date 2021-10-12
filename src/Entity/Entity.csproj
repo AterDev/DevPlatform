@@ -1,21 +1,20 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+	</PropertyGroup>
 
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-  </PropertyGroup>
+	<PropertyGroup>
+		<GenerateDocumentationFile>True</GenerateDocumentationFile>
+		<NoWarn>1701;1702;1591</NoWarn>
+		<DocumentationFile></DocumentationFile>
+	</PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.0-rc.1.21452.10" />
+	</ItemGroup>
 
-  <PropertyGroup>
-    <GenerateDocumentationFile>True</GenerateDocumentationFile>
-    <NoWarn>1701;1702;1591</NoWarn>
-    <DocumentationFile></DocumentationFile>
-  </PropertyGroup>
-  
-  <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.0-preview.6.21352.1" />
-  </ItemGroup>
-  
-  <ItemGroup>
-    <ProjectReference Include="..\Assist\Assist.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Assist\Assist.csproj" />
+	</ItemGroup>
 
 </Project>
