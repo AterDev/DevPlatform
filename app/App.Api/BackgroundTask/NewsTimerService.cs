@@ -1,9 +1,4 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-
-namespace App.Api.BackgroundTask;
+﻿namespace App.Api.BackgroundTask;
 public class NewsTimerService : IHostedService, IDisposable
 {
     private readonly ILogger<NewsTimerService> _logger;

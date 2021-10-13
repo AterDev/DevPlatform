@@ -2,7 +2,6 @@
 using SendGrid;
 using SendGrid.Helpers.Mail;
 using Share.Options;
-using System.Net;
 
 namespace Services
 {

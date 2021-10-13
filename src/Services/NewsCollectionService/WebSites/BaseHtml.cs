@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Services.NewsCollectionService.WebSites;
+﻿namespace Services.NewsCollectionService.WebSites;
 
 public class BaseHtml
 {

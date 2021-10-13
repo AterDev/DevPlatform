@@ -1,10 +1,10 @@
-﻿using DevNews.Models;
-using DevNews.Share;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using DevNews.Models;
+using DevNews.Share;
 using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;

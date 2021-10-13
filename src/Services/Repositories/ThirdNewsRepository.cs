@@ -1,6 +1,4 @@
-﻿using EFCore.BulkExtensions;
-
-namespace Services.Repositories;
+﻿namespace Services.Repositories;
 
 public class ThirdNewsRepository : Repository<ThirdNews, ThirdNewsAddDto, ThirdNewsUpdateDto, ThirdNewsFilter, ThirdNewsDto>
 {
