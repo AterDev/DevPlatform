@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>CodeSnippet</title>
     <base href="/" />
-    <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet" />
     <link href="css/app.css" rel="stylesheet" />
     <link href="CodeSnippet.styles.css" rel="stylesheet" />
     <link href="manifest.json" rel="manifest" />
@@ -14,7 +13,7 @@
     <link rel="apple-touch-icon" sizes="192x192" href="icon-192.png" />
 </head>
 
-<body>
+<body class="ms-Fabric" dir="ltr">
     <div id="app">Loading...</div>
 
     <div id="blazor-error-ui">
@@ -24,6 +23,7 @@
     </div>
     <script src="_framework/blazor.webassembly.js"></script>
     <script>navigator.serviceWorker.register('service-worker.js');</script>
+    <script type="module" src="https://unpkg.com/@fluentui/web-components"></script>
 </body>
 
 </html>

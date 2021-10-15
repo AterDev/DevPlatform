@@ -38,7 +38,7 @@ public class NewsCollectionService
                 Title = news.Title,
                 Url = news.Link,
                 ThumbnailUrl = news.ThumbUrl,
-                DatePublished = news.CreateTime,
+                DatePublished = DateTime.SpecifyKind(news.CreateTime, DateTimeKind.Utc),
                 Type = NewsSource.News
             };
             result.Add(thirdNews);

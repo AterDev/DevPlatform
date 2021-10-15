@@ -15,7 +15,6 @@ namespace Entity
         /// </summary>
         public virtual Status Status { get; set; } = Status.Default;
         public DateTimeOffset CreatedTime { get; set; } = DateTimeOffset.UtcNow;
-
         public DateTimeOffset UpdatedTime { get; set; } = DateTimeOffset.UtcNow;
     }
 
