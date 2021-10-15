@@ -51,7 +51,7 @@
                 _provider = value != null && value.Length > 50 ? value.Substring(0, 50) : value;
             }
         }
-        public DateTime DatePublished { get; set; }
+        public DateTimeOffset? DatePublished { get; set; }
         [MaxLength(8000)]
         public string Content
         {
