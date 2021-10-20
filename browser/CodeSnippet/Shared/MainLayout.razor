@@ -1,4 +1,5 @@
 ﻿@inherits LayoutComponentBase
+@inject IconService iconService;
 
 <div class="page">
     <div class="sidebar">
@@ -15,3 +16,11 @@
         </article>
     </main>
 </div>
+@code
+{
+    protected override async Task OnInitializedAsync()
+    {
+        await iconService.CreateFromIconfontCN("//at.alicdn.com/t/font_2880877_ww9reeen2i.js");
+
+    }
+}
