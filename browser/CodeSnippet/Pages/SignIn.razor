@@ -1,0 +1,25 @@
+﻿@page "/signin"
+
+<h3>SignIn</h3>
+
+<Form Model="@model"
+      OnFinish="OnFinish"
+      OnFinishFailed="OnFinishFailed"
+      LabelColSpan="8"
+      WrapperColSpan="8">
+    <FormItem>
+        <Input @bind-Value="@context.Username" />
+    </FormItem>
+    <FormItem Label="Password">
+        <InputPassword @bind-Value="@context.Password" />
+    </FormItem>
+    <FormItem WrapperColOffset="8" WrapperColSpan="16">
+        <Button Type="@ButtonType.Primary" HtmlType="submit">
+            Login
+        </Button>
+    </FormItem>
+</Form>
+
+@code {
+
+}

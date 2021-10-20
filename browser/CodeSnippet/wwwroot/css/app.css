@@ -6,6 +6,22 @@ html, body {
     padding: 0;
 }
 
+.oi {
+    width: 2rem;
+    font-size: 1.1rem;
+    vertical-align: text-top;
+    top: -2px;
+}
+
+.anticon {
+    width: 2rem;
+    font-size: 1.1rem;
+    vertical-align: text-top;
+    fill: currentColor;
+    overflow: hidden;
+}
+
+
 h1:focus {
     outline: none;
 }
