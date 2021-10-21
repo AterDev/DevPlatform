@@ -6,6 +6,8 @@ public class CustomAuthStateProvider : AuthenticationStateProvider
 {
     public override Task<AuthenticationState> GetAuthenticationStateAsync()
     {
+        // TODO:先从本地取，没有则请求获取并保存
+
         var identity = new ClaimsIdentity(new[]
         {
             new Claim(ClaimTypes.Name, "mrfibuli"),
@@ -15,4 +17,6 @@ public class CustomAuthStateProvider : AuthenticationStateProvider
 
         return Task.FromResult(new AuthenticationState(user));
     }
+
+
 }
