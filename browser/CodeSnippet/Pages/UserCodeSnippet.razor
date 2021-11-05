@@ -2,40 +2,6 @@
 
 <h3>UserCodeSnippet</h3>
 
-<Row>
-    <Col Span="4">
-    <Row Justify="end">
-        <IconFont Type="icon-file-directory" />
-        <IconFont Type="icon-codelibrary" />
-
-
-
-    </Row>
-    <div class="icons-list">
-        <IconFont Type="icon-tuichu" />
-        <IconFont Type="icon-facebook" />
-        <IconFont Type="icon-twitter" />
-    </div>
-    <AntDesign.Search @bind-Value="@searchKey" Placeholder="Search.." />
-    <Tree SearchValue="@searchKey"
-          MatchedClass="site-tree-search-value"
-          DataSource="games"
-          TitleExpression="x => x.DataItem.Text"
-          ChildrenExpression="x => x.DataItem.Items"
-          IconExpression="x => x.DataItem.Icon">
-    </Tree>
-    </Col>
-
-    <Col Span="4">
-
-    </Col>
-    <Col Span="16">
-
-    </Col>
-
-
-</Row>
-
 <style>
     .site-tree-search-value {
         color: #f50;

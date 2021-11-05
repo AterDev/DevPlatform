@@ -1,9 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
 
 @inherits LayoutComponentBase
-@inject IconService iconService;
 @inject NavigationManager Navigation
-@inject SignOutSessionStateManager SignOutManager
 
 <div class="page">
     <div class="sidebar">
@@ -32,12 +30,10 @@
 {
     protected override async Task OnInitializedAsync()
     {
-        await iconService.CreateFromIconfontCN("//at.alicdn.com/t/font_2880877_ww9reeen2i.js");
 
     }
     private async Task BeginLogout(MouseEventArgs args)
     {
-        await SignOutManager.SetSignOutState();
         Navigation.NavigateTo("authentication/logout");
     }
 }

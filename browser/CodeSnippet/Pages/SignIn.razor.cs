@@ -2,7 +2,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
 using System.Text.Json;
-using AntDesign;
 using Microsoft.AspNetCore.Components;
 
 namespace CodeSnippet.Pages
@@ -11,8 +10,7 @@ namespace CodeSnippet.Pages
     {
         private Model model = new Model();
 
-        [Inject]
-        public MessageService message { get; set; }
+
 
         public SignIn()
         {
@@ -22,11 +20,11 @@ namespace CodeSnippet.Pages
         {
             if (model.Username == "niltor" && model.Password == "11100916")
             {
-                message.Success("login success!");
+                //message.Success("login success!");
             }
             else
             {
-                message.Error("login failed");
+                //message.Error("login failed");
             }
         }
 
