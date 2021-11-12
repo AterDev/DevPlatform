@@ -116,6 +116,7 @@ public class Startup
             app.UseHttpsRedirection();
         }
 
+        app.UseHealthChecks("/health");
         app.UseRouting();
         app.UseAuthentication();
         app.UseAuthorization();
