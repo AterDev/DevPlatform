@@ -1,8 +1,7 @@
-﻿namespace CodeSnippet.Shared.Components
+﻿namespace CodeSnippet.Shared.Components;
+
+public partial class ListControl
 {
-    public partial class ListControl
-    {
 
 
-    }
 }

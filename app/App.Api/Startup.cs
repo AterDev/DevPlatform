@@ -1,4 +1,10 @@
 
+using Infrastructure.Data;
+using Share;
+using Share.Agreement;
+using Share.Azure;
+using Share.NewsCollectionService;
+
 namespace App.Api;
 
 public class Startup

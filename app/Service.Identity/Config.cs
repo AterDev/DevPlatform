@@ -5,13 +5,13 @@
 using System.Collections.Generic;
 using IdentityServer4.Models;
 
-namespace Service.Identity
+namespace Service.Identity;
+
+public static class Config
 {
-    public static class Config
-    {
-        public static IEnumerable<IdentityResource> IdentityResources =>
-            new IdentityResource[]
-            {
+    public static IEnumerable<IdentityResource> IdentityResources =>
+        new IdentityResource[]
+        {
                 new IdentityResources.OpenId(),
                 new IdentityResource("profile",
                     userClaims: new[] { "name", "email", "website" },
@@ -19,18 +19,18 @@ namespace Service.Identity
                 new IdentityResources.Email(),
                 new IdentityResources.Phone(),
                 new IdentityResources.Address(),
-            };
+        };
 
-        public static IEnumerable<ApiScope> ApiScopes =>
-            new ApiScope[]
-            {
+    public static IEnumerable<ApiScope> ApiScopes =>
+        new ApiScope[]
+        {
                 new ApiScope("api"),
                 new ApiScope("webapp"),
-            };
+        };
 
-        public static IEnumerable<Client> Clients =>
-            new Client[]
-            {
+    public static IEnumerable<Client> Clients =>
+        new Client[]
+        {
                 // interactive spa client using code flow + pkce
                 new Client
                 {
@@ -48,6 +48,5 @@ namespace Service.Identity
                     AllowOfflineAccess = true,
                     AllowedScopes = { "openid", "profile", "webapp" , "offline_access" }
                 },
-            };
-    }
+        };
 }

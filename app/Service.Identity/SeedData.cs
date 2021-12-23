@@ -10,77 +10,76 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 
-namespace Service.Identity
+namespace Service.Identity;
+
+public class SeedData
 {
-    public class SeedData
+    public static void EnsureSeedData(string connectionString)
     {
-        public static void EnsureSeedData(string connectionString)
+        var services = new ServiceCollection();
+        services.AddOperationalDbContext(options =>
         {
-            var services = new ServiceCollection();
-            services.AddOperationalDbContext(options =>
-            {
-                options.ConfigureDbContext = db => db.UseSqlite(connectionString, sql => sql.MigrationsAssembly(typeof(SeedData).Assembly.FullName));
-            });
-            services.AddConfigurationDbContext(options =>
-            {
-                options.ConfigureDbContext = db => db.UseSqlite(connectionString, sql => sql.MigrationsAssembly(typeof(SeedData).Assembly.FullName));
-            });
+            options.ConfigureDbContext = db => db.UseSqlite(connectionString, sql => sql.MigrationsAssembly(typeof(SeedData).Assembly.FullName));
+        });
+        services.AddConfigurationDbContext(options =>
+        {
+            options.ConfigureDbContext = db => db.UseSqlite(connectionString, sql => sql.MigrationsAssembly(typeof(SeedData).Assembly.FullName));
+        });
 
-            var serviceProvider = services.BuildServiceProvider();
+        var serviceProvider = services.BuildServiceProvider();
 
-            using (var scope = serviceProvider.GetRequiredService<IServiceScopeFactory>().CreateScope())
+        using (var scope = serviceProvider.GetRequiredService<IServiceScopeFactory>().CreateScope())
+        {
+            scope.ServiceProvider.GetService<PersistedGrantDbContext>().Database.Migrate();
+
+            var context = scope.ServiceProvider.GetService<ConfigurationDbContext>();
+            context.Database.Migrate();
+            EnsureSeedData(context);
+        }
+    }
+
+    private static void EnsureSeedData(ConfigurationDbContext context)
+    {
+        if (!context.Clients.Any())
+        {
+            Log.Debug("Clients being populated");
+            foreach (var client in Config.Clients.ToList())
             {
-                scope.ServiceProvider.GetService<PersistedGrantDbContext>().Database.Migrate();
-
-                var context = scope.ServiceProvider.GetService<ConfigurationDbContext>();
-                context.Database.Migrate();
-                EnsureSeedData(context);
+                context.Clients.Add(client.ToEntity());
             }
+            context.SaveChanges();
+        }
+        else
+        {
+            Log.Debug("Clients already populated");
         }
 
-        private static void EnsureSeedData(ConfigurationDbContext context)
+        if (!context.IdentityResources.Any())
         {
-            if (!context.Clients.Any())
+            Log.Debug("IdentityResources being populated");
+            foreach (var resource in Config.IdentityResources.ToList())
             {
-                Log.Debug("Clients being populated");
-                foreach (var client in Config.Clients.ToList())
-                {
-                    context.Clients.Add(client.ToEntity());
-                }
-                context.SaveChanges();
+                context.IdentityResources.Add(resource.ToEntity());
             }
-            else
-            {
-                Log.Debug("Clients already populated");
-            }
+            context.SaveChanges();
+        }
+        else
+        {
+            Log.Debug("IdentityResources already populated");
+        }
 
-            if (!context.IdentityResources.Any())
+        if (!context.ApiResources.Any())
+        {
+            Log.Debug("ApiScopes being populated");
+            foreach (var resource in Config.ApiScopes.ToList())
             {
-                Log.Debug("IdentityResources being populated");
-                foreach (var resource in Config.IdentityResources.ToList())
-                {
-                    context.IdentityResources.Add(resource.ToEntity());
-                }
-                context.SaveChanges();
+                context.ApiScopes.Add(resource.ToEntity());
             }
-            else
-            {
-                Log.Debug("IdentityResources already populated");
-            }
-
-            if (!context.ApiResources.Any())
-            {
-                Log.Debug("ApiScopes being populated");
-                foreach (var resource in Config.ApiScopes.ToList())
-                {
-                    context.ApiScopes.Add(resource.ToEntity());
-                }
-                context.SaveChanges();
-            }
-            else
-            {
-                Log.Debug("ApiScopes already populated");
-            }
+            context.SaveChanges();
+        }
+        else
+        {
+            Log.Debug("ApiScopes already populated");
         }
     }
 }

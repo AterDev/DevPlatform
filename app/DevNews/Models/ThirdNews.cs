@@ -15,55 +15,31 @@ namespace DevNews.Models
 
         public Guid Id { get; set; }
         public DateTimeOffset CreatedTime { get; set; }
-        public string Title
-        {
+        public string Title {
             get => _title;
-            set
-            {
-                _title = value != null && value.Length > 200 ? value.Substring(0, 200) : value;
-            }
+            set => _title = value != null && value.Length > 200 ? value.Substring(0, 200) : value;
         }
-        public string Description
-        {
+        public string Description {
             get => _description;
-            set
-            {
-                _description = value != null && value.Length > 5000 ? value.Substring(0, 5000) : value;
-            }
+            set => _description = value != null && value.Length > 5000 ? value.Substring(0, 5000) : value;
         }
-        public string Url
-        {
+        public string Url {
             get => _url;
-            set
-            {
-                _url = value != null && value.Length > 300 ? value.Substring(0, 300) : value;
-            }
+            set => _url = value != null && value.Length > 300 ? value.Substring(0, 300) : value;
         }
         public string ThumbnailUrl { get; set; }
-        public string Provider
-        {
+        public string Provider {
             get => _provider;
-            set
-            {
-                _provider = value != null && value.Length > 50 ? value.Substring(0, 50) : value;
-            }
+            set => _provider = value != null && value.Length > 50 ? value.Substring(0, 50) : value;
         }
         public DateTime DatePublished { get; set; }
-        public string Content
-        {
+        public string Content {
             get => _content;
-            set
-            {
-                _content = value != null && value.Length > 8000 ? value.Substring(0, 8000) : value;
-            }
+            set => _content = value != null && value.Length > 8000 ? value.Substring(0, 8000) : value;
         }
-        public string Category
-        {
+        public string Category {
             get => _category;
-            set
-            {
-                _category = value != null && value.Length > 50 ? value.Substring(0, 50) : value;
-            }
+            set => _category = value != null && value.Length > 50 ? value.Substring(0, 50) : value;
         }
         public string IdentityId { get; set; }
         public NewsSource Type { get; set; } = NewsSource.News;

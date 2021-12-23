@@ -1,4 +1,9 @@
 
+using Infrastructure.Data.Models;
+using Share.Agreement;
+using Share.Models.ThirdNewsDtos;
+using Share.Repositories;
+
 namespace App.Api.Controllers;
 
 /// <summary>
@@ -18,7 +23,7 @@ public class ThirdNewsController : ApiController<ThirdNewsRepository, ThirdNews,
     /// <param name="form"></param>
     /// <returns></returns>
     [HttpPost]
-    public override async Task<ActionResult<ThirdNews>> AddAsync([FromBody] ThirdNewsAddDto form)
+    public async override Task<ActionResult<ThirdNews>> AddAsync([FromBody] ThirdNewsAddDto form)
     {
         // if (_repos.Any(e => e.Name == form.Name))
         // {
@@ -44,7 +49,7 @@ public class ThirdNewsController : ApiController<ThirdNewsRepository, ThirdNews,
     /// <param name="filter"></param>
     /// <returns></returns>
     [HttpPost("filter")]
-    public override async Task<ActionResult<PageResult<ThirdNewsDto>>> FilterAsync(ThirdNewsFilter filter)
+    public async override Task<ActionResult<PageResult<ThirdNewsDto>>> FilterAsync(ThirdNewsFilter filter)
     {
         return await _repos.GetListWithPageAsync(filter);
     }
@@ -56,7 +61,7 @@ public class ThirdNewsController : ApiController<ThirdNewsRepository, ThirdNews,
     /// <param name="form"></param>
     /// <returns></returns>
     [HttpPut("{id}")]
-    public override async Task<ActionResult<ThirdNews>> UpdateAsync([FromRoute] Guid id, [FromBody] ThirdNewsUpdateDto form)
+    public async override Task<ActionResult<ThirdNews>> UpdateAsync([FromRoute] Guid id, [FromBody] ThirdNewsUpdateDto form)
     {
         if (_repos.Any(e => e.Id == id))
         {
@@ -77,7 +82,7 @@ public class ThirdNewsController : ApiController<ThirdNewsRepository, ThirdNews,
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpDelete("{id}")]
-    public override async Task<ActionResult<ThirdNews>> DeleteAsync([FromRoute] Guid id)
+    public async override Task<ActionResult<ThirdNews>> DeleteAsync([FromRoute] Guid id)
     {
         return await _repos.DeleteAsync(id);
     }

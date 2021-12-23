@@ -9,23 +9,21 @@ using IdentityModel;
 using IdentityServer4;
 using IdentityServer4.Test;
 
-namespace IdentityServerHost.Quickstart.UI
-{
-    public class TestUsers
-    {
-        public static List<TestUser> Users
-        {
-            get
-            {
-                var address = new
-                {
-                    street_address = "One Hacker Way",
-                    locality = "Heidelberg",
-                    postal_code = 69118,
-                    country = "Germany"
-                };
+namespace IdentityServerHost.Quickstart.UI;
 
-                return new List<TestUser>
+public class TestUsers
+{
+    public static List<TestUser> Users {
+        get {
+            var address = new
+            {
+                street_address = "One Hacker Way",
+                locality = "Heidelberg",
+                postal_code = 69118,
+                country = "Germany"
+            };
+
+            return new List<TestUser>
                 {
                     new TestUser
                     {
@@ -60,7 +58,6 @@ namespace IdentityServerHost.Quickstart.UI
                         }
                     }
                 };
-            }
         }
     }
 }

@@ -1,4 +1,15 @@
 ﻿global using System;
-global using Entity;
+global using System.Collections.Generic;
+global using System.Linq;
+global using System.Net;
+global using System.Text;
+global using AutoMapper;
+global using Infrastructure.Data;
+global using Infrastructure.Data.Models;
+global using Infrastructure.Utils;
+global using Microsoft.EntityFrameworkCore;
+global using Microsoft.Extensions.Hosting;
+global using Microsoft.Extensions.Logging;
+global using Microsoft.Extensions.Options;
+global using Share.Agreement;
 global using Share.Models;
-global using Share.Models.Common;

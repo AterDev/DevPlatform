@@ -1,7 +1,6 @@
-﻿namespace CodeSnippet.Pages
-{
-    public partial class CodeSnippetDetail
-    {
+﻿namespace CodeSnippet.Pages;
 
-    }
+public partial class CodeSnippetDetail
+{
+
 }

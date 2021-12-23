@@ -1,10 +1,9 @@
-﻿namespace Share.Options
+﻿namespace Share.Options;
+
+/// <summary>
+/// 邮件服务选项
+/// </summary>
+public class MailOption
 {
-    /// <summary>
-    /// 邮件服务选项
-    /// </summary>
-    public class MailOption
-    {
-        public string APIKey { get; set; }
-    }
+    public string APIKey { get; set; }
 }

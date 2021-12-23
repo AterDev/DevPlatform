@@ -1,8 +1,6 @@
-﻿namespace CodeSnippet.Pages
+﻿namespace CodeSnippet.Pages;
+
+public partial class UserCodeSnippet
 {
 
-    public partial class UserCodeSnippet
-    {
-        
-    }
 }
