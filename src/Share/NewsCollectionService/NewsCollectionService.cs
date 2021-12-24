@@ -1,4 +1,6 @@
-﻿namespace Share.NewsCollectionService;
+﻿using Infrastructure.Data.Models;
+
+namespace Share.NewsCollectionService;
 
 /// <summary>
 /// 采集服务
