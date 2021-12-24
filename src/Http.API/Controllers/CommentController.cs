@@ -1,10 +1,9 @@
 using Infrastructure.Data.Models;
 using NSwag.Annotations;
-using Share.Agreement;
 using Share.Models.CommentDtos;
 using Share.Repositories;
 
-namespace App.Api.Controllers;
+namespace Http.API.Controllers;
 
 /// <summary>
 /// 评论

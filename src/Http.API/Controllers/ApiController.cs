@@ -1,12 +1,10 @@
 // 该控制器由GT.CLI自动生成,继承该类,可以实现基本的CURD Api接口,以及用户相关信息
 // 可以直接继承ApiServiceBase基类,或实现IApiServiceBase接口,以实现自定义的http路由及方法
-using App.Api.Agreement;
-using Infrastructure.Data;
+using Http.API.Agreement;
 using Infrastructure.Data.Models;
-using Share.Agreement;
 using Share.Repositories;
 
-namespace App.Api.Controllers;
+namespace Http.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]

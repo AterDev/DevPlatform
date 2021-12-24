@@ -1,7 +1,7 @@
 using Infrastructure.Data.Models;
 using Share.Repositories;
 
-namespace App.Api.Agreement;
+namespace Http.API.Agreement;
 
 [ApiController]
 [Route("api/[controller]")]

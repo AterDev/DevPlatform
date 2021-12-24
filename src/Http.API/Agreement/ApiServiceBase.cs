@@ -1,4 +1,4 @@
-namespace App.Api.Agreement;
+namespace Http.API.Agreement;
 
 /// <summary>
 /// api 服务基础类

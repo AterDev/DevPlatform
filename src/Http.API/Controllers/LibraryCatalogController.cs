@@ -1,9 +1,8 @@
 using Infrastructure.Data.Models;
-using Share.Agreement;
 using Share.Models.LibraryCatalogDtos;
 using Share.Repositories;
 
-namespace App.Api.Controllers;
+namespace Http.API.Controllers;
 
 /// <summary>
 /// 类库目录

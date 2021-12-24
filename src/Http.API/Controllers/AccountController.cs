@@ -1,11 +1,9 @@
 using Infrastructure.Data.Models;
-using Share;
-using Share.Agreement;
 using Share.Models.AccountDtos;
 using Share.Models.CommonDtos;
 using Share.Repositories;
 
-namespace App.Api.Controllers;
+namespace Http.API.Controllers;
 
 /// <summary>
 /// 用户账号

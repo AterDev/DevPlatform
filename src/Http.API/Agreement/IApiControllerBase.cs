@@ -1,4 +1,4 @@
-namespace App.Api.Agreement;
+namespace Http.API.Agreement;
 
 /// <summary>
 /// 定义基本restful方法

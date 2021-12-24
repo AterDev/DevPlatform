@@ -1,6 +1,4 @@
-﻿using Share.NewsCollectionService;
-
-namespace App.Api.BackgroundTask;
+﻿namespace Http.API.BackgroundTask;
 public class NewsTimerService : IHostedService, IDisposable
 {
     private readonly ILogger<NewsTimerService> _logger;

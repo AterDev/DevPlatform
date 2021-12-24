@@ -2,7 +2,7 @@
 
 using Share.Repositories;
 
-namespace App.Api;
+namespace Http.API;
 
 /// <summary>
 /// 仓储注册服务

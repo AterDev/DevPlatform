@@ -1,11 +1,9 @@
 using Infrastructure.Data.Models;
 using Infrastructure.Utils;
-using Share;
-using Share.Agreement;
 using Share.Models.ArticleDtos;
 using Share.Repositories;
 
-namespace App.Api.Controllers;
+namespace Http.API.Controllers;
 
 /// <summary>
 /// 文章
@@ -127,7 +125,7 @@ public class ArticleController : ApiController<ArticleRepository, Article, Artic
     [HttpPost("UploadEditorFile")]
     public async Task<IActionResult> UploadEditorFile(IFormFile upload, string type = "editor")
     {
-        string dirPath = type;
+        var dirPath = type;
         var filePath = Path.GetTempFileName();
         var url = "";
         var localPath = "";
@@ -144,7 +142,7 @@ public class ArticleController : ApiController<ArticleRepository, Article, Artic
             System.IO.File.Delete(filePath);
 
             // 拼成本地host链接
-            string myHostUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}";
+            var myHostUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}";
             url = $@" {myHostUrl}/Uploads/{localPath}";
         }
         return Ok(new
