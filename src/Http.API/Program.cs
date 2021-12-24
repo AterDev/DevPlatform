@@ -15,7 +15,6 @@ services.AddDbContextPool<ContextBase>(option =>
 services.AddScoped<IUserContext, UserContext>();
 services.AddRepositories();
 services.AddOptions();
-
 services.AddScoped<NewsCollectionService>();
 services.AddScoped<TwitterService>();
 services.AddScoped(typeof(WebService));
@@ -30,24 +29,20 @@ services.AddAuthentication(options =>
 })
 .AddJwtBearer(cfg =>
 {
-    //cfg.RequireHttpsMetadata = true;
-    cfg.SaveToken = true;
-    cfg.TokenValidationParameters = new TokenValidationParameters()
+    // use IdentityServer
+    cfg.Authority = "https://localhost:5001";
+    cfg.TokenValidationParameters = new TokenValidationParameters
     {
-        // 如果不如果jwt，可注释掉，你可能会使用IdentityServer
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration.GetSection("Jwt")["Sign"])),
-        ValidIssuer = configuration.GetSection("Jwt")["Issuer"],
-        ValidAudience = configuration.GetSection("Jwt")["Audience"],
-        ValidateIssuer = true,
-        ValidateLifetime = false,
-        RequireExpirationTime = false,
         ValidateAudience = false,
-        //ValidateIssuerSigningKey = true
     };
 });
 // 验证
 services.AddAuthorization(options =>
 {
+    options.AddPolicy("ApiScope", policy =>
+    {
+        policy.RequireClaim("scope", "api");
+    });
     options.AddPolicy("User", policy =>
         policy.RequireRole("Admin", "User"));
     options.AddPolicy("Admin", policy =>
@@ -67,6 +62,7 @@ services.AddCors(options =>
 });
 #endregion
 
+services.AddHealthChecks();
 // api 接口文档设置
 services.AddOpenApiDocument(c =>
 {
@@ -110,7 +106,12 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
+app.Map("/api/testAuth", [Authorize]() => "success");
+app.Map("/api/testAuthApiScope", [Authorize("ApiScope")]() => "success");
+
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllers();
 });
+
+app.Run();
