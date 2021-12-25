@@ -6,7 +6,7 @@ using Share.Repositories;
 namespace Http.API.Controllers;
 
 /// <summary>
-/// Library
+/// TagLibrary
 /// </summary>
 public class TagLibraryController : ApiController<TagLibraryRepository, TagLibrary, TagLibraryAddDto, TagLibraryUpdateDto, TagLibraryFilter, TagLibraryDto>
 {
@@ -18,7 +18,7 @@ public class TagLibraryController : ApiController<TagLibraryRepository, TagLibra
     }
 
     /// <summary>
-    /// 添加Library
+    /// 添加TagLibrary
     /// </summary>
     /// <param name="form"></param>
     /// <returns></returns>
@@ -34,7 +34,7 @@ public class TagLibraryController : ApiController<TagLibraryRepository, TagLibra
     }
 
     /// <summary>
-    /// 分页筛选Library
+    /// 分页筛选TagLibrary
     /// </summary>
     /// <param name="filter"></param>
     /// <returns></returns>
