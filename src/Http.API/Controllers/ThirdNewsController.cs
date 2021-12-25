@@ -1,4 +1,5 @@
 using Infrastructure.Data.Models;
+using Share.Models.TagLibraryDtos;
 using Share.Models.ThirdNewsDtos;
 using Share.Repositories;
 
@@ -39,6 +40,36 @@ public class ThirdNewsController : ApiController<ThirdNewsRepository, ThirdNews,
     public async Task<List<ThirdNews>> GetWeekNewsAsync()
     {
         return await _repos.GetWeekNewsAsync();
+    }
+
+    /// <summary>
+    /// 添加标签
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="tags"></param>
+    /// <returns></returns>
+    [HttpPost("tags/{id}")]
+    [AllowAnonymous]
+    public async Task<ActionResult<ThirdNews>> AddTags([FromRoute] Guid id, [FromBody] List<NewsTagsAddDto> tags)
+    {
+        var newsTag = await _repos._db.FindAsync(id);
+        if (newsTag == null)
+        {
+            return NotFound();
+        }
+        return await _repos.AddTags(id, tags);
+    }
+
+    /// <summary>
+    /// 删除标签
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    [HttpDelete("tags/{id}")]
+    [AllowAnonymous]
+    public async Task<int> DeleteTagAsync([FromRoute] Guid id)
+    {
+        return await _repos.DeleteTag(id);
     }
 
     /// <summary>

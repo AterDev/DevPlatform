@@ -1,4 +1,6 @@
-﻿namespace Infrastructure.Data.Models;
+﻿using System.Text.Json.Serialization;
+
+namespace Infrastructure.Data.Models;
 
 public class NewsTags : BaseDB
 {
@@ -6,6 +8,7 @@ public class NewsTags : BaseDB
     public string? Name { get; set; }
     [MaxLength(20)]
     public string? Color { get; set; }
+    [JsonIgnore]
     public ThirdNews ThirdNews { get; set; }
 
 }

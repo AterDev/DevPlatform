@@ -13,8 +13,8 @@ public class ContextBase : DbContext
     public DbSet<CodeSnippet>? CodeSnippets { get; set; }
     public DbSet<Library>? Libraries { get; set; }
     public DbSet<ThirdNews>? ThirdNews { get; set; }
-    public DbSet<NewsTags> NewsTags { get; set; }
-    public DbSet<TagLibrary> TagLibraries { get; set; }
+    public DbSet<NewsTags>? NewsTags { get; set; }
+    public DbSet<TagLibrary>? TagLibraries { get; set; }
 
     public ContextBase(DbContextOptions<ContextBase> options) : base(options)
     {
@@ -106,7 +106,7 @@ public class ContextBase : DbContext
             e.HasIndex(m => m.NewsType);
             e.HasIndex(m => m.Type);
         });
-   
+
         base.OnModelCreating(builder);
     }
 }

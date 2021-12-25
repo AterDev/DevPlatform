@@ -1,4 +1,5 @@
-﻿using Share.Models.ThirdNewsDtos;
+﻿using Share.Models.TagLibraryDtos;
+using Share.Models.ThirdNewsDtos;
 
 namespace Share.Repositories;
 
@@ -33,12 +34,30 @@ public class ThirdNewsRepository : Repository<ThirdNews, ThirdNewsAddDto, ThirdN
     /// <param name="id"></param>
     /// <param name="tags"></param>
     /// <returns></returns>
-    public async Task<ThirdNews> AddTags(Guid id, List<NewsTags> tags)
+    public async Task<ThirdNews> AddTags(Guid id, List<NewsTagsAddDto> tags)
     {
-        var news = await _db.FindAsync(id);
-        news.NewsTags = tags;
+        var thirdNews = await _db.FindAsync(id);
+        var newsTags = new List<NewsTags>();
+        tags.ForEach(t =>
+        {
+            var newsTag = _mapper.Map<NewsTags>(t);
+            newsTag.ThirdNews = thirdNews!;
+            newsTags.Add(newsTag);
+        });
+        _context.AddRange(newsTags);
         await _context.SaveChangesAsync();
-        return news;
+        return thirdNews!;
+    }
+
+    public async Task<int> DeleteTag(Guid id)
+    {
+        var tag = _context.NewsTags?.FindAsync(id);
+        if (tag != null)
+        {
+            _context.Remove(tag);
+            return await _context.SaveChangesAsync();
+        }
+        return 0;
     }
 
     /// <summary>

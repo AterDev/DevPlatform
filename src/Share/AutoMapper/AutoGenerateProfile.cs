@@ -86,6 +86,10 @@ public class GenerateProfile : Profile
         CreateMap<LibraryCatalog, LibraryCatalogDto>();
         CreateMap<LibraryCatalog, LibraryCatalogItemDto>();
         CreateMap<LibraryCatalog, LibraryCatalogDetailDto>();
+
+        CreateMap<NewsTagsAddDto, NewsTags>();
+
+        CreateMap<TagLibraryAddDto, TagLibrary>();
         CreateMap<TagLibraryAddDto, TagLibrary>();
         CreateMap<TagLibraryUpdateDto, TagLibrary>()
             .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => NotNull(srcMember))); ;
