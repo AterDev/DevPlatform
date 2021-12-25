@@ -9,7 +9,7 @@ services.Configure<AzureOptions>(configuration.GetSection("Azure"));
 var connectionString = configuration.GetConnectionString("DefaultConnection");
 services.AddDbContextPool<ContextBase>(option =>
 {
-    option.UseNpgsql(connectionString, sql => { sql.MigrationsAssembly("EntityFrameworkCore"); });
+    option.UseNpgsql(connectionString, sql => { sql.MigrationsAssembly("Infrastructure"); });
 });
 
 services.AddScoped<IUserContext, UserContext>();

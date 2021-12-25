@@ -50,8 +50,28 @@ public class ThirdNews : BaseDB
     public string? IdentityId { get; set; }
     public NewsSource Type { get; set; } = NewsSource.News;
     public NewsType NewsType { get; set; } = NewsType.Default;
+    public List<NewsTags>? NewsTags { get; set; }
+    public TechType TechType { get; set; } = TechType.Default;
 
 }
+
+public enum TechType
+{
+    Default,
+    /// <summary>
+    /// 常规资讯
+    /// </summary>
+    Normal,
+    /// <summary>
+    /// 发布或更新
+    /// </summary>
+    Publish,
+    /// <summary>
+    /// 关注内容
+    /// </summary>
+    Focus
+}
+
 public enum NewsSource
 {
     News,

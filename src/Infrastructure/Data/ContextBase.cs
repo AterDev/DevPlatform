@@ -13,6 +13,7 @@ public class ContextBase : DbContext
     public DbSet<CodeSnippet>? CodeSnippets { get; set; }
     public DbSet<Library>? Libraries { get; set; }
     public DbSet<ThirdNews>? ThirdNews { get; set; }
+    public DbSet<NewsTags> NewsTags { get; set; }
 
     public ContextBase(DbContextOptions<ContextBase> options) : base(options)
     {
