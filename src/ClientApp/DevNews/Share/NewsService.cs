@@ -41,7 +41,7 @@ namespace DevNews.Share
         /// <param name="ids"></param>
         /// <param name="newsType"></param>
         /// <returns></returns>
-        public async Task<bool> MoveNewsAsync(List<Guid> ids, NewsType newsType)
+        public async Task<bool> MoveNewsAsync(List<Guid> ids, TechType newsType)
         {
             string url = BaseUrl + "api/ThirdNews/type?newsType=" + newsType;
             try

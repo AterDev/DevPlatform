@@ -21,12 +21,10 @@
             </Grid.ColumnDefinitions>
             <!--分类选择-->
             <StackPanel Orientation="Horizontal">
-                <Button Content="未分类" x:Name="UnFiledFilter" Click="FilterBtn_Click"></Button>
-                <Button Content="大公司" x:Name="CompanyFilter" Click="FilterBtn_Click"></Button>
-                <Button Content="开源" x:Name="OpenSourceFilter" Click="FilterBtn_Click"></Button>
-                <Button Content="语言及框架" x:Name="FrameworkFilter" Click="FilterBtn_Click"></Button>
-                <Button Content="数据及AI" x:Name="DataFilter" Click="FilterBtn_Click"></Button>
-                <Button Content="其他" x:Name="ElseFilter" Click="FilterBtn_Click"></Button>
+                <Button Content="未分类" x:Name="Default" Click="FilterBtn_Click"></Button>
+                <Button Content="资讯速览" x:Name="Normal" Click="FilterBtn_Click"></Button>
+                <Button Content="发布更新" x:Name="Publish" Click="FilterBtn_Click"></Button>
+                <Button Content="关注讨论" x:Name="Focus" Click="FilterBtn_Click"></Button>
             </StackPanel>
 
             <!--右边批量操作-->

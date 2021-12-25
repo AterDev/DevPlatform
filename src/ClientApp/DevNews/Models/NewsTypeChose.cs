@@ -5,7 +5,7 @@ namespace DevNews.Models
     public class NewsTypeChose
     {
         public string DisplayName { get; set; }
-        public NewsType NewsType { get; set; }
+        public TechType NewsType { get; set; }
 
         public NewsTypeChose()
         {
@@ -16,27 +16,17 @@ namespace DevNews.Models
             {
                 new NewsTypeChose
                 {
-                    DisplayName  = "巨头",
-                    NewsType = NewsType.Company
+                    DisplayName  = "资讯速览",
+                    NewsType = TechType.Normal
                 },
                 new NewsTypeChose
                 {
-                    DisplayName = "开源",
-                    NewsType= NewsType.OpenSource
+                    DisplayName = "发布更新",
+                    NewsType= TechType.Publish
                 },
                 new NewsTypeChose{
-                    DisplayName = "语言与框架",
-                    NewsType = NewsType.LanguageAndFramework
-                },
-                new NewsTypeChose
-                {
-                    DisplayName = "数据与AI",
-                    NewsType = NewsType.DataAndAI
-                },
-                new NewsTypeChose
-                {
-                    DisplayName = "其它",
-                    NewsType= NewsType.Else
+                    DisplayName = "关注讨论",
+                    NewsType = TechType.Focus
                 }
             };
         }

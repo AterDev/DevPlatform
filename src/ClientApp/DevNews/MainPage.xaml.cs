@@ -21,7 +21,7 @@ namespace DevNews
         private ObservableCollection<ThirdNews> News { get; set; } = new ObservableCollection<ThirdNews>();
         private ObservableCollection<ThirdNews> NewsCurrentDisplay { get; set; } = new ObservableCollection<ThirdNews>();
         private readonly List<NewsTypeChose> TypeChoses = new List<NewsTypeChose>();
-        private NewsType CurrentNewsType = NewsType.Default;
+        private TechType CurrentNewsType = TechType.Default;
 
         readonly NewsService newsService = new NewsService();
 
@@ -89,7 +89,7 @@ namespace DevNews
             }
         }
 
-        private async Task<bool> SetNewsTypeAsync(List<Guid> ids, NewsType newsType)
+        private async Task<bool> SetNewsTypeAsync(List<Guid> ids, TechType newsType)
         {
             var res = await newsService.MoveNewsAsync(ids, newsType);
             return res;
@@ -118,7 +118,7 @@ namespace DevNews
             if (items != null && items.Count > 0)
             {
                 var ids = items.Select(x => x.Id).ToList();
-                NewsType newsType = currentItem.NewsType;
+                var newsType = currentItem.NewsType;
                 var res = await SetNewsTypeAsync(ids, newsType);
                 if (res)
                 {
@@ -126,7 +126,7 @@ namespace DevNews
                     {
                         if (items.Contains(News[i]))
                         {
-                            News[i].NewsType = newsType;
+                            News[i].TechType = newsType;
                         }
                     }
                     ShowCurrentTypeNews(CurrentNewsType);
@@ -140,9 +140,9 @@ namespace DevNews
         }
 
 
-        private void ShowCurrentTypeNews(NewsType type)
+        private void ShowCurrentTypeNews(TechType type)
         {
-            var currentNews = News.Where(n => n.NewsType == type).ToList();
+            var currentNews = News.Where(n => n.TechType == type).ToList();
             NewsCurrentDisplay = new ObservableCollection<ThirdNews>(currentNews);
             NewsListView.ItemsSource = NewsCurrentDisplay;
         }
@@ -168,29 +168,23 @@ namespace DevNews
         private void FilterBtn_Click(object sender, RoutedEventArgs e)
         {
             var button = (Button)sender;
-            NewsType newsType = NewsType.Default;
+            TechType newsType = TechType.Default;
             switch (button.Name)
             {
-                case "CompanyFilter":
-                    newsType = NewsType.Company;
+                case "Normal":
+                    newsType = TechType.Normal;
                     break;
-                case "OpenSourceFilter":
-                    newsType = NewsType.OpenSource;
+                case "Publish":
+                    newsType = TechType.Publish;
                     break;
-                case "FrameworkFilter":
-                    newsType = NewsType.LanguageAndFramework;
-                    break;
-                case "DataFilter":
-                    newsType = NewsType.DataAndAI;
-                    break;
-                case "ElseFilter":
-                    newsType = NewsType.Else;
+                case "Focus":
+                    newsType = TechType.Focus;
                     break;
                 default:
                     break;
             }
             CurrentNewsType = newsType;
-            var filterNews = News.Where(n => n.NewsType == newsType).ToList();
+            var filterNews = News.Where(n => n.TechType == newsType).ToList();
             var obsFilterNews = new ObservableCollection<ThirdNews>(filterNews);
             NewsCurrentDisplay = obsFilterNews;
             NewsListView.ItemsSource = NewsCurrentDisplay;

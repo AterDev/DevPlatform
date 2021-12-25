@@ -135,7 +135,7 @@ public class ThirdNewsController : ApiController<ThirdNewsRepository, ThirdNews,
     /// <returns></returns>
     [HttpPut("type")]
     [AllowAnonymous]
-    public async Task<int> SetNewsTypeAsync([FromBody] List<Guid> ids, [FromQuery] NewsType newsType)
+    public async Task<int> SetNewsTypeAsync([FromBody] List<Guid> ids, [FromQuery] TechType newsType)
     {
         return await _repos.SetNewsTypeAsync(ids, newsType);
     }

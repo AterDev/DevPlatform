@@ -81,12 +81,12 @@ public class ThirdNewsRepository : Repository<ThirdNews, ThirdNewsAddDto, ThirdN
     /// <param name="ids"></param>
     /// <param name="newsType"></param>
     /// <returns></returns>
-    public async Task<int> SetNewsTypeAsync(List<Guid> ids, NewsType newsType)
+    public async Task<int> SetNewsTypeAsync(List<Guid> ids, TechType newsType)
     {
         var news = await _db.Where(n => ids.Contains(n.Id)).ToListAsync();
         for (var i = 0; i < news.Count; i++)
         {
-            news[i].NewsType = newsType;
+            news[i].TechType = newsType;
         }
         return await _context.SaveChangesAsync();
     }
