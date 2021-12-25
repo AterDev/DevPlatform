@@ -8,6 +8,7 @@
 // Comment;
 // ArticleCatalog;
 // LibraryCatalog;
+// TagLibrary;
 // {AlreadyMapedEntity}
 using Share.Models.AccountDtos;
 using Share.Models.ArticleCatalogDtos;
@@ -19,6 +20,7 @@ using Share.Models.CommonDtos;
 using Share.Models.LibraryCatalogDtos;
 using Share.Models.LibraryDtos;
 using Share.Models.RoleDtos;
+using Share.Models.TagLibraryDtos;
 
 namespace Share.AutoMapper;
 
@@ -84,6 +86,12 @@ public class GenerateProfile : Profile
         CreateMap<LibraryCatalog, LibraryCatalogDto>();
         CreateMap<LibraryCatalog, LibraryCatalogItemDto>();
         CreateMap<LibraryCatalog, LibraryCatalogDetailDto>();
+        CreateMap<TagLibraryAddDto, TagLibrary>();
+        CreateMap<TagLibraryUpdateDto, TagLibrary>()
+            .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => NotNull(srcMember))); ;
+        CreateMap<TagLibrary, TagLibraryDto>();
+        CreateMap<TagLibrary, TagLibraryItemDto>();
+        CreateMap<TagLibrary, TagLibraryDetailDto>();
         // {AppendMappers}
 
         bool NotNull(object src)

@@ -4,8 +4,7 @@ namespace Share.Repositories;
 
 public class ThirdNewsRepository : Repository<ThirdNews, ThirdNewsAddDto, ThirdNewsUpdateDto, ThirdNewsFilter, ThirdNewsDto>
 {
-
-    ILogger _logger;
+    private ILogger _logger;
     public ThirdNewsRepository(ContextBase context, ILogger<ThirdNewsRepository> logger, IUserContext userContext, IMapper mapper)
     : base(context, logger, userContext, mapper)
     {
@@ -28,6 +27,24 @@ public class ThirdNewsRepository : Repository<ThirdNews, ThirdNewsAddDto, ThirdN
         return base.UpdateAsync(id, form);
     }
 
+    /// <summary>
+    /// 添加标签
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="tags"></param>
+    /// <returns></returns>
+    public async Task<ThirdNews> AddTags(Guid id, List<NewsTags> tags)
+    {
+        var news = await _db.FindAsync(id);
+        news.NewsTags = tags;
+        await _context.SaveChangesAsync();
+        return news;
+    }
+
+    /// <summary>
+    /// 获取一周内资讯
+    /// </summary>
+    /// <returns></returns>
     public async Task<List<ThirdNews>> GetWeekNewsAsync()
     {
         var offset = (int)DateTime.Now.Date.DayOfWeek;
@@ -40,7 +57,7 @@ public class ThirdNewsRepository : Repository<ThirdNews, ThirdNewsAddDto, ThirdN
     }
 
     /// <summary>
-    /// TODO:批量更新
+    /// 批量更新
     /// </summary>
     /// <param name="ids"></param>
     /// <param name="newsType"></param>

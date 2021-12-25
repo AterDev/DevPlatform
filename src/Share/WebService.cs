@@ -5,7 +5,7 @@
 /// </summary>
 public class WebService
 {
-    ContextBase _context;
+    private ContextBase _context;
     public WebService(ContextBase context)
     {
         _context = context;

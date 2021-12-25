@@ -1,15 +1,12 @@
-﻿using Infrastructure.Data.Models;
-
-namespace Share.NewsCollectionService;
+﻿namespace Share.NewsCollectionService;
 
 /// <summary>
 /// 采集服务
 /// </summary>
 public class NewsCollectionService
 {
-    readonly ILogger _logger;
-
-    readonly ContextBase _context;
+    private readonly ILogger _logger;
+    private readonly ContextBase _context;
     public NewsCollectionService(ILogger<NewsCollectionService> logger, ContextBase context)
     {
         _logger = logger;

@@ -5,8 +5,8 @@ namespace Share.Azure;
 
 public class BingNewsService
 {
-    readonly string subscriptionKey = "";
-    readonly ILogger _log;
+    private readonly string subscriptionKey = "";
+    private readonly ILogger _log;
     private const double Similarity = 0.5;// 定义相似度
 
     public BingNewsService(ILogger<BingNewsService> logger,

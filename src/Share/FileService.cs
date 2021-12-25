@@ -6,7 +6,8 @@
 public class FileService
 {
     public string LocalPath { get; }
-    IHostEnvironment _env;
+
+    private IHostEnvironment _env;
     public FileService(
         IHostEnvironment env)
     {

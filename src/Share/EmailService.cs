@@ -6,11 +6,10 @@ namespace Share;
 
 public class EmailService
 {
-    readonly string _apiKey;
-    readonly string fromEmail = "no-response@vof.media";
-
-    readonly string _webName = "DevPlf";
-    readonly IHostEnvironment _env;
+    private readonly string _apiKey;
+    private readonly string fromEmail = "no-response@vof.media";
+    private readonly string _webName = "DevPlf";
+    private readonly IHostEnvironment _env;
     public EmailService(IOptions<MailOption> options, IHostEnvironment env)
     {
         _apiKey = options.Value.APIKey;

@@ -16,8 +16,8 @@ public class Repository<TEntity, TAddForm, TUpdatedForm, TFilter, TDto> :
     where TEntity : BaseDB
     where TFilter : FilterBase
 {
-    ILogger _logger;
-    IUserContext _userCtx;
+    private ILogger _logger;
+    private IUserContext _userCtx;
     public Repository(ContextBase context, ILogger logger, IUserContext userContext, IMapper mapper) : base(context, mapper, userContext)
     {
         _logger = logger;

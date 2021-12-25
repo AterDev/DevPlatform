@@ -7,16 +7,14 @@ namespace Share.NewsCollectionService;
 
 public class TwitterService
 {
-    readonly string ConsumerKey = "";
-    readonly string ConsumerSecretKey = "";
-    readonly string AccessToken = "";
-    readonly string AccessSecretToken = "";
-
-    readonly TwitterClient client;
-
-    readonly ILogger _logger;
-    readonly IConfiguration _config;
-    readonly ContextBase _context;
+    private readonly string ConsumerKey = "";
+    private readonly string ConsumerSecretKey = "";
+    private readonly string AccessToken = "";
+    private readonly string AccessSecretToken = "";
+    private readonly TwitterClient client;
+    private readonly ILogger _logger;
+    private readonly IConfiguration _config;
+    private readonly ContextBase _context;
     /// <summary>
     /// 需要关注的twitters
     /// </summary>

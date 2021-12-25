@@ -21,6 +21,6 @@ public static class RepositoryServiceExtensions
         services.AddScoped(typeof(LibraryRepository));
         services.AddScoped(typeof(RoleRepository));
         services.AddScoped(typeof(ThirdNewsRepository));
-
+        services.AddScoped(typeof(TagLibraryRepository));
     }
 }
