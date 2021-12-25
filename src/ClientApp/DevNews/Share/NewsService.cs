@@ -62,6 +62,84 @@ namespace DevNews.Share
             }
         }
 
+        /// <summary>
+        /// 获取标签
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public async Task<bool> GetTagsAsync(string type)
+        {
+            string url = BaseUrl + "api/TagLibrary/filter";
+            try
+            {
+                var response = await httpClient.PostAsJsonAsync(url, new { PageIndex = 0, PageSize = 100, Type = type });
+                if (response.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// 添加标签
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="tags"></param>
+        /// <returns></returns>
+        public async Task<bool> SetTechTypeAsync(Guid id, List<NewsTagsAddDto> tags)
+        {
+            string url = BaseUrl + "api/ThirdNews/tags/" + id;
+            try
+            {
+                var response = await httpClient.PostAsJsonAsync(url, tags);
+                if (response.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// 删除标签
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<bool> DeleteTagAsync(Guid id)
+        {
+            string url = BaseUrl + "api/ThirdNews/tags" + id;
+            try
+            {
+                var response = await httpClient.DeleteAsync(url);
+                if (response.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
 
         /// <summary>
         /// 批量设置为已删除状态

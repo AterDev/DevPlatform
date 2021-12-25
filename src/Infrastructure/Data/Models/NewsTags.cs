@@ -1,5 +1,4 @@
 ﻿using System.Text.Json.Serialization;
-
 namespace Infrastructure.Data.Models;
 
 public class NewsTags : BaseDB
