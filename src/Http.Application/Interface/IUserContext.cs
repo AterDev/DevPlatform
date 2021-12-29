@@ -1,6 +1,6 @@
 ﻿using System.Security.Claims;
 
-namespace Http.Application.Agreement;
+namespace Http.Application.Interface;
 
 /// <summary>
 /// 用户上下文

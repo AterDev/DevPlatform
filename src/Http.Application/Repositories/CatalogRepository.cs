@@ -1,4 +1,3 @@
-using Http.Application.Agreement;
 using Share.Models.CatalogDtos;
 
 namespace Http.Application.Repositories;

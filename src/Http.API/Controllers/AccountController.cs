@@ -1,5 +1,5 @@
 using Http.Application;
-using Http.Application.Agreement;
+using Http.Application.Interface;
 using Http.Application.Repositories;
 using Share.Models.AccountDtos;
 using Share.Models.CommonDtos;

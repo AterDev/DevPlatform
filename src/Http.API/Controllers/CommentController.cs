@@ -1,4 +1,4 @@
-using Http.Application.Agreement;
+using Http.Application.Interface;
 using Http.Application.Repositories;
 using NSwag.Annotations;
 using Share.Models.CommentDtos;

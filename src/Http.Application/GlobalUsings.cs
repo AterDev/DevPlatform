@@ -8,3 +8,4 @@ global using Core.Models;
 global using Share.Models;
 global using EntityFramework;
 global using Core.Utils;
+global using Http.Application.Interface;
