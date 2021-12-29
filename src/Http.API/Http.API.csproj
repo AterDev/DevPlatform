@@ -36,8 +36,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
-		<ProjectReference Include="..\Share\Share.csproj" />
+		<ProjectReference Include="..\Http.Application\Http.Application.csproj" />
 	</ItemGroup>
 
 </Project>

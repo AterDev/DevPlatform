@@ -1,0 +1,10 @@
+﻿global using System;
+global using System.Collections.Generic;
+global using System.Linq;
+global using AutoMapper;
+global using Microsoft.EntityFrameworkCore;
+global using Microsoft.Extensions.Logging;
+global using Core.Models;
+global using Share.Models;
+global using EntityFramework;
+global using Core.Utils;

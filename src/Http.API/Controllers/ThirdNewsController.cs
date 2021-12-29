@@ -1,7 +1,7 @@
-using Infrastructure.Data.Models;
+using Http.Application.Agreement;
+using Http.Application.Repositories;
 using Share.Models.TagLibraryDtos;
 using Share.Models.ThirdNewsDtos;
-using Share.Repositories;
 
 namespace Http.API.Controllers;
 

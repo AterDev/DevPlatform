@@ -1,7 +1,8 @@
-using Infrastructure.Data.Models;
+using Http.Application;
+using Http.Application.Agreement;
+using Http.Application.Repositories;
 using Share.Models.AccountDtos;
 using Share.Models.CommonDtos;
-using Share.Repositories;
 
 namespace Http.API.Controllers;
 

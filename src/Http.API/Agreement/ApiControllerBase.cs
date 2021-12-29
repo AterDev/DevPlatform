@@ -1,5 +1,4 @@
-using Infrastructure.Data.Models;
-using Share.Repositories;
+using Http.Application.Repositories;
 
 namespace Http.API.Agreement;
 

@@ -1,10 +1,3 @@
 ﻿global using System;
 global using System.Net.Http;
-global using System.Linq;
-global using System.Text;
-global using Microsoft.AspNetCore.Authorization;
-global using Microsoft.EntityFrameworkCore;
-global using Microsoft.Extensions.Configuration;
-global using Microsoft.IdentityModel.Tokens;
 global using Microsoft.Extensions.DependencyInjection;
-global using Share.Models;

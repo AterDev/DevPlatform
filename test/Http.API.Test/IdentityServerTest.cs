@@ -1,6 +1,4 @@
 using IdentityModel.Client;
-using Newtonsoft.Json.Linq;
-using static IdentityModel.OidcConstants;
 
 namespace Http.API.Test;
 public class IdentityServerTest

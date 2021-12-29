@@ -1,6 +1,6 @@
 // 该文件由GT.CLI 工具生成
 
-using Share.Repositories;
+using Http.Application.Repositories;
 
 namespace Http.API;
 
