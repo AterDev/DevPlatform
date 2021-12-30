@@ -9,7 +9,7 @@ namespace Core.Utils;
 public static class ObjectExtension
 {
     /// <summary>
-    /// set source property value as merge type value,ignore null property
+    /// set source property value as merge type value, ignore null property
     /// </summary>
     /// <typeparam name="TSource"></typeparam>
     /// <typeparam name="TMerge"></typeparam>

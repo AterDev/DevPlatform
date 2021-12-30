@@ -13,7 +13,7 @@ public interface IDataStore<TEntity, TUpdate, TFilter, TItem, Tkey>
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    Task<TEntity> FindAsync(Tkey id);
+    Task<TEntity?> FindAsync(Tkey id);
     /// <summary>
     /// 列表筛选
     /// </summary>
@@ -31,7 +31,7 @@ public interface IDataStore<TEntity, TUpdate, TFilter, TItem, Tkey>
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    Task<TEntity> DeleteAsync(Tkey id);
+    Task<bool> DeleteAsync(Tkey id);
     /// <summary>
     /// 添加
     /// </summary>
@@ -44,13 +44,13 @@ public interface IDataStore<TEntity, TUpdate, TFilter, TItem, Tkey>
     /// <param name="id"></param>
     /// <param name="dto"></param>
     /// <returns></returns>
-    Task<TEntity> UpdateAsync(Tkey id, TUpdate dto);
+    Task<TEntity?> UpdateAsync(Tkey id, TUpdate dto);
     /// <summary>
     /// 判断实体是否存在
     /// </summary>
     /// <param name="o"></param>
     /// <returns></returns>
-    Task<TEntity> Exist(Tkey id);
+    Task<bool> Exist(Tkey id);
     bool Any(Func<TEntity, bool> predicate);
 }
 /// <summary>

@@ -1,6 +1,6 @@
 namespace Core.Utils;
 
-public static class StringExtenstion
+public static class StringExtension
 {
     /// <summary>
     /// to hyphen style: HelloWord->hellow-word

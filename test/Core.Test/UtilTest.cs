@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using Core.Test.Data;
 using Core.Utils;
 using Xunit;
@@ -52,6 +53,18 @@ namespace Core.Test
             Assert.Equal(Status.Deleted, user.Status);
         }
 
+
+        [Fact]
+        public void Should_select_fields_by_Type()
+        {
+            var user = new User();
+            var users = user.GetTestUsers(12);
+
+            var _query = users.AsQueryable();
+            var items = _query.Select<User, UserItem>();
+            var res = items.ToList();
+            Assert.Equal(12, res.Count);
+        }
 
 
     }

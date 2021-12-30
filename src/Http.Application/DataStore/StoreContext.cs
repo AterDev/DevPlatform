@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace Http.Application.DataStore;
 
-public class StoreContext
+public class StoreContext<TContext> where TContext : DbContext
 {
-
     public StoreContext()
     {
 
