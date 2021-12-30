@@ -19,7 +19,7 @@ public static class StringExtenstion
         for (var i = 0; i < str.Length; i++)
         {
             var item = str[i];
-            // 连续的大写只添加一个-
+            // 连续的大写只添加一个
             var pre = i >= 1 ? str[i - 1] : 'a';
             if (char.IsUpper(item) && char.IsLower(pre))
             {
@@ -35,7 +35,6 @@ public static class StringExtenstion
             }
             builder.Append(char.ToLower(item));
         }
-
         return builder.ToString();
     }
 
