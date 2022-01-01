@@ -78,6 +78,7 @@ public class ThirdNewsController : ApiController<ThirdNewsRepository, ThirdNews,
     /// <param name="filter"></param>
     /// <returns></returns>
     [HttpPost("filter")]
+    [AllowAnonymous]
     public async override Task<ActionResult<PageResult<ThirdNewsDto>>> FilterAsync(ThirdNewsFilter filter)
     {
         return await _repos.GetListWithPageAsync(filter);

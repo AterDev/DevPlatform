@@ -21,6 +21,7 @@ using Share.Models.LibraryCatalogDtos;
 using Share.Models.LibraryDtos;
 using Share.Models.RoleDtos;
 using Share.Models.TagLibraryDtos;
+using Share.Models.ThirdNewsDtos;
 
 namespace Share.AutoMapper;
 
@@ -88,6 +89,7 @@ public class GenerateProfile : Profile
         CreateMap<LibraryCatalog, LibraryCatalogDetailDto>();
 
         CreateMap<NewsTagsAddDto, NewsTags>();
+        CreateMap<ThirdNews, ThirdNewsDto>();
 
         CreateMap<TagLibraryAddDto, TagLibrary>();
         CreateMap<TagLibraryAddDto, TagLibrary>();
