@@ -41,8 +41,5 @@ public class NewsTimerService : IHostedService, IDisposable
         return Task.CompletedTask;
     }
 
-    public void Dispose()
-    {
-        _timer?.Dispose();
-    }
+    public void Dispose() => _timer?.Dispose();
 }

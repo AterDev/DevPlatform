@@ -27,8 +27,5 @@ public class BaseHtml
         return await Task.FromResult(result);
     }
 
-    public virtual string GetContent(string url)
-    {
-        return "";
-    }
+    public virtual string GetContent(string url) => "";
 }

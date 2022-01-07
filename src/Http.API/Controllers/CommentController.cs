@@ -24,14 +24,12 @@ public class CommentController : ApiController<CommentRepository, Comment, Comme
     /// <param name="form"></param>
     /// <returns></returns>
     [HttpPost]
-    public async override Task<ActionResult<Comment>> AddAsync([FromBody] CommentAddDto form)
-    {
+    public async override Task<ActionResult<Comment>> AddAsync([FromBody] CommentAddDto form) =>
         // if (_repos.Any(e => e.Name == form.Name))
         // {
         //     return Conflict();
         // }
-        return await _repos.AddAsync(form);
-    }
+        await _repos.AddAsync(form);
 
     /// <summary>
     /// 分页筛选Comment
@@ -39,10 +37,7 @@ public class CommentController : ApiController<CommentRepository, Comment, Comme
     /// <param name="filter"></param>
     /// <returns></returns>
     [HttpPost("filter")]
-    public async override Task<ActionResult<PageResult<CommentDto>>> FilterAsync(CommentFilter filter)
-    {
-        return await _repos.GetListWithPageAsync(filter);
-    }
+    public async override Task<ActionResult<PageResult<CommentDto>>> FilterAsync(CommentFilter filter) => await _repos.GetListWithPageAsync(filter);
 
     /// <summary>
     /// 更新Comment
@@ -72,10 +67,7 @@ public class CommentController : ApiController<CommentRepository, Comment, Comme
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpDelete("{id}")]
-    public override Task<ActionResult<Comment>> DeleteAsync([FromRoute] Guid id)
-    {
-        return base.DeleteAsync(id);
-    }
+    public override Task<ActionResult<Comment>> DeleteAsync([FromRoute] Guid id) => base.DeleteAsync(id);
 
     /// <summary>
     /// 获取Comment详情
@@ -83,8 +75,5 @@ public class CommentController : ApiController<CommentRepository, Comment, Comme
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpGet("{id}")]
-    public override Task<ActionResult<Comment>> GetDetailAsync([FromRoute] Guid id)
-    {
-        return base.GetDetailAsync(id);
-    }
+    public override Task<ActionResult<Comment>> GetDetailAsync([FromRoute] Guid id) => base.GetDetailAsync(id);
 }

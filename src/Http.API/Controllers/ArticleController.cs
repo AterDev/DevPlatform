@@ -56,10 +56,7 @@ public class ArticleController : ApiController<ArticleRepository, Article, Artic
     /// <param name="filter"></param>
     /// <returns></returns>
     [HttpPost("filter")]
-    public async override Task<ActionResult<PageResult<ArticleDto>>> FilterAsync(ArticleFilter filter)
-    {
-        return await _repos.GetListWithPageAsync(filter);
-    }
+    public async override Task<ActionResult<PageResult<ArticleDto>>> FilterAsync(ArticleFilter filter) => await _repos.GetListWithPageAsync(filter);
 
     /// <summary>
     /// 更新Article
@@ -108,10 +105,7 @@ public class ArticleController : ApiController<ArticleRepository, Article, Artic
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpGet("{id}")]
-    public async override Task<ActionResult<Article>> GetDetailAsync([FromRoute] Guid id)
-    {
-        return await base.GetDetailAsync(id);
-    }
+    public async override Task<ActionResult<Article>> GetDetailAsync([FromRoute] Guid id) => await base.GetDetailAsync(id);
 
 
     /// <summary>

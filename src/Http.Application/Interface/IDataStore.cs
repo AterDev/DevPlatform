@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Http.Application.Interface;
+﻿namespace Http.Application.Interface;
 
 public interface IDataStore<TEntity, TUpdate, TFilter, TItem, Tkey>
 {

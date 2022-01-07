@@ -14,10 +14,7 @@ public class HashCrypto
         var valueBytes = encrpty.GetBytes(32);
         return Convert.ToBase64String(valueBytes);
     }
-    public static bool Validate(string value, string salt, string hash)
-    {
-        return Create(value, salt) == hash;
-    }
+    public static bool Validate(string value, string salt, string hash) => Create(value, salt) == hash;
     public static string BuildSalt()
     {
         var randomBytes = new byte[128 / 8];

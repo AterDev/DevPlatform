@@ -46,10 +46,7 @@ public class AccountController : ApiController<AccountRepository, Account, Accou
     /// <param name="filter"></param>
     /// <returns></returns>
     [HttpPost("filter")]
-    public async override Task<ActionResult<PageResult<AccountDto>>> FilterAsync(AccountFilter filter)
-    {
-        return await _repos.GetListWithPageAsync(filter);
-    }
+    public async override Task<ActionResult<PageResult<AccountDto>>> FilterAsync(AccountFilter filter) => await _repos.GetListWithPageAsync(filter);
 
     /// <summary>
     /// 更新Account
@@ -113,10 +110,7 @@ public class AccountController : ApiController<AccountRepository, Account, Accou
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpDelete("{id}")]
-    public override Task<ActionResult<Account>> DeleteAsync([FromRoute] Guid id)
-    {
-        return base.DeleteAsync(id);
-    }
+    public override Task<ActionResult<Account>> DeleteAsync([FromRoute] Guid id) => base.DeleteAsync(id);
 
     /// <summary>
     /// 获取详情
@@ -124,10 +118,7 @@ public class AccountController : ApiController<AccountRepository, Account, Accou
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpGet("{id}")]
-    public override Task<ActionResult<Account>> GetDetailAsync([FromRoute] Guid id)
-    {
-        return base.GetDetailAsync(id);
-    }
+    public override Task<ActionResult<Account>> GetDetailAsync([FromRoute] Guid id) => base.GetDetailAsync(id);
 
     /// <summary>
     /// 初始化管理员账号
@@ -137,9 +128,6 @@ public class AccountController : ApiController<AccountRepository, Account, Accou
     /// <returns></returns>
     [HttpPost("initAdminUser")]
     [AllowAnonymous]
-    public async Task<ActionResult<Account>> InitAdminUserAsync(string username, string password)
-    {
-        return await webService.InitAdminUserAccountAsync(username, password);
-    }
+    public async Task<ActionResult<Account>> InitAdminUserAsync(string username, string password) => await webService.InitAdminUserAccountAsync(username, password);
 
 }

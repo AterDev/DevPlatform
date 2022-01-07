@@ -59,8 +59,5 @@ public class ZhidingSoft : BaseHtml
         return result.Take(number).ToList();
     }
 
-    public override string GetContent(string url)
-    {
-        return base.GetContent(url);
-    }
+    public override string GetContent(string url) => base.GetContent(url);
 }

@@ -22,14 +22,12 @@ public class ThirdNewsController : ApiController<ThirdNewsRepository, ThirdNews,
     /// <param name="form"></param>
     /// <returns></returns>
     [HttpPost]
-    public async override Task<ActionResult<ThirdNews>> AddAsync([FromBody] ThirdNewsAddDto form)
-    {
+    public async override Task<ActionResult<ThirdNews>> AddAsync([FromBody] ThirdNewsAddDto form) =>
         // if (_repos.Any(e => e.Name == form.Name))
         // {
         //     return Conflict();
         // }
-        return await _repos.AddAsync(form);
-    }
+        await _repos.AddAsync(form);
 
     /// <summary>
     /// Get Latest week news
@@ -37,10 +35,7 @@ public class ThirdNewsController : ApiController<ThirdNewsRepository, ThirdNews,
     /// <returns></returns>
     [HttpGet("week")]
     [AllowAnonymous]
-    public async Task<List<ThirdNews>> GetWeekNewsAsync()
-    {
-        return await _repos.GetWeekNewsAsync();
-    }
+    public async Task<List<ThirdNews>> GetWeekNewsAsync() => await _repos.GetWeekNewsAsync();
 
     /// <summary>
     /// 添加标签
@@ -67,10 +62,7 @@ public class ThirdNewsController : ApiController<ThirdNewsRepository, ThirdNews,
     /// <returns></returns>
     [HttpDelete("tags/{id}")]
     [AllowAnonymous]
-    public async Task<int> DeleteTagAsync([FromRoute] Guid id)
-    {
-        return await _repos.DeleteTag(id);
-    }
+    public async Task<int> DeleteTagAsync([FromRoute] Guid id) => await _repos.DeleteTag(id);
 
     /// <summary>
     /// 分页筛选ThirdNews
@@ -78,10 +70,7 @@ public class ThirdNewsController : ApiController<ThirdNewsRepository, ThirdNews,
     /// <param name="filter"></param>
     /// <returns></returns>
     [HttpPost("filter")]
-    public async override Task<ActionResult<PageResult<ThirdNewsDto>>> FilterAsync(ThirdNewsFilter filter)
-    {
-        return await _repos.GetListWithPageAsync(filter);
-    }
+    public async override Task<ActionResult<PageResult<ThirdNewsDto>>> FilterAsync(ThirdNewsFilter filter) => await _repos.GetListWithPageAsync(filter);
 
     /// <summary>
     /// 更新ThirdNews
@@ -111,10 +100,7 @@ public class ThirdNewsController : ApiController<ThirdNewsRepository, ThirdNews,
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpDelete("{id}")]
-    public async override Task<ActionResult<ThirdNews>> DeleteAsync([FromRoute] Guid id)
-    {
-        return await _repos.DeleteAsync(id);
-    }
+    public async override Task<ActionResult<ThirdNews>> DeleteAsync([FromRoute] Guid id) => await _repos.DeleteAsync(id);
 
     /// <summary>
     /// 获取ThirdNews详情
@@ -122,10 +108,7 @@ public class ThirdNewsController : ApiController<ThirdNewsRepository, ThirdNews,
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpGet("{id}")]
-    public override Task<ActionResult<ThirdNews>> GetDetailAsync([FromRoute] Guid id)
-    {
-        return base.GetDetailAsync(id);
-    }
+    public override Task<ActionResult<ThirdNews>> GetDetailAsync([FromRoute] Guid id) => base.GetDetailAsync(id);
 
     /// <summary>
     /// 资讯分类处理
@@ -135,10 +118,7 @@ public class ThirdNewsController : ApiController<ThirdNewsRepository, ThirdNews,
     /// <returns></returns>
     [HttpPut("type")]
     [AllowAnonymous]
-    public async Task<int> SetNewsTypeAsync([FromBody] List<Guid> ids, [FromQuery] TechType newsType)
-    {
-        return await _repos.SetNewsTypeAsync(ids, newsType);
-    }
+    public async Task<int> SetNewsTypeAsync([FromBody] List<Guid> ids, [FromQuery] TechType newsType) => await _repos.SetNewsTypeAsync(ids, newsType);
 
     /// <summary>
     /// set news as deleted
@@ -147,8 +127,5 @@ public class ThirdNewsController : ApiController<ThirdNewsRepository, ThirdNews,
     /// <returns></returns>
     [HttpPut("deleted")]
     [AllowAnonymous]
-    public async Task<int> RemoveAsync([FromBody] List<Guid> ids)
-    {
-        return await _repos.RemoveAsync(ids);
-    }
+    public async Task<int> RemoveAsync([FromBody] List<Guid> ids) => await _repos.RemoveAsync(ids);
 }

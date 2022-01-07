@@ -116,8 +116,5 @@ public class GenerateProfile : Profile
 /// </summary>
 public static class AutoGenerateProfile
 {
-    public static void Init()
-    {
-        new GenerateProfile();
-    }
+    public static void Init() => new GenerateProfile();
 }

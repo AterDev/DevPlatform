@@ -23,14 +23,12 @@ public class TagLibraryController : ApiController<TagLibraryRepository, TagLibra
     /// <returns></returns>
     [HttpPost]
     [AllowAnonymous]
-    public async override Task<ActionResult<TagLibrary>> AddAsync([FromBody] TagLibraryAddDto form)
-    {
+    public async override Task<ActionResult<TagLibrary>> AddAsync([FromBody] TagLibraryAddDto form) =>
         // if (_repos.Any(e => e.Name == form.Name))
         // {
         //     return Conflict();
         // }
-        return await _repos.AddAsync(form);
-    }
+        await _repos.AddAsync(form);
 
     /// <summary>
     /// 分页筛选TagLibrary
@@ -39,10 +37,7 @@ public class TagLibraryController : ApiController<TagLibraryRepository, TagLibra
     /// <returns></returns>
     [HttpPost("filter")]
     [AllowAnonymous]
-    public async override Task<ActionResult<PageResult<TagLibraryDto>>> FilterAsync(TagLibraryFilter filter)
-    {
-        return await _repos.GetListWithPageAsync(filter);
-    }
+    public async override Task<ActionResult<PageResult<TagLibraryDto>>> FilterAsync(TagLibraryFilter filter) => await _repos.GetListWithPageAsync(filter);
 
     /// <summary>
     /// 更新Library

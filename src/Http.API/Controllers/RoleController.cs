@@ -37,10 +37,7 @@ public class RoleController : ApiController<RoleRepository, Role, RoleAddDto, Ro
     /// <param name="filter"></param>
     /// <returns></returns>
     [HttpPost("filter")]
-    public async override Task<ActionResult<PageResult<RoleDto>>> FilterAsync(RoleFilter filter)
-    {
-        return await _repos.GetListWithPageAsync(filter);
-    }
+    public async override Task<ActionResult<PageResult<RoleDto>>> FilterAsync(RoleFilter filter) => await _repos.GetListWithPageAsync(filter);
 
     /// <summary>
     /// 更新Role

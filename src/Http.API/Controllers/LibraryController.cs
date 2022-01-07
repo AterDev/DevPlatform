@@ -22,14 +22,12 @@ public class LibraryController : ApiController<LibraryRepository, Library, Libra
     /// <param name="form"></param>
     /// <returns></returns>
     [HttpPost]
-    public async override Task<ActionResult<Library>> AddAsync([FromBody] LibraryAddDto form)
-    {
+    public async override Task<ActionResult<Library>> AddAsync([FromBody] LibraryAddDto form) =>
         // if (_repos.Any(e => e.Name == form.Name))
         // {
         //     return Conflict();
         // }
-        return await _repos.AddAsync(form);
-    }
+        await _repos.AddAsync(form);
 
     /// <summary>
     /// 分页筛选Library
@@ -37,10 +35,7 @@ public class LibraryController : ApiController<LibraryRepository, Library, Libra
     /// <param name="filter"></param>
     /// <returns></returns>
     [HttpPost("filter")]
-    public async override Task<ActionResult<PageResult<LibraryDto>>> FilterAsync(LibraryFilter filter)
-    {
-        return await _repos.GetListWithPageAsync(filter);
-    }
+    public async override Task<ActionResult<PageResult<LibraryDto>>> FilterAsync(LibraryFilter filter) => await _repos.GetListWithPageAsync(filter);
 
     /// <summary>
     /// 更新Library

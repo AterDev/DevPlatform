@@ -33,10 +33,7 @@ namespace DevNews
             TypeChoses = new NewsTypeChose().GetDefaultList();
         }
 
-        private void LoadData(object sender, RoutedEventArgs e)
-        {
-            ReloadNews();
-        }
+        private void LoadData(object sender, RoutedEventArgs e) => ReloadNews();
 
         private async void OpenBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -147,10 +144,7 @@ namespace DevNews
             NewsListView.ItemsSource = NewsCurrentDisplay;
         }
 
-        private void RefreshBtn_Click(object sender, RoutedEventArgs e)
-        {
-            ReloadNews();
-        }
+        private void RefreshBtn_Click(object sender, RoutedEventArgs e) => ReloadNews();
 
         private async void ReloadNews()
         {

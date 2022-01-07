@@ -73,15 +73,9 @@ public class RepositoryBase<TContext, TEntity, TAddForm, TUpdateForm, TFilter, T
         return data;
     }
 
-    public virtual Task<List<TData>> GetListAsync(TFilter filter)
-    {
-        throw new NotImplementedException();
-    }
+    public virtual Task<List<TData>> GetListAsync(TFilter filter) => throw new NotImplementedException();
 
-    public virtual Task<PageResult<TData>> GetListWithPageAsync(TFilter filter)
-    {
-        throw new NotImplementedException();
-    }
+    public virtual Task<PageResult<TData>> GetListWithPageAsync(TFilter filter) => throw new NotImplementedException();
 
     /// <summary>
     /// 仅更新实体
@@ -97,10 +91,7 @@ public class RepositoryBase<TContext, TEntity, TAddForm, TUpdateForm, TFilter, T
         return currentData;
     }
 
-    public virtual bool Any(Func<TEntity, bool> predicate)
-    {
-        return _db.Any(predicate);
-    }
+    public virtual bool Any(Func<TEntity, bool> predicate) => _db.Any(predicate);
 }
 
 public class RepositoryBase

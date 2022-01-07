@@ -54,10 +54,7 @@ public class ArticleCatalogController : ApiController<ArticleCatalogRepository, 
     /// <param name="filter"></param>
     /// <returns></returns>
     [HttpPost("filter")]
-    public async override Task<ActionResult<PageResult<ArticleCatalogDto>>> FilterAsync(ArticleCatalogFilter filter)
-    {
-        return await _repos.GetListWithPageAsync(UserId, filter);
-    }
+    public async override Task<ActionResult<PageResult<ArticleCatalogDto>>> FilterAsync(ArticleCatalogFilter filter) => await _repos.GetListWithPageAsync(UserId, filter);
 
     /// <summary>
     /// 更新ArticleCatalog

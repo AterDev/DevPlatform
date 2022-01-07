@@ -22,14 +22,12 @@ public class LibraryCatalogController : ApiController<LibraryCatalogRepository, 
     /// <param name="form"></param>
     /// <returns></returns>
     [HttpPost]
-    public async override Task<ActionResult<LibraryCatalog>> AddAsync([FromBody] LibraryCatalogAddDto form)
-    {
+    public async override Task<ActionResult<LibraryCatalog>> AddAsync([FromBody] LibraryCatalogAddDto form) =>
         // if (_repos.Any(e => e.Name == form.Name))
         // {
         //     return Conflict();
         // }
-        return await _repos.AddAsync(form);
-    }
+        await _repos.AddAsync(form);
 
     /// <summary>
     /// 分页筛选LibraryCatalog
@@ -37,10 +35,7 @@ public class LibraryCatalogController : ApiController<LibraryCatalogRepository, 
     /// <param name="filter"></param>
     /// <returns></returns>
     [HttpPost("filter")]
-    public async override Task<ActionResult<PageResult<LibraryCatalogDto>>> FilterAsync(LibraryCatalogFilter filter)
-    {
-        return await _repos.GetListWithPageAsync(filter);
-    }
+    public async override Task<ActionResult<PageResult<LibraryCatalogDto>>> FilterAsync(LibraryCatalogFilter filter) => await _repos.GetListWithPageAsync(filter);
 
     /// <summary>
     /// 更新LibraryCatalog
@@ -70,10 +65,7 @@ public class LibraryCatalogController : ApiController<LibraryCatalogRepository, 
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpDelete("{id}")]
-    public override Task<ActionResult<LibraryCatalog>> DeleteAsync([FromRoute] Guid id)
-    {
-        return base.DeleteAsync(id);
-    }
+    public override Task<ActionResult<LibraryCatalog>> DeleteAsync([FromRoute] Guid id) => base.DeleteAsync(id);
 
     /// <summary>
     /// 获取LibraryCatalog详情
@@ -81,8 +73,5 @@ public class LibraryCatalogController : ApiController<LibraryCatalogRepository, 
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpGet("{id}")]
-    public override Task<ActionResult<LibraryCatalog>> GetDetailAsync([FromRoute] Guid id)
-    {
-        return base.GetDetailAsync(id);
-    }
+    public override Task<ActionResult<LibraryCatalog>> GetDetailAsync([FromRoute] Guid id) => base.GetDetailAsync(id);
 }

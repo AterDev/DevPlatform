@@ -18,15 +18,9 @@ public class ThirdNewsRepository : Repository<ThirdNews, ThirdNewsAddDto, ThirdN
         return base.GetListWithPageAsync(filter);
     }
 
-    public override Task<ThirdNews> AddAsync(ThirdNewsAddDto form)
-    {
-        return base.AddAsync(form);
-    }
+    public override Task<ThirdNews> AddAsync(ThirdNewsAddDto form) => base.AddAsync(form);
 
-    public override Task<ThirdNews> UpdateAsync(Guid id, ThirdNewsUpdateDto form)
-    {
-        return base.UpdateAsync(id, form);
-    }
+    public override Task<ThirdNews> UpdateAsync(Guid id, ThirdNewsUpdateDto form) => base.UpdateAsync(id, form);
 
     /// <summary>
     /// 添加标签
@@ -114,9 +108,6 @@ public class ThirdNewsRepository : Repository<ThirdNews, ThirdNewsAddDto, ThirdN
         return await _context.SaveChangesAsync();
     }
 
-    public override Task<ThirdNews> GetDetailAsync(Guid id)
-    {
-        return base.GetDetailAsync(id);
-    }
+    public override Task<ThirdNews> GetDetailAsync(Guid id) => base.GetDetailAsync(id);
 
 }

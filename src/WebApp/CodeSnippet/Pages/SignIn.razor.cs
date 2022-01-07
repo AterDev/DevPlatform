@@ -25,11 +25,7 @@ public partial class SignIn
         }
     }
 
-    private void OnFinishFailed(EditContext editContext)
-    {
-
-        Console.WriteLine($"Failed:{JsonSerializer.Serialize(model)}");
-    }
+    private void OnFinishFailed(EditContext editContext) => Console.WriteLine($"Failed:{JsonSerializer.Serialize(model)}");
 }
 public class Model
 {

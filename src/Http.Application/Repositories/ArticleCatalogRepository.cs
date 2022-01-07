@@ -16,11 +16,7 @@ public class ArticleCatalogRepository : Repository<ArticleCatalog, ArticleCatalo
     }
 
 
-    public override Task<ArticleCatalog> AddAsync(ArticleCatalogAddDto form)
-    {
-
-        return base.AddAsync(form);
-    }
+    public override Task<ArticleCatalog> AddAsync(ArticleCatalogAddDto form) => base.AddAsync(form);
 
 
     /// <summary>
@@ -28,8 +24,5 @@ public class ArticleCatalogRepository : Repository<ArticleCatalog, ArticleCatalo
     /// </summary>
     /// <param name="accountId"></param>
     /// <returns></returns>
-    public bool ValidAccount(Guid accountId)
-    {
-        return _context.ArticleCatalogs.Any(a => a.Account.Id == accountId);
-    }
+    public bool ValidAccount(Guid accountId) => _context.ArticleCatalogs.Any(a => a.Account.Id == accountId);
 }

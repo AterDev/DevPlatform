@@ -40,10 +40,7 @@ public class CodeSnippetController : ApiController<CodeSnippetRepository, CodeSn
     /// <param name="filter"></param>
     /// <returns></returns>
     [HttpPost("filter")]
-    public async override Task<ActionResult<PageResult<CodeSnippetDto>>> FilterAsync(CodeSnippetFilter filter)
-    {
-        return await _repos.GetListWithPageAsync(filter);
-    }
+    public async override Task<ActionResult<PageResult<CodeSnippetDto>>> FilterAsync(CodeSnippetFilter filter) => await _repos.GetListWithPageAsync(filter);
 
     /// <summary>
     /// 更新CodeSnippet
@@ -67,8 +64,5 @@ public class CodeSnippetController : ApiController<CodeSnippetRepository, CodeSn
     }
 
     [HttpGet("exist")]
-    public ActionResult<bool> ExistAsync([FromQuery] CodeSnippetUnique dto)
-    {
-        return _repos.Exist(dto);
-    }
+    public ActionResult<bool> ExistAsync([FromQuery] CodeSnippetUnique dto) => _repos.Exist(dto);
 }

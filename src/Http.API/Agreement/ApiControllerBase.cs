@@ -21,10 +21,7 @@ public class ApiControllerBase<TContext, TRepository, TEntity, TAddForm, TUpdate
     }
 
     [HttpPost]
-    public async virtual Task<ActionResult<TEntity>> AddAsync(TAddForm form)
-    {
-        return await _repos.AddAsync(form);
-    }
+    public async virtual Task<ActionResult<TEntity>> AddAsync(TAddForm form) => await _repos.AddAsync(form);
 
     [HttpDelete("{id}")]
     public async virtual Task<ActionResult<TEntity>> DeleteAsync([FromRoute] Guid id)
@@ -37,16 +34,10 @@ public class ApiControllerBase<TContext, TRepository, TEntity, TAddForm, TUpdate
     }
 
     [HttpPost("filter")]
-    public async virtual Task<ActionResult<PageResult<TDto>>> FilterAsync(TFilter filter)
-    {
-        return await _repos.GetListWithPageAsync(filter);
-    }
+    public async virtual Task<ActionResult<PageResult<TDto>>> FilterAsync(TFilter filter) => await _repos.GetListWithPageAsync(filter);
 
     [HttpGet("{id}")]
-    public async virtual Task<ActionResult<TEntity>> GetDetailAsync([FromRoute] Guid id)
-    {
-        return await _repos.GetDetailAsync(id);
-    }
+    public async virtual Task<ActionResult<TEntity>> GetDetailAsync([FromRoute] Guid id) => await _repos.GetDetailAsync(id);
 
     [HttpPut("{id}")]
     public async virtual Task<ActionResult<TEntity>> UpdateAsync([FromRoute] Guid id, TUpdateForm form)

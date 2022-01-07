@@ -46,9 +46,6 @@ public class UserContext : IUserContext
         }
     }
 
-    public Claim FindClaim(string claimType)
-    {
-        return _httpContextAccessor?.HttpContext?.User?.FindFirst(claimType);
-    }
+    public Claim FindClaim(string claimType) => _httpContextAccessor?.HttpContext?.User?.FindFirst(claimType);
 
 }

@@ -40,10 +40,7 @@ public class GrantsController : Controller
     /// Show list of grants
     /// </summary>
     [HttpGet]
-    public async Task<IActionResult> Index()
-    {
-        return View("Index", await BuildViewModelAsync());
-    }
+    public async Task<IActionResult> Index() => View("Index", await BuildViewModelAsync());
 
     /// <summary>
     /// Handle postback to revoke a client

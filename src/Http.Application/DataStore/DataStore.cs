@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper.QueryableExtensions;
-
-
-namespace Http.Application.DataStore;
+﻿namespace Http.Application.DataStore;
 
 public class DataStore<TContext, TEntity, TUpdate, TFilter, TItem> : IDataStore<TEntity, TUpdate, TFilter, TItem>
     where TEntity : BaseDB
@@ -14,12 +6,11 @@ public class DataStore<TContext, TEntity, TUpdate, TFilter, TItem> : IDataStore<
     where TContext : DbContext
     where TItem : class
 {
-    public readonly TContext _context;
-    public readonly DbSet<TEntity> _db;
+    protected readonly TContext _context;
+    protected readonly DbSet<TEntity> _db;
     protected readonly IQueryable<TEntity> _query;
-
-    private readonly ILogger _logger;
-    private readonly IUserContext _userCtx;
+    protected readonly ILogger _logger;
+    protected readonly IUserContext _userCtx;
 
     public DataStore(TContext context, IUserContext userContext, ILogger logger)
     {
@@ -30,8 +21,18 @@ public class DataStore<TContext, TEntity, TUpdate, TFilter, TItem> : IDataStore<
         _query = _db.AsQueryable();
     }
 
+    /// <summary>
+    /// 获取一条数据
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     public async Task<TEntity?> FindAsync(Guid id) => await _db.FindAsync();
 
+    /// <summary>
+    /// 筛选数据
+    /// </summary>
+    /// <param name="filter"></param>
+    /// <returns></returns>
     public async Task<List<TItem>> FindAsync(TFilter filter)
     {
         return await _query.OrderByDescending(d => d.CreatedTime)
@@ -41,6 +42,11 @@ public class DataStore<TContext, TEntity, TUpdate, TFilter, TItem> : IDataStore<
             .ToListAsync();
     }
 
+    /// <summary>
+    /// 筛选数据，分页结构
+    /// </summary>
+    /// <param name="filter"></param>
+    /// <returns></returns>
     public async Task<PageResult<TItem>> FindWithPageAsync(TFilter filter)
     {
         var count = _query.Count();
@@ -89,8 +95,5 @@ public class DataStore<TContext, TEntity, TUpdate, TFilter, TItem> : IDataStore<
         return data != null;
     }
 
-    public bool Any(Func<TEntity, bool> predicate)
-    {
-        return _db.Any(predicate);
-    }
+    public bool Any(Func<TEntity, bool> predicate) => _db.Any(predicate);
 }

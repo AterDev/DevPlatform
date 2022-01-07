@@ -80,17 +80,11 @@ public class ArticleRepository : Repository<Article, ArticleAddDto, ArticleUpdat
     /// </summary>
     /// <param name="catalogId"></param>
     /// <returns></returns>
-    public bool ValidCatalog(Guid catalogId)
-    {
-        return _context.ArticleCatalogs.Any(ac => ac.Id == catalogId);
-    }
+    public bool ValidCatalog(Guid catalogId) => _context.ArticleCatalogs.Any(ac => ac.Id == catalogId);
 
     /// <summary>
     /// 验证用户
     /// </summary>
     /// <returns></returns>
-    public bool ValidAccount()
-    {
-        return _context.Accounts.Any(a => a.Id == _usrCtx.UserId);
-    }
+    public bool ValidAccount() => _context.Accounts.Any(a => a.Id == _usrCtx.UserId);
 }

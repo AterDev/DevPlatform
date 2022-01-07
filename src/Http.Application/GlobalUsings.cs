@@ -2,10 +2,10 @@
 global using System.Collections.Generic;
 global using System.Linq;
 global using AutoMapper;
+global using Core.Models;
+global using Core.Utils;
+global using EntityFramework;
+global using Http.Application.Interface;
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.Extensions.Logging;
-global using Core.Models;
 global using Share.Models;
-global using EntityFramework;
-global using Core.Utils;
-global using Http.Application.Interface;
