@@ -1,3 +1,4 @@
+using Http.API.BackgroundTask;
 using Http.Application;
 using Http.Application.Agreement;
 using Http.Application.Interface;
@@ -7,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
 var configuration = builder.Configuration;
 
+services.AddHostedService<NewsTimerService>();
 services.AddHttpContextAccessor();
 services.AddAutoMapper(typeof(MapperProfile));
 services.Configure<AzureOptions>(configuration.GetSection("Azure"));
