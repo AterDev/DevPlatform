@@ -57,3 +57,5 @@ public interface IDataStore<TEntity, TUpdate, TFilter, TItem, Tkey>
 public interface IDataStore<TEntity, TUpdate, TFilter, TItem> : IDataStore<TEntity, TUpdate, TFilter, TItem, Guid>
 {
 }
+
+
