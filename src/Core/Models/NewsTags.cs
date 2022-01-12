@@ -8,7 +8,6 @@ public class NewsTags : BaseDB
     public string? Name { get; set; }
     [MaxLength(20)]
     public string? Color { get; set; }
-    [JsonIgnore]
-    public ThirdNews ThirdNews { get; set; }
+    public ThirdNews? ThirdNews { get; set; }
 
 }

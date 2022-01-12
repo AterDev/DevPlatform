@@ -8,17 +8,17 @@ public class LibraryItemDto
     /// 库命名空间
     /// </summary>
     [MaxLength(100)]
-    public string Namespace { get; set; }
+    public string? Namespace { get; set; }
     /// <summary>
     /// 描述
     /// </summary>
     [MaxLength(500)]
-    public string Description { get; set; }
+    public string? Description { get; set; }
     /// <summary>
     /// 语言类型
     /// </summary>
     [MaxLength(100)]
-    public string Language { get; set; }
+    public string? Language { get; set; }
     /// <summary>
     /// 是否有效
     /// </summary>

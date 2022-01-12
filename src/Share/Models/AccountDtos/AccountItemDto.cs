@@ -8,22 +8,22 @@ public class AccountItemDto
     /// 邮箱
     /// </summary>
     [MaxLength(120)]
-    public string Email { get; set; }
+    public string? Email { get; set; }
     /// <summary>
     ///  密码
     /// </summary>
     [MaxLength(60)]
-    public string Password { get; set; }
+    public string? Password { get; set; }
     /// <summary>
     /// 用户名
     /// </summary>
     [MaxLength(100)]
-    public string Username { get; set; }
+    public string? Username { get; set; }
     /// <summary>
     /// 密码加盐
     /// </summary>
     [MaxLength(40)]
-    public string HashSalt { get; set; }
+    public string? HashSalt { get; set; }
     /// <summary>
     /// 软删除
     /// </summary>
@@ -33,14 +33,14 @@ public class AccountItemDto
     /// </summary>
     public int RetryCount { get; set; }
     [MaxLength(16)]
-    public string Phone { get; set; }
+    public string? Phone { get; set; }
     public bool PhoneConfirm { get; set; }
     public bool EmailConfirm { get; set; }
     /// <summary>
     /// 头像url
     /// </summary>
     [MaxLength(200)]
-    public string Avatar { get; set; }
+    public string? Avatar { get; set; }
     [Key]
     public Guid Id { get; set; }
     /// <summary>

@@ -8,22 +8,22 @@ public class ArticleItemDto
     /// 标题
     /// </summary>
     [MaxLength(100)]
-    public string Title { get; set; }
+    public string? Title { get; set; }
     /// <summary>
     /// 概要
     /// </summary>
     [MaxLength(500)]
-    public string Summary { get; set; }
+    public string? Summary { get; set; }
     /// <summary>
     /// 作者名称
     /// </summary>
     [MaxLength(100)]
-    public string AuthorName { get; set; }
+    public string? AuthorName { get; set; }
     /// <summary>
     /// 标签
     /// </summary>
     [MaxLength(100)]
-    public string Tags { get; set; }
+    public string? Tags { get; set; }
     /// <summary>
     /// 文章类别
     /// </summary>

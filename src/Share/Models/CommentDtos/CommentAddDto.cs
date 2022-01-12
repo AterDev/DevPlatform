@@ -8,7 +8,7 @@ public class CommentAddDto
     /// 评论内容
     /// </summary>
     [MaxLength(2000)]
-    public string Content { get; set; }
+    public string? Content { get; set; }
     /// <summary>
     /// 状态
     /// </summary>

@@ -9,8 +9,8 @@ namespace Share.Models.TagLibraryDtos;
 public class TagLibraryItemDto
 {
     [MaxLength(40)]
-    public string Type { get; set; }
+    public string? Type { get; set; }
     [MaxLength(40)]
-    public string Name { get; set; }
+    public string? Name { get; set; }
 
 }

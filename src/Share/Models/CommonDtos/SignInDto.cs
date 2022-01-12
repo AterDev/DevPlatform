@@ -8,12 +8,12 @@ public class SignInDto
     /// 邮箱
     /// </summary>
     [MaxLength(120)]
-    public string Email { get; set; }
+    public string? Email { get; set; }
     /// <summary>
     /// 用户名
     /// </summary>
     [MaxLength(100)]
-    public string Username { get; set; }
+    public string? Username { get; set; }
     /// <summary>
     /// 软删除
     /// </summary>
@@ -23,13 +23,13 @@ public class SignInDto
     /// </summary>
     public int RetryCount { get; set; }
     [MaxLength(16)]
-    public string Phone { get; set; }
+    public string? Phone { get; set; }
 
     /// <summary>
     /// 头像url
     /// </summary>
     [MaxLength(200)]
-    public string Avatar { get; set; }
+    public string? Avatar { get; set; }
     // public AccountExtendDto Extend { get; set; }
     [Key]
     public Guid Id { get; set; }
@@ -39,6 +39,6 @@ public class SignInDto
     public Status Status { get; set; }
     public DateTimeOffset CreatedTime { get; set; }
     public DateTimeOffset UpdatedTime { get; set; }
-    public string Token { get; set; }
-    public string RoleName { get; set; }
+    public string? Token { get; set; }
+    public string? RoleName { get; set; }
 }

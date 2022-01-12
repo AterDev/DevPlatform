@@ -5,11 +5,11 @@ public class NewsContentFilter
     /// <summary>
     /// 域名
     /// </summary>
-    public string Url { get; set; }
+    public string? Url { get; set; }
     /// <summary>
     /// 筛选地址
     /// </summary>
-    public string Path { get; set; }
+    public string? Path { get; set; }
     /// <summary>
     /// 需要移除的内容
     /// </summary>

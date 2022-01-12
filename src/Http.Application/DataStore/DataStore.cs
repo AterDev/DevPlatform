@@ -1,6 +1,6 @@
 ﻿namespace Http.Application.DataStore;
 
-public class DataStore<TContext, TEntity, TUpdate, TFilter, TItem> : IDataStore<TEntity, TUpdate, TFilter, TItem>
+public class DataStore<TContext, TEntity, TUpdate, TFilter, TItem> : IDataStore<TEntity, TUpdate, TFilter, TItem, Guid>
     where TEntity : BaseDB
     where TFilter : FilterBase
     where TContext : DbContext
@@ -96,4 +96,52 @@ public class DataStore<TContext, TEntity, TUpdate, TFilter, TItem> : IDataStore<
     }
 
     public bool Any(Func<TEntity, bool> predicate) => _db.Any(predicate);
+
+    /// <summary>
+    /// 批量更新
+    /// </summary>
+    /// <returns></returns>
+    public async Task<int> BatchUpdateAsync(List<Guid> ids, TUpdate dto)
+    {
+        // TODO: test
+        try
+        {
+            var data = _db.Where(item => ids.Contains(item.Id))
+                .ToList();
+            data.ForEach(item =>
+            {
+                item.Merge(dto);
+            });
+            await _context.AddRangeAsync(data);
+            return await _context.SaveChangesAsync();
+        }
+        catch (Exception)
+        {
+            throw;
+        }
+    }
+    /// <summary>
+    /// 批量删除
+    /// </summary>
+    /// <returns></returns>
+    public async Task<int> BatchDeleteAsync(List<Guid> ids)
+    {
+        try
+        {
+            var data = _db.Where(item => ids.Contains(item.Id))
+                .ToList();
+            _context.RemoveRange(data);
+            return await _context.SaveChangesAsync();
+        }
+        catch (Exception)
+        {
+            throw;
+        }
+    }
+
+    public async Task<int> BatchAddAsync(List<TEntity> entities)
+    {
+        await _db.AddRangeAsync(entities);
+        return await _context.SaveChangesAsync();
+    }
 }

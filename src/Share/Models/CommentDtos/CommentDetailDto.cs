@@ -10,7 +10,7 @@ public class CommentDetailDto
     /// 评论内容
     /// </summary>
     [MaxLength(2000)]
-    public string Content { get; set; }
+    public string? Content { get; set; }
     [Key]
     public Guid Id { get; set; }
     /// <summary>

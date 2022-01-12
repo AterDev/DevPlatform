@@ -8,12 +8,12 @@ public class AccountDetailDto
     /// 邮箱
     /// </summary>
     [MaxLength(120)]
-    public string Email { get; set; }
+    public string? Email { get; set; }
     /// <summary>
     /// 用户名
     /// </summary>
     [MaxLength(100)]
-    public string Username { get; set; }
+    public string? Username { get; set; }
     /// <summary>
     /// 最后登录时间
     /// </summary>
@@ -27,18 +27,18 @@ public class AccountDetailDto
     /// </summary>
     public int RetryCount { get; set; }
     [MaxLength(16)]
-    public string Phone { get; set; }
+    public string? Phone { get; set; }
     public bool PhoneConfirm { get; set; }
     public bool EmailConfirm { get; set; }
     /// <summary>
     /// 头像url
     /// </summary>
     [MaxLength(200)]
-    public string Avatar { get; set; }
+    public string? Avatar { get; set; }
 
     //public AccountExtendDto Extend { get; set; }
-    public List<Role> Roles { get; set; }
-    public List<LibraryCatalog> Catalogs { get; set; }
+    public List<Role>? Roles { get; set; }
+    public List<LibraryCatalog>? Catalogs { get; set; }
     [Key]
     public Guid Id { get; set; }
     /// <summary>

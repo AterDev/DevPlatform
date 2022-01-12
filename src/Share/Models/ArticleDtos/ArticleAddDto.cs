@@ -8,17 +8,17 @@ public class ArticleAddDto
     /// 标题
     /// </summary>
     [MaxLength(100)]
-    public string Title { get; set; }
+    public string? Title { get; set; }
     /// <summary>
     /// 概要
     /// </summary>
     [MaxLength(500)]
-    public string Summary { get; set; }
+    public string? Summary { get; set; }
     /// <summary>
     /// 标签
     /// </summary>
     [MaxLength(100)]
-    public string Tags { get; set; }
+    public string? Tags { get; set; }
     /// <summary>
     /// 文章类别
     /// </summary>
@@ -26,7 +26,7 @@ public class ArticleAddDto
     /// <summary>
     /// 文章内容
     /// </summary>
-    public string Content { get; set; }
+    public string? Content { get; set; }
 
     public Guid? AccountId { get; set; }
     public Guid? CatalogId { get; set; }

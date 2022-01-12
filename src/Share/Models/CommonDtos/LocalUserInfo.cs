@@ -10,7 +10,7 @@ public class LocalUserInfo
     public string Avatar { get; set; }
     public string Role { get; set; }
     public Guid Id { get; set; }
-    public LocalUserInfo(Guid id, string username, string email, string role = null, string avatar = null)
+    public LocalUserInfo(Guid id, string username, string email, string? role = null, string? avatar = null)
     {
         Id = id;
         Username = username;

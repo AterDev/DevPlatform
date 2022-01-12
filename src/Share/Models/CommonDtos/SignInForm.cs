@@ -14,13 +14,13 @@ public class SignInForm
     [MinLength(4)]
     [MaxLength(50)]
     [Display(Name = "用户名")]
-    public string Username { get; set; }
+    public string? Username { get; set; }
     [Required]
     [MinLength(6)]
     [MaxLength(50)]
     [Display(Name = "密码")]
     [DataType(DataType.Password)]
-    public string Password { get; set; }
+    public string? Password { get; set; }
     /// <summary>
     /// 验证码
     /// </summary>
