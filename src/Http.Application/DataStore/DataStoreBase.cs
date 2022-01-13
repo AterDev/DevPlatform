@@ -1,18 +1,18 @@
 ﻿namespace Http.Application.DataStore;
 
-public class DataStore<TContext, TEntity, TUpdate, TFilter, TItem> : IDataStore<TEntity, TUpdate, TFilter, TItem, Guid>
+public class DataStoreBase<TContext, TEntity, TUpdate, TFilter, TItem> : IDataStore<TEntity, TUpdate, TFilter, TItem, Guid>
     where TEntity : BaseDB
     where TFilter : FilterBase
     where TContext : DbContext
     where TItem : class
 {
-    protected readonly TContext _context;
+    public readonly TContext _context;
+    public readonly IQueryable<TEntity> _query;
+    public readonly ILogger _logger;
     protected readonly DbSet<TEntity> _db;
-    protected readonly IQueryable<TEntity> _query;
-    protected readonly ILogger _logger;
     protected readonly IUserContext _userCtx;
 
-    public DataStore(TContext context, IUserContext userContext, ILogger logger)
+    public DataStoreBase(TContext context, IUserContext userContext, ILogger logger)
     {
         _context = context;
         _userCtx = userContext;

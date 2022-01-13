@@ -1,6 +1,7 @@
 using Http.API.BackgroundTask;
 using Http.Application;
 using Http.Application.Agreement;
+using Http.Application.DataStore;
 using Http.Application.Interface;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,6 +21,7 @@ services.AddDbContextPool<ContextBase>(option =>
 
 services.AddScoped<IUserContext, UserContext>();
 services.AddRepositories();
+services.AddDataStore();
 services.AddOptions();
 services.AddScoped<NewsCollectionService>();
 services.AddScoped<TwitterService>();
