@@ -30,7 +30,6 @@ public class DataStoreTest
                 Title = "test"
             }
         });
-
         Assert.NotNull(res);
         Assert.Equal("test", res.Name);
     }
@@ -72,5 +71,43 @@ public class DataStoreTest
         Assert.Equal("update_test2", res?.Name);
         Assert.Equal("white", res?.Color);
         Assert.Equal(Status.Valid, res?.Status);
+    }
+
+    [Fact]
+    public async void Should_batch_success()
+    {
+        var tagName = "batch_test_3";
+        var news = new ThirdNews() { Title = "TestNews", Status = Status.Deleted };
+        var newTags = new List<NewsTags>()
+        {
+            new NewsTags{Name = tagName,ThirdNews = news},
+            new NewsTags{Name = tagName,ThirdNews = news},
+            new NewsTags{Name = tagName,ThirdNews = news},
+        };
+
+        // batch add 
+        var res = await _store.BatchAddAsync(newTags);
+        Assert.True(res == 4);// 3tags + 1news
+        var tags = _store.Db.Where(t => t.Name == tagName).ToList();
+        Assert.Equal(3, tags.Count);
+
+        // batch update
+        var ids = tags.Select(t => t.Id).ToList();
+        var updateTag = new NewsTagsUpdateDto
+        {
+            Name = "batch_update_test1",
+            Status = Status.Deleted
+        };
+        await _store.BatchUpdateAsync(ids, updateTag);
+
+        tags = _store.Db
+            .Where(t => t.Name == "batch_update_test1"
+                && t.Status == Status.Deleted)
+            .ToList();
+        Assert.Equal(3, tags.Count);
+        // batch delete
+        await _store.BatchDeleteAsync(ids);
+        tags = _store.Db.Where(t => ids.Contains(t.Id)).ToList();
+        Assert.Empty(tags);
     }
 }

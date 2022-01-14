@@ -11,6 +11,7 @@ public class DataStoreBase<TContext, TEntity, TUpdate, TFilter, TItem> : IDataSt
     public readonly ILogger _logger;
     protected readonly DbSet<TEntity> _db;
     protected readonly IUserContext _userCtx;
+    public DbSet<TEntity> Db { get => _db; }
 
     public DataStoreBase(TContext context, IUserContext userContext, ILogger logger)
     {
@@ -103,16 +104,14 @@ public class DataStoreBase<TContext, TEntity, TUpdate, TFilter, TItem> : IDataSt
     /// <returns></returns>
     public async Task<int> BatchUpdateAsync(List<Guid> ids, TUpdate dto)
     {
-        // TODO: test
         try
         {
             var data = _db.Where(item => ids.Contains(item.Id))
                 .ToList();
-            data.ForEach(item =>
+            foreach (var item in data)
             {
                 item.Merge(dto);
-            });
-            await _context.AddRangeAsync(data);
+            }
             return await _context.SaveChangesAsync();
         }
         catch (Exception)
