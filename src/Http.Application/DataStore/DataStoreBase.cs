@@ -26,7 +26,7 @@ public class DataStoreBase<TContext, TEntity, TUpdate, TFilter, TItem> : IDataSt
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    public async Task<TEntity?> FindAsync(Guid id) => await _db.FindAsync();
+    public async Task<TEntity?> FindAsync(Guid id) => await _db.FindAsync(id);
 
     /// <summary>
     /// 筛选数据

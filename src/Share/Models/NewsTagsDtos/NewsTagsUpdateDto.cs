@@ -9,7 +9,7 @@ public class NewsTagsUpdateDto
     /// <summary>
     /// 状态
     /// </summary>
-    public Status Status { get; set; }
+    public Status? Status { get; set; }
     public Guid? ThirdNewsId { get; set; }
     
 }
