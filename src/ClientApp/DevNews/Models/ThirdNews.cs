@@ -33,7 +33,7 @@ namespace DevNews.Models
             get => _provider;
             set => _provider = value != null && value.Length > 50 ? value.Substring(0, 50) : value;
         }
-        public DateTime DatePublished { get; set; }
+        public DateTime? DatePublished { get; set; }
         public string Content {
             get => _content;
             set => _content = value != null && value.Length > 8000 ? value.Substring(0, 8000) : value;
