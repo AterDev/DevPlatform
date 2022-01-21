@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
+using System.Text.Json;
 using System.Threading.Tasks;
 using DevNews.Models;
 
@@ -11,14 +12,13 @@ namespace DevNews.Share
     public class NewsService
     {
 
-        HttpClient httpClient;
+        private readonly HttpClient httpClient;
         readonly static string BaseUrl = "http://39.104.70.89:9002/";
         //static readonly string BaseUrl = "http://localhost:5002/";
         public NewsService()
         {
             httpClient = new HttpClient();
         }
-
 
         public async Task<List<ThirdNews>> GetNewsAsync()
         {
@@ -29,7 +29,7 @@ namespace DevNews.Share
                 response = response.GroupBy(n => n.Title).Select(n => n.FirstOrDefault()).ToList();
                 return response;
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return new List<ThirdNews>();
             }
