@@ -9,3 +9,4 @@ global using Http.Application.Interface;
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.Extensions.Logging;
 global using Share.Models;
+global using Microsoft.Extensions.DependencyInjection;

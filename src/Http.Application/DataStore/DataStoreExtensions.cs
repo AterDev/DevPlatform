@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-
-namespace Http.Application.DataStore;
+﻿namespace Http.Application.DataStore;
 
 public static class DataStoreExtensions
 {

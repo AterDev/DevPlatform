@@ -27,14 +27,14 @@ public class DataStoreBase<TContext, TEntity, TUpdate, TFilter, TItem> : IDataSt
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    public async Task<TEntity?> FindAsync(Guid id) => await _db.FindAsync(id);
+    public async virtual Task<TEntity?> FindAsync(Guid id) => await _db.FindAsync(id);
 
     /// <summary>
     /// 筛选数据
     /// </summary>
     /// <param name="filter"></param>
     /// <returns></returns>
-    public async Task<List<TItem>> FindAsync(TFilter filter)
+    public async virtual Task<List<TItem>> FindAsync(TFilter filter)
     {
         return await _query.OrderByDescending(d => d.CreatedTime)
             .Select<TEntity, TItem>()
@@ -48,7 +48,7 @@ public class DataStoreBase<TContext, TEntity, TUpdate, TFilter, TItem> : IDataSt
     /// </summary>
     /// <param name="filter"></param>
     /// <returns></returns>
-    public async Task<PageResult<TItem>> FindWithPageAsync(TFilter filter)
+    public async virtual Task<PageResult<TItem>> FindWithPageAsync(TFilter filter)
     {
         var count = _query.Count();
         if (filter.PageIndex < 1) filter.PageIndex = 1;
@@ -65,7 +65,7 @@ public class DataStoreBase<TContext, TEntity, TUpdate, TFilter, TItem> : IDataSt
         };
     }
 
-    public async Task<bool> DeleteAsync(Guid id)
+    public async virtual Task<bool> DeleteAsync(Guid id)
     {
         var data = await _db.FindAsync(id);
         if (data == null) { return false; }
@@ -73,14 +73,14 @@ public class DataStoreBase<TContext, TEntity, TUpdate, TFilter, TItem> : IDataSt
         return (await _context.SaveChangesAsync() > 0);
     }
 
-    public async Task<TEntity> AddAsync(TEntity data)
+    public async virtual Task<TEntity> AddAsync(TEntity data)
     {
         _db.Add(data);
         await _context.SaveChangesAsync();
         return data;
     }
 
-    public async Task<TEntity?> UpdateAsync(Guid id, TUpdate dto)
+    public async virtual Task<TEntity?> UpdateAsync(Guid id, TUpdate dto)
     {
         var data = await _db.FindAsync(id);
         if (data == null) { return null; }
@@ -90,19 +90,19 @@ public class DataStoreBase<TContext, TEntity, TUpdate, TFilter, TItem> : IDataSt
         return data;
     }
 
-    public async Task<bool> Exist(Guid id)
+    public async virtual Task<bool> Exist(Guid id)
     {
         var data = await _db.FindAsync(id);
         return data != null;
     }
 
-    public bool Any(Func<TEntity, bool> predicate) => _db.Any(predicate);
+    public virtual bool Any(Func<TEntity, bool> predicate) => _db.Any(predicate);
 
     /// <summary>
     /// 批量更新
     /// </summary>
     /// <returns></returns>
-    public async Task<int> BatchUpdateAsync(List<Guid> ids, TUpdate dto)
+    public async virtual Task<int> BatchUpdateAsync(List<Guid> ids, TUpdate dto)
     {
         try
         {
@@ -123,7 +123,7 @@ public class DataStoreBase<TContext, TEntity, TUpdate, TFilter, TItem> : IDataSt
     /// 批量删除
     /// </summary>
     /// <returns></returns>
-    public async Task<int> BatchDeleteAsync(List<Guid> ids)
+    public async virtual Task<int> BatchDeleteAsync(List<Guid> ids)
     {
         try
         {
@@ -138,7 +138,7 @@ public class DataStoreBase<TContext, TEntity, TUpdate, TFilter, TItem> : IDataSt
         }
     }
 
-    public async Task<int> BatchAddAsync(List<TEntity> entities)
+    public async virtual Task<int> BatchAddAsync(List<TEntity> entities)
     {
         await _db.AddRangeAsync(entities);
         return await _context.SaveChangesAsync();

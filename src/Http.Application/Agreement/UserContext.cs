@@ -7,19 +7,14 @@ public class UserContext : IUserContext
 {
     public Guid? UserId { get; init; }
     public Guid? SessionId { get; init; }
-    public string Username { get; init; }
-    public string Email { get; set; }
-    public bool IsAdmin { get; init; }
-    public string CurrentRole { get; set; }
-    public List<string> Roles { get; set; }
+    public string? Username { get; init; }
+    public string? Email { get; set; }
+    public bool IsAdmin { get; init; } = false;
+    public string? CurrentRole { get; set; }
+    public List<string>? Roles { get; set; }
     public Guid? GroupId { get; init; }
-
     private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public UserContext()
-    {
-
-    }
     public UserContext(
         IHttpContextAccessor httpContextAccessor
         )
@@ -46,6 +41,6 @@ public class UserContext : IUserContext
         }
     }
 
-    public Claim FindClaim(string claimType) => _httpContextAccessor?.HttpContext?.User?.FindFirst(claimType);
+    public Claim? FindClaim(string claimType) => _httpContextAccessor?.HttpContext?.User?.FindFirst(claimType);
 
 }
