@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using DevNews.Components;
 using DevNews.Models;
 using DevNews.Share;
 using Windows.System;
@@ -184,5 +185,12 @@ namespace DevNews
             NewsListView.ItemsSource = NewsCurrentDisplay;
         }
 
+        private void ShowFocusWindow_Click(object sender, RoutedEventArgs e)
+        {
+             
+
+            
+            
+        }
     }
 }
