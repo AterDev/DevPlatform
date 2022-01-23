@@ -1,24 +1,15 @@
-﻿using Http.Application.DataStore;
+﻿using Http.API.Interface;
+using Http.Application.DataStore;
+using Http.Application.Interface;
+using Share.Models.NewsTagsDtos;
 
 namespace Http.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class NewsTagsController : ControllerBase
+public class NewsTagsController : RestApiBase<NewsTagsDataStore, NewsTags, NewsTagsUpdateDto, NewsTagsFilter, NewsTagsItemDto>
 {
-    private readonly NewsTagsDataStore _store;
-    public NewsTagsController(NewsTagsDataStore store)
+    public NewsTagsController(IUserContext user, ILogger<NewsTagsController> logger, NewsTagsDataStore store) : base(user, logger, store)
     {
-        _store = store;
     }
-
-    public async Task<NewsTags> AddAsync()
-    {
-        return await _store.AddAsync(new NewsTags
-        {
-            Name = "test"
-        });
-    }
-
-
 }

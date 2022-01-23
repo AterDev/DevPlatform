@@ -88,7 +88,6 @@ public class GenerateProfile : Profile
         CreateMap<LibraryCatalog, LibraryCatalogItemDto>();
         CreateMap<LibraryCatalog, LibraryCatalogDetailDto>();
 
-        CreateMap<NewsTagsAddDto, NewsTags>();
         CreateMap<ThirdNews, ThirdNewsDto>();
 
         CreateMap<TagLibraryAddDto, TagLibrary>();

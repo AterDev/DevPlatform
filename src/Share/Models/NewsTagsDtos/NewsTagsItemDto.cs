@@ -3,7 +3,7 @@ namespace Share.Models.NewsTagsDtos;
 public class NewsTagsItemDto
 {
     [MaxLength(40)]
-    public string? Name { get; set; }
+    public string Name { get; set; }
     [MaxLength(20)]
     public string? Color { get; set; }
     [Key]

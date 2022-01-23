@@ -22,26 +22,6 @@ public class ThirdNewsRepository : Repository<ThirdNews, ThirdNewsAddDto, ThirdN
 
     public override Task<ThirdNews> UpdateAsync(Guid id, ThirdNewsUpdateDto form) => base.UpdateAsync(id, form);
 
-    /// <summary>
-    /// 添加标签
-    /// </summary>
-    /// <param name="id"></param>
-    /// <param name="tags"></param>
-    /// <returns></returns>
-    public async Task<ThirdNews> AddTags(Guid id, List<NewsTagsAddDto> tags)
-    {
-        var thirdNews = await _db.FindAsync(id);
-        var newsTags = new List<NewsTags>();
-        tags.ForEach(t =>
-        {
-            var newsTag = _mapper.Map<NewsTags>(t);
-            newsTag.ThirdNews = thirdNews!;
-            newsTags.Add(newsTag);
-        });
-        _context.AddRange(newsTags);
-        await _context.SaveChangesAsync();
-        return thirdNews!;
-    }
 
     public async Task<int> DeleteTag(Guid id)
     {
