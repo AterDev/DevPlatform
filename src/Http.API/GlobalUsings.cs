@@ -17,3 +17,6 @@ global using Share.AutoMapper;
 global using Share.Azure;
 global using Share.Models;
 global using Share.NewsCollectionService;
+global using Http.Application.DataStore;
+global using Http.Application.Interface;
+global using Http.API.Interface;

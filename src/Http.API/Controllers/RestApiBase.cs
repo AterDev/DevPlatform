@@ -1,9 +1,9 @@
-﻿using Http.API.Interface;
-using Http.Application.DataStore;
-using Http.Application.Interface;
-
+﻿
 namespace Http.API.Controllers;
 
+[ApiController]
+[Route("api/[controller]")]
+[Authorize]
 public class RestApiBase<TDataStore, TEntity, TUpdate, TFilter, TItem>
     : ControllerBase, IRestApiBase<TEntity, TUpdate, TFilter, TItem, Guid>
     where TDataStore : DataStoreBase<ContextBase, TEntity, TUpdate, TFilter, TItem>
