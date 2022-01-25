@@ -1,8 +1,5 @@
 using Http.API.BackgroundTask;
 using Http.Application;
-using Http.Application.Agreement;
-using Http.Application.DataStore;
-using Http.Application.Interface;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,7 +8,6 @@ var configuration = builder.Configuration;
 
 services.AddHostedService<NewsTimerService>();
 services.AddHttpContextAccessor();
-services.AddAutoMapper(typeof(MapperProfile));
 services.Configure<AzureOptions>(configuration.GetSection("Azure"));
 var connectionString = configuration.GetConnectionString("DefaultConnection");
 services.AddDbContextPool<ContextBase>(option =>
@@ -19,9 +15,8 @@ services.AddDbContextPool<ContextBase>(option =>
     option.UseNpgsql(connectionString, sql => { sql.MigrationsAssembly("Infrastructure"); });
 });
 
-services.AddScoped<IUserContext, UserContext>();
-services.AddRepositories();
-services.AddDataStore();
+//services.AddScoped<IUserContext, UserContext>();
+//services.AddDataStore();
 services.AddOptions();
 services.AddScoped<NewsCollectionService>();
 services.AddScoped<TwitterService>();

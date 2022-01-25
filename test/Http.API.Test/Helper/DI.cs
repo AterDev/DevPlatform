@@ -1,11 +1,6 @@
-﻿using System;
-using EntityFramework;
-using Http.Application.Agreement;
+﻿using Http.Application;
 using Http.Application.DataStore;
 using Http.Application.Interface;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Http.API.Test.Helper;
 

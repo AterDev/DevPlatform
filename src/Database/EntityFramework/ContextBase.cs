@@ -2,19 +2,19 @@ namespace EntityFramework;
 
 public class ContextBase : DbContext
 {
-    public DbSet<Account>? Accounts { get; set; }
-    public DbSet<AccountExtend>? AccountExtends { get; set; }
-    public DbSet<Role>? Roles { get; set; }
-    public DbSet<Article>? Articles { get; set; }
-    public DbSet<ArticleExtend>? ArticleExtends { get; set; }
-    public DbSet<ArticleCatalog>? ArticleCatalogs { get; set; }
-    public DbSet<LibraryCatalog>? LibraryCatalogs { get; set; }
-    public DbSet<Comment>? Comments { get; set; }
-    public DbSet<CodeSnippet>? CodeSnippets { get; set; }
-    public DbSet<Library>? Libraries { get; set; }
-    public DbSet<ThirdNews>? ThirdNews { get; set; }
-    public DbSet<NewsTags>? NewsTags { get; set; }
-    public DbSet<TagLibrary>? TagLibraries { get; set; }
+    public DbSet<Account> Accounts { get; set; } = null!;
+    public DbSet<AccountExtend> AccountExtends { get; set; } = null!;
+    public DbSet<Role> Roles { get; set; } = null!;
+    public DbSet<Article> Articles { get; set; } = null!;
+    public DbSet<ArticleExtend> ArticleExtends { get; set; } = null!;
+    public DbSet<ArticleCatalog> ArticleCatalogs { get; set; } = null!;
+    public DbSet<LibraryCatalog> LibraryCatalogs { get; set; } = null!;
+    public DbSet<Comment> Comments { get; set; } = null!;
+    public DbSet<CodeSnippet> CodeSnippets { get; set; } = null!;
+    public DbSet<Library> Libraries { get; set; } = null!;
+    public DbSet<ThirdNews> ThirdNews { get; set; } = null!;
+    public DbSet<NewsTags> NewsTags { get; set; } = null!;
+    public DbSet<TagLibrary> TagLibraries { get; set; } = null!;
 
     public ContextBase(DbContextOptions<ContextBase> options) : base(options)
     {
