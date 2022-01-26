@@ -38,6 +38,9 @@ public class ContextBase : DbContext
             e.HasIndex(a => a.PhoneConfirm);
             e.HasIndex(a => a.EmailConfirm);
             e.HasIndex(a => a.CreatedTime);
+            e.HasOne(a => a.Extend)
+                .WithOne(e => e.Account)
+                .HasForeignKey<AccountExtend>(e => e.AccountId);
         });
         builder.Entity<AccountExtend>(e =>
         {
@@ -76,6 +79,9 @@ public class ContextBase : DbContext
             e.HasIndex(m => m.Title);
             e.HasIndex(m => m.CreatedTime);
             e.HasIndex(m => m.ArticleType);
+            e.HasOne(a => a.Extend)
+                .WithOne(e => e.Article)
+                .HasForeignKey<ArticleExtend>(e => e.ArticleId);
         });
         builder.Entity<ArticleCatalog>(e =>
         {
