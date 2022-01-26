@@ -8,8 +8,6 @@ public class ThirdNewsController : RestApiBase<ThirdNewsDataStore, ThirdNews, Th
     {
     }
 
-
-
     /// <summary>
     /// 分页筛选
     /// </summary>
@@ -20,6 +18,9 @@ public class ThirdNewsController : RestApiBase<ThirdNewsDataStore, ThirdNews, Th
         return base.FilterAsync(filter);
     }
 
+    [AllowAnonymous]
+    [HttpGet("week")]
+    public Task<List<ThirdNews>> GetWeekNewsAsync() => _store.GetWeekNewsAsync();
     /// <summary>
     /// 添加
     /// </summary>

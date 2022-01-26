@@ -15,7 +15,7 @@ services.AddDbContextPool<ContextBase>(option =>
     option.UseNpgsql(connectionString, sql => { sql.MigrationsAssembly("EntityFramework.Migrator"); });
 });
 
-//services.AddScoped<IUserContext, UserContext>();
+services.AddScoped<IUserContext, UserContext>();
 services.AddDataStore();
 services.AddOptions();
 services.AddScoped<NewsCollectionService>();

@@ -14,3 +14,8 @@ global using Share;
 global using Share.Azure;
 global using Share.Models;
 global using Share.NewsCollectionService;
+
+
+global using Http.API.Controllers;
+
+
