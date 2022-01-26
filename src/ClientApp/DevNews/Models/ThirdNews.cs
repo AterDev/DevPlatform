@@ -94,4 +94,20 @@ namespace DevNews.Models
         DataAndAI,
         Else
     }
+    public enum Status
+    {
+        /// <summary>
+        /// 默认值 
+        /// </summary>
+        Default,
+        /// <summary>
+        /// 已删除
+        /// </summary>
+        Deleted,
+        /// <summary>
+        /// 无效
+        /// </summary>
+        Invalid,
+        Valid
+    }
 }

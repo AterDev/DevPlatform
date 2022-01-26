@@ -55,7 +55,7 @@ namespace DevNews
 
             var ids = new List<Guid>();
             ids.Add(item.Id);
-            if (await newsService.SetAsDelteAsync(ids))
+            if (await newsService.SetAsDeleteAsync(ids))
             {
                 var success = News.Remove(item);
                 NewsCurrentDisplay.Remove(item);
@@ -75,7 +75,7 @@ namespace DevNews
             }
 
             var ids = items.Select(x => x.Id).ToList();
-            var res = await newsService.SetAsDelteAsync(ids);
+            var res = await newsService.SetAsDeleteAsync(ids);
             if (res)
             {
                 NewsListView.SelectedItems.Clear();
