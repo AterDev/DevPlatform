@@ -12,11 +12,11 @@ services.Configure<AzureOptions>(configuration.GetSection("Azure"));
 var connectionString = configuration.GetConnectionString("DefaultConnection");
 services.AddDbContextPool<ContextBase>(option =>
 {
-    option.UseNpgsql(connectionString, sql => { sql.MigrationsAssembly("Infrastructure"); });
+    option.UseNpgsql(connectionString, sql => { sql.MigrationsAssembly("EntityFramework.Migrator"); });
 });
 
 //services.AddScoped<IUserContext, UserContext>();
-//services.AddDataStore();
+services.AddDataStore();
 services.AddOptions();
 services.AddScoped<NewsCollectionService>();
 services.AddScoped<TwitterService>();

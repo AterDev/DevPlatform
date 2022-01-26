@@ -6,6 +6,7 @@
 public class ArticleExtend : BaseDB
 {
     public Article Article { get; set; } = null!;
+    public Guid ArticleId { get; set; }
     public string Content { get; set; } = null!;
 
 }

@@ -1,11 +1,10 @@
-﻿namespace Core.Models;
-
+namespace Share.Models.AccountExtendDtos;
 /// <summary>
 /// 账号扩展表
 /// </summary>
-public partial class AccountExtend : BaseDB
+public class AccountExtendShortDto
 {
-    public Account Account { get; set; } = null!;
+    public Account Account { get; set; }
     public Guid AccountId { get; set; }
     /// <summary>
     /// 真实姓名
@@ -65,5 +64,12 @@ public partial class AccountExtend : BaseDB
     public string? WXAvatar { get; set; }
     [MaxLength(40)]
     public string? WXUnionId { get; set; }
-
+    public Guid Id { get; set; }
+    /// <summary>
+    /// 状态
+    /// </summary>
+    public Status Status { get; set; }
+    public DateTimeOffset CreatedTime { get; set; }
+    public DateTimeOffset UpdatedTime { get; set; }
+    
 }
