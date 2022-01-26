@@ -9,7 +9,7 @@ public class Role : BaseDB
     /// 角色名称
     /// </summary>
     [MaxLength(50)]
-    public string? Name { get; set; }
+    public string Name { get; set; } = string.Empty;
     /// <summary>
     /// 图标
     /// </summary>

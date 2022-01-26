@@ -5,6 +5,7 @@
 /// </summary>
 public partial class AccountExtend : BaseDB
 {
+    public Account Account { get; set; } = null!;
     /// <summary>
     /// 真实姓名
     /// </summary>

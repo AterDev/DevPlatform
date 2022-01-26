@@ -9,17 +9,17 @@ public class Account : BaseDB
     /// 邮箱
     /// </summary>
     [MaxLength(120)]
-    public string? Email { get; set; }
+    public string Email { get; set; } = null!;
     /// <summary>
     ///  密码
     /// </summary>
     [MaxLength(60)]
-    public string? Password { get; set; }
+    public string Password { get; set; } = null!;
     /// <summary>
     /// 用户名
     /// </summary>
     [MaxLength(100)]
-    public string? Username { get; set; }
+    public string Username { get; set; } = null!;
     /// <summary>
     /// 密码加盐
     /// </summary>
@@ -39,8 +39,8 @@ public class Account : BaseDB
     public int RetryCount { get; set; } = 0;
     [MaxLength(16)]
     public string? Phone { get; set; }
-    public bool PhoneConfirm { get; set; }
-    public bool EmailConfirm { get; set; }
+    public bool PhoneConfirm { get; set; } = false;
+    public bool EmailConfirm { get; set; } = false;
     /// <summary>
     /// 头像url
     /// </summary>

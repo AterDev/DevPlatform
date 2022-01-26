@@ -2,8 +2,8 @@
 
 public class Comment : BaseDB
 {
-    public Article? Article { get; set; }
-    public Account? Account { get; set; }
+    public Article Article { get; set; } = null!;
+    public Account Account { get; set; } = null!;
     /// <summary>
     /// 评论内容
     /// </summary>

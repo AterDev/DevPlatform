@@ -5,10 +5,6 @@
 /// </summary>
 public partial class AccountRole : BaseDB
 {
-    [ForeignKey("AccountId")]
-    public Account? Account { get; set; }
-    [ForeignKey("RoleId")]
-    public Role? Role { get; set; }
-    public Guid AccountId { get; set; }
-    public Guid RoleId { get; set; }
+    public Account Account { get; set; } = null!;
+    public Role Role { get; set; } = null!;
 }

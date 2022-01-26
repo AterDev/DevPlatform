@@ -14,8 +14,8 @@ public class ThirdNews : BaseDB
     public string? AuthorAvatar { get; set; }
 
     [MaxLength(200)]
-    public string? Title {
-        get => _title;
+    public string Title {
+        get => _title ?? string.Empty;
         set => _title = value != null && value.Length > 200 ? value.Substring(0, 200) : value;
     }
     [MaxLength(5000)]

@@ -9,7 +9,7 @@ public partial class Article : BaseDB
     /// 标题
     /// </summary>
     [MaxLength(100)]
-    public string? Title { get; set; }
+    public string Title { get; set; } = null!;
     /// <summary>
     /// 概要
     /// </summary>
@@ -29,11 +29,7 @@ public partial class Article : BaseDB
     /// 文章类别
     /// </summary>
     public ArticleType ArticleType { get; set; }
-
-    [ForeignKey("AccountId")]
-    public Account? Account { get; set; }
-    public Guid AccountId { get; set; }
-
+    public Account Account { get; set; } = null!;
     /// <summary>
     /// 仅个人查看
     /// </summary>

@@ -9,7 +9,7 @@ public class CodeSnippet : BaseDB
     /// 实体名称
     /// </summary>
     [MaxLength(100)]
-    public string? Name { get; set; }
+    public string Name { get; set; } = null!;
     /// <summary>
     /// 描述
     /// </summary>

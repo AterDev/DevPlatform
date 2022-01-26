@@ -5,6 +5,7 @@
 /// </summary>
 public class ArticleExtend : BaseDB
 {
-    public string? Content { get; set; }
+    public Article Article { get; set; } = null!;
+    public string Content { get; set; } = null!;
 
 }
