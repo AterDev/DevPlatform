@@ -20,10 +20,6 @@
 		<PackageReference Include="Quartz.Extensions.Hosting" Version="3.3.3" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <Folder Include="Controllers\" />
-	</ItemGroup>
-
 </Project>
 
 
