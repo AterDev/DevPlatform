@@ -12,9 +12,9 @@ using Quartz;
 using static OpenIddict.Abstractions.OpenIddictConstants;
 
 var builder = WebApplication.CreateBuilder(args);
+var configuration = builder.Configuration;
 
-// OpenIddict offers native integration with Quartz.NET to perform scheduled tasks
-// (like pruning orphaned authorizations/tokens from the database) at regular intervals.
+
 builder.Services.AddQuartz(options =>
 {
     options.UseMicrosoftDependencyInjectionJobFactory();
@@ -22,13 +22,10 @@ builder.Services.AddQuartz(options =>
     options.UseInMemoryStore();
 });
 
-// Register the Quartz.NET service and configure it to block shutdown until jobs are complete.
 builder.Services.AddQuartzHostedService(options => options.WaitForJobsToComplete = true);
-
-builder.Services.AddDbContext<DbContext>(options => options.UseInMemoryDatabase("db").UseOpenIddict());
-
+builder.Services.AddDbContext<DbContext>(options =>
+    options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")).UseOpenIddict());
 builder.Services.AddOpenIddict()
-
     // Register the OpenIddict core components.
     .AddCore(options =>
     {
@@ -80,29 +77,6 @@ builder.Services.AddAuthorization()
 var app = builder.Build();
 
 app.UseHttpsRedirection();
-
-// Create a new application registration matching the values configured in Mimban.Client.
-// Note: in a real world application, this step should be part of a setup script.
-await using (var scope = app.Services.CreateAsyncScope())
-{
-    var manager = scope.ServiceProvider.GetRequiredService<IOpenIddictApplicationManager>();
-
-    await manager.CreateAsync(new OpenIddictApplicationDescriptor
-    {
-        ClientId = "console_app",
-        RedirectUris =
-        {
-            new Uri("http://localhost:8914/")
-        },
-        Permissions =
-        {
-            Permissions.Endpoints.Authorization,
-            Permissions.Endpoints.Token,
-            Permissions.GrantTypes.AuthorizationCode,
-            Permissions.ResponseTypes.Code
-        }
-    });
-}
 
 app.UseAuthentication();
 app.UseAuthorization();
