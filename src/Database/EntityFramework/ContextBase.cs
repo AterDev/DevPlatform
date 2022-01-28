@@ -1,6 +1,7 @@
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 namespace EntityFramework;
 
-public class ContextBase : DbContext
+public class ContextBase : IdentityDbContext<Account, Role, Guid>
 {
     public DbSet<Account> Accounts { get; set; } = null!;
     public DbSet<AccountExtend> AccountExtends { get; set; } = null!;
@@ -32,12 +33,11 @@ public class ContextBase : DbContext
         builder.Entity<Account>(e =>
         {
             e.HasIndex(a => a.Email);
-            e.HasIndex(a => a.Phone);
-            e.HasIndex(a => a.Username);
+            e.HasIndex(a => a.PhoneNumber);
+            e.HasIndex(a => a.UserName);
             e.HasIndex(a => a.IsDeleted);
-            e.HasIndex(a => a.PhoneConfirm);
-            e.HasIndex(a => a.EmailConfirm);
             e.HasIndex(a => a.CreatedTime);
+            e.HasIndex(a => a.Status);
             e.HasOne(a => a.Extend)
                 .WithOne(e => e.Account)
                 .HasForeignKey<AccountExtend>(e => e.AccountId);

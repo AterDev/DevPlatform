@@ -1,30 +1,12 @@
-﻿namespace Core.Models;
+﻿using Microsoft.AspNetCore.Identity;
+
+namespace Core.Models;
 
 /// <summary>
 /// 账号表
 /// </summary>
-public class Account : BaseDB
+public class Account : IdentityUser<Guid>, IBase
 {
-    /// <summary>
-    /// 邮箱
-    /// </summary>
-    [MaxLength(120)]
-    public string Email { get; set; } = null!;
-    /// <summary>
-    ///  密码
-    /// </summary>
-    [MaxLength(60)]
-    public string Password { get; set; } = null!;
-    /// <summary>
-    /// 用户名
-    /// </summary>
-    [MaxLength(100)]
-    public string Username { get; set; } = null!;
-    /// <summary>
-    /// 密码加盐
-    /// </summary>
-    [MaxLength(40)]
-    public string? HashSalt { get; set; }
     /// <summary>
     /// 最后登录时间
     /// </summary>
@@ -37,17 +19,15 @@ public class Account : BaseDB
     /// 密码重试次数
     /// </summary>
     public int RetryCount { get; set; } = 0;
-    [MaxLength(16)]
-    public string? Phone { get; set; }
-    public bool PhoneConfirm { get; set; } = false;
-    public bool EmailConfirm { get; set; } = false;
+    public virtual Status Status { get; set; } = Status.Default;
+    public DateTimeOffset CreatedTime { get; set; } = DateTimeOffset.UtcNow;
+    public DateTimeOffset UpdatedTime { get; set; } = DateTimeOffset.UtcNow;
     /// <summary>
     /// 头像url
     /// </summary>
     [MaxLength(200)]
     public string? Avatar { get; set; }
     public AccountExtend? Extend { get; set; }
-    public List<Role>? Roles { get; set; }
     /// <summary>
     /// 文章
     /// </summary>
@@ -61,3 +41,4 @@ public class Account : BaseDB
     /// </summary>
     public List<Comment>? Comments { get; set; }
 }
+

@@ -20,6 +20,15 @@
 		<PackageReference Include="Quartz.Extensions.Hosting" Version="3.3.3" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <ProjectReference Include="..\..\Database\EntityFramework\EntityFramework.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Data\" />
+	  <Folder Include="Models\" />
+	</ItemGroup>
+
 </Project>
 
 

@@ -1,24 +1,18 @@
-﻿namespace Core.Models;
+﻿using Microsoft.AspNetCore.Identity;
+
+namespace Core.Models;
 
 /// <summary>
 /// 角色表
 /// </summary>
-public class Role : BaseDB
+public class Role : IdentityRole<Guid>
 {
-    /// <summary>
-    /// 角色名称
-    /// </summary>
-    [MaxLength(50)]
-    public string Name { get; set; } = string.Empty;
     /// <summary>
     /// 图标
     /// </summary>
     [MaxLength(30)]
     public string? Icon { get; set; }
-
-    /// <summary>
-    /// 多对多关联账号
-    /// </summary>
-    public List<Account>? Accounts { get; set; }
-
+    public virtual Status Status { get; set; } = Status.Default;
+    public DateTimeOffset CreatedTime { get; set; } = DateTimeOffset.UtcNow;
+    public DateTimeOffset UpdatedTime { get; set; } = DateTimeOffset.UtcNow;
 }

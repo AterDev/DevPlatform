@@ -14,24 +14,7 @@ public class WebService
     /// <summary>
     /// 初始化管理员账号
     /// </summary>
-    public async Task<Account> InitAdminUserAccountAsync(string username, string password)
+    public void InitAdminUserAccountAsync(string username, string password)
     {
-        var salt = HashCrypto.BuildSalt();
-        var user = new Account
-        {
-            Username = username ?? "admin",
-            HashSalt = salt,
-            Password = HashCrypto.Create(password ?? "$admin1234.", salt),
-
-        };
-        var role = new Role
-        {
-            Name = "Admin"
-        };
-        user.Roles = new List<Role> { role };
-        await _context.AddAsync(role);
-        await _context.AddAsync(user);
-        await _context.SaveChangesAsync();
-        return user;
     }
 }

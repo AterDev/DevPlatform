@@ -1,107 +1,116 @@
-using System.Security.Claims;
-using AspNet.Security.OpenId.Steam;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
-using OpenIddict.Abstractions;
-using OpenIddict.Server.AspNetCore;
-using OpenIddict.Validation.AspNetCore;
+using Core.Models;
+using EntityFramework;
+using IdentityServer;
 using Quartz;
 using static OpenIddict.Abstractions.OpenIddictConstants;
 
 var builder = WebApplication.CreateBuilder(args);
+var services = builder.Services;
 var configuration = builder.Configuration;
 
+// dbcontext
+var connectionString = configuration.GetConnectionString("DefaultConnection");
+services.AddDbContext<DbContext>(options =>
+    options.UseNpgsql(connectionString).UseOpenIddict());
 
-builder.Services.AddQuartz(options =>
+services.AddDbContext<ContextBase>(opt => opt.UseNpgsql(connectionString));
+
+// identity
+services.AddIdentity<Account, Role>()
+    .AddEntityFrameworkStores<ContextBase>()
+    .AddDefaultTokenProviders();
+
+// openid
+services.Configure<IdentityOptions>(options =>
+{
+    options.ClaimsIdentity.UserNameClaimType = Claims.Name;
+    options.ClaimsIdentity.UserIdClaimType = Claims.Subject;
+    options.ClaimsIdentity.RoleClaimType = Claims.Role;
+    options.ClaimsIdentity.EmailClaimType = Claims.Email;
+
+    //options.SignIn.RequireConfirmedAccount = true;
+});
+
+services.AddQuartz(options =>
 {
     options.UseMicrosoftDependencyInjectionJobFactory();
     options.UseSimpleTypeLoader();
     options.UseInMemoryStore();
 });
 
-builder.Services.AddQuartzHostedService(options => options.WaitForJobsToComplete = true);
-builder.Services.AddDbContext<DbContext>(options =>
-    options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")).UseOpenIddict());
-builder.Services.AddOpenIddict()
-    // Register the OpenIddict core components.
+services.AddQuartzHostedService(options => options.WaitForJobsToComplete = true);
+
+services.AddOpenIddict()
     .AddCore(options =>
     {
-        options.UseEntityFrameworkCore()
-               .UseDbContext<DbContext>();
+        options.UseEntityFrameworkCore().UseDbContext<DbContext>();
+        options.UseQuartz();
     })
-
-    // Register the OpenIddict server components.
     .AddServer(options =>
     {
-        // Enable the authorization and token endpoints.
-        options.SetAuthorizationEndpointUris("/authorize")
-               .SetTokenEndpointUris("/token");
+        // enable endpoints
+        options.SetAuthorizationEndpointUris("/connect/authorize")
+            .SetLogoutEndpointUris("/connect/logout")
+            .SetIntrospectionEndpointUris("/connect/introspect")
+            .SetTokenEndpointUris("/connect/token")
+            .SetUserinfoEndpointUris("/connect/userinfo")
+            .SetVerificationEndpointUris("/connect/verify");
 
-        // Note: this sample only uses the authorization code flow but you can enable
-        // the other flows if you need to support implicit, password or client credentials.
-        options.AllowAuthorizationCodeFlow();
+        // enable flows
+        options.AllowAuthorizationCodeFlow()
+            .AllowHybridFlow()
+            .AllowPasswordFlow()
+            .AllowClientCredentialsFlow()
+            .AllowRefreshTokenFlow();
 
-        // Register the signing and encryption credentials.
+        // register scopes
+        options.RegisterScopes(Scopes.Email, Scopes.Profile, Scopes.Roles, "dataEventRecords");
+
         options.AddDevelopmentEncryptionCertificate()
-               .AddDevelopmentSigningCertificate();
+            .AddDevelopmentSigningCertificate();
 
-        // Register the ASP.NET Core host and configure the ASP.NET Core-specific options.
-        //
-        // Note: unlike other samples, this sample doesn't use token endpoint pass-through
-        // to handle token requests in a custom MVC action. As such, the token requests
-        // will be automatically handled by OpenIddict, that will reuse the identity
-        // resolved from the authorization code to produce access and identity tokens.
-        //
         options.UseAspNetCore()
-               .EnableAuthorizationEndpointPassthrough();
+            .EnableAuthorizationEndpointPassthrough()
+            .EnableLogoutEndpointPassthrough()
+            .EnableTokenEndpointPassthrough()
+            .EnableUserinfoEndpointPassthrough()
+            .EnableStatusCodePagesIntegration();
     })
-
-    // Register the OpenIddict validation components.
     .AddValidation(options =>
     {
-        // Import the configuration from the local OpenIddict server instance.
         options.UseLocalServer();
-
-        // Register the ASP.NET Core host.
         options.UseAspNetCore();
     });
 
-builder.Services.AddAuthorization()
-    .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-    .AddCookie()
-    .AddSteam();
+// cors
+services.AddCors(options =>
+{
+    options.AddPolicy("AllowAllOrigins",
+        builder =>
+        {
+            builder
+                .AllowCredentials()
+                .WithOrigins("https://localhost:4200")
+                .SetIsOriginAllowedToAllowWildcardSubdomains()
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        });
+});
+
+
 
 var app = builder.Build();
-
+app.UseCors("AllowAllOrigins");
 app.UseHttpsRedirection();
-
+app.UseStaticFiles();
+app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapGet("/api", [Authorize(AuthenticationSchemes = OpenIddictValidationAspNetCoreDefaults.AuthenticationScheme)]
-(ClaimsPrincipal user) => user.Identity!.Name);
-
-app.MapGet("/authorize", async (HttpContext context) =>
+app.UseEndpoints(endpoints =>
 {
-    // Resolve the claims stored in the principal created after the Steam authentication dance.
-    // If the principal cannot be found, trigger a new challenge to redirect the user to Steam.
-    var principal = (await context.AuthenticateAsync(SteamAuthenticationDefaults.AuthenticationScheme))?.Principal;
-    if (principal is null)
-    {
-        return Results.Challenge(properties: null, new[] { SteamAuthenticationDefaults.AuthenticationScheme });
-    }
-
-    var identifier = principal.FindFirst(ClaimTypes.NameIdentifier)!.Value;
-
-    // Create a new identity and import a few select claims from the Steam principal.
-    var identity = new ClaimsIdentity(TokenValidationParameters.DefaultAuthenticationType);
-    identity.AddClaim(new Claim(Claims.Subject, identifier));
-    identity.AddClaim(new Claim(Claims.Name, identifier).SetDestinations(Destinations.AccessToken));
-
-    return Results.SignIn(new ClaimsPrincipal(identity), properties: null, OpenIddictServerAspNetCoreDefaults.AuthenticationScheme);
+    endpoints.MapControllers();
+    endpoints.MapDefaultControllerRoute();
+    endpoints.MapRazorPages();
 });
-
 app.Run();
