@@ -1,5 +1,4 @@
-﻿namespace Share.Models;
-
+namespace Share.Models;
 public class BatchUpdate<T>
 {
     public List<Guid> Ids { get; set; } = null!;

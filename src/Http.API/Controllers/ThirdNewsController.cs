@@ -1,7 +1,6 @@
 using Share.Models.ThirdNewsDtos;
 namespace Http.API.Controllers;
 
-/// 
 public class ThirdNewsController : RestApiBase<ThirdNewsDataStore, ThirdNews, ThirdNewsUpdateDto, ThirdNewsFilter, ThirdNewsItemDto>
 {
     public ThirdNewsController(IUserContext user, ILogger<ThirdNewsController> logger, ThirdNewsDataStore store) : base(user, logger, store)

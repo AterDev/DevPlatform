@@ -1,13 +1,12 @@
 using Share.Models.CommentDtos;
 namespace Http.API.Controllers;
 
-/// 
+
 public class CommentController : RestApiBase<CommentDataStore, Comment, CommentUpdateDto, CommentFilter, CommentItemDto>
 {
     public CommentController(IUserContext user, ILogger<CommentController> logger, CommentDataStore store) : base(user, logger, store)
     {
     }
-
 
     /// <summary>
     /// 关联添加
@@ -31,7 +30,6 @@ public class CommentController : RestApiBase<CommentDataStore, Comment, CommentU
         });
         return await _store.BatchAddAsync(newList);
     }
-
     /// <summary>
     /// 分页筛选
     /// </summary>

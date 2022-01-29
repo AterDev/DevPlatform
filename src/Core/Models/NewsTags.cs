@@ -3,7 +3,7 @@
 /// <summary>
 /// 新闻标签
 /// </summary>
-public class NewsTags : BaseDB
+public class NewsTags : EntityBase
 {
     [MaxLength(40)]
     public string Name { get; set; } = string.Empty;

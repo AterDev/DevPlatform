@@ -1,6 +1,6 @@
 ﻿namespace Core.Models;
 
-public class ThirdNews : BaseDB
+public class ThirdNews : EntityBase
 {
     private string? _description;
     private string? _content;

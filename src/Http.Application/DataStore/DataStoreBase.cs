@@ -1,7 +1,7 @@
 namespace Http.Application.DataStore;
 
 public class DataStoreBase<TContext, TEntity, TUpdate, TFilter, TItem> : IDataStore<TEntity, TUpdate, TFilter, TItem, Guid>
-    where TEntity : BaseDB
+    where TEntity : EntityBase
     where TFilter : FilterBase
     where TContext : DbContext
 {
@@ -22,7 +22,7 @@ public class DataStoreBase<TContext, TEntity, TUpdate, TFilter, TItem> : IDataSt
         _query = _db.AsQueryable();
     }
 
-    /// <summary>
+     /// <summary>
     /// 获取一条数据
     /// </summary>
     /// <param name="id"></param>

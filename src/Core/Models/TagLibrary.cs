@@ -6,7 +6,7 @@ namespace Core.Models;
 /// 标签库
 /// </summary>
 [Index(nameof(Name), nameof(Type))]
-public class TagLibrary : BaseDB
+public class TagLibrary : EntityBase
 {
     [MaxLength(40)]
     public string Type { get; set; } = "default";

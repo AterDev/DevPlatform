@@ -1,5 +1,6 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using Core.Identity;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Share;

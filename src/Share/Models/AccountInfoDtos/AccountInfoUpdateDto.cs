@@ -1,8 +1,8 @@
-namespace Share.Models.AccountExtendDtos;
+namespace Share.Models.AccountInfoDtos;
 /// <summary>
-/// 账号扩展表
+/// 账号扩展表, 可用作用户信息
 /// </summary>
-public class AccountExtendUpdateDto
+public class AccountInfoUpdateDto
 {
     public Guid? AccountId { get; set; }
     /// <summary>
@@ -15,6 +15,16 @@ public class AccountExtendUpdateDto
     /// </summary>
     [MaxLength(40)]
     public string? NickName { get; set; }
+    /// <summary>
+    /// 证件类型
+    /// </summary>
+    [MaxLength(20)]
+    public string? IdentityType { get; set; }
+    /// <summary>
+    /// 证件号
+    /// </summary>
+    [MaxLength(40)]
+    public string? IdentityCode { get; set; }
     /// <summary>
     /// 出生日期
     /// </summary>

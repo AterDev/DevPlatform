@@ -1,8 +1,9 @@
-namespace Share.Models.AccountRoleDtos;
+namespace Share.Models.BaseDBDtos;
 /// <summary>
-/// 用户角色表
+/// 数据加基础字段模型
 /// </summary>
-public class AccountRoleItemDto
+/// <inheritdoc/>
+public class BaseDBItemDto
 {
     public Guid Id { get; set; }
     /// <summary>

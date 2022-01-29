@@ -8,5 +8,8 @@
   <ItemGroup>
     <ProjectReference Include="..\Share\Share.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Interface\" />
+  </ItemGroup>
 
 </Project>

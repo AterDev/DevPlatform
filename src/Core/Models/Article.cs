@@ -3,7 +3,7 @@
 /// <summary>
 /// 文章内容
 /// </summary>
-public partial class Article : BaseDB
+public partial class Article : EntityBase
 {
     /// <summary>
     /// 标题

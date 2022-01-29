@@ -1,4 +1,4 @@
-using Core.Models;
+using Core.Identity;
 using EntityFramework;
 using IdentityServer;
 using Quartz;

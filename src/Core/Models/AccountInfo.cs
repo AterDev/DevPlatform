@@ -1,9 +1,9 @@
 ﻿namespace Core.Models;
 
 /// <summary>
-/// 账号扩展表
+/// 账号扩展表, 可用作用户信息
 /// </summary>
-public partial class AccountExtend : BaseDB
+public partial class AccountInfo : EntityBase
 {
     public Account Account { get; set; } = null!;
     public Guid AccountId { get; set; }
@@ -17,6 +17,16 @@ public partial class AccountExtend : BaseDB
     /// </summary>
     [MaxLength(40)]
     public string? NickName { get; set; }
+    /// <summary>
+    /// 证件类型
+    /// </summary>
+    [MaxLength(20)]
+    public string? IdentityType { get; set; }
+    /// <summary>
+    /// 证件号
+    /// </summary>
+    [MaxLength(40)]
+    public string? IdentityCode { get; set; }
     /// <summary>
     /// 出生日期
     /// </summary>

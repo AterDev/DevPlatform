@@ -1,5 +1,10 @@
+using System.Text.Json.Serialization;
 using Http.API.BackgroundTask;
-using Http.Application;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using Share;
+using Share.Azure;
+using Share.NewsCollectionService;
 
 var builder = WebApplication.CreateBuilder(args);
 

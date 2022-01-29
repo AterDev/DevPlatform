@@ -4,14 +4,8 @@ namespace Share.Models.RoleDtos;
 /// </summary>
 public class RoleFilter : FilterBase
 {
-    /// <summary>
-    /// 角色名称
-    /// </summary>
-    [MaxLength(50)]
     public string? Name { get; set; }
-    /// <summary>
-    /// 状态
-    /// </summary>
-    public Status? Status { get; set; }
+    public string? ConcurrencyStamp { get; set; }
+    public Guid? StatusId { get; set; }
     
 }

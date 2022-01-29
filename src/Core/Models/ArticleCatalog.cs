@@ -1,7 +1,7 @@
 ﻿namespace Core.Models;
 
 [Table("ArticleCatalog")]
-public class ArticleCatalog : BaseDB
+public class ArticleCatalog : EntityBase
 {
     [MaxLength(50)]
     public string Name { get; set; } = null!;

@@ -4,26 +4,29 @@ namespace Share.Models.AccountDtos;
 /// </summary>
 public class AccountShortDto
 {
-    /// <summary>
-    /// 邮箱
-    /// </summary>
-    [MaxLength(120)]
+    public Guid Id { get; set; }
+    public string UserName { get; set; }
+    public string? NormalizedUserName { get; set; }
     public string Email { get; set; }
+    public string? NormalizedEmail { get; set; }
+    public bool EmailConfirmed { get; set; }
+    // public string PasswordHash { get; set; }
     /// <summary>
-    ///  密码
+    /// A random value that must change whenever a users credentials change (password changed, login removed)
     /// </summary>
-    // [MaxLength(60)]
-    // public string Password { get; set; }
+    public string? SecurityStamp { get; set; }
+
     /// <summary>
-    /// 用户名
+    /// A random value that must change whenever a user is persisted to the store
     /// </summary>
-    [MaxLength(100)]
-    public string Username { get; set; }
-    /// <summary>
-    /// 密码加盐
-    /// </summary>
-    [MaxLength(40)]
-    public string? HashSalt { get; set; }
+    public string ConcurrencyStamp { get; set; }
+
+    public string? PhoneNumber { get; set; }
+    public bool PhoneNumberConfirmed { get; set; }
+    public bool TwoFactorEnabled { get; set; }
+    public DateTimeOffset? LockoutEnd { get; set; }
+    public bool LockoutEnabled { get; set; }
+    public int AccessFailedCount { get; set; }
     /// <summary>
     /// 最后登录时间
     /// </summary>
@@ -36,22 +39,14 @@ public class AccountShortDto
     /// 密码重试次数
     /// </summary>
     public int RetryCount { get; set; }
-    [MaxLength(16)]
-    public string? Phone { get; set; }
-    public bool PhoneConfirm { get; set; }
-    public bool EmailConfirm { get; set; }
+    public Status Status { get; set; }
+    public DateTimeOffset CreatedTime { get; set; }
+    public DateTimeOffset UpdatedTime { get; set; }
     /// <summary>
     /// 头像url
     /// </summary>
     [MaxLength(200)]
     public string? Avatar { get; set; }
-    public AccountExtend? Extend { get; set; }
-    public Guid Id { get; set; }
-    /// <summary>
-    /// 状态
-    /// </summary>
-    public Status Status { get; set; }
-    public DateTimeOffset CreatedTime { get; set; }
-    public DateTimeOffset UpdatedTime { get; set; }
+    public AccountInfo? Extend { get; set; }
     
 }

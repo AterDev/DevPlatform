@@ -1,12 +1,15 @@
+using EntityFramework;
+using Microsoft.AspNetCore.Authorization;
+
 namespace Http.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-//[Authorize]
+[Authorize]
 public class RestApiBase<TDataStore, TEntity, TUpdate, TFilter, TItem>
     : ControllerBase, IRestApiBase<TEntity, TUpdate, TFilter, TItem, Guid>
     where TDataStore : DataStoreBase<ContextBase, TEntity, TUpdate, TFilter, TItem>
-    where TEntity : BaseDB
+    where TEntity : EntityBase
     where TFilter : FilterBase
 {
     protected readonly ILogger _logger;

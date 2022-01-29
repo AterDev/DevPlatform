@@ -1,15 +1,14 @@
-using Share.Models.AccountExtendDtos;
+using Share.Models.AccountInfoDtos;
 namespace Http.API.Controllers;
 
 /// <summary>
-/// 账号扩展表
+/// 账号扩展表, 可用作用户信息
 /// </summary>
-public class AccountExtendController : RestApiBase<AccountExtendDataStore, AccountExtend, AccountExtendUpdateDto, AccountExtendFilter, AccountExtendItemDto>
+public class AccountInfoController : RestApiBase<AccountInfoDataStore, AccountInfo, AccountInfoUpdateDto, AccountInfoFilter, AccountInfoItemDto>
 {
-    public AccountExtendController(IUserContext user, ILogger<AccountExtendController> logger, AccountExtendDataStore store) : base(user, logger, store)
+    public AccountInfoController(IUserContext user, ILogger<AccountInfoController> logger, AccountInfoDataStore store) : base(user, logger, store)
     {
     }
-
 
     /// <summary>
     /// 关联添加
@@ -19,13 +18,13 @@ public class AccountExtendController : RestApiBase<AccountExtendDataStore, Accou
     /// <param name="dependStore"></param>
     /// <returns></returns>
     [HttpPost("{id}")]
-    public async Task<ActionResult<int>> AddAsync([FromRoute] Guid id, List<AccountExtendUpdateDto> list, [FromServices] AccountDataStore dependStore)
+    public async Task<ActionResult<int>> AddAsync([FromRoute] Guid id, List<AccountInfoUpdateDto> list, [FromServices] AccountDataStore dependStore)
     {
         var depend = await dependStore.FindAsync(id);
-        var newList = new List<AccountExtend>();
+        var newList = new List<AccountInfo>();
         list.ForEach(item =>
         {
-            var newItem = new AccountExtend()
+            var newItem = new AccountInfo()
             {
                 Account = depend
             };
@@ -33,13 +32,12 @@ public class AccountExtendController : RestApiBase<AccountExtendDataStore, Accou
         });
         return await _store.BatchAddAsync(newList);
     }
-
     /// <summary>
     /// 分页筛选
     /// </summary>
     /// <param name="filter"></param>
     /// <returns></returns>
-    public override Task<ActionResult<PageResult<AccountExtendItemDto>>> FilterAsync(AccountExtendFilter filter)
+    public override Task<ActionResult<PageResult<AccountInfoItemDto>>> FilterAsync(AccountInfoFilter filter)
     {
         return base.FilterAsync(filter);
     }
@@ -49,7 +47,7 @@ public class AccountExtendController : RestApiBase<AccountExtendDataStore, Accou
     /// </summary>
     /// <param name="form"></param>
     /// <returns></returns>
-    public override Task<ActionResult<AccountExtend>> AddAsync(AccountExtend form) => base.AddAsync(form);
+    public override Task<ActionResult<AccountInfo>> AddAsync(AccountInfo form) => base.AddAsync(form);
 
     /// <summary>
     /// ⚠更新
@@ -57,7 +55,7 @@ public class AccountExtendController : RestApiBase<AccountExtendDataStore, Accou
     /// <param name="id"></param>
     /// <param name="form"></param>
     /// <returns></returns>
-    public override Task<ActionResult<AccountExtend?>> UpdateAsync([FromRoute] Guid id, AccountExtendUpdateDto form)
+    public override Task<ActionResult<AccountInfo?>> UpdateAsync([FromRoute] Guid id, AccountInfoUpdateDto form)
         => base.UpdateAsync(id, form);
 
     /// <summary>

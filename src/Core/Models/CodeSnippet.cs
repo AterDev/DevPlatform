@@ -3,7 +3,7 @@
 /// <summary>
 /// 代码片段
 /// </summary>
-public class CodeSnippet : BaseDB
+public class CodeSnippet : EntityBase
 {
     /// <summary>
     /// 实体名称

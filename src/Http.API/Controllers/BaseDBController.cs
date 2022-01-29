@@ -1,12 +1,13 @@
-using Share.Models.RoleDtos;
+using Share.Models.BaseDBDtos;
 namespace Http.API.Controllers;
 
 /// <summary>
-/// 角色表
+/// 数据加基础字段模型
 /// </summary>
-public class RoleController : RestApiBase<RoleDataStore, Role, RoleUpdateDto, RoleFilter, RoleItemDto>
+/// <inheritdoc/>
+public class BaseDBController : RestApiBase<BaseDBDataStore, Core.Models.EntityBase, BaseDBUpdateDto, BaseDBFilter, BaseDBItemDto>
 {
-    public RoleController(IUserContext user, ILogger<RoleController> logger, RoleDataStore store) : base(user, logger, store)
+    public BaseDBController(IUserContext user, ILogger<BaseDBController> logger, BaseDBDataStore store) : base(user, logger, store)
     {
     }
 
@@ -15,7 +16,7 @@ public class RoleController : RestApiBase<RoleDataStore, Role, RoleUpdateDto, Ro
     /// </summary>
     /// <param name="filter"></param>
     /// <returns></returns>
-    public override Task<ActionResult<PageResult<RoleItemDto>>> FilterAsync(RoleFilter filter)
+    public override Task<ActionResult<PageResult<BaseDBItemDto>>> FilterAsync(BaseDBFilter filter)
     {
         return base.FilterAsync(filter);
     }
@@ -25,7 +26,7 @@ public class RoleController : RestApiBase<RoleDataStore, Role, RoleUpdateDto, Ro
     /// </summary>
     /// <param name="form"></param>
     /// <returns></returns>
-    public override Task<ActionResult<Role>> AddAsync(Role form) => base.AddAsync(form);
+    public override Task<ActionResult<Core.Models.EntityBase>> AddAsync(Core.Models.EntityBase form) => base.AddAsync(form);
 
     /// <summary>
     /// ⚠更新
@@ -33,7 +34,7 @@ public class RoleController : RestApiBase<RoleDataStore, Role, RoleUpdateDto, Ro
     /// <param name="id"></param>
     /// <param name="form"></param>
     /// <returns></returns>
-    public override Task<ActionResult<Role?>> UpdateAsync([FromRoute] Guid id, RoleUpdateDto form)
+    public override Task<ActionResult<Core.Models.EntityBase?>> UpdateAsync([FromRoute] Guid id, BaseDBUpdateDto form)
         => base.UpdateAsync(id, form);
 
     /// <summary>

@@ -1,11 +1,10 @@
-namespace Share.Models.AccountRoleDtos;
+namespace Share.Models.BaseDBDtos;
 /// <summary>
-/// 用户角色表
+/// 数据加基础字段模型
 /// </summary>
-public class AccountRoleShortDto
+/// <inheritdoc/>
+public class BaseDBShortDto
 {
-    public Account Account { get; set; }
-    public Role Role { get; set; }
     public Guid Id { get; set; }
     /// <summary>
     /// 状态

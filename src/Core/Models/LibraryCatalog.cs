@@ -3,7 +3,7 @@
 /// <summary>
 /// 目录/文件目录 / 自引用
 /// </summary>
-public partial class LibraryCatalog : BaseDB
+public partial class LibraryCatalog : EntityBase
 {
     [MaxLength(50)]
     public string Name { get; set; } = null!;

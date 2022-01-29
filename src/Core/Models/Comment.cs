@@ -1,6 +1,6 @@
 ﻿namespace Core.Models;
 
-public class Comment : BaseDB
+public class Comment : EntityBase
 {
     public Article Article { get; set; } = null!;
     public Account Account { get; set; } = null!;

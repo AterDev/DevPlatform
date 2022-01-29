@@ -1,12 +1,16 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace Core.Models;
+namespace Core.Identity;
 
 /// <summary>
 /// 角色表
 /// </summary>
 public class Role : IdentityRole<Guid>
 {
+    public override Guid Id { get; set; }
+    public override string Name { get; set; } = null!;
+    public override string? NormalizedName { get; set; }
+    public override string ConcurrencyStamp { get; set; } = Guid.NewGuid().ToString();
     /// <summary>
     /// 图标
     /// </summary>

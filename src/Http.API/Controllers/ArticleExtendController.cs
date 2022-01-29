@@ -10,7 +10,6 @@ public class ArticleExtendController : RestApiBase<ArticleExtendDataStore, Artic
     {
     }
 
-
     /// <summary>
     /// 关联添加
     /// </summary>
@@ -33,7 +32,6 @@ public class ArticleExtendController : RestApiBase<ArticleExtendDataStore, Artic
         });
         return await _store.BatchAddAsync(newList);
     }
-
     /// <summary>
     /// 分页筛选
     /// </summary>

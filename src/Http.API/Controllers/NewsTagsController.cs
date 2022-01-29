@@ -10,7 +10,6 @@ public class NewsTagsController : RestApiBase<NewsTagsDataStore, NewsTags, NewsT
     {
     }
 
-
     /// <summary>
     /// 关联添加
     /// </summary>
@@ -33,7 +32,6 @@ public class NewsTagsController : RestApiBase<NewsTagsDataStore, NewsTags, NewsT
         });
         return await _store.BatchAddAsync(newList);
     }
-
     /// <summary>
     /// 分页筛选
     /// </summary>

@@ -3,7 +3,7 @@
 /// <summary>
 /// 模型库
 /// </summary>
-public class Library : BaseDB
+public class Library : EntityBase
 {
     /// <summary>
     /// 库命名空间

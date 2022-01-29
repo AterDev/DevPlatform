@@ -1,13 +1,12 @@
 using Share.Models.ArticleCatalogDtos;
 namespace Http.API.Controllers;
 
-/// 
+
 public class ArticleCatalogController : RestApiBase<ArticleCatalogDataStore, ArticleCatalog, ArticleCatalogUpdateDto, ArticleCatalogFilter, ArticleCatalogItemDto>
 {
     public ArticleCatalogController(IUserContext user, ILogger<ArticleCatalogController> logger, ArticleCatalogDataStore store) : base(user, logger, store)
     {
     }
-
 
     /// <summary>
     /// 关联添加
@@ -31,7 +30,6 @@ public class ArticleCatalogController : RestApiBase<ArticleCatalogDataStore, Art
         });
         return await _store.BatchAddAsync(newList);
     }
-
     /// <summary>
     /// 分页筛选
     /// </summary>
