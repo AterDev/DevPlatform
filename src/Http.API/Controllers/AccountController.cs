@@ -4,10 +4,15 @@ namespace Http.API.Controllers;
 /// <summary>
 /// 账号表
 /// </summary>
-public class AccountController : RestApiBase<AccountDataStore, Account, AccountUpdateDto, AccountFilter, AccountItemDto>
+[ApiController]
+[Route("api/[controller]")]
+[Authorize]
+public class AccountController : ControllerBase, IRestApiBase<Account, AccountUpdateDto, AccountFilter, AccountItemDto, Guid>
 {
-    public AccountController(IUserContext user, ILogger<AccountController> logger, AccountDataStore store) : base(user, logger, store)
+    private readonly AccountDataStore _store;
+    public AccountController(IUserContext user, ILogger<AccountController> logger, AccountDataStore store)
     {
+        _store = store;
     }
 
     /// <summary>
@@ -15,9 +20,9 @@ public class AccountController : RestApiBase<AccountDataStore, Account, AccountU
     /// </summary>
     /// <param name="filter"></param>
     /// <returns></returns>
-    public override Task<ActionResult<PageResult<AccountItemDto>>> FilterAsync(AccountFilter filter)
+    public async Task<ActionResult<PageResult<AccountItemDto>>> FilterAsync(AccountFilter filter)
     {
-        return base.FilterAsync(filter);
+        return await _store.FindWithPageAsync(filter);
     }
 
     /// <summary>
@@ -25,7 +30,13 @@ public class AccountController : RestApiBase<AccountDataStore, Account, AccountU
     /// </summary>
     /// <param name="form"></param>
     /// <returns></returns>
-    public override Task<ActionResult<Account>> AddAsync(Account form) => base.AddAsync(form);
+    [HttpPost]
+    public async Task<ActionResult<Account>> AddAsync(Account form)
+    {
+        var res = await  _store.CreateAsync(form);
+        if (res.Succeeded) return CreatedAtRoute("", form);
+        return Problem(res.ToString());
+    }
 
     /// <summary>
     /// ⚠更新
@@ -33,17 +44,28 @@ public class AccountController : RestApiBase<AccountDataStore, Account, AccountU
     /// <param name="id"></param>
     /// <param name="form"></param>
     /// <returns></returns>
-    public override Task<ActionResult<Account?>> UpdateAsync([FromRoute] Guid id, AccountUpdateDto form)
-        => base.UpdateAsync(id, form);
+    [HttpPut("{id}")]
+    public async Task<ActionResult<Account?>> UpdateAsync([FromRoute] Guid id, AccountUpdateDto form)
+    {
+        var account = await _store.FindByIdAsync(id.ToString());
+        account.Merge(form);
+        var res = await _store.UpdateAsync(account);
+        if (res.Succeeded) return account;
+        return Problem(res.ToString());
+    }
 
     /// <summary>
     /// ⚠删除
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    public override Task<ActionResult<bool>> DeleteAsync([FromRoute] Guid id)
+    [HttpDelete("{id}")]
+    public async Task<ActionResult<bool>> DeleteAsync([FromRoute] Guid id)
     {
-        return base.DeleteAsync(id);
+        var account = await _store.FindByIdAsync(id.ToString());
+        var res = await _store.DeleteAsync(account);
+        if (res.Succeeded) return true;
+        return false;
     }
 
     /// <summary>
@@ -51,10 +73,14 @@ public class AccountController : RestApiBase<AccountDataStore, Account, AccountU
     /// </summary>
     /// <param name="ids"></param>
     /// <returns></returns>
-    public override async Task<ActionResult<int>> BatchDeleteAsync(List<Guid> ids)
+    [HttpDelete]
+    public async Task<ActionResult<int>> BatchDeleteAsync([FromRoute] List<Guid> ids)
     {
         // 危险操作，请确保该方法的执行权限
         //return base.BatchDeleteAsync(ids);
         return await Task.FromResult(0);
     }
+
+    [HttpGet("{id}")]
+    public async Task<ActionResult<Account?>> GetDetailAsync([FromRoute] Guid id) => await _store.FindByIdAsync(id.ToString());
 }
