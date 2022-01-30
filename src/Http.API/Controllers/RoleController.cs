@@ -20,6 +20,7 @@ public class RoleController : ControllerBase, IRestApiBase<Role, RoleUpdateDto, 
     /// </summary>
     /// <param name="filter"></param>
     /// <returns></returns>
+    [HttpGet]
     public async Task<ActionResult<PageResult<RoleItemDto>>> FilterAsync(RoleFilter filter)
     {
         return await _store.FindWithPageAsync(filter);

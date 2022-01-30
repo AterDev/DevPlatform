@@ -1,6 +1,7 @@
 using System.Text.Json.Serialization;
 using Http.API.BackgroundTask;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using Share;
 using Share.Azure;
@@ -19,6 +20,9 @@ services.AddDbContextPool<ContextBase>(option =>
 {
     option.UseNpgsql(connectionString, sql => { sql.MigrationsAssembly("EntityFramework.Migrator"); });
 });
+services.AddIdentity<Account, Role>()
+    .AddEntityFrameworkStores<ContextBase>()
+    .AddDefaultTokenProviders();
 
 services.AddScoped<IUserContext, UserContext>();
 services.AddDataStore();

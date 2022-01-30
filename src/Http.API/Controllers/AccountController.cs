@@ -20,7 +20,8 @@ public class AccountController : ControllerBase, IRestApiBase<Account, AccountUp
     /// </summary>
     /// <param name="filter"></param>
     /// <returns></returns>
-    public async Task<ActionResult<PageResult<AccountItemDto>>> FilterAsync(AccountFilter filter)
+    [HttpGet]
+    public async Task<ActionResult<PageResult<AccountItemDto>>> FilterAsync([FromQuery] AccountFilter filter)
     {
         return await _store.FindWithPageAsync(filter);
     }

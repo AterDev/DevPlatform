@@ -5,7 +5,7 @@ namespace Share.Models.AccountDtos;
 public class AccountItemDto
 {
     public Guid Id { get; set; }
-    public string UserName { get; set; }
+    public string UserName { get; set; } = default!;
     public string? NormalizedUserName { get; set; }
     public string Email { get; set; }
     public string? NormalizedEmail { get; set; }
