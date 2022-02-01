@@ -1,8 +1,8 @@
 using Core.Identity;
 using EntityFramework;
-using IdentityServer;
 using Quartz;
 using static OpenIddict.Abstractions.OpenIddictConstants;
+
 
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
@@ -16,7 +16,7 @@ services.AddDbContext<DbContext>(options =>
 services.AddDbContext<ContextBase>(opt => opt.UseNpgsql(connectionString));
 
 // identity
-services.AddIdentity<Account, Role>()
+services.AddIdentity<User, Role>()
     .AddEntityFrameworkStores<ContextBase>()
     .AddDefaultTokenProviders();
 
@@ -97,7 +97,8 @@ services.AddCors(options =>
         });
 });
 
-
+services.AddControllersWithViews();
+services.AddRazorPages();
 
 var app = builder.Build();
 app.UseCors("AllowAllOrigins");

@@ -15,7 +15,7 @@ public class LibraryCatalogShortDto
     /// <summary>
     /// 所属用户
     /// </summary>
-    public Account Account { get; set; }
+    public User Account { get; set; }
     public Guid AccountId { get; set; }
     public Guid Id { get; set; }
     /// <summary>
@@ -24,5 +24,5 @@ public class LibraryCatalogShortDto
     public Status Status { get; set; }
     public DateTimeOffset CreatedTime { get; set; }
     public DateTimeOffset UpdatedTime { get; set; }
-    
+
 }

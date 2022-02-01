@@ -25,5 +25,5 @@ public class AccountFilter : FilterBase
     public int? RetryCount { get; set; }
     public Status? Status { get; set; }
     public Guid? ExtendId { get; set; }
-    
+
 }

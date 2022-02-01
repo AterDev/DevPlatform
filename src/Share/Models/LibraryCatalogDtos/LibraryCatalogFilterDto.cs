@@ -14,5 +14,5 @@ public class LibraryCatalogFilter : FilterBase
     /// </summary>
     public Status? Status { get; set; }
     public Guid? ParentId { get; set; }
-    
+
 }

@@ -32,5 +32,5 @@ public class LibraryUpdateDto
     /// </summary>
     public Status? Status { get; set; }
     public Guid? UserId { get; set; }
-    
+
 }

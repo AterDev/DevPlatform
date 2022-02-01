@@ -71,7 +71,7 @@ public class CommentController : RestApiBase<CommentDataStore, Comment, CommentU
     /// </summary>
     /// <param name="ids"></param>
     /// <returns></returns>
-    public override async Task<ActionResult<int>> BatchDeleteAsync(List<Guid> ids)
+    public async override Task<ActionResult<int>> BatchDeleteAsync(List<Guid> ids)
     {
         // 危险操作，请确保该方法的执行权限
         //return base.BatchDeleteAsync(ids);

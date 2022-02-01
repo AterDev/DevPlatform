@@ -4,7 +4,7 @@ namespace Http.API.Controllers;
 /// <summary>
 /// 账号扩展表, 可用作用户信息
 /// </summary>
-public class AccountInfoController : RestApiBase<AccountInfoDataStore, AccountInfo, AccountInfoUpdateDto, AccountInfoFilter, AccountInfoItemDto>
+public class AccountInfoController : RestApiBase<AccountInfoDataStore, UserInfo, AccountInfoUpdateDto, AccountInfoFilter, AccountInfoItemDto>
 {
     public AccountInfoController(IUserContext user, ILogger<AccountInfoController> logger, AccountInfoDataStore store) : base(user, logger, store)
     {
@@ -21,10 +21,10 @@ public class AccountInfoController : RestApiBase<AccountInfoDataStore, AccountIn
     public async Task<ActionResult<int>> AddAsync([FromRoute] Guid id, List<AccountInfoUpdateDto> list, [FromServices] AccountDataStore dependStore)
     {
         var depend = await dependStore.FindAsync(id);
-        var newList = new List<AccountInfo>();
+        var newList = new List<UserInfo>();
         list.ForEach(item =>
         {
-            var newItem = new AccountInfo()
+            var newItem = new UserInfo()
             {
                 Account = depend
             };
@@ -47,7 +47,7 @@ public class AccountInfoController : RestApiBase<AccountInfoDataStore, AccountIn
     /// </summary>
     /// <param name="form"></param>
     /// <returns></returns>
-    public override Task<ActionResult<AccountInfo>> AddAsync(AccountInfo form) => base.AddAsync(form);
+    public override Task<ActionResult<UserInfo>> AddAsync(UserInfo form) => base.AddAsync(form);
 
     /// <summary>
     /// ⚠更新
@@ -55,7 +55,7 @@ public class AccountInfoController : RestApiBase<AccountInfoDataStore, AccountIn
     /// <param name="id"></param>
     /// <param name="form"></param>
     /// <returns></returns>
-    public override Task<ActionResult<AccountInfo?>> UpdateAsync([FromRoute] Guid id, AccountInfoUpdateDto form)
+    public override Task<ActionResult<UserInfo?>> UpdateAsync([FromRoute] Guid id, AccountInfoUpdateDto form)
         => base.UpdateAsync(id, form);
 
     /// <summary>
@@ -73,7 +73,7 @@ public class AccountInfoController : RestApiBase<AccountInfoDataStore, AccountIn
     /// </summary>
     /// <param name="ids"></param>
     /// <returns></returns>
-    public override async Task<ActionResult<int>> BatchDeleteAsync(List<Guid> ids)
+    public async override Task<ActionResult<int>> BatchDeleteAsync(List<Guid> ids)
     {
         // 危险操作，请确保该方法的执行权限
         //return base.BatchDeleteAsync(ids);

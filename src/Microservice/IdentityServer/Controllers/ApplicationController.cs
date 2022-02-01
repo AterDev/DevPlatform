@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using IdentityServer.Models;
+using Microsoft.AspNetCore.Mvc;
 using OpenIddict.Abstractions;
 
 namespace IdentityServer.Controllers;

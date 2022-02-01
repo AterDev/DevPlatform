@@ -4,7 +4,7 @@ namespace Share.Models.AccountInfoDtos;
 /// </summary>
 public class AccountInfoShortDto
 {
-    public Account Account { get; set; }
+    public User Account { get; set; }
     public Guid AccountId { get; set; }
     /// <summary>
     /// 真实姓名
@@ -81,5 +81,5 @@ public class AccountInfoShortDto
     public Status Status { get; set; }
     public DateTimeOffset CreatedTime { get; set; }
     public DateTimeOffset UpdatedTime { get; set; }
-    
+
 }

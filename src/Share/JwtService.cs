@@ -1,6 +1,5 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using Core.Identity;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Share;
@@ -35,7 +34,7 @@ public class JwtService
     }
 
 
-    public string BuildToken(Account account, string role, string sign, string audience, string issuer)
+    public string BuildToken(User account, string role, string sign, string audience, string issuer)
     {
         var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(sign));
         var signingCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256);

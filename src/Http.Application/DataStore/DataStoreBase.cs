@@ -22,7 +22,7 @@ public class DataStoreBase<TContext, TEntity, TUpdate, TFilter, TItem> : IDataSt
         _query = _db.AsQueryable();
     }
 
-     /// <summary>
+    /// <summary>
     /// 获取一条数据
     /// </summary>
     /// <param name="id"></param>

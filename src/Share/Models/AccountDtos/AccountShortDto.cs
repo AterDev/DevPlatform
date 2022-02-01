@@ -47,6 +47,6 @@ public class AccountShortDto
     /// </summary>
     [MaxLength(200)]
     public string? Avatar { get; set; }
-    public AccountInfo? Extend { get; set; }
-    
+    public UserInfo? Extend { get; set; }
+
 }

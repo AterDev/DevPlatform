@@ -28,7 +28,7 @@ public class ArticleShortDto
     /// 文章类别
     /// </summary>
     public ArticleType ArticleType { get; set; }
-    public Account Account { get; set; }
+    public User Account { get; set; }
     /// <summary>
     /// 仅个人查看
     /// </summary>
@@ -48,5 +48,5 @@ public class ArticleShortDto
     public Status Status { get; set; }
     public DateTimeOffset CreatedTime { get; set; }
     public DateTimeOffset UpdatedTime { get; set; }
-    
+
 }

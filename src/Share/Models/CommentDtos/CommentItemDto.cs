@@ -9,5 +9,5 @@ public class CommentItemDto
     public Status Status { get; set; }
     public DateTimeOffset CreatedTime { get; set; }
     public DateTimeOffset UpdatedTime { get; set; }
-    
+
 }

@@ -2,10 +2,10 @@ using Core.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 namespace EntityFramework;
 
-public class ContextBase : IdentityDbContext<Account, Role, Guid>
+public class ContextBase : IdentityDbContext<User, Role, Guid>
 {
-    public DbSet<Account> Accounts { get; set; } = null!;
-    public DbSet<AccountInfo> AccountExtends { get; set; } = null!;
+    public DbSet<User> Accounts { get; set; } = null!;
+    public DbSet<UserInfo> AccountExtends { get; set; } = null!;
     public DbSet<Role> Roles { get; set; } = null!;
     public DbSet<Article> Articles { get; set; } = null!;
     public DbSet<ArticleExtend> ArticleExtends { get; set; } = null!;
@@ -31,7 +31,7 @@ public class ContextBase : IdentityDbContext<Account, Role, Guid>
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
-        builder.Entity<Account>(e =>
+        builder.Entity<User>(e =>
         {
             e.HasIndex(a => a.Email);
             e.HasIndex(a => a.PhoneNumber);
@@ -41,9 +41,9 @@ public class ContextBase : IdentityDbContext<Account, Role, Guid>
             e.HasIndex(a => a.Status);
             e.HasOne(a => a.Extend)
                 .WithOne(e => e.Account)
-                .HasForeignKey<AccountInfo>(e => e.AccountId);
+                .HasForeignKey<UserInfo>(e => e.AccountId);
         });
-        builder.Entity<AccountInfo>(e =>
+        builder.Entity<UserInfo>(e =>
         {
             e.HasIndex(a => a.RealName);
             e.HasIndex(a => a.Country);

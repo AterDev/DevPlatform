@@ -27,7 +27,7 @@ public class LibraryShortDto
     /// 是否公开
     /// </summary>
     public bool IsPublic { get; set; }
-    public Account User { get; set; }
+    public User User { get; set; }
     public LibraryCatalog? Catalog { get; set; }
     public Guid Id { get; set; }
     /// <summary>
@@ -36,5 +36,5 @@ public class LibraryShortDto
     public Status Status { get; set; }
     public DateTimeOffset CreatedTime { get; set; }
     public DateTimeOffset UpdatedTime { get; set; }
-    
+
 }

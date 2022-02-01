@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
-using DevNews.Components;
 using DevNews.Models;
 using DevNews.Share;
 using Windows.System;
@@ -23,8 +22,7 @@ namespace DevNews
         private ObservableCollection<ThirdNews> NewsCurrentDisplay { get; set; } = new ObservableCollection<ThirdNews>();
         private readonly List<NewsTypeChose> TypeChoses = new List<NewsTypeChose>();
         private TechType CurrentNewsType = TechType.Default;
-
-        readonly NewsService newsService = new NewsService();
+        private readonly NewsService newsService = new NewsService();
 
         public MainPage()
         {
@@ -187,10 +185,10 @@ namespace DevNews
 
         private void ShowFocusWindow_Click(object sender, RoutedEventArgs e)
         {
-             
 
-            
-            
+
+
+
         }
     }
 }

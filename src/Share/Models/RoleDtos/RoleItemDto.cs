@@ -15,5 +15,5 @@ public class RoleItemDto
     public string? Icon { get; set; }
     public DateTimeOffset CreatedTime { get; set; }
     public DateTimeOffset UpdatedTime { get; set; }
-    
+
 }

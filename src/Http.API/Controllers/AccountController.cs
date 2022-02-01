@@ -7,7 +7,7 @@ namespace Http.API.Controllers;
 [ApiController]
 [Route("api/[controller]")]
 [Authorize]
-public class AccountController : ControllerBase, IRestApiBase<Account, AccountUpdateDto, AccountFilter, AccountItemDto, Guid>
+public class AccountController : ControllerBase, IRestApiBase<User, AccountUpdateDto, AccountFilter, AccountItemDto, Guid>
 {
     private readonly AccountDataStore _store;
     public AccountController(IUserContext user, ILogger<AccountController> logger, AccountDataStore store)
@@ -32,7 +32,7 @@ public class AccountController : ControllerBase, IRestApiBase<Account, AccountUp
     /// <param name="form"></param>
     /// <returns></returns>
     [HttpPost]
-    public async Task<ActionResult<Account>> AddAsync(Account form)
+    public async Task<ActionResult<User>> AddAsync(User form)
     {
         var res = await  _store.CreateAsync(form);
         if (res.Succeeded) return CreatedAtRoute("", form);
@@ -46,7 +46,7 @@ public class AccountController : ControllerBase, IRestApiBase<Account, AccountUp
     /// <param name="form"></param>
     /// <returns></returns>
     [HttpPut("{id}")]
-    public async Task<ActionResult<Account?>> UpdateAsync([FromRoute] Guid id, AccountUpdateDto form)
+    public async Task<ActionResult<User?>> UpdateAsync([FromRoute] Guid id, AccountUpdateDto form)
     {
         var account = await _store.FindByIdAsync(id.ToString());
         account.Merge(form);
@@ -83,5 +83,5 @@ public class AccountController : ControllerBase, IRestApiBase<Account, AccountUp
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<Account?>> GetDetailAsync([FromRoute] Guid id) => await _store.FindByIdAsync(id.ToString());
+    public async Task<ActionResult<User?>> GetDetailAsync([FromRoute] Guid id) => await _store.FindByIdAsync(id.ToString());
 }

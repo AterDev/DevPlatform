@@ -44,5 +44,5 @@ public class AccountUpdateDto
     [MaxLength(200)]
     public string? Avatar { get; set; }
     public Guid? StatusId { get; set; }
-    
+
 }

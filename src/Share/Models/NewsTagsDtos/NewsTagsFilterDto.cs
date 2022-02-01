@@ -11,5 +11,5 @@ public class NewsTagsFilter : FilterBase
     /// </summary>
     public Status? Status { get; set; }
     public Guid? ThirdNewsId { get; set; }
-    
+
 }

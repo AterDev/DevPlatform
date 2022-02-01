@@ -1,6 +1,3 @@
-using EntityFramework;
-using Microsoft.AspNetCore.Authorization;
-
 namespace Http.API.Controllers;
 
 [ApiController]

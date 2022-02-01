@@ -29,7 +29,7 @@ public partial class Article : EntityBase
     /// 文章类别
     /// </summary>
     public ArticleType ArticleType { get; set; }
-    public Account Account { get; set; } = null!;
+    public User Account { get; set; } = null!;
     /// <summary>
     /// 仅个人查看
     /// </summary>

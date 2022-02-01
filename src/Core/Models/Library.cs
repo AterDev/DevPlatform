@@ -28,7 +28,7 @@ public class Library : EntityBase
     /// 是否公开
     /// </summary>
     public bool IsPublic { get; set; } = false;
-    public Account User { get; set; } = null!;
+    public User User { get; set; } = null!;
     public LibraryCatalog? Catalog { get; set; }
     public List<CodeSnippet>? Snippets { get; set; }
 }

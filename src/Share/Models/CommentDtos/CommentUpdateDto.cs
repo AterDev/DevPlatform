@@ -13,5 +13,5 @@ public class CommentUpdateDto
     public Status? Status { get; set; }
     public Guid? ArticleId { get; set; }
     public Guid? AccountId { get; set; }
-    
+
 }

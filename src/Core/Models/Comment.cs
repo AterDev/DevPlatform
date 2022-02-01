@@ -3,7 +3,7 @@
 public class Comment : EntityBase
 {
     public Article Article { get; set; } = null!;
-    public Account Account { get; set; } = null!;
+    public User Account { get; set; } = null!;
     /// <summary>
     /// 评论内容
     /// </summary>

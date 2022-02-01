@@ -3,9 +3,9 @@
 /// <summary>
 /// 账号扩展表, 可用作用户信息
 /// </summary>
-public partial class AccountInfo : EntityBase
+public partial class UserInfo : EntityBase
 {
-    public Account Account { get; set; } = null!;
+    public User Account { get; set; } = null!;
     public Guid AccountId { get; set; }
     /// <summary>
     /// 真实姓名

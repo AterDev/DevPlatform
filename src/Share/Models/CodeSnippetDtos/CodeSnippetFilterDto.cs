@@ -22,5 +22,5 @@ public class CodeSnippetFilter : FilterBase
     /// </summary>
     public Status? Status { get; set; }
     public Guid? LibraryId { get; set; }
-    
+
 }

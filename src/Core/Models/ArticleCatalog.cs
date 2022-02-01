@@ -23,7 +23,7 @@ public class ArticleCatalog : EntityBase
     /// 所属用户
     /// </summary>
     [ForeignKey("AccountId")]
-    public Account Account { get; set; } = null!;
+    public User Account { get; set; } = null!;
     public Guid AccountId { get; set; }
     /// <summary>
     /// 子目录

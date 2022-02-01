@@ -4,7 +4,7 @@ namespace Core.Identity;
 /// <summary>
 /// 账号表
 /// </summary>
-public class Account : IdentityUser<Guid>
+public class User : IdentityUser<Guid>
 {
     [PersonalData]
     public override Guid Id { get; set; }
@@ -56,7 +56,7 @@ public class Account : IdentityUser<Guid>
     /// </summary>
     [MaxLength(200)]
     public string? Avatar { get; set; }
-    public AccountInfo? Extend { get; set; }
+    public UserInfo? Extend { get; set; }
     /// <summary>
     /// 文章
     /// </summary>

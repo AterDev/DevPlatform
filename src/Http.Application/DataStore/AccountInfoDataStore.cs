@@ -1,6 +1,6 @@
 using Share.Models.AccountInfoDtos;
 namespace Http.Application.DataStore;
-public class AccountInfoDataStore : DataStoreBase<ContextBase, AccountInfo, AccountInfoUpdateDto, AccountInfoFilter, AccountInfoItemDto>
+public class AccountInfoDataStore : DataStoreBase<ContextBase, UserInfo, AccountInfoUpdateDto, AccountInfoFilter, AccountInfoItemDto>
 {
     public AccountInfoDataStore(ContextBase context, IUserContext userContext, ILogger<AccountInfoDataStore> logger) : base(context, userContext, logger)
     {
@@ -14,7 +14,7 @@ public class AccountInfoDataStore : DataStoreBase<ContextBase, AccountInfo, Acco
     {
         return base.FindWithPageAsync(filter);
     }
-    public override Task<AccountInfo> AddAsync(AccountInfo data) => base.AddAsync(data);
-    public override Task<AccountInfo?> UpdateAsync(Guid id, AccountInfoUpdateDto dto) => base.UpdateAsync(id, dto);
+    public override Task<UserInfo> AddAsync(UserInfo data) => base.AddAsync(data);
+    public override Task<UserInfo?> UpdateAsync(Guid id, AccountInfoUpdateDto dto) => base.UpdateAsync(id, dto);
     public override Task<bool> DeleteAsync(Guid id) => base.DeleteAsync(id);
 }

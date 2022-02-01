@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using OpenIddict.Abstractions;
+﻿using OpenIddict.Abstractions;
 
-namespace IdentityServer;
+namespace IdentityServer.Models;
 
-public partial class OpenIddictApplication: OpenIddictApplicationDescriptor
+public partial class OpenIddictApplication : OpenIddictApplicationDescriptor
 {
 
 }
