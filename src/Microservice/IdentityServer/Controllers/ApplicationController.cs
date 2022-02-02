@@ -1,4 +1,5 @@
-﻿using IdentityServer.Models;
+﻿using EntityFramework.IdentityModels;
+using IdentityServer.Models;
 using Microsoft.AspNetCore.Mvc;
 using OpenIddict.Abstractions;
 

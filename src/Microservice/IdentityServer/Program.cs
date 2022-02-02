@@ -1,6 +1,7 @@
 using Core.Identity;
 using EntityFramework;
 using Quartz;
+using static System.Formats.Asn1.AsnWriter;
 using static OpenIddict.Abstractions.OpenIddictConstants;
 
 
@@ -10,8 +11,10 @@ var configuration = builder.Configuration;
 
 // dbcontext
 var connectionString = configuration.GetConnectionString("DefaultConnection");
-services.AddDbContext<DbContext>(options =>
-    options.UseNpgsql(connectionString).UseOpenIddict());
+var identityConnection = configuration.GetConnectionString("IdentityConnection");
+
+services.AddDbContext<IdentityContext>(options =>
+    options.UseNpgsql(identityConnection).UseOpenIddict());
 
 services.AddDbContext<ContextBase>(opt => opt.UseNpgsql(connectionString));
 
@@ -27,7 +30,6 @@ services.Configure<IdentityOptions>(options =>
     options.ClaimsIdentity.UserIdClaimType = Claims.Subject;
     options.ClaimsIdentity.RoleClaimType = Claims.Role;
     options.ClaimsIdentity.EmailClaimType = Claims.Email;
-
     //options.SignIn.RequireConfirmedAccount = true;
 });
 
@@ -35,7 +37,6 @@ services.AddQuartz(options =>
 {
     options.UseMicrosoftDependencyInjectionJobFactory();
     options.UseSimpleTypeLoader();
-    options.UseInMemoryStore();
 });
 
 services.AddQuartzHostedService(options => options.WaitForJobsToComplete = true);
@@ -43,7 +44,7 @@ services.AddQuartzHostedService(options => options.WaitForJobsToComplete = true)
 services.AddOpenIddict()
     .AddCore(options =>
     {
-        options.UseEntityFrameworkCore().UseDbContext<DbContext>();
+        options.UseEntityFrameworkCore().UseDbContext<IdentityContext>();
         options.UseQuartz();
     })
     .AddServer(options =>
@@ -99,8 +100,8 @@ services.AddCors(options =>
 
 services.AddControllersWithViews();
 services.AddRazorPages();
-
 var app = builder.Build();
+
 app.UseCors("AllowAllOrigins");
 app.UseHttpsRedirection();
 app.UseStaticFiles();
