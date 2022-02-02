@@ -82,7 +82,7 @@ public class BaseFeed
                             {
                                 if (description.Length > 999)
                                 {
-                                    description = description.Substring(0, 999);
+                                    description = description[..999];
                                 }
                             }
                             var content = x.Element(Content)?.Value;

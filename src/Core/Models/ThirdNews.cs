@@ -16,35 +16,35 @@ public class ThirdNews : EntityBase
     [MaxLength(200)]
     public string Title {
         get => _title ?? string.Empty;
-        set => _title = value != null && value.Length > 200 ? value.Substring(0, 200) : value;
+        set => _title = value != null && value.Length > 200 ? value[..200] : value;
     }
     [MaxLength(5000)]
     public string? Description {
         get => _description;
-        set => _description = value != null && value.Length > 5000 ? value.Substring(0, 5000) : value;
+        set => _description = value != null && value.Length > 5000 ? value[..5000] : value;
     }
     [MaxLength(300)]
     public string? Url {
         get => _url;
-        set => _url = value != null && value.Length > 300 ? value.Substring(0, 300) : value;
+        set => _url = value != null && value.Length > 300 ? value[..300] : value;
     }
     [MaxLength(300)]
     public string? ThumbnailUrl { get; set; }
     [MaxLength(50)]
     public string? Provider {
         get => _provider;
-        set => _provider = value != null && value.Length > 50 ? value.Substring(0, 50) : value;
+        set => _provider = value != null && value.Length > 50 ? value[..50] : value;
     }
     public DateTimeOffset? DatePublished { get; set; }
     [MaxLength(8000)]
     public string? Content {
         get => _content;
-        set => _content = value != null && value.Length > 8000 ? value.Substring(0, 8000) : value;
+        set => _content = value != null && value.Length > 8000 ? value[..8000] : value;
     }
     [MaxLength(50)]
     public string? Category {
         get => _category;
-        set => _category = value != null && value.Length > 50 ? value.Substring(0, 50) : value;
+        set => _category = value != null && value.Length > 50 ? value[..50] : value;
     }
     [MaxLength(50)]
     public string? IdentityId { get; set; }
