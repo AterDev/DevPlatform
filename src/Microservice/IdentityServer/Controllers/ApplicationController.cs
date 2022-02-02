@@ -1,7 +1,6 @@
-﻿using EntityFramework.IdentityModels;
-using IdentityServer.Models;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using OpenIddict.Abstractions;
+using OpenIddictApplication = IdentityServer.Models.OpenIddictApplication;
 
 namespace IdentityServer.Controllers;
 [Route("api/[controller]")]

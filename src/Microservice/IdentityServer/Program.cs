@@ -1,7 +1,10 @@
 using Core.Identity;
 using EntityFramework;
+using IdentityServer;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.Extensions.DependencyInjection;
+using OpenIddict.Abstractions;
 using Quartz;
-using static System.Formats.Asn1.AsnWriter;
 using static OpenIddict.Abstractions.OpenIddictConstants;
 
 
@@ -100,7 +103,24 @@ services.AddCors(options =>
 
 services.AddControllersWithViews();
 services.AddRazorPages();
+
+
+
 var app = builder.Build();
+
+
+await using (var scope = app.Services.CreateAsyncScope())
+{
+    var manager = scope.ServiceProvider.GetRequiredService<IOpenIddictApplicationManager>();
+    if(await manager.FindByClientIdAsync(InitClient.AdminClient.ClientId!) == null)
+    {
+        await manager.CreateAsync(InitClient.AdminClient);
+    }
+    if (await manager.FindByClientIdAsync(InitClient.Api.ClientId!) == null)
+    {
+        await manager.CreateAsync(InitClient.Api);
+    }
+}
 
 app.UseCors("AllowAllOrigins");
 app.UseHttpsRedirection();
