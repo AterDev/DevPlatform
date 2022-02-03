@@ -1,9 +1,7 @@
-using Core.Identity;
 using EntityFramework;
 using IdentityServer;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.Extensions.DependencyInjection;
-using OpenIddict.Abstractions;
+using IdentityServer.Services;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Quartz;
 using static OpenIddict.Abstractions.OpenIddictConstants;
 
@@ -26,6 +24,7 @@ services.AddIdentity<User, Role>()
     .AddEntityFrameworkStores<ContextBase>()
     .AddDefaultTokenProviders();
 
+services.AddSingleton<IEmailSender, EmailSender>();
 // openid
 services.Configure<IdentityOptions>(options =>
 {
@@ -35,6 +34,14 @@ services.Configure<IdentityOptions>(options =>
     options.ClaimsIdentity.EmailClaimType = Claims.Email;
     //options.SignIn.RequireConfirmedAccount = true;
 });
+
+// 自定义路径
+services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/Identity/Account/Login";
+    options.LogoutPath = "/Identity/Account/Loginout";
+});
+
 
 services.AddQuartz(options =>
 {
@@ -112,7 +119,7 @@ var app = builder.Build();
 await using (var scope = app.Services.CreateAsyncScope())
 {
     var manager = scope.ServiceProvider.GetRequiredService<IOpenIddictApplicationManager>();
-    if(await manager.FindByClientIdAsync(InitClient.AdminClient.ClientId!) == null)
+    if (await manager.FindByClientIdAsync(InitClient.AdminClient.ClientId!) == null)
     {
         await manager.CreateAsync(InitClient.AdminClient);
     }
