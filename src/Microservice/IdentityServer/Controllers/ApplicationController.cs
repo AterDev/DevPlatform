@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using OpenIddict.Abstractions;
-using OpenIddictApplication = IdentityServer.Models.OpenIddictApplication;
+﻿using OpenIddictApplication = IdentityServer.Models.OpenIddictApplication;
 
 namespace IdentityServer.Controllers;
 [Route("api/[controller]")]
@@ -26,7 +24,7 @@ public class ApplicationController : ControllerBase
     public List<OpenIddictApplication> List(int pageIndex = 1, int pageSize = 100)
     {
         if (pageIndex < 1) pageIndex = 1;
-        var offset= (pageIndex - 1) * pageSize;
+        var offset = (pageIndex - 1) * pageSize;
         return (List<OpenIddictApplication>)_manager.ListAsync(pageSize, offset);
     }
 
@@ -48,7 +46,7 @@ public class ApplicationController : ControllerBase
     [HttpPut]
     public async Task<ActionResult<OpenIddictApplication>> EditApplicationAsync([FromRoute] Guid id, OpenIddictApplication update)
     {
-        var application =  await _manager.FindByIdAsync(id.ToString());
+        var application = await _manager.FindByIdAsync(id.ToString());
         if (application == null) return NotFound();
         await _manager.UpdateAsync(application, update);
         return update;
@@ -58,7 +56,7 @@ public class ApplicationController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<ActionResult> DeleteApplicationAsync([FromRoute] Guid id)
     {
-        var application =  await _manager.FindByIdAsync(id.ToString());
+        var application = await _manager.FindByIdAsync(id.ToString());
         if (application == null) return NotFound();
         if (application != null)
             await _manager.DeleteAsync(application);

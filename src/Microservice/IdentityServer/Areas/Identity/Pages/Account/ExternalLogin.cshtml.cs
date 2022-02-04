@@ -3,13 +3,9 @@
 #nullable disable
 
 using System.ComponentModel.DataAnnotations;
-using System.Security.Claims;
 using System.Text;
 using System.Text.Encodings.Web;
-using Core.Identity;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity.UI.Services;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 

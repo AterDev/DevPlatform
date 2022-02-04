@@ -4,8 +4,6 @@
 
 using System.ComponentModel.DataAnnotations;
 using System.Text;
-using Core.Identity;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 

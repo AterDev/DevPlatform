@@ -1,5 +1,4 @@
-﻿using OpenIddict.Abstractions;
-using static OpenIddict.Abstractions.OpenIddictConstants;
+﻿using static OpenIddict.Abstractions.OpenIddictConstants;
 
 namespace IdentityServer;
 
@@ -8,13 +7,14 @@ public static class InitClient
     public static OpenIddictApplicationDescriptor AdminClient = new()
     {
         ClientId = "webapp_admin",
+        ConsentType = ConsentTypes.Explicit,
         RedirectUris =
         {
             new Uri("https://localhost:4200/")
         },
         PostLogoutRedirectUris =
         {
-            new Uri("https://localhost:4200/authentication/logout-callback")
+            new Uri("https://localhost:4200/")
         },
         Permissions =
         {
@@ -37,17 +37,14 @@ public static class InitClient
     public static OpenIddictApplicationDescriptor Api = new()
     {
         ClientId = "api",
-        RedirectUris =
-        {
-            new Uri("https://localhost:15002/")
-        },
+        ClientSecret = "myApiTestSecret",
         Permissions =
         {
             Permissions.Endpoints.Introspection,
-            Permissions.Endpoints.Authorization,
-            Permissions.Endpoints.Token,
-            Permissions.GrantTypes.AuthorizationCode,
-            Permissions.ResponseTypes.Code
+            //Permissions.Endpoints.Authorization,
+            //Permissions.Endpoints.Token,
+            //Permissions.GrantTypes.AuthorizationCode,
+            //Permissions.ResponseTypes.Code
         }
     };
 }

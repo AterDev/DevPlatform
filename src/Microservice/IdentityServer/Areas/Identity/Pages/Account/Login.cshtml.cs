@@ -3,9 +3,6 @@
 #nullable disable
 
 using System.ComponentModel.DataAnnotations;
-using Core.Identity;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace IdentityServer.Areas.Identity.Pages.Account;

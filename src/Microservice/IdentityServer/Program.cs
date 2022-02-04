@@ -47,6 +47,7 @@ services.AddQuartz(options =>
 {
     options.UseMicrosoftDependencyInjectionJobFactory();
     options.UseSimpleTypeLoader();
+    options.UseInMemoryStore();
 });
 
 services.AddQuartzHostedService(options => options.WaitForJobsToComplete = true);
@@ -70,12 +71,12 @@ services.AddOpenIddict()
         // enable flows
         options.AllowAuthorizationCodeFlow()
             .AllowHybridFlow()
-            .AllowPasswordFlow()
-            .AllowClientCredentialsFlow()
+            //.AllowPasswordFlow()
+            //.AllowClientCredentialsFlow()
             .AllowRefreshTokenFlow();
 
         // register scopes
-        options.RegisterScopes(Scopes.Email, Scopes.Profile, Scopes.Roles, "dataEventRecords");
+        options.RegisterScopes(Scopes.Email, Scopes.Profile, Scopes.Roles, Scopes.OpenId);
 
         options.AddDevelopmentEncryptionCertificate()
             .AddDevelopmentSigningCertificate();
@@ -111,10 +112,7 @@ services.AddCors(options =>
 services.AddControllersWithViews();
 services.AddRazorPages();
 
-
-
 var app = builder.Build();
-
 
 await using (var scope = app.Services.CreateAsyncScope())
 {
