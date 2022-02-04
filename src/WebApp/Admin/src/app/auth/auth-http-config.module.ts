@@ -8,7 +8,7 @@ import { environment } from 'src/environments/environment';
       config: {
         authority: environment.authority,
         redirectUrl: environment.redirectUrl,
-        postLogoutRedirectUri: environment.redirectUrl + 'authentication/logout-callback',
+        postLogoutRedirectUri: environment.redirectUrl,
         clientId: 'webapp_admin',
         scope: 'openid profile email offline_access',
         responseType: 'code',

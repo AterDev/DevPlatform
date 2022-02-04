@@ -1,3 +1,10 @@
-<a (click)="login()">
-  登录
-</a>
+<div *ngIf="isAuthenticated">
+  <a (click)="logout()">
+    退出
+  </a>
+</div>
+<div *ngIf="!isAuthenticated">
+  <a (click)="login()">
+    登录
+  </a>
+</div>
