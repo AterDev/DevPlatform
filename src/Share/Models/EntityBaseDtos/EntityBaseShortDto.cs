@@ -1,9 +1,10 @@
-namespace Share.Models.CommentDtos;
-
-public class CommentShortDto
+namespace Share.Models.EntityBaseDtos;
+/// <summary>
+/// 数据加基础字段模型
+/// </summary>
+/// <inheritdoc/>
+public class EntityBaseShortDto
 {
-    public Article Article { get; set; } = default!;
-    public User Account { get; set; } = default!;
     public Guid Id { get; set; } = default!;
     /// <summary>
     /// 状态

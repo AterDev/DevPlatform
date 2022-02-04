@@ -7,4 +7,5 @@ public class RoleFilter : FilterBase
     public string? Name { get; set; }
     public string? ConcurrencyStamp { get; set; }
     public Status? Status { get; set; }
+    
 }

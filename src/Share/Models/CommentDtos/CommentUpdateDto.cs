@@ -1,5 +1,5 @@
 namespace Share.Models.CommentDtos;
-/// 
+
 public class CommentUpdateDto
 {
     /// <summary>
@@ -11,7 +11,7 @@ public class CommentUpdateDto
     /// 状态
     /// </summary>
     public Status? Status { get; set; }
-    public Guid? ArticleId { get; set; }
-    public Guid? AccountId { get; set; }
-
+    public Guid? ArticleId { get; set; } = default!;
+    public Guid? AccountId { get; set; } = default!;
+    
 }

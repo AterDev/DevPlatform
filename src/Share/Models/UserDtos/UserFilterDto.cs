@@ -1,12 +1,14 @@
-namespace Share.Models.AccountDtos;
+namespace Share.Models.UserDtos;
 /// <summary>
 /// 账号表
 /// </summary>
-public class AccountFilter : FilterBase
+public class UserFilter : FilterBase
 {
     public string? UserName { get; set; }
     public string? Email { get; set; }
     public bool? EmailConfirmed { get; set; }
+    // public string? PasswordHash { get; set; }
+
     /// <summary>
     /// A random value that must change whenever a user is persisted to the store
     /// </summary>
@@ -24,6 +26,6 @@ public class AccountFilter : FilterBase
     /// </summary>
     public int? RetryCount { get; set; }
     public Status? Status { get; set; }
-    public Guid? ExtendId { get; set; }
-
+    public Guid? ExtendId { get; set; } = default!;
+    
 }

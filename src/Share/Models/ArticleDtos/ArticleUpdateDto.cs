@@ -36,6 +36,6 @@ public class ArticleUpdateDto
     /// 状态
     /// </summary>
     public Status? Status { get; set; }
-    public Guid? AccountId { get; set; }
-
+    public Guid? AccountId { get; set; } = default!;
+    
 }

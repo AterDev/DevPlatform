@@ -46,7 +46,6 @@ public partial class Article : EntityBase
     /// 评论
     /// </summary>
     public List<Comment>? Comments { get; set; }
-
 }
 
 public enum ArticleType

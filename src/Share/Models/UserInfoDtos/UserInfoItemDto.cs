@@ -1,11 +1,10 @@
-namespace Share.Models.AccountInfoDtos;
+namespace Share.Models.UserInfoDtos;
 /// <summary>
 /// 账号扩展表, 可用作用户信息
 /// </summary>
-public class AccountInfoShortDto
+public class UserInfoItemDto
 {
-    public User Account { get; set; }
-    public Guid AccountId { get; set; }
+    public Guid AccountId { get; set; } = default!;
     /// <summary>
     /// 真实姓名
     /// </summary>
@@ -74,12 +73,12 @@ public class AccountInfoShortDto
     public string? WXAvatar { get; set; }
     [MaxLength(40)]
     public string? WXUnionId { get; set; }
-    public Guid Id { get; set; }
+    public Guid Id { get; set; } = default!;
     /// <summary>
     /// 状态
     /// </summary>
-    public Status Status { get; set; }
-    public DateTimeOffset CreatedTime { get; set; }
-    public DateTimeOffset UpdatedTime { get; set; }
-
+    public Status Status { get; set; } = default!;
+    public DateTimeOffset CreatedTime { get; set; } = default!;
+    public DateTimeOffset UpdatedTime { get; set; } = default!;
+    
 }

@@ -1,8 +1,8 @@
-namespace Share.Models.AccountDtos;
+namespace Share.Models.UserDtos;
 /// <summary>
 /// 账号表
 /// </summary>
-public class AccountUpdateDto
+public class UserUpdateDto
 {
     public string? UserName { get; set; }
     public string? NormalizedUserName { get; set; }
@@ -38,11 +38,11 @@ public class AccountUpdateDto
     /// 密码重试次数
     /// </summary>
     public int? RetryCount { get; set; }
+    public Status? Status { get; set; }
     /// <summary>
     /// 头像url
     /// </summary>
     [MaxLength(200)]
     public string? Avatar { get; set; }
-    public Guid? StatusId { get; set; }
-
+    
 }

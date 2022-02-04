@@ -12,6 +12,6 @@ public class RoleUpdateDto
     /// </summary>
     [MaxLength(30)]
     public string? Icon { get; set; }
-    public Guid? StatusId { get; set; }
-
+    public Status? Status { get; set; }
+    
 }

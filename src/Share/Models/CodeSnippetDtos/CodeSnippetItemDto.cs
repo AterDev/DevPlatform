@@ -8,7 +8,7 @@ public class CodeSnippetItemDto
     /// 实体名称
     /// </summary>
     [MaxLength(100)]
-    public string Name { get; set; }
+    public string Name { get; set; } = default!;
     /// <summary>
     /// 描述
     /// </summary>
@@ -17,17 +17,17 @@ public class CodeSnippetItemDto
     /// <summary>
     /// 语言类型
     /// </summary>
-    public Language Language { get; set; }
+    public Language Language { get; set; } = default!;
     /// <summary>
     /// 类型
     /// </summary>
-    public CodeType CodeType { get; set; }
-    public Guid Id { get; set; }
+    public CodeType CodeType { get; set; } = default!;
+    public Guid Id { get; set; } = default!;
     /// <summary>
     /// 状态
     /// </summary>
-    public Status Status { get; set; }
-    public DateTimeOffset CreatedTime { get; set; }
-    public DateTimeOffset UpdatedTime { get; set; }
-
+    public Status Status { get; set; } = default!;
+    public DateTimeOffset CreatedTime { get; set; } = default!;
+    public DateTimeOffset UpdatedTime { get; set; } = default!;
+    
 }

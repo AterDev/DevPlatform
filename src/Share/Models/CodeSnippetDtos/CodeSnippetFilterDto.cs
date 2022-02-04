@@ -21,6 +21,6 @@ public class CodeSnippetFilter : FilterBase
     /// 状态
     /// </summary>
     public Status? Status { get; set; }
-    public Guid? LibraryId { get; set; }
-
+    public Guid? LibraryId { get; set; } = default!;
+    
 }

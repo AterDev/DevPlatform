@@ -10,6 +10,6 @@ public class NewsTagsFilter : FilterBase
     /// 状态
     /// </summary>
     public Status? Status { get; set; }
-    public Guid? ThirdNewsId { get; set; }
-
+    public Guid? ThirdNewsId { get; set; } = default!;
+    
 }

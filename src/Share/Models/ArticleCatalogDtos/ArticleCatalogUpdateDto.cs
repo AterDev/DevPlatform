@@ -1,5 +1,5 @@
 namespace Share.Models.ArticleCatalogDtos;
-/// 
+
 public class ArticleCatalogUpdateDto
 {
     [MaxLength(50)]
@@ -14,5 +14,5 @@ public class ArticleCatalogUpdateDto
     /// 状态
     /// </summary>
     public Status? Status { get; set; }
-
+    
 }

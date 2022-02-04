@@ -17,8 +17,8 @@ public class ArticleFilter : FilterBase
     /// 状态
     /// </summary>
     public Status? Status { get; set; }
-    public Guid? AccountId { get; set; }
-    public Guid? ExtendId { get; set; }
-    public Guid? CatalogId { get; set; }
-
+    public Guid? AccountId { get; set; } = default!;
+    public Guid? ExtendId { get; set; } = default!;
+    public Guid? CatalogId { get; set; } = default!;
+    
 }

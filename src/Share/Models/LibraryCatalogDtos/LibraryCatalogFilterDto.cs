@@ -13,6 +13,6 @@ public class LibraryCatalogFilter : FilterBase
     /// 状态
     /// </summary>
     public Status? Status { get; set; }
-    public Guid? ParentId { get; set; }
-
+    public Guid? ParentId { get; set; } = default!;
+    
 }

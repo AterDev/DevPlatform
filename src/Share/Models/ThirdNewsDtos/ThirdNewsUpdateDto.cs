@@ -1,5 +1,5 @@
 namespace Share.Models.ThirdNewsDtos;
-/// 
+
 public class ThirdNewsUpdateDto
 {
     [MaxLength(100)]
@@ -31,5 +31,5 @@ public class ThirdNewsUpdateDto
     /// 状态
     /// </summary>
     public Status? Status { get; set; }
-
+    
 }

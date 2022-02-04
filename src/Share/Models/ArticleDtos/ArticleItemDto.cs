@@ -8,7 +8,7 @@ public class ArticleItemDto
     /// 标题
     /// </summary>
     [MaxLength(100)]
-    public string Title { get; set; }
+    public string Title { get; set; } = default!;
     /// <summary>
     /// 概要
     /// </summary>
@@ -27,17 +27,16 @@ public class ArticleItemDto
     /// <summary>
     /// 文章类别
     /// </summary>
-    public ArticleType ArticleType { get; set; }
+    public ArticleType ArticleType { get; set; } = default!;
     /// <summary>
     /// 仅个人查看
     /// </summary>
     public bool? IsPrivate { get; set; }
-    public Guid Id { get; set; }
+    public Guid Id { get; set; } = default!;
     /// <summary>
     /// 状态
     /// </summary>
-    public Status Status { get; set; }
-    public DateTimeOffset CreatedTime { get; set; }
-    public DateTimeOffset UpdatedTime { get; set; }
-
+    public Status Status { get; set; } = default!;
+    public DateTimeOffset CreatedTime { get; set; } = default!;
+    public DateTimeOffset UpdatedTime { get; set; } = default!;
 }

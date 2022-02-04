@@ -1,5 +1,5 @@
 namespace Share.Models.ThirdNewsDtos;
-/// 
+
 public class ThirdNewsFilter : FilterBase
 {
 
@@ -12,5 +12,5 @@ public class ThirdNewsFilter : FilterBase
     /// 状态
     /// </summary>
     public Status? Status { get; set; }
-
+    
 }

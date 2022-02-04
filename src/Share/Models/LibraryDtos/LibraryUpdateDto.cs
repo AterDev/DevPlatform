@@ -31,6 +31,6 @@ public class LibraryUpdateDto
     /// 状态
     /// </summary>
     public Status? Status { get; set; }
-    public Guid? UserId { get; set; }
-
+    public Guid? UserId { get; set; } = default!;
+    
 }

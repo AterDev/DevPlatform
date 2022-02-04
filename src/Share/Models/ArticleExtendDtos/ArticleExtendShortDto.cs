@@ -4,14 +4,14 @@ namespace Share.Models.ArticleExtendDtos;
 /// </summary>
 public class ArticleExtendShortDto
 {
-    public Article Article { get; set; }
-    public Guid ArticleId { get; set; }
-    public Guid Id { get; set; }
+    public Article Article { get; set; } = default!;
+    public Guid ArticleId { get; set; } = default!;
+    public Guid Id { get; set; } = default!;
     /// <summary>
     /// 状态
     /// </summary>
-    public Status Status { get; set; }
-    public DateTimeOffset CreatedTime { get; set; }
-    public DateTimeOffset UpdatedTime { get; set; }
-
+    public Status Status { get; set; } = default!;
+    public DateTimeOffset CreatedTime { get; set; } = default!;
+    public DateTimeOffset UpdatedTime { get; set; } = default!;
+    
 }
