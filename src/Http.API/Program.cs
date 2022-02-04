@@ -1,7 +1,4 @@
 using Http.API.BackgroundTask;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.IdentityModel.Tokens;
 using Share.Azure;
 using Share.NewsCollectionService;
 
@@ -18,40 +15,40 @@ services.AddDbContextPool<ContextBase>(option =>
 {
     option.UseNpgsql(connectionString, sql => { sql.MigrationsAssembly("EntityFramework.Migrator"); });
 });
-services.AddIdentity<User, Role>()
-    .AddEntityFrameworkStores<ContextBase>()
-    .AddDefaultTokenProviders();
 
-services.AddScoped<IUserContext, UserContext>();
-services.AddDataStore();
+
 services.AddOptions();
+services.AddScoped<IUserContext, UserContext>();
 services.AddScoped<NewsCollectionService>();
 services.AddScoped<TwitterService>();
 services.AddScoped(typeof(WebService));
 services.AddScoped(typeof(FileService));
 
+services.AddDataStore();
+
 #region 接口相关内容:jwt/授权/cors
 // jwt
 services.AddAuthentication(options =>
 {
-    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-})
-.AddJwtBearer(cfg =>
-{
-    // use IdentityServer
-    cfg.Authority = "https://localhost:5001";
-    cfg.TokenValidationParameters = new TokenValidationParameters
-    {
-        ValidateAudience = false,
-    };
+    options.DefaultScheme = OpenIddictValidationAspNetCoreDefaults.AuthenticationScheme;
 });
+services.AddOpenIddict()
+    .AddValidation(options =>
+    {
+        options.SetIssuer("https://localhost:5001/");
+        options.UseIntrospection()
+        .SetClientId("api")
+        .SetClientSecret("myApiTestSecret");
+
+        options.UseSystemNetHttp();
+        options.UseAspNetCore();
+    });
 // 验证
 services.AddAuthorization(options =>
 {
     options.AddPolicy("ApiScope", policy =>
     {
-        policy.RequireClaim("scope", "api");
+        policy.RequireClaim("scope", "openid profile email offline_access");
     });
     options.AddPolicy("User", policy =>
         policy.RequireRole("Admin", "User"));
@@ -59,7 +56,6 @@ services.AddAuthorization(options =>
         policy.RequireRole("Admin"));
 });
 
-// services.AddScoped(typeof(JwtService)); 
 // cors配置 
 services.AddCors(options =>
 {
@@ -106,12 +102,12 @@ else
 {
     // 生产环境需要新的配置
     app.UseCors("default");
-    app.UseExceptionHandler("/Home/Error");
     //app.UseHsts();
     app.UseHttpsRedirection();
 }
 
 app.UseHealthChecks("/health");
+
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();

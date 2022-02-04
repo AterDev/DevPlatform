@@ -8,6 +8,7 @@ public class ArticleController : RestApiBase<ArticleDataStore, Article, ArticleU
 {
     public ArticleController(IUserContext user, ILogger<ArticleController> logger, ArticleDataStore store) : base(user, logger, store)
     {
+
     }
 
     /// <summary>
@@ -18,7 +19,7 @@ public class ArticleController : RestApiBase<ArticleDataStore, Article, ArticleU
     /// <param name="dependStore"></param>
     /// <returns></returns>
     [HttpPost("{id}")]
-    public async Task<ActionResult<int>> AddAsync([FromRoute] Guid id, List<ArticleUpdateDto> list, [FromServices] AccountDataStore dependStore)
+    public async Task<ActionResult<int>> AddAsync([FromRoute] Guid id, List<ArticleUpdateDto> list, [FromServices] UserDataStore dependStore)
     {
         var depend = await dependStore.FindAsync(id);
         var newList = new List<Article>();
@@ -32,6 +33,7 @@ public class ArticleController : RestApiBase<ArticleDataStore, Article, ArticleU
         });
         return await _store.BatchAddAsync(newList);
     }
+
     /// <summary>
     /// 分页筛选
     /// </summary>

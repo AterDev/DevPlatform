@@ -16,7 +16,7 @@ public class ArticleCatalogController : RestApiBase<ArticleCatalogDataStore, Art
     /// <param name="dependStore"></param>
     /// <returns></returns>
     [HttpPost("{id}")]
-    public async Task<ActionResult<int>> AddAsync([FromRoute] Guid id, List<ArticleCatalogUpdateDto> list, [FromServices] AccountDataStore dependStore)
+    public async Task<ActionResult<int>> AddAsync([FromRoute] Guid id, List<ArticleCatalogUpdateDto> list, [FromServices] UserDataStore dependStore)
     {
         var depend = await dependStore.FindAsync(id);
         var newList = new List<ArticleCatalog>();
@@ -30,6 +30,7 @@ public class ArticleCatalogController : RestApiBase<ArticleCatalogDataStore, Art
         });
         return await _store.BatchAddAsync(newList);
     }
+
     /// <summary>
     /// 分页筛选
     /// </summary>

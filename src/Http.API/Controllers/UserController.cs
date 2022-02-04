@@ -1,16 +1,16 @@
-using Share.Models.RoleDtos;
+using Share.Models.UserDtos;
 namespace Http.API.Controllers;
 
 /// <summary>
-/// 角色表
+/// 账号表
 /// </summary>
 [ApiController]
 [Route("api/[controller]")]
 [Authorize]
-public class RoleController : ControllerBase, IRestApiBase<Role, RoleUpdateDto, RoleFilter, RoleItemDto, Guid>
+public class UserController : ControllerBase, IRestApiBase<User, UserUpdateDto, UserFilter, UserItemDto, Guid>
 {
-    private readonly RoleDataStore _store;
-    public RoleController(IUserContext user, ILogger<RoleController> logger, RoleDataStore store)
+    private readonly UserDataStore _store;
+    public UserController(IUserContext user, ILogger<UserController> logger, UserDataStore store)
     {
         _store = store;
     }
@@ -21,7 +21,7 @@ public class RoleController : ControllerBase, IRestApiBase<Role, RoleUpdateDto, 
     /// <param name="filter"></param>
     /// <returns></returns>
     [HttpGet]
-    public async Task<ActionResult<PageResult<RoleItemDto>>> FilterAsync(RoleFilter filter)
+    public async Task<ActionResult<PageResult<UserItemDto>>> FilterAsync([FromQuery] UserFilter filter)
     {
         return await _store.FindWithPageAsync(filter);
     }
@@ -32,10 +32,11 @@ public class RoleController : ControllerBase, IRestApiBase<Role, RoleUpdateDto, 
     /// <param name="form"></param>
     /// <returns></returns>
     [HttpPost]
-    public async Task<ActionResult<Role>> AddAsync(Role form)
+    public async Task<ActionResult<User>> AddAsync(User form)
     {
         var res = await _store.AddAsync(form);
         return CreatedAtRoute("", res);
+
     }
 
     /// <summary>
@@ -45,10 +46,10 @@ public class RoleController : ControllerBase, IRestApiBase<Role, RoleUpdateDto, 
     /// <param name="form"></param>
     /// <returns></returns>
     [HttpPut("{id}")]
-    public async Task<ActionResult<Role?>> UpdateAsync([FromRoute] Guid id, RoleUpdateDto form)
+    public async Task<ActionResult<User?>> UpdateAsync([FromRoute] Guid id, UserUpdateDto form)
     {
-        var Role = await _store.FindAsync(id);
-        Role.Merge(form);
+        var user = await _store.FindAsync(id);
+        user.Merge(form);
         var res = await _store.UpdateAsync(id, form);
         return res;
 
@@ -62,10 +63,10 @@ public class RoleController : ControllerBase, IRestApiBase<Role, RoleUpdateDto, 
     [HttpDelete("{id}")]
     public async Task<ActionResult<bool>> DeleteAsync([FromRoute] Guid id)
     {
-        var role = await _store.FindAsync(id);
-        if(role == null) return NotFound();
-        var res = await _store.DeleteAsync(id);
-        return res;
+        var user = await _store.FindAsync(id);
+        if (user == null) return NotFound();
+        return await _store.DeleteAsync(id);
+
     }
 
     /// <summary>
@@ -82,5 +83,5 @@ public class RoleController : ControllerBase, IRestApiBase<Role, RoleUpdateDto, 
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<Role?>> GetDetailAsync([FromRoute] Guid id) => await _store.FindAsync(id);
+    public async Task<ActionResult<User?>> GetDetailAsync([FromRoute] Guid id) => await _store.FindAsync(id);
 }

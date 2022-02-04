@@ -18,7 +18,7 @@ public class LibraryCatalogController : RestApiBase<LibraryCatalogDataStore, Lib
     /// <param name="dependStore"></param>
     /// <returns></returns>
     [HttpPost("{id}")]
-    public async Task<ActionResult<int>> AddAsync([FromRoute] Guid id, List<LibraryCatalogUpdateDto> list, [FromServices] AccountDataStore dependStore)
+    public async Task<ActionResult<int>> AddAsync([FromRoute] Guid id, List<LibraryCatalogUpdateDto> list, [FromServices] UserDataStore dependStore)
     {
         var depend = await dependStore.FindAsync(id);
         var newList = new List<LibraryCatalog>();
