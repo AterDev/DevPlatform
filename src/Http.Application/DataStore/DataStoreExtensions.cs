@@ -4,8 +4,6 @@ public static class DataStoreExtensions
 {
     public static void AddDataStore(this IServiceCollection services)
     {
-        services.AddScoped(typeof(AccountDataStore));
-        services.AddScoped(typeof(AccountInfoDataStore));
         services.AddScoped(typeof(ArticleCatalogDataStore));
         services.AddScoped(typeof(ArticleDataStore));
         services.AddScoped(typeof(ArticleExtendDataStore));
@@ -15,9 +13,9 @@ public static class DataStoreExtensions
         services.AddScoped(typeof(LibraryCatalogDataStore));
         services.AddScoped(typeof(LibraryDataStore));
         services.AddScoped(typeof(NewsTagsDataStore));
-        services.AddScoped(typeof(RoleDataStore));
         services.AddScoped(typeof(TagLibraryDataStore));
         services.AddScoped(typeof(ThirdNewsDataStore));
-
+        services.AddScoped(typeof(UserDataStore));
+        services.AddScoped(typeof(RoleDataStore));
     }
 }
