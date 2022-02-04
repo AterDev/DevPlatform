@@ -10,5 +10,5 @@ public partial class IdentityContext : DbContext
         : base(options)
     {
     }
-   
+
 }

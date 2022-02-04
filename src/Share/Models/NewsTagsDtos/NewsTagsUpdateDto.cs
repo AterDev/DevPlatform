@@ -13,5 +13,5 @@ public class NewsTagsUpdateDto
     /// </summary>
     public Status? Status { get; set; }
     public Guid? ThirdNewsId { get; set; } = default!;
-    
+
 }

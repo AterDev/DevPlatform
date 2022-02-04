@@ -48,5 +48,5 @@ public class UserShortDto
     [MaxLength(200)]
     public string? Avatar { get; set; }
     public UserInfo? Extend { get; set; } = default!;
-    
+
 }

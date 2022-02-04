@@ -13,5 +13,5 @@ public class RoleUpdateDto
     [MaxLength(30)]
     public string? Icon { get; set; }
     public Status? Status { get; set; }
-    
+
 }

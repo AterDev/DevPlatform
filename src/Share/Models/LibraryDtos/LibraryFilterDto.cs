@@ -23,5 +23,5 @@ public class LibraryFilter : FilterBase
     public Status? Status { get; set; }
     public Guid? UserId { get; set; } = default!;
     public Guid? CatalogId { get; set; } = default!;
-    
+
 }

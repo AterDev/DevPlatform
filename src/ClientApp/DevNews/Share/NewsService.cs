@@ -70,7 +70,7 @@ namespace DevNews.Share
             {
                 var data = new BatchUpdate<ThirdNewsUpdateDto>
                 {
-                    Ids =ids,
+                    Ids = ids,
                     UpdateDto = dto
                 };
                 var response = await httpClient.PutAsJsonAsync(url, data);

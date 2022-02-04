@@ -15,12 +15,12 @@ var host = Host.CreateDefaultBuilder(args)
         services.AddDbContext<ContextBase>(option =>
         {
             var connectionString = config.GetConnectionString("Default");
-            option.UseNpgsql(connectionString,option=>option.MigrationsAssembly("EntityFramework.Migrator"));
+            option.UseNpgsql(connectionString, option => option.MigrationsAssembly("EntityFramework.Migrator"));
         });
         services.AddDbContext<IdentityContext>(option =>
         {
             var connectionString = config.GetConnectionString("Identity");
-            option.UseNpgsql(connectionString,option=>option.MigrationsAssembly("EntityFramework.Migrator"));
+            option.UseNpgsql(connectionString, option => option.MigrationsAssembly("EntityFramework.Migrator"));
         });
     });
 

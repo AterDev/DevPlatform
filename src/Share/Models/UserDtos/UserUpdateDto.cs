@@ -44,5 +44,5 @@ public class UserUpdateDto
     /// </summary>
     [MaxLength(200)]
     public string? Avatar { get; set; }
-    
+
 }

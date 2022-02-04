@@ -80,5 +80,5 @@ public class UserInfoItemDto
     public Status Status { get; set; } = default!;
     public DateTimeOffset CreatedTime { get; set; } = default!;
     public DateTimeOffset UpdatedTime { get; set; } = default!;
-    
+
 }

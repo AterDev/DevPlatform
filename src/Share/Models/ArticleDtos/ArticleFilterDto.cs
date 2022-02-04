@@ -20,5 +20,5 @@ public class ArticleFilter : FilterBase
     public Guid? AccountId { get; set; } = default!;
     public Guid? ExtendId { get; set; } = default!;
     public Guid? CatalogId { get; set; } = default!;
-    
+
 }

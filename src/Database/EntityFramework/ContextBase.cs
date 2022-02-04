@@ -4,7 +4,7 @@ namespace EntityFramework;
 
 public class ContextBase : IdentityDbContext<User, Role, Guid>
 {
-    public DbSet<User> Accounts { get; set; } = null!;
+    public DbSet<User> Users { get; set; } = null!;
     public DbSet<UserInfo> AccountExtends { get; set; } = null!;
     public DbSet<Role> Roles { get; set; } = null!;
     public DbSet<Article> Articles { get; set; } = null!;

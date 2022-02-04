@@ -9,5 +9,5 @@ public class EntityBaseUpdateDto
     /// 状态
     /// </summary>
     public Status? Status { get; set; }
-    
+
 }

@@ -37,5 +37,5 @@ public class ArticleUpdateDto
     /// </summary>
     public Status? Status { get; set; }
     public Guid? AccountId { get; set; } = default!;
-    
+
 }

@@ -47,5 +47,5 @@ public class UserItemDto
     /// </summary>
     [MaxLength(200)]
     public string? Avatar { get; set; }
-    
+
 }

@@ -63,7 +63,7 @@ public class RoleController : ControllerBase, IRestApiBase<Role, RoleUpdateDto, 
     public async Task<ActionResult<bool>> DeleteAsync([FromRoute] Guid id)
     {
         var role = await _store.FindAsync(id);
-        if(role == null) return NotFound();
+        if (role == null) return NotFound();
         var res = await _store.DeleteAsync(id);
         return res;
     }
