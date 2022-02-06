@@ -7,7 +7,6 @@ public static class DataStoreExtensions
         services.AddScoped(typeof(ArticleCatalogDataStore));
         services.AddScoped(typeof(ArticleDataStore));
         services.AddScoped(typeof(ArticleExtendDataStore));
-        services.AddScoped(typeof(BaseDBDataStore));
         services.AddScoped(typeof(CodeSnippetDataStore));
         services.AddScoped(typeof(CommentDataStore));
         services.AddScoped(typeof(LibraryCatalogDataStore));
