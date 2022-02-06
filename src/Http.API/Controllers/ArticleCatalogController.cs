@@ -19,6 +19,7 @@ public class ArticleCatalogController : RestApiBase<ArticleCatalogDataStore, Art
     public async Task<ActionResult<int>> AddAsync([FromRoute] Guid id, List<ArticleCatalogUpdateDto> list, [FromServices] UserDataStore dependStore)
     {
         var depend = await dependStore.FindAsync(id);
+        if (depend == null) return NotFound("depend not exist");
         var newList = new List<ArticleCatalog>();
         list.ForEach(item =>
         {

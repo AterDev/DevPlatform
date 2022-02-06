@@ -21,7 +21,6 @@ services.AddOptions();
 services.AddScoped<IUserContext, UserContext>();
 services.AddScoped<NewsCollectionService>();
 services.AddScoped<TwitterService>();
-services.AddScoped(typeof(WebService));
 services.AddScoped(typeof(FileService));
 
 services.AddDataStore();

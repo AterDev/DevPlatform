@@ -21,6 +21,7 @@ public class LibraryCatalogController : RestApiBase<LibraryCatalogDataStore, Lib
     public async Task<ActionResult<int>> AddAsync([FromRoute] Guid id, List<LibraryCatalogUpdateDto> list, [FromServices] UserDataStore dependStore)
     {
         var depend = await dependStore.FindAsync(id);
+        if (depend == null) return NotFound("depend not exist");
         var newList = new List<LibraryCatalog>();
         list.ForEach(item =>
         {

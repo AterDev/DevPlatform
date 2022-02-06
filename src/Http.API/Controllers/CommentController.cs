@@ -19,6 +19,7 @@ public class CommentController : RestApiBase<CommentDataStore, Comment, CommentU
     public async Task<ActionResult<int>> AddAsync([FromRoute] Guid id, List<CommentUpdateDto> list, [FromServices] ArticleDataStore dependStore)
     {
         var depend = await dependStore.FindAsync(id);
+        if (depend == null) return NotFound("depend not exist");
         var newList = new List<Comment>();
         list.ForEach(item =>
         {
