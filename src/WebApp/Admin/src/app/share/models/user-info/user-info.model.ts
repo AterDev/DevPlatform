@@ -1,7 +1,7 @@
 import { EntityBase } from '../entity-base.model';
 import { User } from '../user/user.model';
 export interface UserInfo extends EntityBase {
-  account?: string | null;
+  account?: User | null;
   accountId: string;
   realName?: string | null;
   nickName?: string | null;

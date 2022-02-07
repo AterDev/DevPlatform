@@ -4,6 +4,6 @@ export interface BatchUpdateOfLibraryCatalogUpdateDto {
   /**
    * 目录/文件目录 / 自引用
    */
-  updateDto?: string | null;
+  updateDto?: LibraryCatalogUpdateDto | null;
 
 }

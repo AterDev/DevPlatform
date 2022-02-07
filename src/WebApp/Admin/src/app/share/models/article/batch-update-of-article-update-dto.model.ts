@@ -4,6 +4,6 @@ export interface BatchUpdateOfArticleUpdateDto {
   /**
    * 文章内容
    */
-  updateDto?: string | null;
+  updateDto?: ArticleUpdateDto | null;
 
 }

@@ -4,6 +4,6 @@ export interface BatchUpdateOfCodeSnippetUpdateDto {
   /**
    * 代码片段
    */
-  updateDto?: string | null;
+  updateDto?: CodeSnippetUpdateDto | null;
 
 }

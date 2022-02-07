@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { OidcSecurityService } from 'angular-auth-oidc-client';
 import { Observable, of } from 'rxjs';
-import { TestService } from './share/services/test.service';
 
 @Component({
   selector: 'app-root',
@@ -14,8 +13,7 @@ export class AppComponent {
   isAuthenticated = false;
 
   constructor(
-    private oidcSecurityService: OidcSecurityService,
-    private testService: TestService) {
+    private oidcSecurityService: OidcSecurityService) {
     console.log('AppComponent STARTING');
   }
   ngOnInit(): void {
@@ -24,7 +22,6 @@ export class AppComponent {
     this.oidcSecurityService.checkAuth()
       .subscribe(res => {
         this.isAuthenticated = res.isAuthenticated;
-        this.testService.getWeekNews();
         console.log('app authenticated', res.isAuthenticated);
       });
   }

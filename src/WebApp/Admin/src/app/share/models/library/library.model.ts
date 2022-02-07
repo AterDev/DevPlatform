@@ -8,7 +8,7 @@ export interface Library extends EntityBase {
   language?: string | null;
   isValid: boolean;
   isPublic: boolean;
-  user?: string | null;
+  user?: User | null;
   catalog?: LibraryCatalog | null;
   snippets?: CodeSnippet[] | null;
 

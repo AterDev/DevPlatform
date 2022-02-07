@@ -9,7 +9,7 @@ export interface ArticleCatalog extends EntityBase {
   articles?: Article[] | null;
   parent?: ArticleCatalog | null;
   parentId?: string | null;
-  account?: string | null;
+  account?: User | null;
   accountId: string;
   catalogs?: ArticleCatalog[] | null;
 

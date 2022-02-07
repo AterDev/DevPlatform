@@ -4,6 +4,6 @@ export interface BatchUpdateOfLibraryUpdateDto {
   /**
    * 模型库
    */
-  updateDto?: string | null;
+  updateDto?: LibraryUpdateDto | null;
 
 }

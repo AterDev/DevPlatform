@@ -4,6 +4,6 @@ export interface BatchUpdateOfNewsTagsUpdateDto {
   /**
    * 新闻标签
    */
-  updateDto?: string | null;
+  updateDto?: NewsTagsUpdateDto | null;
 
 }

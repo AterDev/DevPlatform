@@ -4,6 +4,6 @@ export interface BatchUpdateOfArticleExtendUpdateDto {
   /**
    * 文章扩展
    */
-  updateDto?: string | null;
+  updateDto?: ArticleExtendUpdateDto | null;
 
 }

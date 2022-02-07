@@ -3,6 +3,6 @@ import { ThirdNews } from '../third-news/third-news.model';
 export interface NewsTags extends EntityBase {
   name: string;
   color?: string | null;
-  thirdNews?: string | null;
+  thirdNews?: ThirdNews | null;
 
 }

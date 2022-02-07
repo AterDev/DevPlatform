@@ -7,7 +7,7 @@ export interface LibraryCatalog extends EntityBase {
   level: number;
   parent?: LibraryCatalog | null;
   parentId?: string | null;
-  account?: string | null;
+  account?: User | null;
   accountId: string;
   catalogs?: LibraryCatalog[] | null;
 

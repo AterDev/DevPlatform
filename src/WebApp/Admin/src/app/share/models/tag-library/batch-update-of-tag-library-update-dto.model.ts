@@ -4,6 +4,6 @@ export interface BatchUpdateOfTagLibraryUpdateDto {
   /**
    * 标签库
    */
-  updateDto?: string | null;
+  updateDto?: TagLibraryUpdateDto | null;
 
 }
