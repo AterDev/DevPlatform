@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthHttpConfigModule } from './auth/auth-http-config.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -12,7 +13,8 @@ import { AuthHttpConfigModule } from './auth/auth-http-config.module';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    AuthHttpConfigModule
+    AuthHttpConfigModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
