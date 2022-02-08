@@ -1,10 +1,11 @@
 # 目录结构
 `app`
 - components,组件，无路由
-  - layout，**内置**
-  - naviagation
+  - [ ] layout，**内置**
+    - 上下（左右栏）布局
+  - [ ] naviagation
     - 两级菜单，**生成**
-  - dialogs
+  - [ ] dialogs
     - deleteConfirmDialog，**内置**
   - 
 - pages，页面，带路由
@@ -12,15 +13,19 @@
 - share
   - models，**生成**
   - services，**生成**
-  - pipe，**内置**
-
+  - [ ] pipe，**内置**
+- auth 授权验证
+  - AuthConfigModule, 
+  - [ ] AuthGuard, 路由守卫
+  
 # 依赖
 - 字体图标: [`Material Icons`](https://fonts.google.com/icons?selected=Material+Icons)
 - 布局: `bootstrap-grid`
 - UI: `Angular Material`
 - 富文件编辑器：[`ckeditor5`](https://github.com/ckeditor/ckeditor5-angular)
 - markdown编辑器：[`ngx-markdown`](https://github.com/jfcere/ngx-markdown)
-- monaco editor: 
+- 授权验证: `angular-auth-oidc-client`
+
 # 常见业务页面实现
 ## 页面及组件
 - 列表

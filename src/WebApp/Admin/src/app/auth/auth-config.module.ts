@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { AuthModule, StsConfigHttpLoader, LogLevel } from 'angular-auth-oidc-client';
+import { AuthModule, LogLevel } from 'angular-auth-oidc-client';
 import { environment } from 'src/environments/environment';
 
 @NgModule({
@@ -13,7 +13,6 @@ import { environment } from 'src/environments/environment';
         scope: 'openid profile email offline_access',
         responseType: 'code',
         silentRenew: true,
-        renewTimeBeforeTokenExpiresInSeconds: 10,
         useRefreshToken: true,
         logLevel: LogLevel.Debug,
       },
@@ -21,4 +20,4 @@ import { environment } from 'src/environments/environment';
   ],
   exports: [AuthModule],
 })
-export class AuthHttpConfigModule {}
+export class AuthConfigModule { }
