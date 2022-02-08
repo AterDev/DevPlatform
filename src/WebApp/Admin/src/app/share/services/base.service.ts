@@ -1,10 +1,8 @@
-import { Injectable, InjectionToken } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { OidcSecurityService } from 'angular-auth-oidc-client';
-export const BLOB_BASE_URL = new InjectionToken<string>('BLOB_BASE_URL');
-export const API_BASE_URL = new InjectionToken<string>('API_BASE_URL');
 
 @Injectable({
   providedIn: 'root'
