@@ -15,7 +15,7 @@ var connectionString = configuration.GetConnectionString("DefaultConnection");
 var identityConnection = configuration.GetConnectionString("IdentityConnection");
 
 services.AddDbContext<IdentityContext>(options =>
-    options.UseNpgsql(identityConnection).UseOpenIddict());
+    options.UseNpgsql(identityConnection).UseOpenIddict<Guid>());
 
 services.AddDbContext<ContextBase>(opt => opt.UseNpgsql(connectionString));
 
@@ -55,7 +55,9 @@ services.AddQuartzHostedService(options => options.WaitForJobsToComplete = true)
 services.AddOpenIddict()
     .AddCore(options =>
     {
-        options.UseEntityFrameworkCore().UseDbContext<IdentityContext>();
+        options.UseEntityFrameworkCore()
+            .UseDbContext<IdentityContext>()
+            .ReplaceDefaultEntities<Guid>();
         options.UseQuartz();
     })
     .AddServer(options =>
