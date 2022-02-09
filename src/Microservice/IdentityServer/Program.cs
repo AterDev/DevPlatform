@@ -113,11 +113,16 @@ services.AddCors(options =>
 
 services.AddControllersWithViews();
 services.AddRazorPages();
-
 var app = builder.Build();
 
+// 以下数据库初始化内容，可使用其他方式替代
 await using (var scope = app.Services.CreateAsyncScope())
 {
+    // 生成数据库结构
+    var context = scope.ServiceProvider.GetRequiredService<IdentityContext>();
+    context.Database.EnsureCreated();
+
+    // 添加默认数据
     var manager = scope.ServiceProvider.GetRequiredService<IOpenIddictApplicationManager>();
     if (await manager.FindByClientIdAsync(InitClient.AdminClient.ClientId!) == null)
     {
