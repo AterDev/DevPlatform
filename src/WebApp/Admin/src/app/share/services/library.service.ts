@@ -17,7 +17,7 @@ export class LibraryService extends BaseService {
    * @param id 所属对象id
    * @param data []
    */
-  add(id: string, data: []): Observable<number> {
+  addIn(id: string, data: []): Observable<number> {
     const url = `/api/Library/${id}`;
     return this.request<number>('post', url, data);
   }
@@ -63,7 +63,7 @@ export class LibraryService extends BaseService {
    * 添加
    * @param data Library
    */
-  add2(data: Library): Observable<Library> {
+  add(data: Library): Observable<Library> {
     const url = `/api/Library`;
     return this.request<Library>('post', url, data);
   }

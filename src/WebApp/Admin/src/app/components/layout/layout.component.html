@@ -26,7 +26,7 @@
         </span>
     </mat-toolbar>
     <div class="content">
-        <admin-navigation></admin-navigation>
+        <admin-navigation *ngIf="isLogin"></admin-navigation>
         <div class="container">
             <router-outlet></router-outlet>
         </div>

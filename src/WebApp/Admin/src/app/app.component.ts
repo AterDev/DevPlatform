@@ -19,7 +19,6 @@ export class AppComponent {
     console.log('AppComponent STARTING');
   }
   ngOnInit(): void {
-    this.userData$ = this.oidcSecurityService.userData$;
     this.oidcSecurityService.checkAuth()
       .subscribe(res => {
         this.isAuthenticated = res.isAuthenticated;

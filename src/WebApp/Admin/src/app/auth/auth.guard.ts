@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { OidcSecurityService } from 'angular-auth-oidc-client';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -11,29 +11,28 @@ export class AuthGuard implements CanActivate {
     private router: Router,
     private service: OidcSecurityService,
   ) {
-
-
   }
   canActivate(
     route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): boolean {
-
-    const isLogin = this.service.isAuthenticated();
+    state: RouterStateSnapshot): Observable<boolean | UrlTree> {
     const url = state.url;
-    // 不需要登录的页面
-    if (url.startsWith('/home')) {
-      return true;
-    }
-    // 未登录的时默认路由
-    if (!isLogin) {
-      this.router.navigate(['/home']);
-      return false;
-    }
-    return true;
+
+    return this.service.isAuthenticated$.pipe(
+      map((res) => {
+        // 不需要授权的页面路由
+        if (url.startsWith('/index')) {
+          return true;
+        }
+        if (res.isAuthenticated) {
+          return true;
+        }
+        return this.router.parseUrl('/index');
+      })
+    );
   }
   canActivateChild(
     next: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): boolean {
+    state: RouterStateSnapshot): Observable<boolean | UrlTree> {
     return this.canActivate(next, state);
   }
 }

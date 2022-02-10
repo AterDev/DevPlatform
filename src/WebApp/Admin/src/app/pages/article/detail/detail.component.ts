@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ArticleService } from 'src/app/services/article.service';
+import { ArticleService } from 'src/app/share/services/article.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ArticleDto } from 'src/app/share/models/article-dto.model';
+import { Article } from 'src/app/share/models/article/article.model';
 import { Location } from '@angular/common';
 
 @Component({
@@ -13,7 +13,7 @@ import { Location } from '@angular/common';
 export class DetailComponent implements OnInit {
   id!: string;
   isLoading = true;
-  data = {} as ArticleDto;
+  data = {} as Article;
   constructor(
     private service: ArticleService,
     private snb: MatSnackBar,
@@ -35,7 +35,7 @@ export class DetailComponent implements OnInit {
   getDetail(): void {
     this.service.getDetail(this.id)
       .subscribe(res => {
-        this.data = res as ArticleDto;
+        this.data = res;
         this.isLoading = false;
       }, error => {
         this.snb.open(error);

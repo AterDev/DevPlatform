@@ -67,10 +67,6 @@ img {
     padding-left: 16px;
     padding-right: 16px;
 }
-.active {
-    background-color: rgb(205, 174, 255);
-}
-
 .clickable {
     cursor: pointer;
 }

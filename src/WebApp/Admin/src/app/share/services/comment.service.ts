@@ -17,7 +17,7 @@ export class CommentService extends BaseService {
    * @param id 所属对象id
    * @param data []
    */
-  add(id: string, data: []): Observable<number> {
+  addIn(id: string, data: []): Observable<number> {
     const url = `/api/Comment/${id}`;
     return this.request<number>('post', url, data);
   }
@@ -63,7 +63,7 @@ export class CommentService extends BaseService {
    * 添加
    * @param data Comment
    */
-  add2(data: Comment): Observable<Comment> {
+  add(data: Comment): Observable<Comment> {
     const url = `/api/Comment`;
     return this.request<Comment>('post', url, data);
   }

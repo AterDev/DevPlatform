@@ -1,9 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ArticleDto } from 'src/app/share/models/article-dto.model';
-import { ArticleService } from 'src/app/services/article.service';
+import { Article } from 'src/app/share/models/article/article.model';
+import { ArticleService } from 'src/app/share/services/article.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ArticleUpdateDto } from 'src/app/share/models/article-update-dto.model';
+import { ArticleUpdateDto } from 'src/app/share/models/article/article-update-dto.model';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Location } from '@angular/common';
@@ -61,41 +61,41 @@ export class EditComponent implements OnInit {
 
   initForm(): void {
     this.formGroup = new FormGroup({
-      title: new FormControl(title, [Validators.maxLength(100)]),
-      summary: new FormControl(summary, [Validators.maxLength(500)]),
-      authorName: new FormControl(authorName, [Validators.maxLength(100)]),
-      tags: new FormControl(tags, [Validators.maxLength(100)]),
-      isPrivate: new FormControl(isPrivate, []),
-      accountId: new FormControl(accountId, []),
+      title: new FormControl(this.title?.value, [Validators.maxLength(100)]),
+      summary: new FormControl(this.summary?.value, [Validators.maxLength(500)]),
+      authorName: new FormControl(this.authorName?.value, [Validators.maxLength(100)]),
+      tags: new FormControl(this.tags?.value, [Validators.maxLength(100)]),
+      isPrivate: new FormControl(this.isPrivate?.value, []),
+      accountId: new FormControl(this.accountId?.value, []),
 
     });
   }
   getValidatorMessage(type: string): string {
     switch (type) {
       case 'title':
-        return this.title?.errors?.required ? 'Title必填' :
-          this.title?.errors?.minlength ? 'Title长度最少位' :
-            this.title?.errors?.maxlength ? 'Title长度最多100位' : '';
+        return this.title?.errors?.['required'] ? 'Title必填' :
+          this.title?.errors?.['minlength'] ? 'Title长度最少位' :
+            this.title?.errors?.['maxlength'] ? 'Title长度最多100位' : '';
       case 'summary':
-        return this.summary?.errors?.required ? 'Summary必填' :
-          this.summary?.errors?.minlength ? 'Summary长度最少位' :
-            this.summary?.errors?.maxlength ? 'Summary长度最多500位' : '';
+        return this.summary?.errors?.['required'] ? 'Summary必填' :
+          this.summary?.errors?.['minlength'] ? 'Summary长度最少位' :
+            this.summary?.errors?.['maxlength'] ? 'Summary长度最多500位' : '';
       case 'authorName':
-        return this.authorName?.errors?.required ? 'AuthorName必填' :
-          this.authorName?.errors?.minlength ? 'AuthorName长度最少位' :
-            this.authorName?.errors?.maxlength ? 'AuthorName长度最多100位' : '';
+        return this.authorName?.errors?.['required'] ? 'AuthorName必填' :
+          this.authorName?.errors?.['minlength'] ? 'AuthorName长度最少位' :
+            this.authorName?.errors?.['maxlength'] ? 'AuthorName长度最多100位' : '';
       case 'tags':
-        return this.tags?.errors?.required ? 'Tags必填' :
-          this.tags?.errors?.minlength ? 'Tags长度最少位' :
-            this.tags?.errors?.maxlength ? 'Tags长度最多100位' : '';
+        return this.tags?.errors?.['required'] ? 'Tags必填' :
+          this.tags?.errors?.['minlength'] ? 'Tags长度最少位' :
+            this.tags?.errors?.['maxlength'] ? 'Tags长度最多100位' : '';
       case 'isPrivate':
-        return this.isPrivate?.errors?.required ? 'IsPrivate必填' :
-          this.isPrivate?.errors?.minlength ? 'IsPrivate长度最少位' :
-            this.isPrivate?.errors?.maxlength ? 'IsPrivate长度最多位' : '';
+        return this.isPrivate?.errors?.['required'] ? 'IsPrivate必填' :
+          this.isPrivate?.errors?.['minlength'] ? 'IsPrivate长度最少位' :
+            this.isPrivate?.errors?.['maxlength'] ? 'IsPrivate长度最多位' : '';
       case 'accountId':
-        return this.accountId?.errors?.required ? 'AccountId必填' :
-          this.accountId?.errors?.minlength ? 'AccountId长度最少位' :
-            this.accountId?.errors?.maxlength ? 'AccountId长度最多位' : '';
+        return this.accountId?.errors?.['required'] ? 'AccountId必填' :
+          this.accountId?.errors?.['minlength'] ? 'AccountId长度最少位' :
+            this.accountId?.errors?.['maxlength'] ? 'AccountId长度最多位' : '';
 
       default:
         return '';

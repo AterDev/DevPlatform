@@ -6,14 +6,13 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 @NgModule({
-  declarations: [],
+  declarations: [EnumPipe],
   imports: [
     CommonModule,
     RouterModule,
     ReactiveFormsModule,
     FormsModule,
     MarkdownModule.forRoot(),
-    EnumPipe
   ],
   exports: [
     CommonModule,

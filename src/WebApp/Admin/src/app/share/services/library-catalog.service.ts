@@ -17,7 +17,7 @@ export class LibraryCatalogService extends BaseService {
    * @param id 所属对象id
    * @param data []
    */
-  add(id: string, data: []): Observable<number> {
+  addIn(id: string, data: []): Observable<number> {
     const url = `/api/LibraryCatalog/${id}`;
     return this.request<number>('post', url, data);
   }
@@ -63,7 +63,7 @@ export class LibraryCatalogService extends BaseService {
    * 添加
    * @param data LibraryCatalog
    */
-  add2(data: LibraryCatalog): Observable<LibraryCatalog> {
+  add(data: LibraryCatalog): Observable<LibraryCatalog> {
     const url = `/api/LibraryCatalog`;
     return this.request<LibraryCatalog>('post', url, data);
   }

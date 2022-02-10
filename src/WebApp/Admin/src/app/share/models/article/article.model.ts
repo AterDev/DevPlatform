@@ -17,7 +17,6 @@ export interface Article extends EntityBase {
 4 = Comment
    */
   articleType?: ArticleType | null;
-
   account?: User | null;
   isPrivate?: boolean | null;
   extend?: ArticleExtend | null;

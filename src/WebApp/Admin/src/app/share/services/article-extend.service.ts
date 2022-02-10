@@ -17,7 +17,7 @@ export class ArticleExtendService extends BaseService {
    * @param id 所属对象id
    * @param data []
    */
-  add(id: string, data: []): Observable<number> {
+  addIn(id: string, data: []): Observable<number> {
     const url = `/api/ArticleExtend/${id}`;
     return this.request<number>('post', url, data);
   }
@@ -63,7 +63,7 @@ export class ArticleExtendService extends BaseService {
    * 添加
    * @param data ArticleExtend
    */
-  add2(data: ArticleExtend): Observable<ArticleExtend> {
+  add(data: ArticleExtend): Observable<ArticleExtend> {
     const url = `/api/ArticleExtend`;
     return this.request<ArticleExtend>('post', url, data);
   }

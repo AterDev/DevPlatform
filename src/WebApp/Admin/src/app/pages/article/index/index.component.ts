@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ArticleService } from 'src/app/services/article.service';
+import { ArticleService } from 'src/app/share/services/article.service';
 import { Router } from '@angular/router';
-import { ConfirmDialogComponent } from 'src/app/share/confirm-dialog/confirm-dialog.component';
-import { ArticleDto } from 'src/app/share/models/article-dto.model';
-import { ArticleFilter } from 'src/app/share/models/article-filter.model';
+import { ConfirmDialogComponent } from 'src/app/components/confirm-dialog/confirm-dialog.component';
+import { ArticleItemDto } from 'src/app/share/models/article/article-item-dto.model';
+import { ArticleFilter } from 'src/app/share/models/article/article-filter.model';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -18,9 +18,9 @@ export class IndexComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   isLoading = true;
   total = 0;
-  data: ArticleDto[] = [];
+  data: ArticleItemDto[] = [];
   columns: string[] = ['title',　'summary',　'authorName',　'actions'];
-  dataSource!: MatTableDataSource<ArticleDto>;
+  dataSource!: MatTableDataSource<ArticleItemDto>;
   filter: ArticleFilter;
   pageSizeOption = [12, 20, 50];
   constructor(
@@ -50,12 +50,12 @@ export class IndexComponent implements OnInit {
         if (res.data) {
           this.data = res.data;
           this.total = res.count;
-          this.dataSource = new MatTableDataSource<ArticleDto>(this.data);
+          this.dataSource = new MatTableDataSource<ArticleItemDto>(this.data);
         }
       });
   }
 
-  deleteConfirm(item: ArticleDto): void {
+  deleteConfirm(item: ArticleItemDto): void {
     const ref = this.dialog.open(ConfirmDialogComponent, {
       hasBackdrop: true,
       disableClose: false,
@@ -71,12 +71,16 @@ export class IndexComponent implements OnInit {
       }
     });
   }
-  delete(item: ArticleDto): void {
+  delete(item: ArticleItemDto): void {
     this.service.delete(item.id)
       .subscribe(res => {
-        this.data = this.data.filter(_ => _.id !== res.id);
-        this.dataSource.data = this.data;
-        this.snb.open('删除成功');
+        if (res) {
+          this.data = this.data.filter(_ => _.id !== item.id);
+          this.dataSource.data = this.data;
+          this.snb.open('删除成功');
+        } else {
+          this.snb.open('删除失败');
+        }
       });
 }
 

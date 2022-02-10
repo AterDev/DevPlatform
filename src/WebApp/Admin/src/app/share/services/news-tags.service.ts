@@ -17,7 +17,7 @@ export class NewsTagsService extends BaseService {
    * @param id 所属对象id
    * @param data []
    */
-  add(id: string, data: []): Observable<number> {
+  addIn(id: string, data: []): Observable<number> {
     const url = `/api/NewsTags/${id}`;
     return this.request<number>('post', url, data);
   }
@@ -63,7 +63,7 @@ export class NewsTagsService extends BaseService {
    * 添加
    * @param data NewsTags
    */
-  add2(data: NewsTags): Observable<NewsTags> {
+  add(data: NewsTags): Observable<NewsTags> {
     const url = `/api/NewsTags`;
     return this.request<NewsTags>('post', url, data);
   }
