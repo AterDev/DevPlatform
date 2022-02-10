@@ -29,19 +29,20 @@ public class UserinfoController : Controller
 
         var claims = new Dictionary<string, object>(StringComparer.Ordinal)
         {
-            [Claims.Subject] = await _userManager.GetUserIdAsync(user)
+            [Claims.Subject] = user.Id,
+            [Claims.Username] = user.UserName,
         };
 
         if (User.HasScope(Scopes.Email))
         {
-            claims[Claims.Email] = await _userManager.GetEmailAsync(user);
-            claims[Claims.EmailVerified] = await _userManager.IsEmailConfirmedAsync(user);
+            claims[Claims.Email] = user.Id;
+            claims[Claims.EmailVerified] = user.EmailConfirmed;
         }
 
         if (User.HasScope(Scopes.Phone))
         {
-            claims[Claims.PhoneNumber] = await _userManager.GetPhoneNumberAsync(user);
-            claims[Claims.PhoneNumberVerified] = await _userManager.IsPhoneNumberConfirmedAsync(user);
+            claims[Claims.PhoneNumber] = user.PhoneNumber ?? "";
+            claims[Claims.PhoneNumberVerified] = user.PhoneNumberConfirmed;
         }
 
         if (User.HasScope(Scopes.Roles))

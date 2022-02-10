@@ -8,7 +8,6 @@ public class ArticleController : RestApiBase<ArticleDataStore, Article, ArticleU
 {
     public ArticleController(IUserContext user, ILogger<ArticleController> logger, ArticleDataStore store) : base(user, logger, store)
     {
-
     }
 
     /// <summary>

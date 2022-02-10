@@ -18,7 +18,7 @@ public class UserContext : IUserContext
     public UserContext(IHttpContextAccessor httpContextAccessor)
     {
         _httpContextAccessor = httpContextAccessor;
-        if (Guid.TryParse(FindClaim(ClaimTypes.NameIdentifier)?.Value, out var userId) && userId != Guid.Empty)
+        if (Guid.TryParse(FindClaim("sub")?.Value, out var userId) && userId != Guid.Empty)
         {
             UserId = userId;
         }

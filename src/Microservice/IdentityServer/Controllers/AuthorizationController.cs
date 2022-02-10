@@ -135,6 +135,7 @@ public class AuthorizationController : Controller
 
                 foreach (var claim in principal.Claims)
                 {
+                    var cc = GetDestinations(claim, principal);
                     claim.SetDestinations(GetDestinations(claim, principal));
                 }
 
@@ -193,7 +194,7 @@ public class AuthorizationController : Controller
         {
             return Forbid(
                 authenticationSchemes: OpenIddictServerAspNetCoreDefaults.AuthenticationScheme,
-                properties: new AuthenticationProperties(new Dictionary<string, string>
+                properties: new AuthenticationProperties(new Dictionary<string, string?>
                 {
                     [OpenIddictServerAspNetCoreConstants.Properties.Error] = Errors.ConsentRequired,
                     [OpenIddictServerAspNetCoreConstants.Properties.ErrorDescription] =
@@ -226,6 +227,7 @@ public class AuthorizationController : Controller
 
         foreach (var claim in principal.Claims)
         {
+            var cc = GetDestinations(claim, principal);
             claim.SetDestinations(GetDestinations(claim, principal));
         }
 
@@ -281,7 +283,7 @@ public class AuthorizationController : Controller
             {
                 return Forbid(
                     authenticationSchemes: OpenIddictServerAspNetCoreDefaults.AuthenticationScheme,
-                    properties: new AuthenticationProperties(new Dictionary<string, string>
+                    properties: new AuthenticationProperties(new Dictionary<string, string?>
                     {
                         [OpenIddictServerAspNetCoreConstants.Properties.Error] = Errors.InvalidGrant,
                         [OpenIddictServerAspNetCoreConstants.Properties.ErrorDescription] = "The token is no longer valid."
@@ -293,7 +295,7 @@ public class AuthorizationController : Controller
             {
                 return Forbid(
                     authenticationSchemes: OpenIddictServerAspNetCoreDefaults.AuthenticationScheme,
-                    properties: new AuthenticationProperties(new Dictionary<string, string>
+                    properties: new AuthenticationProperties(new Dictionary<string, string?>
                     {
                         [OpenIddictServerAspNetCoreConstants.Properties.Error] = Errors.InvalidGrant,
                         [OpenIddictServerAspNetCoreConstants.Properties.ErrorDescription] = "The user is no longer allowed to sign in."
@@ -318,28 +320,26 @@ public class AuthorizationController : Controller
         {
             case Claims.Name:
                 yield return Destinations.AccessToken;
-
+                yield return Claims.Name;
                 if (principal.HasScope(Scopes.Profile))
                     yield return Destinations.IdentityToken;
-
                 yield break;
-
             case Claims.Email:
                 yield return Destinations.AccessToken;
-
+                yield return Claims.Email;
                 if (principal.HasScope(Scopes.Email))
                     yield return Destinations.IdentityToken;
-
                 yield break;
-
             case Claims.Role:
                 yield return Destinations.AccessToken;
-
+                yield return Claims.Role;
                 if (principal.HasScope(Scopes.Roles))
                     yield return Destinations.IdentityToken;
-
                 yield break;
-
+            case Claims.Subject:
+                yield return Destinations.AccessToken;
+                yield return Claims.Subject;
+                yield break;
             // Never include the security stamp in the access and identity tokens, as it's a secret value.
             case "AspNet.Identity.SecurityStamp": yield break;
 

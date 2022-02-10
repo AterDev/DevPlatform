@@ -36,8 +36,8 @@ services.AddOpenIddict()
     {
         options.SetIssuer("https://localhost:5001/");
         options.UseIntrospection()
-        .SetClientId("api")
-        .SetClientSecret("myApiTestSecret");
+            .SetClientId("api")
+            .SetClientSecret("myApiTestSecret");
 
         options.UseSystemNetHttp();
         options.UseAspNetCore();

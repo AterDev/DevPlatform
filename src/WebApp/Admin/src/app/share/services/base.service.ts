@@ -24,8 +24,6 @@ export class BaseService {
       headers: this.getHeaders(),
       body
     };
-
-
     return this.http.request<R>(method, url, options);
   }
 
