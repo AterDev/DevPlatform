@@ -18,7 +18,7 @@ public class NewsTagsController : RestApiBase<NewsTagsDataStore, NewsTags, NewsT
     /// <param name="dependStore"></param>
     /// <returns></returns>
     [HttpPost("{id}")]
-    public async Task<ActionResult<int>> AddAsync([FromRoute] Guid id, List<NewsTagsUpdateDto> list, [FromServices] ThirdNewsDataStore dependStore)
+    public async Task<ActionResult<int>> AddInAsync([FromRoute] Guid id, List<NewsTagsUpdateDto> list, [FromServices] ThirdNewsDataStore dependStore)
     {
         var depend = await dependStore.FindAsync(id);
         if (depend == null) return NotFound("depend not exist");

@@ -11,7 +11,6 @@ public class ApplicationController : ControllerBase
         _manager = manager;
     }
 
-
     [HttpGet("{id}")]
     public async Task<ActionResult<OpenIddictApplication>> FindAsync([FromRoute] Guid id)
     {
@@ -28,11 +27,9 @@ public class ApplicationController : ControllerBase
         return (List<OpenIddictApplication>)_manager.ListAsync(pageSize, offset);
     }
 
-
     [HttpPost]
     public async Task<ActionResult<OpenIddictApplication>> AddApplicationAsync(OpenIddictApplication application)
     {
-
         if (await _manager.FindByClientIdAsync(application.ClientId!) == null)
         {
             return (OpenIddictApplication)(await _manager.CreateAsync(application));
