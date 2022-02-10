@@ -24,6 +24,8 @@ export class BaseService {
       headers: this.getHeaders(),
       body
     };
+
+
     return this.http.request<R>(method, url, options);
   }
 
@@ -40,9 +42,8 @@ export class BaseService {
   getHeaders(): HttpHeaders {
     let headers = new HttpHeaders({
       Accept: 'application/json',
-      Authorization: 'Bearer',
+      Authorization: 'Bearer ' + this.oidcSecurityService.getAccessToken(),
     });
-    headers.set('Authorization', 'Bearer ' + this.oidcSecurityService.getAccessToken());
     return headers;
   }
   isMoblie(): boolean {

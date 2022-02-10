@@ -25,7 +25,6 @@ export class LayoutComponent implements OnInit {
               this.username = res.userData.email;
             });
         }
-
       })
   }
   login(): void {
