@@ -70,3 +70,7 @@ img {
 .clickable {
     cursor: pointer;
 }
+
+.ck-editor__editable_inline {
+    min-height: 500px;
+}

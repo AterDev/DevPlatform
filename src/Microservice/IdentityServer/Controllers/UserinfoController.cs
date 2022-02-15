@@ -35,7 +35,7 @@ public class UserinfoController : Controller
 
         if (User.HasScope(Scopes.Email))
         {
-            claims[Claims.Email] = user.Id;
+            claims[Claims.Email] = user.Email;
             claims[Claims.EmailVerified] = user.EmailConfirmed;
         }
 

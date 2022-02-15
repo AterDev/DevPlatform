@@ -7,19 +7,26 @@ import { ArticleUpdateDto } from 'src/app/share/models/article/article-update-dt
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Location } from '@angular/common';
-
+import * as ClassicEditor from 'ng-ckeditor5-classic';
+import { environment } from 'src/environments/environment';
+import { CKEditor5 } from '@ckeditor/ckeditor5-angular';
+import { OidcSecurityService } from 'angular-auth-oidc-client';
 @Component({
   selector: 'app-edit',
   templateUrl: './edit.component.html',
   styleUrls: ['./edit.component.css']
 })
 export class EditComponent implements OnInit {
+  public editorConfig!: CKEditor5.Config;
+  public editor: CKEditor5.EditorConstructor = ClassicEditor;
   id!: string;
   isLoading = true;
   data = {} as Article;
   updateData = {} as ArticleUpdateDto;
   formGroup!: FormGroup;
-  constructor(
+    constructor(
+    
+    private authService: OidcSecurityService,
     private service: ArticleService,
     private snb: MatSnackBar,
     private router: Router,
@@ -39,15 +46,35 @@ export class EditComponent implements OnInit {
     get title() { return this.formGroup.get('title'); }
     get summary() { return this.formGroup.get('summary'); }
     get authorName() { return this.formGroup.get('authorName'); }
+    get content() { return this.formGroup.get('content'); }
     get tags() { return this.formGroup.get('tags'); }
     get isPrivate() { return this.formGroup.get('isPrivate'); }
-    get accountId() { return this.formGroup.get('accountId'); }
 
 
   ngOnInit(): void {
     this.getDetail();
+    this.initEditor();
+    // TODO:获取其他相关数据后设置加载状态
+    this.isLoading = false;
   }
-
+    initEditor(): void {
+    this.editorConfig = {
+      // placeholder: '请添加图文信息提供证据，也可以直接从Word文档中复制',
+      simpleUpload: {
+        uploadUrl: environment.uploadEditorFileUrl,
+        headers: {
+          Authorization: 'Bearer ' + this.authService.getAccessToken()
+        }
+      },
+      language: 'zh-cn'
+    };
+  }
+  onReady(editor: any) {
+    editor.ui.getEditableElement().parentElement.insertBefore(
+      editor.ui.view.toolbar.element,
+      editor.ui.getEditableElement()
+    );
+  }
   getDetail(): void {
     this.service.getDetail(this.id)
       .subscribe(res => {
@@ -64,9 +91,9 @@ export class EditComponent implements OnInit {
       title: new FormControl(this.title?.value, [Validators.maxLength(100)]),
       summary: new FormControl(this.summary?.value, [Validators.maxLength(500)]),
       authorName: new FormControl(this.authorName?.value, [Validators.maxLength(100)]),
+      content: new FormControl(this.content?.value, [Validators.minLength(100)]),
       tags: new FormControl(this.tags?.value, [Validators.maxLength(100)]),
       isPrivate: new FormControl(this.isPrivate?.value, []),
-      accountId: new FormControl(this.accountId?.value, []),
 
     });
   }
@@ -84,6 +111,10 @@ export class EditComponent implements OnInit {
         return this.authorName?.errors?.['required'] ? 'AuthorName必填' :
           this.authorName?.errors?.['minlength'] ? 'AuthorName长度最少位' :
             this.authorName?.errors?.['maxlength'] ? 'AuthorName长度最多100位' : '';
+      case 'content':
+        return this.content?.errors?.['required'] ? 'Content必填' :
+          this.content?.errors?.['minlength'] ? 'Content长度最少100位' :
+            this.content?.errors?.['maxlength'] ? 'Content长度最多位' : '';
       case 'tags':
         return this.tags?.errors?.['required'] ? 'Tags必填' :
           this.tags?.errors?.['minlength'] ? 'Tags长度最少位' :
@@ -92,10 +123,6 @@ export class EditComponent implements OnInit {
         return this.isPrivate?.errors?.['required'] ? 'IsPrivate必填' :
           this.isPrivate?.errors?.['minlength'] ? 'IsPrivate长度最少位' :
             this.isPrivate?.errors?.['maxlength'] ? 'IsPrivate长度最多位' : '';
-      case 'accountId':
-        return this.accountId?.errors?.['required'] ? 'AccountId必填' :
-          this.accountId?.errors?.['minlength'] ? 'AccountId长度最少位' :
-            this.accountId?.errors?.['maxlength'] ? 'AccountId长度最多位' : '';
 
       default:
         return '';

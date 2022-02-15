@@ -20,6 +20,11 @@ public class ArticleUpdateDto
     [MaxLength(100)]
     public string? AuthorName { get; set; }
     /// <summary>
+    /// 内容
+    /// </summary>
+    [MinLength(100)]
+    public string? Content { get; set; } 
+    /// <summary>
     /// 标签
     /// </summary>
     [MaxLength(100)]

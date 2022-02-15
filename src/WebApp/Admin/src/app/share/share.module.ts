@@ -4,6 +4,7 @@ import { MarkdownModule } from 'ngx-markdown';
 import { EnumPipe } from './pipe/enum.pipe';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 @NgModule({
   declarations: [EnumPipe],
@@ -12,12 +13,14 @@ import { RouterModule } from '@angular/router';
     RouterModule,
     ReactiveFormsModule,
     FormsModule,
+    CKEditorModule,
     MarkdownModule.forRoot(),
   ],
   exports: [
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
+    CKEditorModule,
     EnumPipe
   ]
 })
