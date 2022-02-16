@@ -11,6 +11,9 @@ import * as ClassicEditor from 'ng-ckeditor5-classic';
 import { environment } from 'src/environments/environment';
 import { CKEditor5 } from '@ckeditor/ckeditor5-angular';
 import { OidcSecurityService } from 'angular-auth-oidc-client';
+import { ArticleType } from 'src/app/share/models/enum/article-type.model';
+import { Status } from 'src/app/share/models/enum/status.model';
+
 @Component({
   selector: 'app-edit',
   templateUrl: './edit.component.html',
@@ -19,6 +22,9 @@ import { OidcSecurityService } from 'angular-auth-oidc-client';
 export class EditComponent implements OnInit {
   public editorConfig!: CKEditor5.Config;
   public editor: CKEditor5.EditorConstructor = ClassicEditor;
+  ArticleType = ArticleType;
+Status = Status;
+
   id!: string;
   isLoading = true;
   data = {} as Article;
@@ -48,7 +54,9 @@ export class EditComponent implements OnInit {
     get authorName() { return this.formGroup.get('authorName'); }
     get content() { return this.formGroup.get('content'); }
     get tags() { return this.formGroup.get('tags'); }
+    get articleType() { return this.formGroup.get('articleType'); }
     get isPrivate() { return this.formGroup.get('isPrivate'); }
+    get status() { return this.formGroup.get('status'); }
 
 
   ngOnInit(): void {
@@ -88,12 +96,14 @@ export class EditComponent implements OnInit {
 
   initForm(): void {
     this.formGroup = new FormGroup({
-      title: new FormControl(this.title?.value, [Validators.maxLength(100)]),
-      summary: new FormControl(this.summary?.value, [Validators.maxLength(500)]),
-      authorName: new FormControl(this.authorName?.value, [Validators.maxLength(100)]),
-      content: new FormControl(this.content?.value, [Validators.minLength(100)]),
-      tags: new FormControl(this.tags?.value, [Validators.maxLength(100)]),
-      isPrivate: new FormControl(this.isPrivate?.value, []),
+      title: new FormControl(this.data.title, [Validators.maxLength(100)]),
+      summary: new FormControl(this.data.summary, [Validators.maxLength(500)]),
+      authorName: new FormControl(this.data.authorName, [Validators.maxLength(100)]),
+      content: new FormControl('', [Validators.minLength(100)]),
+      tags: new FormControl(this.data.tags, [Validators.maxLength(100)]),
+      articleType: new FormControl(this.data.articleType, []),
+      isPrivate: new FormControl(this.data.isPrivate, []),
+      status: new FormControl(this.data.status, []),
 
     });
   }
@@ -119,10 +129,18 @@ export class EditComponent implements OnInit {
         return this.tags?.errors?.['required'] ? 'Tags必填' :
           this.tags?.errors?.['minlength'] ? 'Tags长度最少位' :
             this.tags?.errors?.['maxlength'] ? 'Tags长度最多100位' : '';
+      case 'articleType':
+        return this.articleType?.errors?.['required'] ? 'ArticleType必填' :
+          this.articleType?.errors?.['minlength'] ? 'ArticleType长度最少位' :
+            this.articleType?.errors?.['maxlength'] ? 'ArticleType长度最多位' : '';
       case 'isPrivate':
         return this.isPrivate?.errors?.['required'] ? 'IsPrivate必填' :
           this.isPrivate?.errors?.['minlength'] ? 'IsPrivate长度最少位' :
             this.isPrivate?.errors?.['maxlength'] ? 'IsPrivate长度最多位' : '';
+      case 'status':
+        return this.status?.errors?.['required'] ? 'Status必填' :
+          this.status?.errors?.['minlength'] ? 'Status长度最少位' :
+            this.status?.errors?.['maxlength'] ? 'Status长度最多位' : '';
 
       default:
         return '';

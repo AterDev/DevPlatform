@@ -38,11 +38,10 @@ export class BaseService {
   }
 
   getHeaders(): HttpHeaders {
-    let headers = new HttpHeaders({
+    return new HttpHeaders({
       Accept: 'application/json',
       Authorization: 'Bearer ' + this.oidcSecurityService.getAccessToken(),
     });
-    return headers;
   }
   isMoblie(): boolean {
     const ua = navigator.userAgent;

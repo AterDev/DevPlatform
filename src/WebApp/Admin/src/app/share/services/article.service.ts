@@ -13,6 +13,15 @@ import { PageResultOfArticleItemDto } from '../models/article/page-result-of-art
 @Injectable({ providedIn: 'root' })
 export class ArticleService extends BaseService {
   /**
+   * addWithContent
+   * @param data ArticleUpdateDto
+   */
+  addWithContent(data: ArticleUpdateDto): Observable<Article> {
+    const url = `/api/Article/add`;
+    return this.request<Article>('post', url, data);
+  }
+
+  /**
    * 关联添加
    * @param id 所属对象id
    * @param data []

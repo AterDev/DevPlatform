@@ -5,9 +5,10 @@ import { EnumPipe } from './pipe/enum.pipe';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { ToKeyValuePipe } from './pipe/to-key-value.pipe';
 
 @NgModule({
-  declarations: [EnumPipe],
+  declarations: [EnumPipe, ToKeyValuePipe],
   imports: [
     CommonModule,
     RouterModule,
@@ -21,7 +22,8 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
     ReactiveFormsModule,
     FormsModule,
     CKEditorModule,
-    EnumPipe
+    EnumPipe,
+    ToKeyValuePipe
   ]
 })
 export class ShareModule { }

@@ -17,6 +17,10 @@ export interface ArticleUpdateDto {
    */
   authorName?: string | null;
   /**
+   * 内容
+   */
+  content?: string | null;
+  /**
    * 标签
    */
   tags?: string | null;
