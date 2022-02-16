@@ -10,6 +10,31 @@ public class ArticleController : RestApiBase<ArticleDataStore, Article, ArticleU
     {
     }
 
+
+    /// <summary>
+    /// 添加文章内容
+    /// </summary>
+    /// <param name="data"></param>
+    /// <param name="extendDataStore"></param>
+    /// <returns></returns>
+    [HttpPost("add")]
+    public async Task<ActionResult<Article>> AddWithContentAsync([FromBody] ArticleUpdateDto data, [FromServices] ArticleExtendDataStore extendDataStore)
+    {
+        var article = new Article();
+        var user = await  _store._context.Users.FindAsync(_user.UserId);
+        article.Merge(data);
+        article.Account = user!;
+        article = await _store.AddAsync(article);
+
+        var articleExtend = new ArticleExtend()
+        {
+            Article = article,
+            Content = data.Content??"",
+        };
+        await extendDataStore.AddAsync(articleExtend);
+        return article;
+    }
+
     /// <summary>
     /// 关联添加
     /// </summary>
