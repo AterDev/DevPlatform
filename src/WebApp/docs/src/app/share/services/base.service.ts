@@ -11,7 +11,7 @@ export class BaseService {
   baseUrl: string | null;
   isMobile = false;
   constructor(
-    public http: HttpClient
+    public http: HttpClient,
     // private oidcSecurityService: OidcSecurityService
   ) {
     this.isMobile = this.isMoblie();

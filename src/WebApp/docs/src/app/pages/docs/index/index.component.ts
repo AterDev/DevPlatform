@@ -37,7 +37,7 @@ export class IndexComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.getList();
+    this.getList();
   }
 
   getList(event?: PageEvent): void {

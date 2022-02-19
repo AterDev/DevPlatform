@@ -5,9 +5,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ComponentsModule } from './components/components.module';
-import { DocsCatalogModule } from './pages/docs-catalog/docs-catalog.module';
-import { DocsModule } from './pages/docs/docs.module';
 import { HttpClientModule } from '@angular/common/http';
+import { DocsModule } from './pages/docs/docs.module';
+import { DocsCatalogModule } from './pages/docs-catalog/docs-catalog.module';
 
 @NgModule({
   declarations: [
@@ -18,9 +18,9 @@ import { HttpClientModule } from '@angular/common/http';
     AppRoutingModule,
     BrowserAnimationsModule,
     ComponentsModule,
-    DocsCatalogModule,
+    HttpClientModule,
     DocsModule,
-    HttpClientModule
+    DocsCatalogModule
   ],
   providers: [],
   bootstrap: [AppComponent]

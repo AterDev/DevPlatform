@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { DocsCatalogFilter } from '../models/docs-catalog/docs-catalog-filter.model';
 import { DocsCatalog } from '../models/docs-catalog/docs-catalog.model';
 import { BatchUpdateOfDocsCatalogUpdateDto } from '../models/docs-catalog/batch-update-of-docs-catalog-update-dto.model';
-import { DocsCatalogAddDto } from '../models/docs-catalog-add-dto/docs-catalog-add-dto.model';
+import { DocsCatalogAddDto } from '../models/docs-catalog/docs-catalog-add-dto.model';
 import { DocsCatalogUpdateDto } from '../models/docs-catalog/docs-catalog-update-dto.model';
 import { PageResultOfDocsCatalogItemDto } from '../models/docs-catalog/page-result-of-docs-catalog-item-dto.model';
 
