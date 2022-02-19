@@ -1,5 +1,4 @@
-﻿global using Core.Models;
-global using DocAPI.Models;
+﻿global using DocAPI.Models;
 global using Microsoft.EntityFrameworkCore;
 global using System.ComponentModel.DataAnnotations;
 global using System;
