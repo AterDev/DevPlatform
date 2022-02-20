@@ -10,6 +10,9 @@ import { Location } from '@angular/common';
 import * as ClassicEditor from 'ng-ckeditor5-classic';
 import { environment } from 'src/environments/environment';
 import { CKEditor5 } from '@ckeditor/ckeditor5-angular';
+import { DocsCatalogService } from 'src/app/share/services/docs-catalog.service';
+import { DocsCatalogItemDto } from 'src/app/share/models/docs-catalog/docs-catalog-item-dto.model';
+import { resetFakeAsyncZone } from '@angular/core/testing';
 // import { OidcSecurityService } from 'angular-auth-oidc-client';
 
 @Component({
@@ -20,14 +23,14 @@ import { CKEditor5 } from '@ckeditor/ckeditor5-angular';
 export class AddComponent implements OnInit {
   public editorConfig!: CKEditor5.Config;
   public editor: CKEditor5.EditorConstructor = ClassicEditor;
-
   formGroup!: FormGroup;
   data = {} as DocsUpdateDto;
+  catalogs = [] as DocsCatalogItemDto[];
   isLoading = true;
   constructor(
-
     // private authService: OidcSecurityService,
     private service: DocsService,
+    private catalogSrv: DocsCatalogService,
     public snb: MatSnackBar,
     private router: Router,
     private route: ActivatedRoute,
@@ -40,13 +43,23 @@ export class AddComponent implements OnInit {
 
   get name() { return this.formGroup.get('name'); }
   get content() { return this.formGroup.get('content'); }
-
+  get catalogId() { return this.formGroup.get('catalogId'); }
 
   ngOnInit(): void {
     this.initForm();
     this.initEditor();
     // TODO:获取其他相关数据后设置加载状态
-    this.isLoading = false;
+    this.getCatalogs();
+  }
+
+  getCatalogs(): void {
+    this.catalogSrv.filter({ pageIndex: 1, pageSize: 100 })
+      .subscribe(res => {
+        if (res.data) {
+          this.catalogs = res.data;
+        }
+        this.isLoading = false;
+      });
   }
   initEditor(): void {
     this.editorConfig = {
@@ -70,7 +83,7 @@ export class AddComponent implements OnInit {
     this.formGroup = new FormGroup({
       name: new FormControl(null, [Validators.minLength(3), Validators.maxLength(100)]),
       content: new FormControl(null, [Validators.maxLength(10000)]),
-
+      catalogId: new FormControl(null, [Validators.required])
     });
   }
   getValidatorMessage(type: string): string {
@@ -83,7 +96,8 @@ export class AddComponent implements OnInit {
         return this.content?.errors?.['required'] ? 'Content必填' :
           this.content?.errors?.['minlength'] ? 'Content长度最少位' :
             this.content?.errors?.['maxlength'] ? 'Content长度最多10000位' : '';
-
+      case 'catalogId':
+        return this.catalogId?.errors?.['required'] ? '必须选择一个目录' : '';
       default:
         return '';
     }
@@ -93,7 +107,10 @@ export class AddComponent implements OnInit {
     if (this.formGroup.valid) {
       const data = this.formGroup.value as DocsUpdateDto;
       this.data = { ...data, ...this.data };
-      this.service.add(this.data as Docs)
+      
+      let docs = [] as DocsUpdateDto[];
+      docs.push(this.data);
+      this.service.addIn(this.catalogId?.value, docs)
         .subscribe(res => {
           this.snb.open('添加成功');
           // this.dialogRef.close(res);

@@ -8,6 +8,7 @@ import { ComponentsModule } from './components/components.module';
 import { HttpClientModule } from '@angular/common/http';
 import { DocsModule } from './pages/docs/docs.module';
 import { DocsCatalogModule } from './pages/docs-catalog/docs-catalog.module';
+import { HomeModule } from './pages/home/home.module';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { DocsCatalogModule } from './pages/docs-catalog/docs-catalog.module';
     ComponentsModule,
     HttpClientModule,
     DocsModule,
-    DocsCatalogModule
+    DocsCatalogModule,
+    HomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -19,14 +19,20 @@ public class DocsCatalogController : RestApiBase<DocsCatalogDataStore, DocsCatal
     {
         return base.FilterAsync(filter);
     }
-
+    /// <summary>
+    /// 获取树形结构
+    /// </summary>
+    [HttpGet("tree")]
+    public async Task<List<DocsCatalogTreeItemDto>> GetTreeAsync()
+    {
+        return await _store.GetTreeAsync();
+    }
     /// <summary>
     /// 添加
     /// </summary>
     /// <param name="form"></param>
     /// <returns></returns>
     public override Task<ActionResult<DocsCatalog>> AddAsync(DocsCatalog form) => base.AddAsync(form);
-
 
     /// <summary>
     /// 添加文档目录

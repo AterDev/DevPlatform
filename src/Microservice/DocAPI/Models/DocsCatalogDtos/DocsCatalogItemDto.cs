@@ -9,5 +9,4 @@ public class DocsCatalogItemDto
     public string Name { get; set; } = default!;
     public int Sort { get; set; } = default!;
     public Guid Id { get; set; } = default!;
-
 }

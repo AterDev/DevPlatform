@@ -17,7 +17,7 @@ export class DocsService extends BaseService {
    * @param id 所属对象id
    * @param data []
    */
-  addIn(id: string, data: []): Observable<number> {
+  addIn(id: string, data: DocsUpdateDto[]): Observable<number> {
     const url = `/api/Docs/${id}`;
     return this.request<number>('post', url, data);
   }

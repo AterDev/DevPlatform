@@ -2,12 +2,9 @@ import { Status } from './enum/status.model';
 export interface EntityBase {
   id: string;
   /**
-   * 0 = Default
-1 = Deleted
-2 = Invalid
-3 = Valid
+   * 状态
    */
-  status?: Status | null;
+  status?: Status;
   createdTime: Date;
   updatedTime: Date;
 
