@@ -7,7 +7,7 @@ import { BatchUpdateOfDocsCatalogUpdateDto } from '../models/docs-catalog/batch-
 import { DocsCatalogAddDto } from '../models/docs-catalog/docs-catalog-add-dto.model';
 import { DocsCatalogUpdateDto } from '../models/docs-catalog/docs-catalog-update-dto.model';
 import { PageResultOfDocsCatalogItemDto } from '../models/docs-catalog/page-result-of-docs-catalog-item-dto.model';
-import { DocsCatalogTreeItemDto } from '../models/docs-catalog-tree/docs-catalog-tree-item-dto.model';
+import { DocsCatalogTreeItemDto } from '../models/docs-catalog/docs-catalog-tree-item-dto.model';
 
 /**
  * 文档目录
@@ -28,7 +28,7 @@ export class DocsCatalogService extends BaseService {
    */
   getTree(): Observable<DocsCatalogTreeItemDto[]> {
     const url = `/api/DocsCatalog/tree`;
-    return this.request<[]>('get', url);
+    return this.request<DocsCatalogTreeItemDto[]>('get', url);
   }
 
   /**
