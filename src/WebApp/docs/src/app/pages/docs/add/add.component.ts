@@ -9,7 +9,6 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Location } from '@angular/common';
 import * as ClassicEditor from 'ng-ckeditor5-classic';
 import { environment } from 'src/environments/environment';
-import { CKEditor5 } from '@ckeditor/ckeditor5-angular';
 import { DocsCatalogService } from 'src/app/share/services/docs-catalog.service';
 import { DocsCatalogItemDto } from 'src/app/share/models/docs-catalog/docs-catalog-item-dto.model';
 import { resetFakeAsyncZone } from '@angular/core/testing';
@@ -21,8 +20,6 @@ import { resetFakeAsyncZone } from '@angular/core/testing';
   styleUrls: ['./add.component.css']
 })
 export class AddComponent implements OnInit {
-  public editorConfig!: CKEditor5.Config;
-  public editor: CKEditor5.EditorConstructor = ClassicEditor;
   formGroup!: FormGroup;
   data = {} as DocsUpdateDto;
   catalogs = [] as DocsCatalogItemDto[];
@@ -47,8 +44,7 @@ export class AddComponent implements OnInit {
 
   ngOnInit(): void {
     this.initForm();
-    this.initEditor();
-    // TODO:获取其他相关数据后设置加载状态
+    // 获取其他相关数据后设置加载状态
     this.getCatalogs();
   }
 
@@ -60,24 +56,6 @@ export class AddComponent implements OnInit {
         }
         this.isLoading = false;
       });
-  }
-  initEditor(): void {
-    this.editorConfig = {
-      // placeholder: '请添加图文信息提供证据，也可以直接从Word文档中复制',
-      simpleUpload: {
-        uploadUrl: environment.uploadEditorFileUrl,
-        headers: {
-          // Authorization: 'Bearer ' + this.authService.getAccessToken()
-        }
-      },
-      language: 'zh-cn'
-    };
-  }
-  onReady(editor: any) {
-    editor.ui.getEditableElement().parentElement.insertBefore(
-      editor.ui.view.toolbar.element,
-      editor.ui.getEditableElement()
-    );
   }
   initForm(): void {
     this.formGroup = new FormGroup({
@@ -107,7 +85,7 @@ export class AddComponent implements OnInit {
     if (this.formGroup.valid) {
       const data = this.formGroup.value as DocsUpdateDto;
       this.data = { ...data, ...this.data };
-      
+
       let docs = [] as DocsUpdateDto[];
       docs.push(this.data);
       this.service.addIn(this.catalogId?.value, docs)

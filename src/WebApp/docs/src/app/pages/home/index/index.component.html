@@ -1,6 +1,4 @@
-<p>
-    {{docs.name}}
-</p>
-<pre [innerHtml]="docs.content">
-
-</pre>
+<div class="p-2">
+    <h1>{{docs.name}}</h1>
+    <markdown emoji [data]="docs.content!"></markdown>
+</div>

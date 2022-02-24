@@ -1,0 +1,24 @@
+<mat-sidenav-container class="example-container">
+    <mat-sidenav *ngIf="!isLoading" #sidenav mode="side" opened="opened">
+        <div class="d-flex flex-row-reverse">
+            <button mat-icon-button *ngIf="opened" (click)="toggle()">
+                <mat-icon>keyboard_double_arrow_left</mat-icon>
+            </button>
+            <button mat-icon-button *ngIf="!opened" (click)="toggle()">
+                <mat-icon>keyboard_double_arrow_right</mat-icon>
+            </button>
+        </div>
+        <mat-list>
+            <mat-nav-list [routerLink]="['/docs']" routerLinkActive="active">
+                文档
+            </mat-nav-list>
+            <mat-nav-list [routerLink]="['/docs-catalog']" routerLinkActive="active">
+                文档目录
+            </mat-nav-list>
+        </mat-list>
+
+    </mat-sidenav>
+    <mat-sidenav-content class="px-2">
+        <router-outlet></router-outlet>
+    </mat-sidenav-content>
+</mat-sidenav-container>

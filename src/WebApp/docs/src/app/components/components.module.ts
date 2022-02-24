@@ -5,7 +5,6 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
-import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
@@ -38,6 +37,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatRadioModule } from '@angular/material/radio';
+import { MarkdownModule } from 'ngx-markdown';
 
 const materialModules = [
   MatToolbarModule,
@@ -72,7 +72,6 @@ const materialModules = [
   MatChipsModule,
   MatAutocompleteModule,
   MatRadioModule
-
 ];
 
 @NgModule({
@@ -86,7 +85,7 @@ const materialModules = [
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
-    CKEditorModule,
+    MarkdownModule.forRoot(),
     ...materialModules
 
   ],
@@ -97,7 +96,7 @@ const materialModules = [
     ReactiveFormsModule,
     LayoutComponent,
     ConfirmDialogComponent,
-    CKEditorModule,
+    MarkdownModule,
     ...materialModules
 
   ]
