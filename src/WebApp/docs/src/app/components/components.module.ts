@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, SecurityContext } from '@angular/core';
 import { LayoutComponent } from '../components/layout/layout.component';
 import { NavigationComponent } from './navigation/navigation.component';
 import { CommonModule } from '@angular/common';
@@ -37,7 +37,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatRadioModule } from '@angular/material/radio';
-import { MarkdownModule } from 'ngx-markdown';
+import { MarkdownModule, MarkedOptions } from 'ngx-markdown';
 
 const materialModules = [
   MatToolbarModule,
@@ -85,7 +85,19 @@ const materialModules = [
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
-    MarkdownModule.forRoot(),
+    MarkdownModule.forRoot({
+      sanitize: SecurityContext.NONE,
+      markedOptions: {
+        provide: MarkedOptions,
+        useValue: {
+          gfm: true,
+          breaks: false,
+          pedantic: false,
+          smartLists: true,
+          smartypants: false,
+        }
+      }
+    }),
     ...materialModules
 
   ],

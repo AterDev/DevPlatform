@@ -1,16 +1,19 @@
 <div class="d-flex p-2 justify-content-between">
-  <div class="d-flex flex-column">
+  <div class="d-flex flex-column" style="max-width: 960px;">
     <h1>{{docs.name}}</h1>
-    <markdown ngPreserveWhitespaces [data]="docs.content!" (ready)="onReady()"></markdown>
+    <markdown emoji ngPreserveWhitespaces [data]="docs.content!" (ready)="onReady()"></markdown>
   </div>
-  <div *ngIf="headings && headings.length>0" class="d-flex flex-column" style="max-width: 960px;">
+  <div *ngIf="headings && headings.length>0" class="d-flex flex-column">
     <nav class="navigation">
       <legend>
-        文章目录索引
+        <strong>文章目录索引</strong>
+        <button mat-icon-button (click)="toggleNavigation()">
+          <mat-icon>{{expand?'expand_less':'expand_more'}}</mat-icon>
+        </button>
       </legend>
-      <ul>
+      <ul *ngIf="expand">
         <li *ngFor="let heading of headings">
-          <a href="#{{heading.id}}">{{ heading.innerHTML | stripHtml }}</a>
+          <a (click)="onClick(heading.id)">{{ heading.innerHTML | stripHtml }}</a>
         </li>
       </ul>
     </nav>

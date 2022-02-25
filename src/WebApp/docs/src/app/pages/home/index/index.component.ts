@@ -13,11 +13,16 @@ export class IndexComponent implements OnInit {
   @Input()
   docs = {} as Docs;
   headings: any;
+  expand = true;
   constructor(
     @Inject(DOCUMENT) private document: Document
   ) { }
   ngOnInit(): void {
 
+  }
+
+  onClick(elementId: string): void {
+    this.document.querySelector('#' + elementId)!.scrollIntoView();
   }
   onReady(): void {
     setTimeout(() => {
@@ -28,5 +33,8 @@ export class IndexComponent implements OnInit {
       console.log(this.headings);
 
     });
+  }
+  toggleNavigation(): void {
+    this.expand = !this.expand;
   }
 }
