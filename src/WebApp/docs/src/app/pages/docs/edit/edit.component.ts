@@ -5,10 +5,8 @@ import { DocsService } from 'src/app/share/services/docs.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DocsUpdateDto } from 'src/app/share/models/docs/docs-update-dto.model';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Location } from '@angular/common';
-import * as ClassicEditor from 'ng-ckeditor5-classic';
-import { environment } from 'src/environments/environment';
+
 // import { OidcSecurityService } from 'angular-auth-oidc-client';
 
 @Component({
@@ -45,11 +43,8 @@ export class EditComponent implements OnInit {
   get name() { return this.formGroup.get('name'); }
   get content() { return this.formGroup.get('content'); }
 
-
   ngOnInit(): void {
     this.getDetail();
-    // TODO:获取其他相关数据后设置加载状态
-    this.isLoading = false;
   }
 
   onReady(editor: any) {

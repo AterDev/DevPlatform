@@ -1,0 +1,25 @@
+code{
+    background-color: #ddd;
+    padding: 1px 4px;
+    border-radius: 2px;
+    font-family: 'Cascadia Code','Consolas','Courier', 'Segoe UI';
+}
+.navigation{
+    max-height: 1000px;
+    overflow-y: auto;
+    border:1px solid #ddd;
+    padding:8px;
+    border-radius: 5px;
+}
+ul {
+    list-style-type: none;
+    padding: 8px;
+    margin: 0;
+}
+ul li{
+    margin:2px 0;
+    padding:2px;
+}
+ul li a{
+    text-decoration: none;
+}

@@ -4,5 +4,6 @@
 export interface DocsCatalogUpdateDto {
   name?: string | null;
   sort?: number | null;
+  parentId?: string | null;
 
 }

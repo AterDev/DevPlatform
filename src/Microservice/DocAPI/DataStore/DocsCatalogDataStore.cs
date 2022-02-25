@@ -48,6 +48,28 @@ public class DocsCatalogDataStore : DataStoreBase<DocsContext, DocsCatalog, Docs
         return catalogs;
     }
     public override Task<DocsCatalog> AddAsync(DocsCatalog data) => base.AddAsync(data);
-    public override Task<DocsCatalog?> UpdateAsync(Guid id, DocsCatalogUpdateDto dto) => base.UpdateAsync(id, dto);
+    public override async Task<DocsCatalog?> UpdateAsync(Guid id, DocsCatalogUpdateDto dto)
+    {
+        if (dto.ParentId != null)
+        {
+            var parent = await _db.FindAsync(dto.ParentId);
+            if (parent != null)
+            {
+                var current = await _db.FindAsync(id);
+                if (current != null)
+                {
+                    current.Merge(dto);
+                    current.Parent = parent;
+                    await _context.SaveChangesAsync();
+                }
+            }
+        }
+        return null;
+    }
     public override Task<bool> DeleteAsync(Guid id) => base.DeleteAsync(id);
+
+    public override Task<DocsCatalog?> FindAsync(Guid id)
+    {
+        return _db.Include(d => d.Parent).SingleOrDefaultAsync(d => d.Id == id);
+    }
 }

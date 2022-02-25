@@ -7,45 +7,56 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Location } from '@angular/common';
+import { DocsCatalogItemDto } from 'src/app/share/models/docs-catalog/docs-catalog-item-dto.model';
+import { DocsCatalogAddDto } from 'src/app/share/models/docs-catalog/docs-catalog-add-dto.model';
 
 @Component({
-    selector: 'app-add',
-    templateUrl: './add.component.html',
-    styleUrls: ['./add.component.css']
+  selector: 'app-add',
+  templateUrl: './add.component.html',
+  styleUrls: ['./add.component.css']
 })
 export class AddComponent implements OnInit {
-    
-    formGroup!: FormGroup;
-    data = {} as DocsCatalogUpdateDto;
-    isLoading = true;
-    constructor(
-        
-        private service: DocsCatalogService,
-        public snb: MatSnackBar,
-        private router: Router,
-        private route: ActivatedRoute,
-        private location: Location
-        // public dialogRef: MatDialogRef<AddComponent>,
-        // @Inject(MAT_DIALOG_DATA) public dlgData: { id: '' }
-    ) {
 
-    }
+  formGroup!: FormGroup;
+  data = {} as DocsCatalogUpdateDto;
+  catalogs = [] as DocsCatalogItemDto[];
+  isLoading = true;
+  constructor(
 
-    get name() { return this.formGroup.get('name'); }
-    get sort() { return this.formGroup.get('sort'); }
+    private service: DocsCatalogService,
+    public snb: MatSnackBar,
+    private router: Router,
+    private route: ActivatedRoute,
+    private location: Location
+    // public dialogRef: MatDialogRef<AddComponent>,
+    // @Inject(MAT_DIALOG_DATA) public dlgData: { id: '' }
+  ) {
 
+  }
+
+  get name() { return this.formGroup.get('name'); }
+  get sort() { return this.formGroup.get('sort'); }
+  get parentId() { return this.formGroup.get('parentId'); }
 
   ngOnInit(): void {
     this.initForm();
-    
-    // TODO:获取其他相关数据后设置加载状态
-    this.isLoading = false;
+    this.getCatalogs();
   }
-  
+
+  getCatalogs(): void {
+    this.service.filter({ pageIndex: 1, pageSize: 100 })
+      .subscribe(res => {
+        if (res.data) {
+          this.catalogs = res.data;
+        }
+        this.isLoading = false;
+      });
+  }
   initForm(): void {
     this.formGroup = new FormGroup({
-      name: new FormControl(null, [Validators.minLength(3),Validators.maxLength(20)]),
-      sort: new FormControl(null, []),
+      name: new FormControl(null, [Validators.minLength(3), Validators.maxLength(20)]),
+      sort: new FormControl(0, []),
+      parentId: new FormControl(null)
 
     });
   }
@@ -59,38 +70,37 @@ export class AddComponent implements OnInit {
         return this.sort?.errors?.['required'] ? 'Sort必填' :
           this.sort?.errors?.['minlength'] ? 'Sort长度最少位' :
             this.sort?.errors?.['maxlength'] ? 'Sort长度最多位' : '';
-
       default:
-    return '';
+        return '';
     }
   }
 
   add(): void {
-    if(this.formGroup.valid) {
-    const data = this.formGroup.value as DocsCatalogUpdateDto;
-    this.data = { ...data, ...this.data };
-    this.service.add(this.data as DocsCatalog)
+    if (this.formGroup.valid) {
+      const data = this.formGroup.value as DocsCatalogAddDto;
+      this.data = { ...data, ...this.data };
+      this.service.addIn(this.data)
         .subscribe(res => {
-            this.snb.open('添加成功');
-            // this.dialogRef.close(res);
-            // this.router.navigate(['../index'],{relativeTo: this.route});
+          this.snb.open('添加成功');
+          // this.dialogRef.close(res);
+          // this.router.navigate(['../index'],{relativeTo: this.route});
         });
     }
   }
   back(): void {
     this.location.back();
   }
-  upload(event: any, type ?: string): void {
+  upload(event: any, type?: string): void {
     const files = event.target.files;
-    if(files[0]) {
+    if (files[0]) {
       const formdata = new FormData();
       formdata.append('file', files[0]);
-    /*    this.service.uploadFile('agent-info' + type, formdata)
-          .subscribe(res => {
-            this.data.logoUrl = res.url;
-          }, error => {
-            this.snb.open(error?.detail);
-          }); */
+      /*    this.service.uploadFile('agent-info' + type, formdata)
+            .subscribe(res => {
+              this.data.logoUrl = res.url;
+            }, error => {
+              this.snb.open(error?.detail);
+            }); */
     } else {
 
     }

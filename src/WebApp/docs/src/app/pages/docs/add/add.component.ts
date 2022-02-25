@@ -1,17 +1,12 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { DocsService } from 'src/app/share/services/docs.service';
-import { Docs } from 'src/app/share/models/docs/docs.model';
 import { DocsUpdateDto } from 'src/app/share/models/docs/docs-update-dto.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Location } from '@angular/common';
-import * as ClassicEditor from 'ng-ckeditor5-classic';
-import { environment } from 'src/environments/environment';
 import { DocsCatalogService } from 'src/app/share/services/docs-catalog.service';
 import { DocsCatalogItemDto } from 'src/app/share/models/docs-catalog/docs-catalog-item-dto.model';
-import { resetFakeAsyncZone } from '@angular/core/testing';
 // import { OidcSecurityService } from 'angular-auth-oidc-client';
 
 @Component({

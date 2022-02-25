@@ -8,15 +8,14 @@
                 <mat-icon>keyboard_double_arrow_right</mat-icon>
             </button>
         </div>
-        <mat-list>
-            <mat-nav-list [routerLink]="['/docs']" routerLinkActive="active">
+        <mat-nav-list *ngIf="opened">
+            <mat-list-item [routerLink]="['/docs']" routerLinkActive="active">
                 文档
-            </mat-nav-list>
-            <mat-nav-list [routerLink]="['/docs-catalog']" routerLinkActive="active">
+            </mat-list-item>
+            <mat-list-item [routerLink]="['/docs-catalog']" routerLinkActive="active">
                 文档目录
-            </mat-nav-list>
-        </mat-list>
-
+            </mat-list-item>
+        </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content class="px-2">
         <router-outlet></router-outlet>

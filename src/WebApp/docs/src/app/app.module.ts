@@ -9,6 +9,7 @@ import { HomeModule } from './pages/home/home.module';
 import { LayoutComponent } from './pages/layout/layout.component';
 import { DocsModule } from './pages/docs/docs.module';
 import { DocsCatalogModule } from './pages/docs-catalog/docs-catalog.module';
+import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,9 @@ import { DocsCatalogModule } from './pages/docs-catalog/docs-catalog.module';
     DocsModule,
     DocsCatalogModule
   ],
-  providers: [],
+  providers: [
+    { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 2500 } }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

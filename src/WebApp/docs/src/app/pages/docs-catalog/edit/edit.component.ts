@@ -5,8 +5,8 @@ import { DocsCatalogService } from 'src/app/share/services/docs-catalog.service'
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DocsCatalogUpdateDto } from 'src/app/share/models/docs-catalog/docs-catalog-update-dto.model';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Location } from '@angular/common';
+import { DocsCatalogItemDto } from 'src/app/share/models/docs-catalog/docs-catalog-item-dto.model';
 
 @Component({
   selector: 'app-edit',
@@ -14,14 +14,14 @@ import { Location } from '@angular/common';
   styleUrls: ['./edit.component.css']
 })
 export class EditComponent implements OnInit {
-  
+
   id!: string;
   isLoading = true;
   data = {} as DocsCatalog;
   updateData = {} as DocsCatalogUpdateDto;
+  catalogs = [] as DocsCatalogItemDto[];
   formGroup!: FormGroup;
-    constructor(
-    
+  constructor(
     private service: DocsCatalogService,
     private snb: MatSnackBar,
     private router: Router,
@@ -38,35 +38,41 @@ export class EditComponent implements OnInit {
     }
   }
 
-    get name() { return this.formGroup.get('name'); }
-    get sort() { return this.formGroup.get('sort'); }
-
+  get name() { return this.formGroup.get('name'); }
+  get sort() { return this.formGroup.get('sort'); }
+  get parentId() { return this.formGroup.get('parentId'); }
 
   ngOnInit(): void {
     this.getDetail();
-    
-    // TODO:获取其他相关数据后设置加载状态
-    this.isLoading = false;
   }
-  
+
   getDetail(): void {
     this.service.getDetail(this.id)
       .subscribe(res => {
         this.data = res;
         this.initForm();
-        this.isLoading = false;
+        this.getCatalogs();
       }, error => {
         this.snb.open(error);
       })
   }
-
+  getCatalogs(): void {
+    this.service.filter({ pageIndex: 1, pageSize: 100 })
+      .subscribe(res => {
+        if (res.data) {
+          this.catalogs = res.data;
+        }
+        this.isLoading = false;
+      });
+  }
   initForm(): void {
     this.formGroup = new FormGroup({
-      name: new FormControl(this.data.name, [Validators.minLength(3),Validators.maxLength(20)]),
+      name: new FormControl(this.data.name, [Validators.minLength(3), Validators.maxLength(20)]),
       sort: new FormControl(this.data.sort, []),
-
+      parentId: new FormControl(this.data.parent?.id),
     });
   }
+
   getValidatorMessage(type: string): string {
     switch (type) {
       case 'name':
@@ -83,12 +89,12 @@ export class EditComponent implements OnInit {
     }
   }
   edit(): void {
-    if(this.formGroup.valid) {
+    if (this.formGroup.valid) {
       this.updateData = this.formGroup.value as DocsCatalogUpdateDto;
       this.service.update(this.id, this.updateData)
         .subscribe(res => {
           this.snb.open('修改成功');
-           // this.dialogRef.close(res);
+          // this.dialogRef.close(res);
           // this.router.navigate(['../index'],{relativeTo: this.route});
         });
     }
@@ -98,17 +104,17 @@ export class EditComponent implements OnInit {
     this.location.back();
   }
 
-  upload(event: any, type ?: string): void {
+  upload(event: any, type?: string): void {
     const files = event.target.files;
-    if(files[0]) {
-    const formdata = new FormData();
-    formdata.append('file', files[0]);
-    /*    this.service.uploadFile('agent-info' + type, formdata)
-          .subscribe(res => {
-            this.updateData.logoUrl = res.url;
-          }, error => {
-            this.snb.open(error?.detail);
-          }); */
+    if (files[0]) {
+      const formdata = new FormData();
+      formdata.append('file', files[0]);
+      /*    this.service.uploadFile('agent-info' + type, formdata)
+            .subscribe(res => {
+              this.updateData.logoUrl = res.url;
+            }, error => {
+              this.snb.open(error?.detail);
+            }); */
     } else {
 
     }
