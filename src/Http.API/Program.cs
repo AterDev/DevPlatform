@@ -94,7 +94,7 @@ if (app.Environment.IsDevelopment())
     app.UseCors("default");
     app.UseDeveloperExceptionPage();
     app.UseOpenApi();
-    app.UseSwaggerUi3(c => { c.DocumentTitle = "ÎÄµµ"; });
+    app.UseSwaggerUi3(c => { c.DocumentTitle = "ÎÄµµ"; }); 
     app.UseStaticFiles();
 }
 else
@@ -110,10 +110,6 @@ app.UseHealthChecks("/health");
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
-
-app.Map("/api/testAuth", [Authorize]() => "success");
-app.Map("/api/testAuthApiScope", [Authorize("ApiScope")]() => "success");
-
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllers();
