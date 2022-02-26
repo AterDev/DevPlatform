@@ -1,3 +1,7 @@
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -27,6 +31,31 @@ builder.Services.AddOpenApiDocument(c =>
         document.Info.Version = "1.0";
     };
 });
+// jwt
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(cfg =>
+{
+    //cfg.RequireHttpsMetadata = true;
+    cfg.SaveToken = true;
+    cfg.TokenValidationParameters = new TokenValidationParameters()
+    {
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetSection("Jwt")["Sign"])),
+        ValidIssuer = builder.Configuration.GetSection("Jwt")["Issuer"],
+        ValidAudience = builder.Configuration.GetSection("Jwt")["Audience"],
+        ValidateIssuer = true,
+        ValidateLifetime = true,
+        RequireExpirationTime = false,
+        ValidateIssuerSigningKey = true
+    };
+});
+// 授权
+builder.Services.AddAuthorization(options =>
+{
+});
 
 // cors配置 
 builder.Services.AddCors(options =>
@@ -49,6 +78,15 @@ builder.Services.AddControllers()
 
 var app = builder.Build();
 
+// 初始化管理员账号
+await using (var scope = app.Services.CreateAsyncScope())
+{
+    var store = scope.ServiceProvider.GetRequiredService<UserDataStore>();
+    var admin = store.Db.Where(u=>u.UserName=="admin").FirstOrDefault();
+    if (admin == null)
+        await store.InitAdminUserAsync("admin", "admin123.");
+}
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -61,6 +99,9 @@ app.UseCors("default");
 app.UseHttpsRedirection();
 
 app.UseRouting();
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.UseEndpoints(endpoints =>
 {

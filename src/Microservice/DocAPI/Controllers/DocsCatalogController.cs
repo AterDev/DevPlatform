@@ -23,6 +23,7 @@ public class DocsCatalogController : RestApiBase<DocsCatalogDataStore, DocsCatal
     /// 获取树形结构
     /// </summary>
     [HttpGet("tree")]
+    [AllowAnonymous]
     public async Task<List<DocsCatalogTreeItemDto>> GetTreeAsync()
     {
         return await _store.GetTreeAsync();

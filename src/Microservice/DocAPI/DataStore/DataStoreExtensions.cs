@@ -6,6 +6,7 @@ public static class DataStoreExtensions
     {
         services.AddScoped(typeof(DocsCatalogDataStore));
         services.AddScoped(typeof(DocsDataStore));
+        services.AddScoped(typeof(UserDataStore));
 
     }
 }

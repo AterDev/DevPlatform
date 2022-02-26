@@ -50,6 +50,9 @@ public class DocsController : RestApiBase<DocsDataStore, Docs, DocsUpdateDto, Do
     /// <returns></returns>
     public override Task<ActionResult<Docs>> AddAsync(Docs form) => base.AddAsync(form);
 
+    [AllowAnonymous]
+    public override Task<ActionResult<Docs?>> GetDetailAsync([FromRoute] Guid id) => base.GetDetailAsync(id);
+
     /// <summary>
     /// ⚠更新
     /// </summary>
