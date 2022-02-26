@@ -23,6 +23,15 @@ export class DocsService extends BaseService {
   }
 
   /**
+   * getDetail
+   * @param id string
+   */
+  getDetail(id: string): Observable<Docs> {
+    const url = `/api/Docs/${id}`;
+    return this.request<Docs>('get', url);
+  }
+
+  /**
    * ⚠更新
    * @param id string
    * @param data DocsUpdateDto
@@ -39,15 +48,6 @@ export class DocsService extends BaseService {
   delete(id: string): Observable<boolean> {
     const url = `/api/Docs/${id}`;
     return this.request<boolean>('delete', url);
-  }
-
-  /**
-   * 详情
-   * @param id string
-   */
-  getDetail(id: string): Observable<Docs> {
-    const url = `/api/Docs/${id}`;
-    return this.request<Docs>('get', url);
   }
 
   /**

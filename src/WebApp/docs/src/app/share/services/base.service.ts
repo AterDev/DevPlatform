@@ -38,10 +38,18 @@ export class BaseService {
   }
 
   getHeaders(): HttpHeaders {
-    return new HttpHeaders({
-      Accept: 'application/json',
-      // Authorization: 'Bearer ' + this.oidcSecurityService.getAccessToken(),
-    });
+    if (localStorage.getItem('token')) {
+      return new HttpHeaders({
+        Accept: 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
+      });
+
+    } else {
+      return new HttpHeaders({
+        Accept: 'application/json',
+        // Authorization: 'Bearer ' + this.oidcSecurityService.getAccessToken(),
+      });
+    }
   }
   isMoblie(): boolean {
     const ua = navigator.userAgent;

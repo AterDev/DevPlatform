@@ -8,6 +8,7 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
+import { AuthService } from 'src/app/share/services/auth.service';
 
 @Component({
   selector: 'app-index',
@@ -23,6 +24,8 @@ export class IndexComponent implements OnInit {
   dataSource!: MatTableDataSource<DocsItemDto>;
   filter: DocsFilter;
   pageSizeOption = [12, 20, 50];
+
+  isLogin = false;
   constructor(
     private service: DocsService,
     private snb: MatSnackBar,

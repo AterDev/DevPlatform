@@ -25,13 +25,10 @@ export class IndexComponent implements OnInit {
     this.document.querySelector('#' + elementId)!.scrollIntoView();
   }
   onReady(): void {
-    setTimeout(() => {
+    setTimeout(() => { 
       this.headings = this.document
         .querySelector('markdown')!
         .querySelectorAll('h1, h2, h3');
-
-      console.log(this.headings);
-
     });
   }
   toggleNavigation(): void {

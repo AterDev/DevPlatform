@@ -38,6 +38,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatRadioModule } from '@angular/material/radio';
 import { MarkdownModule, MarkedOptions } from 'ngx-markdown';
+import { HttpClientModule } from '@angular/common/http';
 
 const materialModules = [
   MatToolbarModule,
@@ -85,6 +86,7 @@ const materialModules = [
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
+    HttpClientModule,
     MarkdownModule.forRoot({
       sanitize: SecurityContext.NONE,
       markedOptions: {
@@ -109,6 +111,7 @@ const materialModules = [
     LayoutComponent,
     ConfirmDialogComponent,
     MarkdownModule,
+    HttpClientModule,
     ...materialModules
 
   ]
