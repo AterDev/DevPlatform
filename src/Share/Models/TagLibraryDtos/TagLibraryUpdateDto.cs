@@ -1,11 +1,7 @@
-using System.ComponentModel.DataAnnotations;
-
 namespace Share.Models.TagLibraryDtos;
-
 /// <summary>
 /// 标签库
 /// </summary>
-
 public class TagLibraryUpdateDto
 {
     [MaxLength(40)]
@@ -16,4 +12,9 @@ public class TagLibraryUpdateDto
     public string? Color { get; set; }
     [MaxLength(40)]
     public string? Style { get; set; }
+    /// <summary>
+    /// 状态
+    /// </summary>
+    public Status? Status { get; set; }
+
 }

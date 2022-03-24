@@ -1,9 +1,9 @@
 ﻿namespace Core.Models;
 
-public class Comment : BaseDB
+public class Comment : EntityBase
 {
-    public Article? Article { get; set; }
-    public Account? Account { get; set; }
+    public Article Article { get; set; } = null!;
+    public User Account { get; set; } = null!;
     /// <summary>
     /// 评论内容
     /// </summary>

@@ -31,8 +31,4 @@
 		<ProjectReference Include="..\Core\Core.csproj" />
 		<ProjectReference Include="..\Database\EntityFramework\EntityFramework.csproj" />
 	</ItemGroup>
-
-	<ItemGroup>
-		<Folder Include="Models\TagLibraryDtos\" />
-	</ItemGroup>
 </Project>

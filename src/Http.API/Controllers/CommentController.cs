@@ -1,90 +1,81 @@
-using Http.Application.Interface;
-using Http.Application.Repositories;
-using NSwag.Annotations;
 using Share.Models.CommentDtos;
-
 namespace Http.API.Controllers;
 
-/// <summary>
-/// 评论
-/// </summary>
-[OpenApiTag("Comment", Description = "评论")]
-public class CommentController : ApiController<CommentRepository, Comment, CommentAddDto, CommentUpdateDto, CommentFilter, CommentDto>
+
+public class CommentController : RestApiBase<CommentDataStore, Comment, CommentUpdateDto, CommentFilter, CommentItemDto>
 {
-    public CommentController(
-        ILogger<CommentController> logger,
-        CommentRepository repository,
-         IUserContext accessor) : base(logger, repository, accessor)
+    public CommentController(IUserContext user, ILogger<CommentController> logger, CommentDataStore store) : base(user, logger, store)
     {
     }
 
     /// <summary>
-    /// 添加Comment
+    /// 关联添加
     /// </summary>
-    /// <param name="form"></param>
+    /// <param name="id">所属对象id</param>
+    /// <param name="list">数组</param>
+    /// <param name="dependStore"></param>
     /// <returns></returns>
-    [HttpPost]
-    public async override Task<ActionResult<Comment>> AddAsync([FromBody] CommentAddDto form)
+    [HttpPost("{id}")]
+    public async Task<ActionResult<int>> AddInAsync([FromRoute] Guid id, List<CommentUpdateDto> list, [FromServices] ArticleDataStore dependStore)
     {
-        // if (_repos.Any(e => e.Name == form.Name))
-        // {
-        //     return Conflict();
-        // }
-        return await _repos.AddAsync(form);
+        var depend = await dependStore.FindAsync(id);
+        if (depend == null) return NotFound("depend not exist");
+        var newList = new List<Comment>();
+        list.ForEach(item =>
+        {
+            var newItem = new Comment()
+            {
+                Article = depend
+            };
+            newList.Add(newItem.Merge(item));
+        });
+        return await _store.BatchAddAsync(newList);
     }
-
     /// <summary>
-    /// 分页筛选Comment
+    /// 分页筛选
     /// </summary>
     /// <param name="filter"></param>
     /// <returns></returns>
-    [HttpPost("filter")]
-    public async override Task<ActionResult<PageResult<CommentDto>>> FilterAsync(CommentFilter filter)
+    public override Task<ActionResult<PageResult<CommentItemDto>>> FilterAsync(CommentFilter filter)
     {
-        return await _repos.GetListWithPageAsync(filter);
+        return base.FilterAsync(filter);
     }
 
     /// <summary>
-    /// 更新Comment
+    /// 添加
+    /// </summary>
+    /// <param name="form"></param>
+    /// <returns></returns>
+    public override Task<ActionResult<Comment>> AddAsync(Comment form) => base.AddAsync(form);
+
+    /// <summary>
+    /// ⚠更新
     /// </summary>
     /// <param name="id"></param>
     /// <param name="form"></param>
     /// <returns></returns>
-    [HttpPut("{id}")]
-    public async override Task<ActionResult<Comment>> UpdateAsync([FromRoute] Guid id, [FromBody] CommentUpdateDto form)
-    {
-        if (_repos._db.Any(e => e.Id == id))
-        {
-            // 名称不可以修改成其他已经存在的名称
-            // if (_repos.Any(e => e.Name == form.Name && e.Id != id))
-            // {
-            //    return Conflict();
-            // }
-            return await _repos.UpdateAsync(id, form);
-        }
-        return NotFound();
-    }
-
+    public override Task<ActionResult<Comment?>> UpdateAsync([FromRoute] Guid id, CommentUpdateDto form)
+        => base.UpdateAsync(id, form);
 
     /// <summary>
-    /// 删除Comment
+    /// ⚠删除
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    [HttpDelete("{id}")]
-    public override Task<ActionResult<Comment>> DeleteAsync([FromRoute] Guid id)
+    public override Task<ActionResult<bool>> DeleteAsync([FromRoute] Guid id)
     {
         return base.DeleteAsync(id);
     }
 
     /// <summary>
-    /// 获取Comment详情
+    /// ⚠ 批量删除
     /// </summary>
-    /// <param name="id"></param>
+    /// <param name="ids"></param>
     /// <returns></returns>
-    [HttpGet("{id}")]
-    public override Task<ActionResult<Comment>> GetDetailAsync([FromRoute] Guid id)
+    public async override Task<ActionResult<int>> BatchDeleteAsync(List<Guid> ids)
     {
-        return base.GetDetailAsync(id);
+        // 危险操作，请确保该方法的执行权限
+        //return base.BatchDeleteAsync(ids);
+        return await Task.FromResult(0);
     }
 }

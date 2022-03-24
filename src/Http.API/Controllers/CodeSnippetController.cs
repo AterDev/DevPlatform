@@ -1,74 +1,60 @@
-using Http.Application.Interface;
-using Http.Application.Repositories;
 using Share.Models.CodeSnippetDtos;
-
 namespace Http.API.Controllers;
 
 /// <summary>
 /// 代码片段
 /// </summary>
-public class CodeSnippetController : ApiController<CodeSnippetRepository, CodeSnippet, CodeSnippetAddDto, CodeSnippetUpdateDto, CodeSnippetFilter, CodeSnippetDto>
+public class CodeSnippetController : RestApiBase<CodeSnippetDataStore, CodeSnippet, CodeSnippetUpdateDto, CodeSnippetFilter, CodeSnippetItemDto>
 {
-    public IUserContext Accessor { get; }
-
-    public CodeSnippetController(
-        ILogger<CodeSnippetController> logger,
-        CodeSnippetRepository repository,
-         IUserContext accessor) : base(logger, repository, accessor)
+    public CodeSnippetController(IUserContext user, ILogger<CodeSnippetController> logger, CodeSnippetDataStore store) : base(user, logger, store)
     {
-        Accessor = accessor;
     }
 
     /// <summary>
-    /// 添加CodeSnippet
-    /// </summary>
-    /// <param name="form"></param>
-    /// <returns></returns>
-    [HttpPost]
-    public async override Task<ActionResult<CodeSnippet>> AddAsync([FromBody] CodeSnippetAddDto form)
-    {
-        if (_repos.Any(_usrCtx.UserId.Value, form.Name, form.CodeType, form.Language))
-        {
-            return Conflict();
-        }
-        return await _repos.AddAsync(form);
-    }
-
-    /// <summary>
-    /// 分页筛选CodeSnippet
+    /// 分页筛选
     /// </summary>
     /// <param name="filter"></param>
     /// <returns></returns>
-    [HttpPost("filter")]
-    public async override Task<ActionResult<PageResult<CodeSnippetDto>>> FilterAsync(CodeSnippetFilter filter)
+    public override Task<ActionResult<PageResult<CodeSnippetItemDto>>> FilterAsync(CodeSnippetFilter filter)
     {
-        return await _repos.GetListWithPageAsync(filter);
+        return base.FilterAsync(filter);
     }
 
     /// <summary>
-    /// 更新CodeSnippet
+    /// 添加
+    /// </summary>
+    /// <param name="form"></param>
+    /// <returns></returns>
+    public override Task<ActionResult<CodeSnippet>> AddAsync(CodeSnippet form) => base.AddAsync(form);
+
+    /// <summary>
+    /// ⚠更新
     /// </summary>
     /// <param name="id"></param>
     /// <param name="form"></param>
     /// <returns></returns>
-    [HttpPut("{id}")]
-    public async override Task<ActionResult<CodeSnippet>> UpdateAsync([FromRoute] Guid id, [FromBody] CodeSnippetUpdateDto form)
+    public override Task<ActionResult<CodeSnippet?>> UpdateAsync([FromRoute] Guid id, CodeSnippetUpdateDto form)
+        => base.UpdateAsync(id, form);
+
+    /// <summary>
+    /// ⚠删除
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    public override Task<ActionResult<bool>> DeleteAsync([FromRoute] Guid id)
     {
-        if (_repos._db.Any(e => e.Id == id))
-        {
-            // 名称不可以修改成其他已经存在的名称
-            // if (_repos.Any(e => e.Name == form.Name && e.Id != id))
-            // {
-            //    return Conflict();
-            // }
-            return await _repos.UpdateAsync(id, form);
-        }
-        return NotFound();
+        return base.DeleteAsync(id);
     }
 
-    [HttpGet("exist")]
-    public ActionResult<bool> ExistAsync([FromQuery] CodeSnippetUnique dto)
+    /// <summary>
+    /// ⚠ 批量删除
+    /// </summary>
+    /// <param name="ids"></param>
+    /// <returns></returns>
+    public async override Task<ActionResult<int>> BatchDeleteAsync(List<Guid> ids)
     {
-        return _repos.Exist(dto);
+        // 危险操作，请确保该方法的执行权限
+        //return base.BatchDeleteAsync(ids);
+        return await Task.FromResult(0);
     }
 }

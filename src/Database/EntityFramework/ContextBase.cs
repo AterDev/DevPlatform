@@ -1,20 +1,22 @@
+using Core.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 namespace EntityFramework;
 
-public class ContextBase : DbContext
+public class ContextBase : IdentityDbContext<User, Role, Guid>
 {
-    public DbSet<Account>? Accounts { get; set; }
-    public DbSet<AccountExtend>? AccountExtends { get; set; }
-    public DbSet<Role>? Roles { get; set; }
-    public DbSet<Article>? Articles { get; set; }
-    public DbSet<ArticleExtend>? ArticleExtends { get; set; }
-    public DbSet<ArticleCatalog>? ArticleCatalogs { get; set; }
-    public DbSet<LibraryCatalog>? LibraryCatalogs { get; set; }
-    public DbSet<Comment>? Comments { get; set; }
-    public DbSet<CodeSnippet>? CodeSnippets { get; set; }
-    public DbSet<Library>? Libraries { get; set; }
-    public DbSet<ThirdNews>? ThirdNews { get; set; }
-    public DbSet<NewsTags>? NewsTags { get; set; }
-    public DbSet<TagLibrary>? TagLibraries { get; set; }
+    public DbSet<User> Users { get; set; } = null!;
+    public DbSet<UserInfo> AccountExtends { get; set; } = null!;
+    public DbSet<Role> Roles { get; set; } = null!;
+    public DbSet<Article> Articles { get; set; } = null!;
+    public DbSet<ArticleExtend> ArticleExtends { get; set; } = null!;
+    public DbSet<ArticleCatalog> ArticleCatalogs { get; set; } = null!;
+    public DbSet<LibraryCatalog> LibraryCatalogs { get; set; } = null!;
+    public DbSet<Comment> Comments { get; set; } = null!;
+    public DbSet<CodeSnippet> CodeSnippets { get; set; } = null!;
+    public DbSet<Library> Libraries { get; set; } = null!;
+    public DbSet<ThirdNews> ThirdNews { get; set; } = null!;
+    public DbSet<NewsTags> NewsTags { get; set; } = null!;
+    public DbSet<TagLibrary> TagLibraries { get; set; } = null!;
 
     public ContextBase(DbContextOptions<ContextBase> options) : base(options)
     {
@@ -29,17 +31,19 @@ public class ContextBase : DbContext
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
-        builder.Entity<Account>(e =>
+        builder.Entity<User>(e =>
         {
             e.HasIndex(a => a.Email);
-            e.HasIndex(a => a.Phone);
-            e.HasIndex(a => a.Username);
+            e.HasIndex(a => a.PhoneNumber);
+            e.HasIndex(a => a.UserName);
             e.HasIndex(a => a.IsDeleted);
-            e.HasIndex(a => a.PhoneConfirm);
-            e.HasIndex(a => a.EmailConfirm);
             e.HasIndex(a => a.CreatedTime);
+            e.HasIndex(a => a.Status);
+            e.HasOne(a => a.Extend)
+                .WithOne(e => e.Account)
+                .HasForeignKey<UserInfo>(e => e.AccountId);
         });
-        builder.Entity<AccountExtend>(e =>
+        builder.Entity<UserInfo>(e =>
         {
             e.HasIndex(a => a.RealName);
             e.HasIndex(a => a.Country);
@@ -76,6 +80,9 @@ public class ContextBase : DbContext
             e.HasIndex(m => m.Title);
             e.HasIndex(m => m.CreatedTime);
             e.HasIndex(m => m.ArticleType);
+            e.HasOne(a => a.Extend)
+                .WithOne(e => e.Article)
+                .HasForeignKey<ArticleExtend>(e => e.ArticleId);
         });
         builder.Entity<ArticleCatalog>(e =>
         {

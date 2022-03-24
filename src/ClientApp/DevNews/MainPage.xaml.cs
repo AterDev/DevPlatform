@@ -22,8 +22,7 @@ namespace DevNews
         private ObservableCollection<ThirdNews> NewsCurrentDisplay { get; set; } = new ObservableCollection<ThirdNews>();
         private readonly List<NewsTypeChose> TypeChoses = new List<NewsTypeChose>();
         private TechType CurrentNewsType = TechType.Default;
-
-        readonly NewsService newsService = new NewsService();
+        private readonly NewsService newsService = new NewsService();
 
         public MainPage()
         {
@@ -33,10 +32,7 @@ namespace DevNews
             TypeChoses = new NewsTypeChose().GetDefaultList();
         }
 
-        private void LoadData(object sender, RoutedEventArgs e)
-        {
-            ReloadNews();
-        }
+        private void LoadData(object sender, RoutedEventArgs e) => ReloadNews();
 
         private async void OpenBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -57,7 +53,7 @@ namespace DevNews
 
             var ids = new List<Guid>();
             ids.Add(item.Id);
-            if (await newsService.SetAsDelteAsync(ids))
+            if (await newsService.SetAsDeleteAsync(ids))
             {
                 var success = News.Remove(item);
                 NewsCurrentDisplay.Remove(item);
@@ -77,7 +73,7 @@ namespace DevNews
             }
 
             var ids = items.Select(x => x.Id).ToList();
-            var res = await newsService.SetAsDelteAsync(ids);
+            var res = await newsService.SetAsDeleteAsync(ids);
             if (res)
             {
                 NewsListView.SelectedItems.Clear();
@@ -147,10 +143,7 @@ namespace DevNews
             NewsListView.ItemsSource = NewsCurrentDisplay;
         }
 
-        private void RefreshBtn_Click(object sender, RoutedEventArgs e)
-        {
-            ReloadNews();
-        }
+        private void RefreshBtn_Click(object sender, RoutedEventArgs e) => ReloadNews();
 
         private async void ReloadNews()
         {
@@ -190,5 +183,12 @@ namespace DevNews
             NewsListView.ItemsSource = NewsCurrentDisplay;
         }
 
+        private void ShowFocusWindow_Click(object sender, RoutedEventArgs e)
+        {
+
+
+
+
+        }
     }
 }

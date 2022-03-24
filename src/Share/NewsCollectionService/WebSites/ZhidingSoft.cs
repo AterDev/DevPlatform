@@ -36,31 +36,31 @@ public class ZhidingSoft : BaseHtml
                 var doc = new HtmlDocument();
                 doc.LoadHtml(content);
                 var rootNodes = doc.DocumentNode.SelectSingleNode(RootName);
-                var itemsNodes = rootNodes.SelectNodes(ItemName);
-
-                itemsNodes.ToList().ForEach(node =>
+                if(rootNodes != null)
                 {
-                    var date = node.SelectSingleNode(PubDate)?.InnerText.Trim();
-                    var catetory = node.SelectSingleNode(Category);
+                    var itemsNodes = rootNodes.SelectNodes(ItemName);
 
-                    var news = new Rss
+                    itemsNodes.ToList().ForEach(node =>
                     {
-                        Categories = node.SelectSingleNode(Category)?.InnerText?.Trim(),
-                        CreateTime = DateTime.TryParse(date, out var pubDate) ? pubDate : DateTime.Now,
-                        Description = node.SelectSingleNode(Description)?.InnerText?.Trim(),
-                        Title = node.SelectSingleNode(Title)?.InnerText?.Trim(),
-                        Link = node.SelectSingleNode(Link)?.GetAttributeValue("href", "")
-                    };
+                        var date = node.SelectSingleNode(PubDate)?.InnerText.Trim();
+                        var catetory = node.SelectSingleNode(Category);
 
-                    result.Add(news);
-                });
+                        var news = new Rss
+                        {
+                            Categories = node.SelectSingleNode(Category)?.InnerText?.Trim(),
+                            CreateTime = DateTime.TryParse(date, out var pubDate) ? pubDate : DateTime.Now,
+                            Description = node.SelectSingleNode(Description)?.InnerText?.Trim(),
+                            Title = node.SelectSingleNode(Title)?.InnerText?.Trim(),
+                            Link = node.SelectSingleNode(Link)?.GetAttributeValue("href", "")
+                        };
+
+                        result.Add(news);
+                    });
+                }
             }
         }
         return result.Take(number).ToList();
     }
 
-    public override string GetContent(string url)
-    {
-        return base.GetContent(url);
-    }
+    public override string GetContent(string url) => base.GetContent(url);
 }

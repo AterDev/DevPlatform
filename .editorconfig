@@ -72,7 +72,7 @@ csharp_prefer_braces = when_multiline:suggestion
 #prefer block bodies for constructors
 csharp_style_expression_bodied_constructors = false:suggestion
 #prefer block bodies for methods
-csharp_style_expression_bodied_methods = when_on_single_line:suggestion
+csharp_style_expression_bodied_methods = when_on_single_line:silent
 
 #Style - expression level options
 
@@ -132,3 +132,6 @@ dotnet_style_qualification_for_property = false:suggestion
 
 # xUnit2004: Do not use equality check to test for boolean conditions
 dotnet_diagnostic.xUnit2004.severity = silent
+
+# IDE0022: 使用方法的表达式主体
+dotnet_diagnostic.IDE0022.severity = silent

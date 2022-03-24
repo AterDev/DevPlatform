@@ -1,12 +1,12 @@
-﻿
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace Core.Models;
+
 /// <summary>
 /// 标签库
 /// </summary>
 [Index(nameof(Name), nameof(Type))]
-public class TagLibrary : BaseDB
+public class TagLibrary : EntityBase
 {
     [MaxLength(40)]
     public string Type { get; set; } = "default";
