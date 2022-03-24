@@ -4,8 +4,7 @@ namespace Http.API.BackgroundTask;
 public class NewsTimerService : IHostedService, IDisposable
 {
     private readonly ILogger<NewsTimerService> _logger;
-    private Timer _timer;
-
+    private Timer? _timer;
 
     public NewsTimerService(ILogger<NewsTimerService> logger, IServiceProvider services)
     {
@@ -18,7 +17,6 @@ public class NewsTimerService : IHostedService, IDisposable
     public Task StartAsync(CancellationToken stoppingToken)
     {
         _logger.LogInformation("News collection service start.");
-
         _timer = new Timer(DoWork, null, TimeSpan.Zero, TimeSpan.FromHours(4));
         return Task.CompletedTask;
     }

@@ -15,12 +15,20 @@ public class NewsCollectionService
 
     public async Task Start()
     {
-        _logger.LogInformation("===Start=== Collect news");
-        var list = await GetThirdNewsAsync();
-        _logger.LogInformation("===Result=== collect news: " + list.Count);
-        _logger.LogInformation("===Start=== Add news");
-        await AddThirdNewsAsync(list);
-        _logger.LogInformation("===Result=== finish!");
+        try
+        {
+            _logger.LogInformation("===Start=== Collect news");
+            var list = await GetThirdNewsAsync();
+            _logger.LogInformation("===Result=== collect news: " + list.Count);
+            _logger.LogInformation("===Start=== Add news");
+            await AddThirdNewsAsync(list);
+            _logger.LogInformation("===Result=== finish!");
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.Message + ex.StackTrace);
+        }
+
     }
 
     public async Task<List<ThirdNews>> GetThirdNewsAsync()
