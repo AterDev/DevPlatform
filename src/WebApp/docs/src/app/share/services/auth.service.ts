@@ -26,8 +26,6 @@ export class AuthService {
    * 更新用户状态
    */
   updateUserLoginState(): void {
-    console.log('updateUserLoginState');
-    
     const userId = localStorage.getItem('id');
     const username = localStorage.getItem('username');
     const token = localStorage.getItem('token');
