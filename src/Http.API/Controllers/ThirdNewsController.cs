@@ -18,6 +18,7 @@ public class ThirdNewsController : RestApiBase<ThirdNewsDataStore, ThirdNews, Th
     }
 
     [HttpGet("week")]
+    [AllowAnonymous]
     public Task<List<ThirdNews>> GetWeekNewsAsync() => _store.GetWeekNewsAsync();
     /// <summary>
     /// 添加
