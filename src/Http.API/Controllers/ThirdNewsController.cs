@@ -36,6 +36,14 @@ public class ThirdNewsController : RestApiBase<ThirdNewsDataStore, ThirdNews, Th
     public override Task<ActionResult<ThirdNews?>> UpdateAsync([FromRoute] Guid id, ThirdNewsUpdateDto form)
         => base.UpdateAsync(id, form);
 
+
+    /// <summary>
+    /// 批量更新
+    /// </summary>
+    /// <param name="data"></param>
+    /// <returns></returns>
+    [AllowAnonymous]
+    public override Task<int> BatchUpdateAsync([FromBody] BatchUpdate<ThirdNewsUpdateDto> data) => base.BatchUpdateAsync(data);
     /// <summary>
     /// ⚠删除
     /// </summary>
