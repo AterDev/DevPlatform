@@ -8,7 +8,7 @@
 
   <Identity
     Name="8e6e8ddd-0f69-4b2f-ad77-d7f4569ea1f5"
-    Publisher="CN=cooper.chen"
+    Publisher="CN=niltor"
     Version="0.1.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="8e6e8ddd-0f69-4b2f-ad77-d7f4569ea1f5" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
