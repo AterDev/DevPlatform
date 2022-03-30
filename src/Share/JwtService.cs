@@ -34,7 +34,7 @@ public class JwtService
     }
 
 
-    public string BuildToken(Account account, string role, string sign, string audience, string issuer)
+    public string BuildToken(User account, string role, string sign, string audience, string issuer)
     {
         var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(sign));
         var signingCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256);
@@ -43,7 +43,7 @@ public class JwtService
                 // 此处自定义claims
                 new Claim(ClaimTypes.NameIdentifier, account.Id.ToString()),
                 new Claim(ClaimTypes.Email, account.Email),
-                new Claim(ClaimTypes.Name, account.Username),
+                new Claim(ClaimTypes.Name, account.UserName),
                 new Claim(ClaimTypes.Role, role)
         };
         var jwt = new JwtSecurityToken(issuer, audience, claims, signingCredentials: signingCredentials);

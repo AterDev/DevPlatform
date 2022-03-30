@@ -27,7 +27,7 @@ public class EmailService
     /// <param name="fromName"></param>
     /// <param name="toName"></param>
     /// <returns></returns>
-    public async Task<Response> SendAsync(string fromEamil, string toEmail, string subject, string content = null, string htmlContent = null, string fromName = null, string toName = null)
+    public async Task<Response> SendAsync(string fromEamil, string toEmail, string subject, string? content = null, string? htmlContent = null, string? fromName = null, string? toName = null)
     {
         var client = new SendGridClient(_apiKey);
         var from = new EmailAddress(fromEamil, fromName);

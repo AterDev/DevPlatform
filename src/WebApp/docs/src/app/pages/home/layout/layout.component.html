@@ -1,0 +1,44 @@
+<mat-sidenav-container class="example-container">
+    <mat-sidenav *ngIf="!isLoading" #sidenav mode="side" opened="opened">
+        <div class="d-flex flex-row-reverse">
+            <!-- <button mat-icon-button *ngIf="opened" (click)="toggle()">
+                <mat-icon>keyboard_double_arrow_left</mat-icon>
+            </button>
+            <button mat-icon-button *ngIf="!opened" (click)="toggle()">
+                <mat-icon>keyboard_double_arrow_right</mat-icon>
+            </button> -->
+        </div>
+        <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="example-tree">
+            <!-- This is the tree node template for leaf nodes -->
+            <!-- There is inline padding applied to this node using styles.
+    This padding value depends on the mat-icon-button width. -->
+            <!-- 叶节点 -->
+            <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle class="clickable" (click)="loadContent(node)">
+                {{node.name}}
+            </mat-tree-node>
+            <!-- This is the tree node template for expandable nodes -->
+            <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild">
+                <div class="mat-tree-node">
+                    <mat-list-item matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.name">
+                        <a matLine>
+                            {{node.name}}
+                        </a>
+                        <button mat-icon-button>
+                            <mat-icon class="mat-icon-rtl-mirror">
+                                {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                            </mat-icon>
+                        </button>
+                    </mat-list-item>
+                </div>
+                <!-- There is inline padding applied to this div using styles.
+          This padding value depends on the mat-icon-button width.  -->
+                <div [class.example-tree-invisible]="!treeControl.isExpanded(node)" role="group">
+                    <ng-container matTreeNodeOutlet></ng-container>
+                </div>
+            </mat-nested-tree-node>
+        </mat-tree>
+    </mat-sidenav>
+    <mat-sidenav-content class="px-2">
+        <app-index [docs]="docs"></app-index>
+    </mat-sidenav-content>
+</mat-sidenav-container>

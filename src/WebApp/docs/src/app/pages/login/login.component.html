@@ -1,0 +1,30 @@
+<div class="d-flex justify-content-center" style="margin-top: 2rem">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>登录</mat-card-title>
+      <!-- <mat-card-subtitle>使用管理账号登录</mat-card-subtitle> -->
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="loginForm" (ngSubmit)="doLogin()">
+        <div class="mt-2">
+          <mat-form-field appearance="outline">
+            <mat-label>用户名</mat-label>
+            <input matInput type="text" placeholder="username" formControlName="username" required minlength="4"
+              maxlength="50">
+            <mat-error *ngIf="username?.invalid">{{getValidatorMessage('username')}}</mat-error>
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field appearance="outline">
+            <mat-label>密码</mat-label>
+            <input type="password" matInput placeholder="密码长度6位(含6位)以上" formControlName="password" required
+              minlength="6" maxlength="50">
+            <mat-error *ngIf="password?.invalid">{{getValidatorMessage('password')}}
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <button mat-flat-button color="primary" type="submit" [disabled]="loginForm.invalid">登录</button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

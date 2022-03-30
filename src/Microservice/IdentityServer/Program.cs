@@ -1,71 +1,150 @@
-ï»¿// Copyright (c) Duende Software. All rights reserved.
-// See LICENSE in the project root for license information.
+using EntityFramework;
+using IdentityServer;
+using IdentityServer.Services;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using Quartz;
+using static OpenIddict.Abstractions.OpenIddictConstants;
 
-namespace IdentityServer;
 
-public class Program
+var builder = WebApplication.CreateBuilder(args);
+var services = builder.Services;
+var configuration = builder.Configuration;
+
+// dbcontext
+var connectionString = configuration.GetConnectionString("DefaultConnection");
+var identityConnection = configuration.GetConnectionString("IdentityConnection");
+
+services.AddDbContext<IdentityContext>(options =>
+    options.UseNpgsql(identityConnection).UseOpenIddict<Guid>());
+
+services.AddDbContext<ContextBase>(opt => opt.UseNpgsql(connectionString));
+
+// identity
+services.AddIdentity<User, Role>()
+    .AddEntityFrameworkStores<ContextBase>()
+    .AddDefaultTokenProviders();
+
+services.AddSingleton<IEmailSender, EmailSender>();
+// openid
+services.Configure<IdentityOptions>(options =>
 {
-    public static int Main(string[] args)
-    {
-        Log.Logger = new LoggerConfiguration()
-            .MinimumLevel.Debug()
-            .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
-            .MinimumLevel.Override("Microsoft.Hosting.Lifetime", LogEventLevel.Information)
-            .MinimumLevel.Override("System", LogEventLevel.Warning)
-            .MinimumLevel.Override("Microsoft.AspNetCore.Authentication", LogEventLevel.Information)
-            .Enrich.FromLogContext()
-            // uncomment to write to Azure diagnostics stream
-            //.WriteTo.File(
-            //    @"D:\home\LogFiles\Application\identityserver.txt",
-            //    fileSizeLimitBytes: 1_000_000,
-            //    rollOnFileSizeLimit: true,
-            //    shared: true,
-            //    flushToDiskInterval: TimeSpan.FromSeconds(1))
-            .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level}] {SourceContext}{NewLine}{Message:lj}{NewLine}{Exception}{NewLine}", theme: AnsiConsoleTheme.Code)
-            .CreateLogger();
-
-        try
-        {
-            var seed = args.Contains("/seed");
-            if (seed)
-            {
-                args = args.Except(new[] { "/seed" }).ToArray();
-            }
-
-            var host = CreateHostBuilder(args).Build();
-
-            if (seed)
-            {
-                Log.Information("Seeding database...");
-                var config = host.Services.GetRequiredService<IConfiguration>();
-                var connectionString = config.GetConnectionString("DefaultConnection");
-                SeedData.EnsureSeedData(connectionString);
-                Log.Information("Done seeding database.");
-                return 0;
-            }
-
-            Log.Information("Starting host...");
-            host.Run();
-            return 0;
-        }
-        catch (Exception ex)
-        {
-            Log.Fatal(ex, "Host terminated unexpectedly.");
-            return 1;
-        }
-        finally
-        {
-            Log.CloseAndFlush();
-        }
-    }
-
-    public static IHostBuilder CreateHostBuilder(string[] args)
-    {
-        return Host.CreateDefaultBuilder(args)
-.UseSerilog()
-.ConfigureWebHostDefaults(webBuilder =>
-{
-    webBuilder.UseStartup<Startup>();
+    options.ClaimsIdentity.UserNameClaimType = Claims.Name;
+    options.ClaimsIdentity.UserIdClaimType = Claims.Subject;
+    options.ClaimsIdentity.RoleClaimType = Claims.Role;
+    options.ClaimsIdentity.EmailClaimType = Claims.Email;
+    //options.SignIn.RequireConfirmedAccount = true;
 });
+
+// ×Ô¶¨ÒåÂ·¾¶
+services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/Identity/Account/Login";
+    options.LogoutPath = "/Identity/Account/Loginout";
+});
+
+
+services.AddQuartz(options =>
+{
+    options.UseMicrosoftDependencyInjectionJobFactory();
+    options.UseSimpleTypeLoader();
+    options.UseInMemoryStore();
+});
+
+services.AddQuartzHostedService(options => options.WaitForJobsToComplete = true);
+
+services.AddOpenIddict()
+    .AddCore(options =>
+    {
+        options.UseEntityFrameworkCore()
+            .UseDbContext<IdentityContext>()
+            .ReplaceDefaultEntities<Guid>();
+        options.UseQuartz();
+    })
+    .AddServer(options =>
+    {
+        // enable endpoints
+        options.SetAuthorizationEndpointUris("/connect/authorize")
+            .SetLogoutEndpointUris("/connect/logout")
+            .SetIntrospectionEndpointUris("/connect/introspect")
+            .SetTokenEndpointUris("/connect/token")
+            .SetUserinfoEndpointUris("/connect/userinfo")
+            .SetVerificationEndpointUris("/connect/verify");
+
+        // enable flows
+        options.AllowAuthorizationCodeFlow()
+            .AllowHybridFlow()
+            //.AllowPasswordFlow()
+            //.AllowClientCredentialsFlow()
+            .AllowRefreshTokenFlow();
+
+        // register scopes
+        options.RegisterScopes(Scopes.Email, Scopes.Profile, Scopes.Roles, Scopes.OpenId);
+
+        options.AddDevelopmentEncryptionCertificate()
+            .AddDevelopmentSigningCertificate();
+
+        options.UseAspNetCore()
+            .EnableAuthorizationEndpointPassthrough()
+            .EnableLogoutEndpointPassthrough()
+            .EnableTokenEndpointPassthrough()
+            .EnableUserinfoEndpointPassthrough()
+            .EnableStatusCodePagesIntegration();
+    })
+    .AddValidation(options =>
+    {
+        options.UseLocalServer();
+        options.UseAspNetCore();
+    });
+
+// cors
+services.AddCors(options =>
+{
+    options.AddPolicy("AllowAllOrigins",
+        builder =>
+        {
+            builder
+                .AllowCredentials()
+                .WithOrigins("https://localhost:4200")
+                .SetIsOriginAllowedToAllowWildcardSubdomains()
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        });
+});
+
+services.AddControllersWithViews();
+services.AddRazorPages();
+var app = builder.Build();
+
+// ÒÔÏÂÊý¾Ý¿â³õÊ¼»¯ÄÚÈÝ£¬¿ÉÊ¹ÓÃÆäËû·½Ê½Ìæ´ú
+await using (var scope = app.Services.CreateAsyncScope())
+{
+    // Éú³ÉÊý¾Ý¿â½á¹¹
+    var context = scope.ServiceProvider.GetRequiredService<IdentityContext>();
+    context.Database.EnsureCreated();
+
+    // Ìí¼ÓÄ¬ÈÏÊý¾Ý
+    var manager = scope.ServiceProvider.GetRequiredService<IOpenIddictApplicationManager>();
+    if (await manager.FindByClientIdAsync(InitClient.AdminClient.ClientId!) == null)
+    {
+        await manager.CreateAsync(InitClient.AdminClient);
+    }
+    if (await manager.FindByClientIdAsync(InitClient.Api.ClientId!) == null)
+    {
+        await manager.CreateAsync(InitClient.Api);
     }
 }
+
+app.UseCors("AllowAllOrigins");
+app.UseHttpsRedirection();
+app.UseStaticFiles();
+app.UseRouting();
+app.UseAuthentication();
+app.UseAuthorization();
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllers();
+    endpoints.MapDefaultControllerRoute();
+    endpoints.MapRazorPages();
+});
+app.Run();

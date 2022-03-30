@@ -1,4 +1,6 @@
-﻿namespace Http.API.BackgroundTask;
+﻿using Share.NewsCollectionService;
+
+namespace Http.API.BackgroundTask;
 public class NewsTimerService : IHostedService, IDisposable
 {
     private readonly ILogger<NewsTimerService> _logger;
@@ -41,8 +43,5 @@ public class NewsTimerService : IHostedService, IDisposable
         return Task.CompletedTask;
     }
 
-    public void Dispose()
-    {
-        _timer?.Dispose();
-    }
+    public void Dispose() => _timer?.Dispose();
 }

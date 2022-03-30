@@ -1,117 +1,82 @@
-using Http.Application.Interface;
-using Http.Application.Repositories;
 using Share.Models.ArticleCatalogDtos;
-
 namespace Http.API.Controllers;
 
-/// <summary>
-/// 文章目录
-/// </summary>
-public class ArticleCatalogController : ApiController<ArticleCatalogRepository, ArticleCatalog, ArticleCatalogAddDto, ArticleCatalogUpdateDto, ArticleCatalogFilter, ArticleCatalogDto>
+
+public class ArticleCatalogController : RestApiBase<ArticleCatalogDataStore, ArticleCatalog, ArticleCatalogUpdateDto, ArticleCatalogFilter, ArticleCatalogItemDto>
 {
-
-    protected Guid UserId = Guid.Empty;
-    public ArticleCatalogController(
-        ILogger<ArticleCatalogController> logger,
-             IUserContext userContext,
-        ArticleCatalogRepository repository) : base(logger, repository, userContext)
+    public ArticleCatalogController(IUserContext user, ILogger<ArticleCatalogController> logger, ArticleCatalogDataStore store) : base(user, logger, store)
     {
     }
 
     /// <summary>
-    /// 添加ArticleCatalog
+    /// 关联添加
     /// </summary>
-    /// <param name="form"></param>
+    /// <param name="id">所属对象id</param>
+    /// <param name="list">数组</param>
+    /// <param name="dependStore"></param>
     /// <returns></returns>
-    [HttpPost]
-    public async override Task<ActionResult<ArticleCatalog>> AddAsync([FromBody] ArticleCatalogAddDto form)
+    [HttpPost("{id}")]
+    public async Task<ActionResult<int>> AddInAsync([FromRoute] Guid id, List<ArticleCatalogUpdateDto> list, [FromServices] UserDataStore dependStore)
     {
-        if (_repos._db.Any(e => e.Name == form.Name
-            && e.Account.Id == UserId))
+        var depend = await dependStore.FindAsync(id);
+        if (depend == null) return NotFound("depend not exist");
+        var newList = new List<ArticleCatalog>();
+        list.ForEach(item =>
         {
-            return Conflict();
-        }
-        form.AccountId = UserId;
-        if (form.ParentId == null || form.ParentId == Guid.Empty)
-        {
-            form.Level = 0;
-        }
-        else
-        {
-            var parent = _repos._db.SingleOrDefault(p => p.Id == form.ParentId);
-            if (parent == null)
+            var newItem = new ArticleCatalog()
             {
-                return NotFound("错误的父类id");
-            }
-            form.Level = (short)(parent.Level + 1);
-        }
-        return await _repos.AddAsync(form);
+                Account = depend
+            };
+            newList.Add(newItem.Merge(item));
+        });
+        return await _store.BatchAddAsync(newList);
     }
 
     /// <summary>
-    /// 分页筛选ArticleCatalog
+    /// 分页筛选
     /// </summary>
     /// <param name="filter"></param>
     /// <returns></returns>
-    [HttpPost("filter")]
-    public async override Task<ActionResult<PageResult<ArticleCatalogDto>>> FilterAsync(ArticleCatalogFilter filter)
+    public override Task<ActionResult<PageResult<ArticleCatalogItemDto>>> FilterAsync(ArticleCatalogFilter filter)
     {
-        return await _repos.GetListWithPageAsync(UserId, filter);
+        return base.FilterAsync(filter);
     }
 
     /// <summary>
-    /// 更新ArticleCatalog
+    /// 添加
+    /// </summary>
+    /// <param name="form"></param>
+    /// <returns></returns>
+    public override Task<ActionResult<ArticleCatalog>> AddAsync(ArticleCatalog form) => base.AddAsync(form);
+
+    /// <summary>
+    /// ⚠更新
     /// </summary>
     /// <param name="id"></param>
     /// <param name="form"></param>
     /// <returns></returns>
-    [HttpPut("{id}")]
-    public async override Task<ActionResult<ArticleCatalog>> UpdateAsync([FromRoute] Guid id, [FromBody] ArticleCatalogUpdateDto form)
-    {
-        if (_repos._db.Any(e => e.Id == id))
-        {
-            // 名称不可以修改成其他已经存在的名称
-            if (_repos._db.Any(e => e.Name == form.Name && e.Id != id))
-            {
-                return Conflict();
-            }
-            if (!_repos.ValidAccount(UserId))
-            {
-                return Forbid();
-            }
-            return await _repos.UpdateAsync(id, form);
-        }
-        return NotFound();
-    }
-
+    public override Task<ActionResult<ArticleCatalog?>> UpdateAsync([FromRoute] Guid id, ArticleCatalogUpdateDto form)
+        => base.UpdateAsync(id, form);
 
     /// <summary>
-    /// 删除ArticleCatalog
+    /// ⚠删除
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    [HttpDelete("{id}")]
-    public async override Task<ActionResult<ArticleCatalog>> DeleteAsync([FromRoute] Guid id)
+    public override Task<ActionResult<bool>> DeleteAsync([FromRoute] Guid id)
     {
-        if (!_repos.ValidAccount(UserId))
-        {
-            return Forbid();
-        }
-        return await base.DeleteAsync(id);
+        return base.DeleteAsync(id);
     }
 
     /// <summary>
-    /// 获取ArticleCatalog详情
+    /// ⚠ 批量删除
     /// </summary>
-    /// <param name="id"></param>
+    /// <param name="ids"></param>
     /// <returns></returns>
-    [HttpGet("{id}")]
-    public async override Task<ActionResult<ArticleCatalog>> GetDetailAsync([FromRoute] Guid id)
+    public async override Task<ActionResult<int>> BatchDeleteAsync(List<Guid> ids)
     {
-        if (!_repos.ValidAccount(UserId))
-        {
-            return Forbid();
-        }
-        return await base.GetDetailAsync(id);
+        // 危险操作，请确保该方法的执行权限
+        //return base.BatchDeleteAsync(ids);
+        return await Task.FromResult(0);
     }
 }

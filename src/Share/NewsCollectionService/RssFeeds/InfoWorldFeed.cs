@@ -23,35 +23,5 @@ public class InfoWorldFeed : BaseFeed
         return string.Join(";", categories);
     }
 
-    protected override string GetContent(string url)
-    {
-        return string.Empty;
-
-        //if (HasContent != false) return "";
-        //var cookieContainer = new CookieContainer();
-        //using (var handler = new HttpClientHandler() { CookieContainer = cookieContainer })
-        //using (var client = new HttpClient(handler))
-        //{
-        //    cookieContainer.Add(new Cookie("nsdr", @"""em=geethin%2540outlook.com|tkn=1|fnm=niltor|industry=Aerospace%252FDefense%2520Contractor|jobFunction=Applications|jobPosition=Manager""", "/", "infoworld.com"));
-        //    cookieContainer.Add(new Cookie("idg_uuid", "745fb237-4296-42e1-95ed-e06ebfa7c6ac", "/", "infoworld.com"));
-
-        //    var content = client.GetStringAsync(url).Result;
-        //    if (!string.IsNullOrEmpty(content))
-        //    {
-        //        var doc = new HtmlDocument();
-        //        doc.LoadHtml(content);
-        //        var contentNode = doc.DocumentNode.SelectSingleNode("//id[@drr-container]");
-        //        var removeXPaths = new List<string>();
-        //        var asideNodes = contentNode.SelectNodes("//aside").Select(n => n.XPath).ToList();
-        //        var scriptNodes = contentNode.SelectNodes("//script").Select(n => n.XPath).ToList();
-        //        removeXPaths.AddRange(asideNodes);
-        //        removeXPaths.AddRange(scriptNodes);
-        //        removeXPaths.ForEach(path =>
-        //        {
-        //            contentNode.SelectSingleNode(path).Remove();
-        //        });
-        //        return contentNode.InnerHtml;
-        //    }
-        //}
-    }
+    protected override string GetContent(string url) => string.Empty;//if (HasContent != false) return "";//var cookieContainer = new CookieContainer();//using (var handler = new HttpClientHandler() { CookieContainer = cookieContainer })//using (var client = new HttpClient(handler))//{//    cookieContainer.Add(new Cookie("nsdr", @"""em=geethin%2540outlook.com|tkn=1|fnm=niltor|industry=Aerospace%252FDefense%2520Contractor|jobFunction=Applications|jobPosition=Manager""", "/", "infoworld.com"));//    cookieContainer.Add(new Cookie("idg_uuid", "745fb237-4296-42e1-95ed-e06ebfa7c6ac", "/", "infoworld.com"));//    var content = client.GetStringAsync(url).Result;//    if (!string.IsNullOrEmpty(content))//    {//        var doc = new HtmlDocument();//        doc.LoadHtml(content);//        var contentNode = doc.DocumentNode.SelectSingleNode("//id[@drr-container]");//        var removeXPaths = new List<string>();//        var asideNodes = contentNode.SelectNodes("//aside").Select(n => n.XPath).ToList();//        var scriptNodes = contentNode.SelectNodes("//script").Select(n => n.XPath).ToList();//        removeXPaths.AddRange(asideNodes);//        removeXPaths.AddRange(scriptNodes);//        removeXPaths.ForEach(path =>//        {//            contentNode.SelectSingleNode(path).Remove();//        });//        return contentNode.InnerHtml;//    }//}
 }

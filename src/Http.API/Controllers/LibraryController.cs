@@ -1,65 +1,83 @@
-using Http.Application.Interface;
-using Http.Application.Repositories;
 using Share.Models.LibraryDtos;
-
 namespace Http.API.Controllers;
 
 /// <summary>
-/// Library
+/// 模型库
 /// </summary>
-public class LibraryController : ApiController<LibraryRepository, Library, LibraryAddDto, LibraryUpdateDto, LibraryFilter, LibraryDto>
+public class LibraryController : RestApiBase<LibraryDataStore, Library, LibraryUpdateDto, LibraryFilter, LibraryItemDto>
 {
-    public LibraryController(
-        ILogger<LibraryController> logger,
-        LibraryRepository repository,
-         IUserContext accessor) : base(logger, repository, accessor)
+    public LibraryController(IUserContext user, ILogger<LibraryController> logger, LibraryDataStore store) : base(user, logger, store)
     {
     }
 
     /// <summary>
-    /// 添加Library
+    /// 关联添加
     /// </summary>
-    /// <param name="form"></param>
+    /// <param name="id">所属对象id</param>
+    /// <param name="list">数组</param>
+    /// <param name="dependStore"></param>
     /// <returns></returns>
-    [HttpPost]
-    public async override Task<ActionResult<Library>> AddAsync([FromBody] LibraryAddDto form)
+    [HttpPost("{id}")]
+    public async Task<ActionResult<int>> AddInAsync([FromRoute] Guid id, List<LibraryUpdateDto> list, [FromServices] UserDataStore dependStore)
     {
-        // if (_repos.Any(e => e.Name == form.Name))
-        // {
-        //     return Conflict();
-        // }
-        return await _repos.AddAsync(form);
+        var depend = await dependStore.FindAsync(id);
+        if (depend == null) return NotFound("depend not exist");
+        var newList = new List<Library>();
+        list.ForEach(item =>
+        {
+            var newItem = new Library()
+            {
+                User = depend
+            };
+            newList.Add(newItem.Merge(item));
+        });
+        return await _store.BatchAddAsync(newList);
     }
-
     /// <summary>
-    /// 分页筛选Library
+    /// 分页筛选
     /// </summary>
     /// <param name="filter"></param>
     /// <returns></returns>
-    [HttpPost("filter")]
-    public async override Task<ActionResult<PageResult<LibraryDto>>> FilterAsync(LibraryFilter filter)
+    public override Task<ActionResult<PageResult<LibraryItemDto>>> FilterAsync(LibraryFilter filter)
     {
-        return await _repos.GetListWithPageAsync(filter);
+        return base.FilterAsync(filter);
     }
 
     /// <summary>
-    /// 更新Library
+    /// 添加
+    /// </summary>
+    /// <param name="form"></param>
+    /// <returns></returns>
+    public override Task<ActionResult<Library>> AddAsync(Library form) => base.AddAsync(form);
+
+    /// <summary>
+    /// ⚠更新
     /// </summary>
     /// <param name="id"></param>
     /// <param name="form"></param>
     /// <returns></returns>
-    [HttpPut("{id}")]
-    public async override Task<ActionResult<Library>> UpdateAsync([FromRoute] Guid id, [FromBody] LibraryUpdateDto form)
+    public override Task<ActionResult<Library?>> UpdateAsync([FromRoute] Guid id, LibraryUpdateDto form)
+        => base.UpdateAsync(id, form);
+
+    /// <summary>
+    /// ⚠删除
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    public override Task<ActionResult<bool>> DeleteAsync([FromRoute] Guid id)
     {
-        if (_repos._db.Any(e => e.Id == id))
-        {
-            // 名称不可以修改成其他已经存在的名称
-            // if (_repos.Any(e => e.Name == form.Name && e.Id != id))
-            // {
-            //    return Conflict();
-            // }
-            return await _repos.UpdateAsync(id, form);
-        }
-        return NotFound();
+        return base.DeleteAsync(id);
+    }
+
+    /// <summary>
+    /// ⚠ 批量删除
+    /// </summary>
+    /// <param name="ids"></param>
+    /// <returns></returns>
+    public async override Task<ActionResult<int>> BatchDeleteAsync(List<Guid> ids)
+    {
+        // 危险操作，请确保该方法的执行权限
+        //return base.BatchDeleteAsync(ids);
+        return await Task.FromResult(0);
     }
 }

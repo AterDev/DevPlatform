@@ -1,153 +1,109 @@
-using Http.Application.Interface;
-using Http.Application.Repositories;
 using Share.Models.ArticleDtos;
-
 namespace Http.API.Controllers;
 
 /// <summary>
-/// 文章
+/// 文章内容
 /// </summary>
-public class ArticleController : ApiController<ArticleRepository, Article, ArticleAddDto, ArticleUpdateDto, ArticleFilter, ArticleDto>
+public class ArticleController : RestApiBase<ArticleDataStore, Article, ArticleUpdateDto, ArticleFilter, ArticleItemDto>
 {
-
-    FileService _fileService;
-    public ArticleController(
-        ILogger<ArticleController> logger,
-        ArticleRepository repository,
-        IUserContext userContext,
-        FileService fileService
-        ) : base(logger, repository, userContext)
+    public ArticleController(IUserContext user, ILogger<ArticleController> logger, ArticleDataStore store) : base(user, logger, store)
     {
-        _fileService = fileService;
     }
 
+
     /// <summary>
-    /// 添加Article
+    /// 添加文章内容
     /// </summary>
-    /// <param name="form"></param>
+    /// <param name="data"></param>
+    /// <param name="extendDataStore"></param>
     /// <returns></returns>
-    [HttpPost]
-    public async override Task<ActionResult<Article>> AddAsync([FromBody] ArticleAddDto form)
+    [HttpPost("add")]
+    public async Task<ActionResult<Article>> AddWithContentAsync([FromBody] ArticleUpdateDto data, [FromServices] ArticleExtendDataStore extendDataStore)
     {
-        if (_repos.Any(e => e.Title == form.Title
-            && e.AccountId == _usrCtx.UserId))
+        var article = new Article();
+        var user = await  _store._context.Users.FindAsync(_user.UserId);
+        article.Merge(data);
+        article.Account = user!;
+        article = await _store.AddAsync(article);
+
+        var articleExtend = new ArticleExtend()
         {
-            return Conflict();
-        }
-        if (!_repos.ValidAccount())
-        {
-            return Forbid();
-        }
-        // 上录是否合法
-        if (form.CatalogId.HasValue)
-        {
-            var catalog = _repos.ValidCatalog(form.CatalogId.Value);
-            if (!catalog)
-            {
-                return NotFound("未找到相应的目录");
-            }
-        }
-        return await _repos.AddAsync(form);
+            Article = article,
+            Content = data.Content??"",
+        };
+        await extendDataStore.AddAsync(articleExtend);
+        return article;
     }
 
     /// <summary>
-    /// 分页筛选Article
+    /// 关联添加
+    /// </summary>
+    /// <param name="id">所属对象id</param>
+    /// <param name="list">数组</param>
+    /// <param name="dependStore"></param>
+    /// <returns></returns>
+    [HttpPost("{id}")]
+    public async Task<ActionResult<int>> AddInAsync([FromRoute] Guid id, List<ArticleUpdateDto> list, [FromServices] UserDataStore dependStore)
+    {
+        var depend = await dependStore.FindAsync(id);
+        if (depend == null) return NotFound("depend not exist");
+        var newList = new List<Article>();
+        list.ForEach(item =>
+        {
+            var newItem = new Article()
+            {
+                Account = depend
+            };
+            newList.Add(newItem.Merge(item));
+        });
+        return await _store.BatchAddAsync(newList);
+    }
+
+    /// <summary>
+    /// 分页筛选
     /// </summary>
     /// <param name="filter"></param>
     /// <returns></returns>
-    [HttpPost("filter")]
-    public async override Task<ActionResult<PageResult<ArticleDto>>> FilterAsync(ArticleFilter filter)
+    public override Task<ActionResult<PageResult<ArticleItemDto>>> FilterAsync(ArticleFilter filter)
     {
-        return await _repos.GetListWithPageAsync(filter);
+        return base.FilterAsync(filter);
     }
 
     /// <summary>
-    /// 更新Article
+    /// 添加
+    /// </summary>
+    /// <param name="form"></param>
+    /// <returns></returns>
+    public override Task<ActionResult<Article>> AddAsync(Article form) => base.AddAsync(form);
+
+    /// <summary>
+    /// ⚠更新
     /// </summary>
     /// <param name="id"></param>
     /// <param name="form"></param>
     /// <returns></returns>
-    [HttpPut("{id}")]
-    public async override Task<ActionResult<Article>> UpdateAsync([FromRoute] Guid id, [FromBody] ArticleUpdateDto form)
-    {
-        if (_repos._db.Any(e => e.Id == id))
-        {
-            // 名称不可以修改成其他已经存在的名称
-            if (_repos._db.Any(e => e.Title == form.Title && e.Id != id))
-            {
-                return Conflict();
-            }
-            if (!_repos.ValidAccount())
-            {
-                return Forbid();
-            }
-            return await _repos.UpdateAsync(id, form);
-        }
-        return NotFound();
-    }
-
+    public override Task<ActionResult<Article?>> UpdateAsync([FromRoute] Guid id, ArticleUpdateDto form)
+        => base.UpdateAsync(id, form);
 
     /// <summary>
-    /// 删除Article
+    /// ⚠删除
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    [HttpDelete("{id}")]
-    public async override Task<ActionResult<Article>> DeleteAsync([FromRoute] Guid id)
+    public override Task<ActionResult<bool>> DeleteAsync([FromRoute] Guid id)
     {
-        if (!_repos.ValidAccount())
-        {
-            return Forbid();
-        }
-        return await base.DeleteAsync(id);
+        return base.DeleteAsync(id);
     }
 
     /// <summary>
-    /// 获取Article详情
+    /// ⚠ 批量删除
     /// </summary>
-    /// <param name="id"></param>
+    /// <param name="ids"></param>
     /// <returns></returns>
-    [HttpGet("{id}")]
-    public async override Task<ActionResult<Article>> GetDetailAsync([FromRoute] Guid id)
+    public async override Task<ActionResult<int>> BatchDeleteAsync(List<Guid> ids)
     {
-        return await base.GetDetailAsync(id);
-    }
-
-
-    /// <summary>
-    /// 文本编辑器上传文件
-    /// </summary>
-    /// <param name="upload"></param>
-    /// <param name="type"></param>
-    /// <returns></returns>
-    [RequestSizeLimit(10_000_000)]
-    [HttpPost("UploadEditorFile")]
-    public async Task<IActionResult> UploadEditorFile(IFormFile upload, string type = "editor")
-    {
-        var dirPath = type;
-        var filePath = Path.GetTempFileName();
-        var url = "";
-        var localPath = "";
-        if (upload.Length > 0)
-        {
-            using var stream = new MemoryStream();
-            await upload.CopyToAsync(stream);
-            var fileExt = upload.FileName.Split(".").LastOrDefault();
-            var fileName = Path.GetFileName(HashCrypto.Md5Hash(DateTime.Now.ToString()) + $".{fileExt ?? "png"}");
-            // 保存到本地
-            localPath = Path.Combine(dirPath, fileName);
-            _fileService.SaveFile(localPath, stream);
-            // 删除临时文件
-            System.IO.File.Delete(filePath);
-
-            // 拼成本地host链接
-            var myHostUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}";
-            url = $@" {myHostUrl}/Uploads/{localPath}";
-        }
-        return Ok(new
-        {
-            Url = url,
-            LocalUrl = url
-        });
+        // 危险操作，请确保该方法的执行权限
+        //return base.BatchDeleteAsync(ids);
+        return await Task.FromResult(0);
     }
 }

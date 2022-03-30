@@ -3,13 +3,13 @@
 /// <summary>
 /// 文章内容
 /// </summary>
-public partial class Article : BaseDB
+public partial class Article : EntityBase
 {
     /// <summary>
     /// 标题
     /// </summary>
     [MaxLength(100)]
-    public string? Title { get; set; }
+    public string Title { get; set; } = null!;
     /// <summary>
     /// 概要
     /// </summary>
@@ -29,11 +29,7 @@ public partial class Article : BaseDB
     /// 文章类别
     /// </summary>
     public ArticleType ArticleType { get; set; }
-
-    [ForeignKey("AccountId")]
-    public Account? Account { get; set; }
-    public Guid AccountId { get; set; }
-
+    public User Account { get; set; } = null!;
     /// <summary>
     /// 仅个人查看
     /// </summary>
@@ -50,7 +46,6 @@ public partial class Article : BaseDB
     /// 评论
     /// </summary>
     public List<Comment>? Comments { get; set; }
-
 }
 
 public enum ArticleType

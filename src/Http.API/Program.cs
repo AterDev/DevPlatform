@@ -1,7 +1,6 @@
 using Http.API.BackgroundTask;
-using Http.Application;
-using Http.Application.Agreement;
-using Http.Application.Interface;
+using Share.Azure;
+using Share.NewsCollectionService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,44 +9,45 @@ var configuration = builder.Configuration;
 
 services.AddHostedService<NewsTimerService>();
 services.AddHttpContextAccessor();
-services.AddAutoMapper(typeof(MapperProfile));
 services.Configure<AzureOptions>(configuration.GetSection("Azure"));
 var connectionString = configuration.GetConnectionString("DefaultConnection");
 services.AddDbContextPool<ContextBase>(option =>
 {
-    option.UseNpgsql(connectionString, sql => { sql.MigrationsAssembly("Infrastructure"); });
+    option.UseNpgsql(connectionString, sql => { sql.MigrationsAssembly("EntityFramework.Migrator"); });
 });
 
-services.AddScoped<IUserContext, UserContext>();
-services.AddRepositories();
+
 services.AddOptions();
+services.AddScoped<IUserContext, UserContext>();
 services.AddScoped<NewsCollectionService>();
 services.AddScoped<TwitterService>();
-services.AddScoped(typeof(WebService));
 services.AddScoped(typeof(FileService));
+
+services.AddDataStore();
 
 #region 接口相关内容:jwt/授权/cors
 // jwt
 services.AddAuthentication(options =>
 {
-    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-})
-.AddJwtBearer(cfg =>
-{
-    // use IdentityServer
-    cfg.Authority = "https://localhost:5001";
-    cfg.TokenValidationParameters = new TokenValidationParameters
-    {
-        ValidateAudience = false,
-    };
+    options.DefaultScheme = OpenIddictValidationAspNetCoreDefaults.AuthenticationScheme;
 });
+services.AddOpenIddict()
+    .AddValidation(options =>
+    {
+        options.SetIssuer("https://localhost:5001/");
+        options.UseIntrospection()
+            .SetClientId("api")
+            .SetClientSecret("myApiTestSecret");
+
+        options.UseSystemNetHttp();
+        options.UseAspNetCore();
+    });
 // 验证
 services.AddAuthorization(options =>
 {
     options.AddPolicy("ApiScope", policy =>
     {
-        policy.RequireClaim("scope", "api");
+        policy.RequireClaim("scope", "openid profile email offline_access");
     });
     options.AddPolicy("User", policy =>
         policy.RequireRole("Admin", "User"));
@@ -55,7 +55,6 @@ services.AddAuthorization(options =>
         policy.RequireRole("Admin"));
 });
 
-// services.AddScoped(typeof(JwtService)); 
 // cors配置 
 services.AddCors(options =>
 {
@@ -95,26 +94,22 @@ if (app.Environment.IsDevelopment())
     app.UseCors("default");
     app.UseDeveloperExceptionPage();
     app.UseOpenApi();
-    app.UseSwaggerUi3(c => { c.DocumentTitle = "文档"; });
+    app.UseSwaggerUi3(c => { c.DocumentTitle = "文档"; }); 
     app.UseStaticFiles();
 }
 else
 {
     // 生产环境需要新的配置
     app.UseCors("default");
-    app.UseExceptionHandler("/Home/Error");
     //app.UseHsts();
     app.UseHttpsRedirection();
 }
 
 app.UseHealthChecks("/health");
+
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
-
-app.Map("/api/testAuth", [Authorize]() => "success");
-app.Map("/api/testAuthApiScope", [Authorize("ApiScope")]() => "success");
-
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllers();

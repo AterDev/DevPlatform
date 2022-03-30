@@ -45,8 +45,5 @@ public class FileService
     /// <param name="path"></param>
     /// <param name="stream"></param>
     /// <returns></returns>
-    public string SaveToCloud(string path, Stream stream)
-    {
-        return default;
-    }
+    public string SaveToCloud(string path, Stream stream) => default;
 }

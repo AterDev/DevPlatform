@@ -82,7 +82,7 @@ public class BaseFeed
                             {
                                 if (description.Length > 999)
                                 {
-                                    description = description.Substring(0, 999);
+                                    description = description[..999];
                                 }
                             }
                             var content = x.Element(Content)?.Value;
@@ -130,10 +130,7 @@ public class BaseFeed
     /// </summary>
     /// <param name="url"></param>
     /// <returns></returns>
-    protected virtual string GetContent(string url)
-    {
-        return "";
-    }
+    protected virtual string GetContent(string url) => "";
 
     /// <summary>
     /// 获取标签目录
@@ -152,10 +149,7 @@ public class BaseFeed
     /// 获取缩略图
     /// </summary>
     /// <returns></returns>
-    protected virtual string GetThumb(XElement x)
-    {
-        return "";
-    }
+    protected virtual string GetThumb(XElement x) => "";
     /// <summary>
     /// 是否包含
     /// </summary>

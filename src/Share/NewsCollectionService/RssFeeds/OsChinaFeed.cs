@@ -10,8 +10,5 @@ public class OsChinaFeed : BaseFeed
         };
     }
 
-    protected override string GetContent(string url)
-    {
-        return base.GetContent(url);
-    }
+    protected override string GetContent(string url) => base.GetContent(url);
 }

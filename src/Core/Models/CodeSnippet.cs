@@ -3,13 +3,13 @@
 /// <summary>
 /// 代码片段
 /// </summary>
-public class CodeSnippet : BaseDB
+public class CodeSnippet : EntityBase
 {
     /// <summary>
     /// 实体名称
     /// </summary>
     [MaxLength(100)]
-    public string? Name { get; set; }
+    public string Name { get; set; } = null!;
     /// <summary>
     /// 描述
     /// </summary>
