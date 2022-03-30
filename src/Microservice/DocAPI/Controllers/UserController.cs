@@ -30,7 +30,7 @@ public class UserController : RestApiBase<UserDataStore, User, UserUpdateDto, Us
         var res = await _store.LoginAsync(user);
         if (res == null)
         {
-            return NotFound();
+            return Problem("用户名或密码错误");
         }
 
         var issuerSign = _config.GetSection("Jwt")["Sign"];

@@ -26,4 +26,17 @@ public class ThirdNewsDataStore : DataStoreBase<ContextBase, ThirdNews, ThirdNew
     public override Task<ThirdNews> AddAsync(ThirdNews data) => base.AddAsync(data);
     public override Task<ThirdNews?> UpdateAsync(Guid id, ThirdNewsUpdateDto dto) => base.UpdateAsync(id, dto);
     public override Task<bool> DeleteAsync(Guid id) => base.DeleteAsync(id);
+
+    //public async Task<int> BatchUpdateAsync(List<Guid> ids, ThirdNewsUpdateDto form)
+    //{
+    //    var data = await _db.Where(d=>ids.Contains(d.Id))
+    //        .ToListAsync();
+    //    if (data == null) { return 0; }
+    //    // merge data and save 
+    //    foreach (var item in data)
+    //    {
+    //        item.Merge(form);
+    //    }
+    //    return await _context.SaveChangesAsync();
+    //}
 }

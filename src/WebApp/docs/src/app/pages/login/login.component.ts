@@ -61,7 +61,7 @@ export class LoginComponent implements OnInit {
           this.snb.open('登录成功');
           this.router.navigateByUrl('/docs');
         }, error => {
-          this.snb.open(error.detail);
+          this.snb.open(error.error.detail);
         });
 
     } else {
