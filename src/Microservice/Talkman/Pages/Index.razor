@@ -1,40 +1,16 @@
 ﻿@page "/"
 <PageTitle>Just Talk</PageTitle>
 
-<div class="row">
-    <div class="col-6 col-sm-12">
-        <div class="row">
-            <span class="col col-auto align-self-center fs-4">解动态</span>
-            <div class="col">
-                <button class="btn btn-primary" @onclick="HEXToUTF8">转</button>
-            </div>
-        </div>
-
-        <div class="row mt-1">
-            <div class="col-md-6 col-sm-12">
-                <textarea class="form-control" rows="10" @bind="HEXOrigin"></textarea>
-            </div>
-            <div class="col-md-6 col-sm-12">
-                <textarea class="form-control" rows="10" @bind="UTF8Content"></textarea>
-            </div>
-        </div>
-
+<div class="d-flex flex-column vh-100 w-100 justify-content-center">
+    <div class="d-flex justify-content-center">
+        <a href="Decrpty" class="btn btn-primary">翻译翻译</a>
     </div>
-    <div class="col-6 col-sm-12 mt-2">
-        <div class="row">
-            <span class="col col-auto align-self-center fs-4">转动态</span>
-            <div class="col">
-                <button class="btn btn-primary" @onclick="UTF8ToHEX">转</button>
-            </div>
-        </div>
-        <div class="row mt-1">
-            <div class="col-md-6 col-sm-12">
-                <textarea class="form-control" rows="10" @bind="UTF8Origin"></textarea>
-            </div>
-            <div class="col-md-6 col-sm-12">
-                <textarea class="form-control" rows="10" @bind="HEXContent"></textarea>
-            </div>
-        </div>
-
+    <div class="d-flex justify-content-center mt-2">
+        <a href="Encrpty" class="btn btn-primary">加密加密</a>
     </div>
+
 </div>
+
+@code{
+
+}

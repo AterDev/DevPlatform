@@ -1,0 +1,35 @@
+﻿@page "/encrpty"
+<div class="col-12">
+    <div class="row">
+        <span class="col col-auto align-self-center fs-4">MIMI</span>
+        <div class="col">
+            <button class="btn btn-primary" @onclick="EncryptContent">MI'a</button>
+        </div>
+    </div>
+    <div class="row mt-1">
+        <div class="col-md-6 col-sm-12">
+            <textarea class="form-control" rows="10" @bind="OriginContent"
+                      placeholder="原文"></textarea>
+        </div>
+        <div class="col-12 mt-2">
+            <textarea class="form-control" rows="10" @bind="EnCryptedContent"
+                      placeholder="密后"></textarea>
+        </div>
+    </div>
+
+</div>
+@code {
+    public string? OriginContent { get; set; }
+    public string? EnCryptedContent { get; set; }
+
+    public void EncryptContent()
+    {
+        if (OriginContent != null)
+        {
+            var trimContent = OriginContent.Trim();
+            var bytes = Encoding.UTF8.GetBytes(trimContent, 0, trimContent.Length);
+            var reverse = bytes.Reverse().ToArray();
+            EnCryptedContent = Encoding.Unicode.GetString(reverse);
+        }
+    }
+}

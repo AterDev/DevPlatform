@@ -1,0 +1,31 @@
+﻿@page "/decrpty"
+<div class="col-12">
+    <div class="row">
+        <span class="col col-auto align-self-center fs-4">YIYI</span>
+        <div class="col">
+            <button class="btn btn-primary" @onclick="DecryptContent">YI'a</button>
+        </div>
+    </div>
+    <div class="row mt-1">
+        <div class="col-12">
+            <textarea class="form-control" rows="10" @bind="HEXOrigin" placeholder="原文"></textarea>
+        </div>
+        <div class="col-12 mt-1">
+            <textarea class="form-control" rows="10" @bind="UTF8Content" placeholder="译后"></textarea>
+        </div>
+    </div>
+</div>
+@code {
+    public string? HEXOrigin { get; set; }
+    public string? UTF8Content { get; set; }
+
+    public void DecryptContent()
+    {
+        if (HEXOrigin != null)
+        {
+            var bytes = Encoding.Unicode.GetBytes(HEXOrigin, 0, HEXOrigin.Length);
+            var reverse = bytes.Reverse().ToArray();
+            UTF8Content = Encoding.UTF8.GetString(reverse);
+        }
+    }
+}
