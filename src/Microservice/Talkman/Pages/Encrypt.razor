@@ -1,24 +1,20 @@
 ﻿@page "/encrpty"
 <div class="col-12 py-2">
-    <div class="row">
-        <span class="col col-auto align-self-center fs-4">MIMI</span>
-        <div class="col">
-            <button class="btn btn-primary" @onclick="EncryptContent">MI'a</button>
-        </div>
-    </div>
+
     <div class="row mt-1">
         <div class="col-12">
             <textarea class="form-control" rows="10" @bind="OriginContent"
                       placeholder="原文"></textarea>
         </div>
+        <div class="d-flex mt-2">
+            <button class="btn btn-primary" @onclick="EncryptContent">MI'a</button>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="btn btn-primary" @onclick="DecryptContent">YI'a</button>
+        </div>
+
         <div class="col-12 mt-2">
             <textarea class="form-control" rows="10" @bind="EnCryptedContent"
                       placeholder="密后"></textarea>
-        </div>
-    </div>
-    <div class="row mt-2">
-        <div class="col-12 text-center">
-            <a href="/" class="btn btn-secondary w-50">返回</a>
         </div>
     </div>
 </div>
@@ -38,6 +34,16 @@
             }
             var reverse = bytes.Reverse().ToArray();
             EnCryptedContent = Encoding.Unicode.GetString(reverse);
+        }
+    }
+
+    public void DecryptContent()
+    {
+        if (EnCryptedContent != null)
+        {
+            var bytes = Encoding.Unicode.GetBytes(EnCryptedContent, 0, EnCryptedContent.Length);
+            var reverse = bytes.Reverse().ToArray();
+            OriginContent = Encoding.UTF8.GetString(reverse);
         }
     }
 }
