@@ -81,8 +81,11 @@ var app = builder.Build();
 // 初始化管理员账号
 await using (var scope = app.Services.CreateAsyncScope())
 {
+    var context = scope.ServiceProvider.GetRequiredService<DocsContext>();
+    context.Database.EnsureCreated();
+
     var store = scope.ServiceProvider.GetRequiredService<UserDataStore>();
-    var admin = store.Db.Where(u=>u.UserName=="admin").FirstOrDefault();
+    var admin = store.Db.Where(u => u.UserName == "admin").FirstOrDefault();
     if (admin == null)
         await store.InitAdminUserAsync("admin", "admin123.");
 }
