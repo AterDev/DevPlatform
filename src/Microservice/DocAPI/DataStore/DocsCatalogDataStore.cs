@@ -18,16 +18,16 @@ public class DocsCatalogDataStore : DataStoreBase<DocsContext, DocsCatalog, Docs
     public async Task<List<DocsCatalogTreeItemDto>> GetTreeAsync()
     {
         // 查询所有目录
-        var catalogs = await  _db.Select(s=>new DocsCatalogTreeItemDto()
+        var catalogs = await _db.Select(s => new DocsCatalogTreeItemDto()
         {
             Id = s.Id,
             Name = s.Name,
-            ParentId = s.Parent==null?null: s.Parent.Id,
+            ParentId = s.Parent == null ? null : s.Parent.Id,
             Sort = s.Sort
         }).ToListAsync();
 
         // 查询所有文档做为目录结构
-        var docs = await _context.Docs.Select(s=>new DocsCatalogTreeItemDto
+        var docs = await _context.Docs.Select(s => new DocsCatalogTreeItemDto
         {
             Name = s.Name,
             Id = s.Id,
@@ -50,21 +50,18 @@ public class DocsCatalogDataStore : DataStoreBase<DocsContext, DocsCatalog, Docs
     public override Task<DocsCatalog> AddAsync(DocsCatalog data) => base.AddAsync(data);
     public override async Task<DocsCatalog?> UpdateAsync(Guid id, DocsCatalogUpdateDto dto)
     {
+        var current = await _db.FindAsync(id);
+        current.Merge(dto);
         if (dto.ParentId != null)
         {
             var parent = await _db.FindAsync(dto.ParentId);
             if (parent != null)
             {
-                var current = await _db.FindAsync(id);
-                if (current != null)
-                {
-                    current.Merge(dto);
-                    current.Parent = parent;
-                    await _context.SaveChangesAsync();
-                }
+                current!.Parent = parent;
             }
         }
-        return null;
+        await _context.SaveChangesAsync();
+        return current;
     }
     public override Task<bool> DeleteAsync(Guid id) => base.DeleteAsync(id);
 

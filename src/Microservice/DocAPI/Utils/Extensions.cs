@@ -30,11 +30,10 @@ public static partial class Extensions
 
     /// <summary>
     /// select dto properties
-    /// important: dto and entity property(name & type) must same
+    /// important: dto and entity property(name and type) must same
     /// </summary>
     /// <typeparam name="TSource"></typeparam>
     /// <param name="source"></param>
-    /// <param name="count"></param>
     /// <returns></returns>
     /// <exception cref="NullReferenceException"></exception>
     public static IQueryable<TResult> Select<TSource, TResult>(this IQueryable<TSource> source)
@@ -52,6 +51,5 @@ public static partial class Extensions
         return source.Provider.CreateQuery<TResult>(
             Expression.Call(typeof(Queryable), "Select", new Type[] { sourceType, resultType },
                 source.Expression, Expression.Quote(selector)));
-
     }
 }
