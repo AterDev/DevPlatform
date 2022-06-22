@@ -14,7 +14,8 @@ public class DocsDataStore : DataStoreBase<DocsContext, Docs, DocsUpdateDto, Doc
     {
         if (filter.DocsCatalogId != null)
         {
-            _query = _query.Where(q => q.DocsCatalog.Id == filter.DocsCatalogId);
+            _query = _query.Where(q => q.DocsCatalog.Id == filter.DocsCatalogId)
+                .OrderBy(d => d.Sort);
         }
         return base.FindWithPageAsync(filter);
     }

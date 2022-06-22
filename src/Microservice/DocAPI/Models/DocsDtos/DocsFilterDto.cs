@@ -8,5 +8,5 @@ public class DocsFilter : FilterBase
     [MinLength(3)]
     public string? Name { get; set; }
     public Guid? DocsCatalogId { get; set; } = default!;
-    
+    public LanguageType? Language { get; set; }
 }

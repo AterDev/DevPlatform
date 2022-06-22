@@ -17,5 +17,6 @@ public class DocsCatalog : EntityBase
     [MinLength(3)]
     public string Name { get; set; } = default!;
     public int Sort { get; set; }
+    public LanguageType Language { get; set; } = LanguageType.EN;
     public ICollection<Docs>? Docs { get; set; }
 }
