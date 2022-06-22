@@ -15,25 +15,33 @@ public class DocsCatalogDataStore : DataStoreBase<DocsContext, DocsCatalog, Docs
         return base.FindWithPageAsync(filter);
     }
 
-    public async Task<List<DocsCatalogTreeItemDto>> GetTreeAsync()
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="language">语言</param>
+    /// <returns></returns>
+    public async Task<List<DocsCatalogTreeItemDto>> GetTreeAsync(string language)
     {
         // 查询所有目录
-        var catalogs = await  _db.Select(s=>new DocsCatalogTreeItemDto()
-        {
-            Id = s.Id,
-            Name = s.Name,
-            ParentId = s.Parent==null?null: s.Parent.Id,
-            Sort = s.Sort
-        }).ToListAsync();
+        var catalogs = await _db.Where(s => s.Language == language)
+            .Select(s => new DocsCatalogTreeItemDto()
+            {
+                Id = s.Id,
+                Name = s.Name,
+                ParentId = s.Parent == null ? null : s.Parent.Id,
+                Sort = s.Sort
+            })
+            .ToListAsync();
 
         // 查询所有文档做为目录结构
-        var docs = await _context.Docs.Select(s=>new DocsCatalogTreeItemDto
-        {
-            Name = s.Name,
-            Id = s.Id,
-            ParentId = s.DocsCatalog.Id,
-            IsDoc = true
-        }).ToListAsync();
+        var docs = await _context.Docs.Where(s => s.Language == language)
+            .Select(s => new DocsCatalogTreeItemDto
+            {
+                Name = s.Name,
+                Id = s.Id,
+                ParentId = s.DocsCatalog.Id,
+                IsDoc = true
+            }).ToListAsync();
 
         // 合并
         catalogs.AddRange(docs);
@@ -50,21 +58,19 @@ public class DocsCatalogDataStore : DataStoreBase<DocsContext, DocsCatalog, Docs
     public override Task<DocsCatalog> AddAsync(DocsCatalog data) => base.AddAsync(data);
     public override async Task<DocsCatalog?> UpdateAsync(Guid id, DocsCatalogUpdateDto dto)
     {
+        var current = await _db.FindAsync(id);
+        current.Merge(dto);
         if (dto.ParentId != null)
         {
             var parent = await _db.FindAsync(dto.ParentId);
             if (parent != null)
             {
-                var current = await _db.FindAsync(id);
-                if (current != null)
-                {
-                    current.Merge(dto);
-                    current.Parent = parent;
-                    await _context.SaveChangesAsync();
-                }
+                current!.Parent = parent;
             }
         }
-        return null;
+
+        await _context.SaveChangesAsync();
+        return current;
     }
     public override Task<bool> DeleteAsync(Guid id) => base.DeleteAsync(id);
 

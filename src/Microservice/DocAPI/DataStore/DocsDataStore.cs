@@ -12,9 +12,14 @@ public class DocsDataStore : DataStoreBase<DocsContext, Docs, DocsUpdateDto, Doc
 
     public override Task<PageResult<DocsItemDto>> FindWithPageAsync(DocsFilter filter)
     {
+        _query = _query.OrderBy(d => d.Sort);
         if (filter.DocsCatalogId != null)
         {
             _query = _query.Where(q => q.DocsCatalog.Id == filter.DocsCatalogId);
+        }
+        if (filter.Language != null)
+        {
+            _query = _query.Where(q => q.Language == filter.Language);
         }
         return base.FindWithPageAsync(filter);
     }

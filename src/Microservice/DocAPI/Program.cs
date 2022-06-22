@@ -82,7 +82,7 @@ var app = builder.Build();
 await using (var scope = app.Services.CreateAsyncScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<DocsContext>();
-    context.Database.EnsureCreated();
+    context.Database.Migrate();
 
     var store = scope.ServiceProvider.GetRequiredService<UserDataStore>();
     var admin = store.Db.Where(u => u.UserName == "admin").FirstOrDefault();

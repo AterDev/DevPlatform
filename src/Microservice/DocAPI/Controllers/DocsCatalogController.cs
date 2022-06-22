@@ -24,9 +24,9 @@ public class DocsCatalogController : RestApiBase<DocsCatalogDataStore, DocsCatal
     /// </summary>
     [HttpGet("tree")]
     [AllowAnonymous]
-    public async Task<List<DocsCatalogTreeItemDto>> GetTreeAsync()
+    public async Task<List<DocsCatalogTreeItemDto>> GetTreeAsync(string language)
     {
-        return await _store.GetTreeAsync();
+        return await _store.GetTreeAsync(language);
     }
     /// <summary>
     /// 添加
