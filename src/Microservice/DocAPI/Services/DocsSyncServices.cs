@@ -57,7 +57,8 @@ public class DocsSyncServices
             var languageDirs = await GetRepositoryRootAsync(repositoryId.Value);
             foreach (var lang in languageDirs)
             {
-
+                var contents = await GetFilesAsync(repositoryId.Value, lang.Path);
+                await CreateDocsRecursionAsync(repositoryId.Value, contents, lang.Name, null);
             }
         }
     }
@@ -67,28 +68,67 @@ public class DocsSyncServices
     /// </summary>
     /// <param name="repositoryId"></param>
     /// <param name="contents"></param>
+    /// <param name="language"></param>
     /// <param name="ignoreFile"></param>
     /// <param name="parent"></param>
-    public void CreateDocsRecursion(long repositoryId, IReadOnlyList<RepositoryContent> contents, RepositoryContent? parent, bool ignoreFile = false)
+    public async Task CreateDocsRecursionAsync(long repositoryId, IReadOnlyList<RepositoryContent> contents, string language, RepositoryContent? parent, bool ignoreFile = false)
     {
         var dirs = contents.Where(c => c.Type.Equals("dir")).ToList();
+        DocsCatalog? parentCatalog = null;
+        if (parent != null)
+        {
+            parentCatalog = await _context.DocsCatalogs.FirstOrDefaultAsync(c => c.GitSha == parent.GitUrl);
+        }
         if (dirs.Any())
         {
+            var sort = 0;
             dirs.ForEach(async d =>
             {
-                // TODO:创建目录
+                // 创建目录
+                var catalog = new DocsCatalog
+                {
+                    Name = d.Name,
+                    Sort = sort,
+                    GitSha = d.Sha,
+                    GitUrl = d.Url,
+                    Language = language
+                };
+                if (parentCatalog != null)
+                {
+                    catalog.Parent = parentCatalog;
+                }
+                _context.DocsCatalogs.Add(catalog);
+                sort++;
                 // 获取子目录，递归调用
                 var childContents = await GetFilesAsync(repositoryId, d.Path);
-                CreateDocsRecursion(repositoryId, childContents, d);
+                await CreateDocsRecursionAsync(repositoryId, childContents, language, d);
             });
         }
         if (!ignoreFile)
         {
+            var sort = 0;
             var files = contents.Where(c => c.Type.Equals("file")).ToList();
             if (files.Any())
             {
-                // TODO:创建文件
-
+                files.ForEach(f =>
+                {
+                    // 创建文件
+                    var doc = new Docs
+                    {
+                        Name = f.Name,
+                        GitUrl = f.Url,
+                        GitSha = f.Sha,
+                        Content = f.Content,
+                        Language = language,
+                        Sort = sort,
+                    };
+                    if (parentCatalog != null)
+                    {
+                        doc.DocsCatalog = parentCatalog;
+                    }
+                    _context.Docs.Add(doc);
+                    sort++;
+                });
             }
         }
     }

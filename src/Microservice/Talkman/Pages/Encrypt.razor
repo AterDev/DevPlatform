@@ -1,7 +1,7 @@
 ﻿@page "/encrpty"
-<div class="col-12 py-2">
 
-    <div class="row mt-1">
+<div class="col-12 py-2">
+    <div  class="row mt-1">
         <div class="col-12">
             <textarea class="form-control" rows="10" @bind="OriginContent"
                       placeholder="原文"></textarea>
@@ -18,6 +18,9 @@
         </div>
     </div>
 </div>
+
+
+
 @code {
     public string? OriginContent { get; set; }
     public string? EnCryptedContent { get; set; }
