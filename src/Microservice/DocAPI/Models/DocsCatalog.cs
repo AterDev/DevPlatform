@@ -17,6 +17,14 @@ public class DocsCatalog : EntityBase
     [MinLength(3)]
     public string Name { get; set; } = default!;
     public int Sort { get; set; }
-    public LanguageType Language { get; set; } = LanguageType.EN;
+    /// <summary>
+    /// git url
+    /// </summary>
+    [MaxLength(300)]
+    public string? GitUrl { get; set; }
+    [MaxLength(60)]
+    public string? GitSha { get; set; }
+    [MaxLength(20)]
+    public string Language { get; set; } = "en";
     public ICollection<Docs>? Docs { get; set; }
 }

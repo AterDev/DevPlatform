@@ -14,7 +14,14 @@ public class Docs : EntityBase
     /// 排序
     /// </summary>
     public int Sort { get; set; } = 1;
-
-    public LanguageType Language { get; set; } = LanguageType.EN;
+    /// <summary>
+    /// git url
+    /// </summary>
+    [MaxLength(300)]
+    public string? GitUrl { get; set; }
+    [MaxLength(60)]
+    public string? GitSha { get; set; }
+    [MaxLength(20)]
+    public string Language { get; set; } = "en";
     public DocsCatalog DocsCatalog { get; set; } = default!;
 }

@@ -20,7 +20,7 @@ public class DocsCatalogDataStore : DataStoreBase<DocsContext, DocsCatalog, Docs
     /// </summary>
     /// <param name="language">语言</param>
     /// <returns></returns>
-    public async Task<List<DocsCatalogTreeItemDto>> GetTreeAsync(LanguageType language)
+    public async Task<List<DocsCatalogTreeItemDto>> GetTreeAsync(string language)
     {
         // 查询所有目录
         var catalogs = await _db.Where(s => s.Language == language)
