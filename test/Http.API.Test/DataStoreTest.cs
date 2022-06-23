@@ -1,15 +1,18 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+
 using Core.Models;
+
 using Http.API.Test.Helper;
 using Http.Application.DataStore;
+
 using Share.Models.NewsTagsDtos;
 
 namespace Http.API.Test;
 
 public class DataStoreTest
 {
-    private NewsTagsDataStore _store;
+    private readonly NewsTagsDataStore _store;
     public DataStoreTest()
     {
         _store = DI.GetService<NewsTagsDataStore>();
