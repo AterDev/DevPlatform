@@ -8,7 +8,7 @@ public class DocsSyncServices
 {
     private readonly DocsContext _context;
     public GitHubClient Client { get; set; }
-    private ApiOptions _options;
+    private readonly ApiOptions _options;
     private Octokit.User? User { get; set; }
 
     public DocsSyncServices(DocsContext context)
@@ -27,8 +27,8 @@ public class DocsSyncServices
     /// <param name="pat"></param>
     public async Task SetPATAsync(string pat)
     {
+        Client.Credentials = new Credentials(pat);
         User = await Client.User.Current();
-        Client.Credentials = new Credentials(pat); ;
     }
 
     /// <summary>
