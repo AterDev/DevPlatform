@@ -1,0 +1,14 @@
+global using Microsoft.Extensions.DependencyInjection;
+global using Microsoft.AspNetCore.Mvc;
+global using Microsoft.AspNetCore.Authorization;
+global using System.Text.Json.Serialization;
+global using Microsoft.EntityFrameworkCore;
+global using DocAPI.Utils;
+global using DocAPI.Models;
+// global using DocAPI.Identity;
+global using ;
+global using .Models;
+global using .Controllers;
+global using ;
+global using .Interface;
+global using .DataStore;
