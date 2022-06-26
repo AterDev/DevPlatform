@@ -34,7 +34,7 @@ export class LayoutComponent implements OnInit, AfterViewInit {
   }
 
   getList(): void {
-    this.service.getTree("en")
+    this.service.getTree("cn")
       .subscribe(res => {
         if (res) {
           this.catalogs = res;

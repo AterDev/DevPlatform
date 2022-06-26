@@ -2,13 +2,12 @@
   <mat-toolbar color="">
     <mat-toolbar-row style="font-size:16px">
       <div fxFlex></div>
-      <button mat-flat-button color="primary" matTooltipPosition="right" [routerLink]="['../add']">
+      <button mat-flat-button color="primary" matTooltipPosition="right" matTooltip="请配置好后点击同步" (click)="sync()">
         <mat-icon>sync</mat-icon>
         同步
       </button>
     </mat-toolbar-row>
   </mat-toolbar>
-  <span>请配置好后点击同步</span>
 </div>
 
 <h2>配置信息以便同步</h2>

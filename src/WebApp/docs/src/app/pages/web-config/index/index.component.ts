@@ -129,4 +129,22 @@ export class IndexComponent implements OnInit {
         }
       });
   }
+  sync(): void {
+    this.snb.open("开始同步，请稍等");
+    if (this.data?.githubPAT && this.data.repositoryId) {
+      this.service.sync()
+        .subscribe(res => {
+          if (res) {
+            this.snb.open("同步成功");
+          } else {
+            this.snb.open("同步失败");
+          }
+        });
+    } else {
+      this.snb.open("请先配置github PAT并选择要同步的仓库");
+    }
+
+
+
+  }
 }
