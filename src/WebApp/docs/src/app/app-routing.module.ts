@@ -4,7 +4,7 @@ import { LoginComponent } from './pages/login/login.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'index' },
-  { path: 'login',component: LoginComponent },
+  { path: 'login', component: LoginComponent },
   { path: 'docs', pathMatch: 'full', redirectTo: 'docs' },
   { path: 'config', pathMatch: 'full', redirectTo: 'config' },
   { path: 'docs-catalog', pathMatch: 'full', redirectTo: 'docs-catalog' },
