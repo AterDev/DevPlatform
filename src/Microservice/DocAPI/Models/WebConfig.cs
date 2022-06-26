@@ -1,5 +1,7 @@
 ﻿namespace DocAPI.Models;
-
+/// <summary>
+/// 网站配置
+/// </summary>
 public class WebConfig : EntityBase
 {
     /// <summary>
@@ -22,5 +24,5 @@ public class WebConfig : EntityBase
     /// <summary>
     /// 同步的仓库id
     /// </summary>
-    public long RepositoryId { get; set; }
+    public long? RepositoryId { get; set; }
 }

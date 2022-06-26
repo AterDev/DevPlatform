@@ -1,8 +1,10 @@
 using DocAPI.Models.WebConfigDtos;
 namespace DocAPI.Controllers;
 
-
-public class WebConfigController : RestApiBase<WebConfigDataStore, WebConfig, WebConfigAddDto, WebConfigUpdateDto, WebConfigFilterDto, WebConfigItemDto>
+/// <summary>
+/// 网站配置
+/// </summary>
+public class WebConfigController : RestApiBase<WebConfigDataStore, WebConfig, WebConfigUpdateDto, WebConfigFilterDto, WebConfigItemDto>
 {
     public WebConfigController(IUserContext user, ILogger<WebConfigController> logger, WebConfigDataStore store) : base(user, logger, store)
     {
@@ -23,7 +25,34 @@ public class WebConfigController : RestApiBase<WebConfigDataStore, WebConfig, We
     /// </summary>
     /// <param name="form"></param>
     /// <returns></returns>
-    public override async Task<ActionResult<WebConfig>> AddAsync(WebConfigAddDto form) => await base.AddAsync(form);
+    public override async Task<ActionResult<WebConfig>> AddAsync([FromBody] WebConfig form) => await base.AddAsync(form);
+
+    /// <summary>
+    /// 网站配置
+    /// </summary>
+    /// <param name="form"></param>
+    /// <returns></returns>
+    [HttpPut("save")]
+    public async Task<ActionResult<WebConfig>> SaveAsync([FromBody] WebConfigAddDto form)
+    {
+        if (form.Id == null || form.Id == Guid.Empty)
+        {
+            var data = new WebConfig();
+            data = data.Merge(form);
+            return await base.AddAsync(data);
+        }
+        else
+        {
+            var config = await _store.FindAsync(form.Id.Value);
+            if (config == null) return NotFound();
+            config.WebSiteName = form.WebSiteName;
+            config.Description = form.Description;
+            config.GithubUser = form.GithubUser;
+            config.GithubPAT = form.GithubPAT;
+            await _store._context.SaveChangesAsync();
+            return config!;
+        }
+    }
 
     /// <summary>
     /// ⚠更新

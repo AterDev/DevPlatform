@@ -10,6 +10,6 @@ public class DocsUpdateDto
     [MaxLength(10000)]
     public string? Content { get; set; }
     public Guid? DocsCatalogId { get; set; } = default!;
-    public LanguageType Language { get; set; } = LanguageType.EN;
+    public string Language { get; set; } = "en";
 
 }

@@ -13,5 +13,5 @@ public class DocsCatalogTreeItemDto
     /// 是否为文档节点
     /// </summary>
     public bool IsDoc { get; set; } = false;
-    public LanguageType Language { get; set; } = LanguageType.EN;
+    public string Language { get; set; } = "en";
 }

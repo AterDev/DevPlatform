@@ -9,6 +9,6 @@ public class DocsCatalogFilter : FilterBase
     public string? Name { get; set; }
     public int? Sort { get; set; }
     public Guid? ParentId { get; set; } = default!;
-    public LanguageType? Language { get; set; }
+    public string? Language { get; set; }
 
 }

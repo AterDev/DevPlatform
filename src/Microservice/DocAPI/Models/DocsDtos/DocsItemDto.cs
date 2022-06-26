@@ -8,5 +8,5 @@ public class DocsItemDto
     [MinLength(3)]
     public string Name { get; set; } = default!;
     public Guid Id { get; set; }
-    public LanguageType Language { get; set; } = LanguageType.EN;
+    public string Language { get; set; } = "en";
 }

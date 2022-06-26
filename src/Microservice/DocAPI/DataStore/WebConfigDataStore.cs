@@ -5,9 +5,9 @@ public class WebConfigDataStore : DataStoreBase<DocsContext, WebConfig, WebConfi
     public WebConfigDataStore(DocsContext context, IUserContext userContext, ILogger<WebConfigDataStore> logger) : base(context, userContext, logger)
     {
     }
-    public override async Task<List<WebConfigItemDto>> FindAsync(WebConfigFilterDto filter, bool noTracking = true)
+    public override async Task<List<WebConfigItemDto>> FindAsync(WebConfigFilterDto filter)
     {
-        return await base.FindAsync(filter, noTracking);
+        return await base.FindAsync(filter);
     }
 
     public override async Task<PageResult<WebConfigItemDto>> FindWithPageAsync(WebConfigFilterDto filter)

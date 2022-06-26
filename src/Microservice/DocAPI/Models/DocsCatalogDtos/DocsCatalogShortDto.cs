@@ -12,6 +12,6 @@ public class DocsCatalogShortDto
     [MinLength(3)]
     public string Name { get; set; } = default!;
     public int Sort { get; set; } = default!;
-    public LanguageType Language { get; set; } = LanguageType.EN;
+    public string Language { get; set; } = "en";
 
 }

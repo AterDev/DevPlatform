@@ -2,6 +2,7 @@ namespace DocAPI.Models.WebConfigDtos;
 
 public class WebConfigAddDto
 {
+    public Guid? Id { get; set; }
     /// <summary>
     /// 网站名称
     /// </summary>
@@ -22,10 +23,7 @@ public class WebConfigAddDto
     /// <summary>
     /// 同步的仓库id
     /// </summary>
-    public long RepositoryId { get; set; } = default!;
-    /// <summary>
-    /// 状态
-    /// </summary>
-    public Status Status { get; set; } = default!;
-    
+    public long? RepositoryId { get; set; } = default!;
+
+
 }

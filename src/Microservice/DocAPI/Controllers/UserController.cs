@@ -1,7 +1,9 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+
 using DocAPI.Models.UserDtos;
+
 using Microsoft.IdentityModel.Tokens;
 
 namespace DocAPI.Controllers;
@@ -11,8 +13,7 @@ namespace DocAPI.Controllers;
 /// </summary>
 public class UserController : RestApiBase<UserDataStore, User, UserUpdateDto, UserFilter, UserItemDto>
 {
-
-    IConfiguration _config;
+    private IConfiguration _config;
     public UserController(IUserContext user, ILogger<UserController> logger, UserDataStore store, IConfiguration configuration) : base(user, logger, store)
     {
         _config = configuration;
@@ -68,10 +69,7 @@ public class UserController : RestApiBase<UserDataStore, User, UserUpdateDto, Us
     /// </summary>
     /// <param name="filter"></param>
     /// <returns></returns>
-    public override Task<ActionResult<PageResult<UserItemDto>>> FilterAsync(UserFilter filter)
-    {
-        return base.FilterAsync(filter);
-    }
+    public override Task<ActionResult<PageResult<UserItemDto>>> FilterAsync(UserFilter filter) => base.FilterAsync(filter);
 
     /// <summary>
     /// 添加
@@ -94,20 +92,15 @@ public class UserController : RestApiBase<UserDataStore, User, UserUpdateDto, Us
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    public override Task<ActionResult<bool>> DeleteAsync([FromRoute] Guid id)
-    {
-        return base.DeleteAsync(id);
-    }
+    public override Task<ActionResult<bool>> DeleteAsync([FromRoute] Guid id) => base.DeleteAsync(id);
 
     /// <summary>
     /// ⚠ 批量删除
     /// </summary>
     /// <param name="ids"></param>
     /// <returns></returns>
-    public override async Task<ActionResult<int>> BatchDeleteAsync(List<Guid> ids)
-    {
+    public async override Task<ActionResult<int>> BatchDeleteAsync(List<Guid> ids) =>
         // 危险操作，请确保该方法的执行权限
         //return base.BatchDeleteAsync(ids);
-        return await Task.FromResult(0);
-    }
+        await Task.FromResult(0);
 }

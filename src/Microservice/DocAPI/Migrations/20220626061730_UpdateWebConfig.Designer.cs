@@ -3,6 +3,7 @@ using System;
 using DocAPI;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DocAPI.Migrations
 {
     [DbContext(typeof(DocsContext))]
-    partial class DocContextModelSnapshot : ModelSnapshot
+    [Migration("20220626061730_UpdateWebConfig")]
+    partial class UpdateWebConfig
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.6");
@@ -54,7 +56,7 @@ namespace DocAPI.Migrations
                     b.Property<int>("Sort")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("Status")
+                    b.Property<int>("Status")
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTimeOffset>("UpdatedTime")
@@ -100,7 +102,7 @@ namespace DocAPI.Migrations
                     b.Property<int>("Sort")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("Status")
+                    b.Property<int>("Status")
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTimeOffset>("UpdatedTime")
@@ -131,7 +133,7 @@ namespace DocAPI.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("Status")
+                    b.Property<int>("Status")
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTimeOffset>("UpdatedTime")
@@ -171,7 +173,7 @@ namespace DocAPI.Migrations
                     b.Property<long?>("RepositoryId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("Status")
+                    b.Property<int>("Status")
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTimeOffset>("UpdatedTime")
