@@ -34,13 +34,13 @@ export class LayoutComponent implements OnInit, AfterViewInit {
   }
 
   getList(): void {
-    this.service.getTree()
+    this.service.getTree("en")
       .subscribe(res => {
         if (res) {
           this.catalogs = res;
           this.dataSource.data = this.catalogs;
           this.isLoading = false;
-          // expanded 
+          // expanded
           this.treeControl.dataNodes = this.catalogs;
           this.treeControl.expandAll();
         }

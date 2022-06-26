@@ -4,5 +4,6 @@
 export interface DocsItemDto {
   name: string;
   id: string;
+  language: string;
 
 }

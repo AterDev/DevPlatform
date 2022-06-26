@@ -1,0 +1,42 @@
+<mat-toolbar fxLayoutGap="4px">
+  <button color="basic" mat-icon-button matTooltip="返回" (click)="back()">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+  添加
+</mat-toolbar>
+<form class="d-flex" *ngIf="!isLoading" [formGroup]="formGroup" (ngSubmit)="add()">
+  <div class="d-flex flex-column w-100">
+    <mat-form-field>
+      <mat-label>WebSiteName</mat-label>
+      <input matInput placeholder="WebSiteName" formControlName="webSiteName" minlength="" maxlength="60">
+      <mat-error *ngIf="webSiteName?.invalid">
+        {{getValidatorMessage('webSiteName')}}
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Description</mat-label>
+      <textarea matInput placeholder="Description" formControlName="description" minlength="" maxlength="200"
+        cols="5"></textarea>
+      <mat-error *ngIf="description?.invalid">
+        {{getValidatorMessage('description')}}
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>GithubUser</mat-label>
+      <input matInput placeholder="GithubUser" formControlName="githubUser" minlength="" maxlength="100">
+      <mat-error *ngIf="githubUser?.invalid">
+        {{getValidatorMessage('githubUser')}}
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>GithubPAT</mat-label>
+      <input matInput placeholder="GithubPAT" formControlName="githubPAT" minlength="" maxlength="100">
+      <mat-error *ngIf="githubPAT?.invalid">
+        {{getValidatorMessage('githubPAT')}}
+      </mat-error>
+    </mat-form-field>
+    <div class="d-flex">
+      <button class="d-flex flex-column" mat-flat-button color="primary" type="submit">保存</button>
+    </div>
+  </div>
+</form>

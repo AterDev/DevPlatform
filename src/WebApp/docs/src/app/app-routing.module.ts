@@ -6,9 +6,10 @@ const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'index' },
   { path: 'login',component: LoginComponent },
   { path: 'docs', pathMatch: 'full', redirectTo: 'docs' },
+  { path: 'config', pathMatch: 'full', redirectTo: 'config' },
   { path: 'docs-catalog', pathMatch: 'full', redirectTo: 'docs-catalog' },
   { path: '*', pathMatch: 'full', redirectTo: 'index' },
-  
+
 ];
 
 @NgModule({

@@ -11,6 +11,12 @@ export interface DocsCatalog extends EntityBase {
   children?: DocsCatalog[] | null;
   name: string;
   sort: number;
+  /**
+   * git url
+   */
+  gitUrl?: string | null;
+  gitSha?: string | null;
+  language: string;
   docs?: Docs[] | null;
 
 }

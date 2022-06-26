@@ -25,9 +25,10 @@ export class DocsCatalogService extends BaseService {
 
   /**
    * 获取树形结构
+   * @param language string
    */
-  getTree(): Observable<DocsCatalogTreeItemDto[]> {
-    const url = `/api/DocsCatalog/tree`;
+  getTree(language: string): Observable<DocsCatalogTreeItemDto[]> {
+    const url = `/api/DocsCatalog/tree?language=${language}`;
     return this.request<DocsCatalogTreeItemDto[]>('get', url);
   }
 
