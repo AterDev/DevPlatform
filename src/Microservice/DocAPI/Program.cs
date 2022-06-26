@@ -1,4 +1,7 @@
 using System.Text;
+
+using DocAPI.Services;
+
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 
@@ -12,6 +15,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<IUserContext, UserContext>();
 builder.Services.AddDataStore();
+builder.Services.AddScoped(typeof(DocsSyncServices));
 
 var connectionString = builder.Configuration.GetConnectionString("Default");
 builder.Services.AddDbContext<DocsContext>(options =>

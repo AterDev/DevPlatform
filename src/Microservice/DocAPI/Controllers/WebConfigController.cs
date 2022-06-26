@@ -1,4 +1,8 @@
 using DocAPI.Models.WebConfigDtos;
+using DocAPI.Services;
+
+using Octokit;
+
 namespace DocAPI.Controllers;
 
 /// <summary>
@@ -6,8 +10,15 @@ namespace DocAPI.Controllers;
 /// </summary>
 public class WebConfigController : RestApiBase<WebConfigDataStore, WebConfig, WebConfigUpdateDto, WebConfigFilterDto, WebConfigItemDto>
 {
-    public WebConfigController(IUserContext user, ILogger<WebConfigController> logger, WebConfigDataStore store) : base(user, logger, store)
+    private readonly DocsSyncServices _syncService;
+
+    public WebConfigController(
+        IUserContext user,
+        ILogger<WebConfigController> logger,
+        WebConfigDataStore store,
+        DocsSyncServices syncService) : base(user, logger, store)
     {
+        _syncService = syncService;
     }
 
     /// <summary>
@@ -28,7 +39,7 @@ public class WebConfigController : RestApiBase<WebConfigDataStore, WebConfig, We
     public override async Task<ActionResult<WebConfig>> AddAsync([FromBody] WebConfig form) => await base.AddAsync(form);
 
     /// <summary>
-    /// 网站配置
+    /// 保存网站配置
     /// </summary>
     /// <param name="form"></param>
     /// <returns></returns>
@@ -49,9 +60,47 @@ public class WebConfigController : RestApiBase<WebConfigDataStore, WebConfig, We
             config.Description = form.Description;
             config.GithubUser = form.GithubUser;
             config.GithubPAT = form.GithubPAT;
+            config.RepositoryId = form.RepositoryId;
             await _store._context.SaveChangesAsync();
             return config!;
         }
+    }
+
+
+    /// <summary>
+    /// 获取仓库
+    /// </summary>
+    /// <param name="pat"></param>
+    /// <returns></returns>
+    [HttpGet("repositories")]
+    public async Task<ActionResult<List<RepositoryItemDto>>> GetRepositories(string pat)
+    {
+        await _syncService.SetPATAsync(pat);
+        var list = await _syncService.GetPublicRepositories();
+        return list.Select(s => new RepositoryItemDto
+        {
+            FullName = s.FullName,
+            RepositoryId = s.Id
+        }).ToList();
+    }
+
+    /// <summary>
+    /// 同步文档
+    /// </summary>
+    public async Task<ActionResult> SyncAsync()
+    {
+        var config = await _store.Db.FirstOrDefaultAsync();
+        if (config == null)
+        {
+            return Problem("请先填写github配置");
+        }
+        if (string.IsNullOrEmpty(config.GithubPAT) || config.RepositoryId == null)
+        {
+            return Problem("请先填写github pat并选择对应的文档仓库");
+        }
+
+        await _syncService.SyncDocsAsync(config.RepositoryId);
+        return Ok();
     }
 
     /// <summary>

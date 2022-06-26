@@ -11,6 +11,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { WebConfig } from 'src/app/share/models/web-config/web-config.model';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { WebConfigAddDto } from 'src/app/share/models/web-config/web-config-add-dto.model';
+import { Repository } from 'src/app/share/models/repository.model';
+import { RepositoryItemDto } from 'src/app/share/models/repository/repository-item-dto.model';
 
 @Component({
   selector: 'app-index',
@@ -21,7 +23,8 @@ export class IndexComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   isLoading = true;
   total = 0;
-  data? = {} as WebConfig;
+  data?= {} as WebConfig;
+  repositories = [] as RepositoryItemDto[] || null;
   columns: string[] = ['webSiteName', 'description', 'githubUser', 'actions'];
   dataSource!: MatTableDataSource<WebConfigItemDto>;
   filter: WebConfigFilterDto;
@@ -43,7 +46,6 @@ export class IndexComponent implements OnInit {
   get githubUser() { return this.formGroup.get('githubUser'); }
   get githubPAT() { return this.formGroup.get('githubPAT'); }
   get repositoryId() { return this.formGroup.get('repositoryId'); }
-  get status() { return this.formGroup.get('status'); }
   ngOnInit(): void {
     this.getList();
   }
@@ -54,8 +56,6 @@ export class IndexComponent implements OnInit {
       githubUser: new FormControl(this.data?.githubUser, [Validators.maxLength(100)]),
       githubPAT: new FormControl(this.data?.githubPAT, [Validators.maxLength(100)]),
       repositoryId: new FormControl(this.data?.repositoryId, []),
-      status: new FormControl(this.data?.status, []),
-
     });
   }
   getList(): void {
@@ -72,6 +72,24 @@ export class IndexComponent implements OnInit {
       });
   }
 
+  choseRepos(): void {
+    this.snb.open("正在获取您的github仓库列表");
+    if (this.data?.githubPAT) {
+      this.service.getRepositories(this.data?.githubPAT)
+        .subscribe(res => {
+          this.repositories = res;
+          if (res && res.length > 0) {
+            this.repositoryId?.setValue(res[0].repositoryId);
+          }
+
+          this.snb.open("获取仓库成功");
+
+        });
+    } else {
+      this.snb.open("请先设置PAT");
+    }
+
+  }
   getValidatorMessage(type: string): string {
     switch (type) {
       case 'webSiteName':
@@ -94,11 +112,6 @@ export class IndexComponent implements OnInit {
         return this.repositoryId?.errors?.['required'] ? 'RepositoryId必填' :
           this.repositoryId?.errors?.['minlength'] ? 'RepositoryId长度最少位' :
             this.repositoryId?.errors?.['maxlength'] ? 'RepositoryId长度最多位' : '';
-      case 'status':
-        return this.status?.errors?.['required'] ? 'Status必填' :
-          this.status?.errors?.['minlength'] ? 'Status长度最少位' :
-            this.status?.errors?.['maxlength'] ? 'Status长度最多位' : '';
-
       default:
         return '';
     }

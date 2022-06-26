@@ -1,4 +1,5 @@
 export interface WebConfigAddDto {
+  id?: string | null;
   /**
    * 网站名称
    */
@@ -16,6 +17,5 @@ export interface WebConfigAddDto {
    * 同步的仓库id
    */
   repositoryId?: number | null;
-  id?: string | null;
 
 }

@@ -43,6 +43,17 @@
         {{getValidatorMessage('githubPAT')}}
       </mat-error>
     </mat-form-field>
+    <div class="d-flex mb-1">
+      <button class="d-flex flex-column" type="button" mat-flat-button color="primary"
+        (click)="choseRepos()">选择仓库</button>
+    </div>
+    <mat-form-field>
+      <mat-select *ngIf="repositories" placeholder="文档仓库" formControlName="repositoryId" name="repositoryId">
+        <mat-option *ngFor="let item of repositories" [value]="item.repositoryId">
+          {{item.fullName}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
     <div class="d-flex">
       <button class="d-flex flex-column" mat-flat-button color="primary" type="submit">保存</button>
     </div>

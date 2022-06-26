@@ -24,6 +24,4 @@ public class WebConfigAddDto
     /// 同步的仓库id
     /// </summary>
     public long? RepositoryId { get; set; } = default!;
-
-
 }
