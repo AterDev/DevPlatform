@@ -98,9 +98,16 @@ public class WebConfigController : RestApiBase<WebConfigDataStore, WebConfig, We
         {
             return Problem("请先填写github pat并选择对应的文档仓库");
         }
+        try
+        {
+            await _syncService.SyncDocsAsync(config.RepositoryId);
+            return Ok("同步完成");
+        }
+        catch (Exception ex)
+        {
 
-        await _syncService.SyncDocsAsync(config.RepositoryId);
-        return Ok();
+            return Problem(ex.Message);
+        }
     }
 
     /// <summary>

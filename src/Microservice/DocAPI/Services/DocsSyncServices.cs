@@ -77,48 +77,64 @@ public class DocsSyncServices
         DocsCatalog? parentCatalog = null;
         if (parent != null)
         {
-            parentCatalog = await _context.DocsCatalogs.FirstOrDefaultAsync(c => c.GitSha == parent.GitUrl);
+            parentCatalog = await _context.DocsCatalogs.FirstOrDefaultAsync(c => c.GitSha == parent.Sha);
         }
         if (dirs.Any())
         {
             var sort = 0;
-            dirs.ForEach(async d =>
+            foreach (var d in dirs)
             {
-                // 创建目录
-                var catalog = new DocsCatalog
+                var exist = _context.DocsCatalogs.Any(c => c.GitSha == d.Sha);
+                if (!exist)
                 {
-                    Name = d.Name,
-                    Sort = sort,
-                    GitSha = d.Sha,
-                    GitUrl = d.Url,
-                    Language = language
-                };
-                if (parentCatalog != null)
-                {
-                    catalog.Parent = parentCatalog;
+                    // 创建目录
+                    var catalog = new DocsCatalog
+                    {
+                        Name = d.Name,
+                        Sort = sort,
+                        GitSha = d.Sha,
+                        GitUrl = d.Url,
+                        Language = language
+                    };
+                    if (parentCatalog != null)
+                    {
+                        catalog.Parent = parentCatalog;
+                    }
+                    _context.DocsCatalogs.Add(catalog);
+                    sort++;
+
+                    await _context.SaveChangesAsync();
                 }
-                _context.DocsCatalogs.Add(catalog);
-                sort++;
+
                 // 获取子目录，递归调用
                 var childContents = await GetFilesAsync(repositoryId, d.Path);
                 await CreateDocsRecursionAsync(repositoryId, childContents, language, d);
-            });
+            }
         }
         if (!ignoreFile)
         {
             var sort = 0;
             var files = contents.Where(c => c.Type.Equals("file")).ToList();
+
             if (files.Any())
             {
-                files.ForEach(f =>
+                // 库中不存在则添加
+                var shas = files.Select(f => f.Sha).ToList();
+                var existshas = _context.Docs.Where(d => shas.Contains(d.GitSha))
+                    .Select(s => s.GitSha).ToList();
+                if (existshas.Any()) { files = files.Where(f => !existshas.Contains(f.Sha)).ToList(); }
+                foreach (var f in files)
                 {
+                    var filecontents = await Client.Repository.Content.GetAllContents(repositoryId, f.Path);
+                    var file = filecontents.FirstOrDefault();
+                    if (file == null) continue;
                     // 创建文件
                     var doc = new Docs
                     {
-                        Name = f.Name,
-                        GitUrl = f.Url,
-                        GitSha = f.Sha,
-                        Content = f.Content,
+                        Name = file.Name,
+                        GitUrl = file.Url,
+                        GitSha = file.Sha,
+                        Content = file.Content ?? file.EncodedContent,
                         Language = language,
                         Sort = sort,
                     };
@@ -128,8 +144,9 @@ public class DocsSyncServices
                     }
                     _context.Docs.Add(doc);
                     sort++;
-                });
+                }
             }
+            await _context.SaveChangesAsync();
         }
     }
 
