@@ -4,7 +4,7 @@ export interface EntityBase {
   /**
    * 状态
    */
-  status?: Status;
+  status?: Status | null;
   createdTime: Date;
   updatedTime: Date;
 

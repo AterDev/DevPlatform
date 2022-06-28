@@ -5,5 +5,6 @@ export interface DocsUpdateDto {
   name?: string | null;
   content?: string | null;
   docsCatalogId?: string | null;
+  language: string;
 
 }

@@ -1,23 +1,26 @@
 <mat-sidenav-container class="example-container">
-    <mat-sidenav *ngIf="!isLoading" #sidenav mode="side" opened="opened">
-        <div class="d-flex flex-row-reverse">
-            <button mat-icon-button *ngIf="opened" (click)="toggle()">
-                <mat-icon>keyboard_double_arrow_left</mat-icon>
-            </button>
-            <button mat-icon-button *ngIf="!opened" (click)="toggle()">
-                <mat-icon>keyboard_double_arrow_right</mat-icon>
-            </button>
-        </div>
-        <mat-nav-list *ngIf="opened">
-            <mat-list-item [routerLink]="['/docs']" routerLinkActive="active">
-                文档
-            </mat-list-item>
-            <mat-list-item [routerLink]="['/docs-catalog']" routerLinkActive="active">
-                文档目录
-            </mat-list-item>
-        </mat-nav-list>
-    </mat-sidenav>
-    <mat-sidenav-content class="px-2">
-        <router-outlet></router-outlet>
-    </mat-sidenav-content>
+  <mat-sidenav *ngIf="!isLoading" #sidenav mode="side" opened="opened">
+    <div class="d-flex flex-row-reverse">
+      <button mat-icon-button *ngIf="opened" (click)="toggle()">
+        <mat-icon>keyboard_double_arrow_left</mat-icon>
+      </button>
+      <button mat-icon-button *ngIf="!opened" (click)="toggle()">
+        <mat-icon>keyboard_double_arrow_right</mat-icon>
+      </button>
+    </div>
+    <mat-nav-list *ngIf="opened">
+      <mat-list-item [routerLink]="['/config']" routerLinkActive="active">
+        配置
+      </mat-list-item>
+      <!-- <mat-list-item [routerLink]="['/docs']" routerLinkActive="active">
+        文档
+      </mat-list-item>
+      <mat-list-item [routerLink]="['/docs-catalog']" routerLinkActive="active">
+        文档目录
+      </mat-list-item> -->
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content class="px-2">
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
 </mat-sidenav-container>

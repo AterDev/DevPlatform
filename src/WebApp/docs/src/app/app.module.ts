@@ -10,6 +10,7 @@ import { DocsModule } from './pages/docs/docs.module';
 import { DocsCatalogModule } from './pages/docs-catalog/docs-catalog.module';
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 import { LoginComponent } from './pages/login/login.component';
+import { WebConfigModule } from './pages/web-config/web-config.module';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { LoginComponent } from './pages/login/login.component';
     ComponentsModule,
     HomeModule,
     DocsModule,
-    DocsCatalogModule
+    DocsCatalogModule,
+    WebConfigModule
   ],
   providers: [
     { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 2500 } }

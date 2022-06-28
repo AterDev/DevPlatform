@@ -7,5 +7,5 @@ public class DocsCatalogAddDto
     [MinLength(3)]
     public string? Name { get; set; }
     public int? Sort { get; set; }
-    public LanguageType Language { get; set; } = LanguageType.EN;
+    public string Language { get; set; } = "en";
 }

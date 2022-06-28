@@ -6,7 +6,7 @@ import { UserFilter } from '../models/user/user-filter.model';
 import { User } from '../models/user/user.model';
 import { BatchUpdateOfUserUpdateDto } from '../models/user/batch-update-of-user-update-dto.model';
 import { UserUpdateDto } from '../models/user/user-update-dto.model';
-import { LoginResult } from '../models/login-result/login-result.model';
+import { LoginResult } from '../models/user/login-result.model';
 import { PageResultOfUserItemDto } from '../models/user/page-result-of-user-item-dto.model';
 
 /**

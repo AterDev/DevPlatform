@@ -111,5 +111,7 @@
       }
     }
   },
-  "defaultProject": "admin"
+  "cli": {
+    "analytics": false
+  }
 }

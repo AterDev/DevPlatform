@@ -14,6 +14,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{732A3A76-7A59-492B-9D68-9EC3EB78A9D1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Deploy", "Deploy", "{F2F1C9D1-8D62-479A-8407-D13A46772A6C}"
+	ProjectSection(SolutionItems) = preProject
+		src\Microservice\DocAPI\Scripts\SyncNgRequest.ps1 = src\Microservice\DocAPI\Scripts\SyncNgRequest.ps1
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DevPlatform", "DevPlatform", "{D503550D-124B-405F-9E42-67B71A70D25C}"
 EndProject

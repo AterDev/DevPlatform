@@ -54,7 +54,7 @@ namespace DocAPI.Migrations
                     b.Property<int>("Sort")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("Status")
+                    b.Property<int?>("Status")
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTimeOffset>("UpdatedTime")
@@ -100,7 +100,7 @@ namespace DocAPI.Migrations
                     b.Property<int>("Sort")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("Status")
+                    b.Property<int?>("Status")
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTimeOffset>("UpdatedTime")
@@ -131,7 +131,7 @@ namespace DocAPI.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("Status")
+                    b.Property<int?>("Status")
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTimeOffset>("UpdatedTime")
@@ -168,10 +168,10 @@ namespace DocAPI.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
-                    b.Property<long>("RepositoryId")
+                    b.Property<long?>("RepositoryId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("Status")
+                    b.Property<int?>("Status")
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTimeOffset>("UpdatedTime")

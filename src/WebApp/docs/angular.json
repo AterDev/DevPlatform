@@ -111,5 +111,7 @@
       }
     }
   },
-  "defaultProject": "docs"
+  "cli": {
+    "analytics": false
+  }
 }
