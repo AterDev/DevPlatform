@@ -29,13 +29,6 @@
       </mat-error>
     </mat-form-field>
     <mat-form-field>
-      <mat-label>Github 用户名</mat-label>
-      <input matInput placeholder="GithubUser" formControlName="githubUser" minlength="" maxlength="100">
-      <mat-error *ngIf="githubUser?.invalid">
-        {{getValidatorMessage('githubUser')}}
-      </mat-error>
-    </mat-form-field>
-    <mat-form-field>
       <mat-label>Github PAT</mat-label>
       <input matInput placeholder="GithubPAT" formControlName="githubPAT" minlength="" maxlength="100">
       <mat-error *ngIf="githubPAT?.invalid">

@@ -43,7 +43,6 @@ export class IndexComponent implements OnInit {
   }
   get webSiteName() { return this.formGroup.get('webSiteName'); }
   get description() { return this.formGroup.get('description'); }
-  get githubUser() { return this.formGroup.get('githubUser'); }
   get githubPAT() { return this.formGroup.get('githubPAT'); }
   get repositoryId() { return this.formGroup.get('repositoryId'); }
   ngOnInit(): void {
@@ -53,7 +52,6 @@ export class IndexComponent implements OnInit {
     this.formGroup = new FormGroup({
       webSiteName: new FormControl(this.data?.webSiteName, [Validators.maxLength(60)]),
       description: new FormControl(this.data?.description, [Validators.maxLength(200)]),
-      githubUser: new FormControl(this.data?.githubUser, [Validators.maxLength(100)]),
       githubPAT: new FormControl(this.data?.githubPAT, [Validators.maxLength(100)]),
       repositoryId: new FormControl(this.data?.repositoryId, []),
     });
@@ -74,8 +72,8 @@ export class IndexComponent implements OnInit {
 
   choseRepos(): void {
     this.snb.open("正在获取您的github仓库列表");
-    if (this.data?.githubPAT) {
-      this.service.getRepositories(this.data?.githubPAT)
+    if (this.githubPAT?.value) {
+      this.service.getRepositories(this.githubPAT.value)
         .subscribe(res => {
           this.repositories = res;
           if (res && res.length > 0) {
@@ -100,10 +98,6 @@ export class IndexComponent implements OnInit {
         return this.description?.errors?.['required'] ? 'Description必填' :
           this.description?.errors?.['minlength'] ? 'Description长度最少位' :
             this.description?.errors?.['maxlength'] ? 'Description长度最多200位' : '';
-      case 'githubUser':
-        return this.githubUser?.errors?.['required'] ? 'GithubUser必填' :
-          this.githubUser?.errors?.['minlength'] ? 'GithubUser长度最少位' :
-            this.githubUser?.errors?.['maxlength'] ? 'GithubUser长度最多100位' : '';
       case 'githubPAT':
         return this.githubPAT?.errors?.['required'] ? 'GithubPAT必填' :
           this.githubPAT?.errors?.['minlength'] ? 'GithubPAT长度最少位' :
@@ -131,7 +125,7 @@ export class IndexComponent implements OnInit {
   }
   sync(): void {
     this.snb.open("开始同步，请稍等");
-    if (this.data?.githubPAT && this.data.repositoryId) {
+    if (this.githubPAT?.value && this.repositoryId?.value) {
       this.service.sync()
         .subscribe(res => {
           if (res) {
