@@ -10,6 +10,11 @@ public class DocsController : RestApiBase<DocsDataStore, Docs, DocsUpdateDto, Do
     {
     }
 
+    [HttpPost("update")]
+    public void UpdateFromGithub()
+    {
+    }
+
     /// <summary>
     /// 关联添加
     /// </summary>
@@ -50,7 +55,6 @@ public class DocsController : RestApiBase<DocsDataStore, Docs, DocsUpdateDto, Do
     /// <returns></returns>
     public override Task<ActionResult<Docs>> AddAsync(Docs form) => base.AddAsync(form);
 
-    [AllowAnonymous]
     public override Task<ActionResult<Docs?>> GetDetailAsync([FromRoute] Guid id) => base.GetDetailAsync(id);
 
     /// <summary>
@@ -77,7 +81,7 @@ public class DocsController : RestApiBase<DocsDataStore, Docs, DocsUpdateDto, Do
     /// </summary>
     /// <param name="ids"></param>
     /// <returns></returns>
-    public override async Task<ActionResult<int>> BatchDeleteAsync(List<Guid> ids)
+    public async override Task<ActionResult<int>> BatchDeleteAsync(List<Guid> ids)
     {
         // 危险操作，请确保该方法的执行权限
         //return base.BatchDeleteAsync(ids);

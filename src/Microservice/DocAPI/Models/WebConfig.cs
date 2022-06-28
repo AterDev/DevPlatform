@@ -23,4 +23,8 @@ public class WebConfig : EntityBase
     /// 同步的仓库id
     /// </summary>
     public long RepositoryId { get; set; }
+    /// <summary>
+    /// github webhook secret
+    /// </summary>
+    public string? WebhookSecret { get; set; }
 }

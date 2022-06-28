@@ -1,4 +1,5 @@
 using System.Text;
+
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 
@@ -67,7 +68,6 @@ builder.Services.AddCors(options =>
         builder.AllowAnyHeader();
     });
 });
-
 
 builder.Services.AddControllers()
      .AddJsonOptions(options =>

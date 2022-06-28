@@ -2,7 +2,7 @@ namespace DocAPI.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-//[Authorize]
+[Authorize]
 public class RestApiBase<TDataStore, TEntity, TUpdate, TFilter, TItem>
     : ControllerBase, IRestApiBase<TEntity, TUpdate, TFilter, TItem, Guid>
     where TDataStore : DataStoreBase<DocsContext, TEntity, TUpdate, TFilter, TItem>

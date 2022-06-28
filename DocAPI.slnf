@@ -1,0 +1,9 @@
+{
+  "solution": {
+    "path": "DevPlatform.sln",
+    "projects": [
+      "src\\Microservice\\DocAPI\\DocAPI.csproj",
+      "test\\DocAPI.Test\\DocAPI.Test.csproj"
+    ]
+  }
+}
