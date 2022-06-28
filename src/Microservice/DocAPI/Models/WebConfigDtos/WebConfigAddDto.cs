@@ -24,4 +24,8 @@ public class WebConfigAddDto
     /// 同步的仓库id
     /// </summary>
     public long? RepositoryId { get; set; } = default!;
+    /// <summary>
+    /// 密钥
+    /// </summary>
+    public string? WebhookSecret { get; set; }
 }

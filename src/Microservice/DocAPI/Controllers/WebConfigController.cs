@@ -1,7 +1,4 @@
 using DocAPI.Models.WebConfigDtos;
-using DocAPI.Services;
-
-using Octokit;
 
 namespace DocAPI.Controllers;
 
@@ -26,7 +23,7 @@ public class WebConfigController : RestApiBase<WebConfigDataStore, WebConfig, We
     /// </summary>
     /// <param name="filter"></param>
     /// <returns></returns>
-    public override async Task<ActionResult<PageResult<WebConfigItemDto>>> FilterAsync(WebConfigFilterDto filter)
+    public async override Task<ActionResult<PageResult<WebConfigItemDto>>> FilterAsync(WebConfigFilterDto filter)
     {
         return await base.FilterAsync(filter);
     }
@@ -36,7 +33,7 @@ public class WebConfigController : RestApiBase<WebConfigDataStore, WebConfig, We
     /// </summary>
     /// <param name="form"></param>
     /// <returns></returns>
-    public override async Task<ActionResult<WebConfig>> AddAsync([FromBody] WebConfig form) => await base.AddAsync(form);
+    public async override Task<ActionResult<WebConfig>> AddAsync([FromBody] WebConfig form) => await base.AddAsync(form);
 
     /// <summary>
     /// 保存网站配置
@@ -65,7 +62,6 @@ public class WebConfigController : RestApiBase<WebConfigDataStore, WebConfig, We
             return config!;
         }
     }
-
 
     /// <summary>
     /// 获取仓库
@@ -100,13 +96,12 @@ public class WebConfigController : RestApiBase<WebConfigDataStore, WebConfig, We
         }
         try
         {
-            await _syncService.SyncDocsAsync(config.RepositoryId);
+            await _syncService.AutoSyncAsync();
             return Ok("同步完成");
         }
         catch (Exception ex)
         {
-
-            return Problem(ex.Message);
+            return Problem(ex.Message + ex.StackTrace);
         }
     }
 
@@ -116,7 +111,7 @@ public class WebConfigController : RestApiBase<WebConfigDataStore, WebConfig, We
     /// <param name="id"></param>
     /// <param name="form"></param>
     /// <returns></returns>
-    public override async Task<ActionResult<WebConfig?>> UpdateAsync([FromRoute] Guid id, WebConfigUpdateDto form)
+    public async override Task<ActionResult<WebConfig?>> UpdateAsync([FromRoute] Guid id, WebConfigUpdateDto form)
         => await base.UpdateAsync(id, form);
 
     /// <summary>
@@ -125,9 +120,9 @@ public class WebConfigController : RestApiBase<WebConfigDataStore, WebConfig, We
     /// <param name="id"></param>
     /// <returns></returns>
     // [ApiExplorerSettings(IgnoreApi = true)]
-    public override async Task<ActionResult<bool>> DeleteAsync([FromRoute] Guid id)
+    public async override Task<ActionResult<bool>> DeleteAsync([FromRoute] Guid id)
     {
-        return await base.DeleteAsync(id);
+        return await Task.FromResult(true);
     }
 
     /// <summary>
@@ -135,7 +130,7 @@ public class WebConfigController : RestApiBase<WebConfigDataStore, WebConfig, We
     /// </summary>
     /// <param name="ids"></param>
     /// <returns></returns>
-    public override async Task<ActionResult<int>> BatchDeleteAsync(List<Guid> ids)
+    public async override Task<ActionResult<int>> BatchDeleteAsync(List<Guid> ids)
     {
         // 危险操作，请确保该方法的执行权限
         //return await base.BatchDeleteAsync(ids);

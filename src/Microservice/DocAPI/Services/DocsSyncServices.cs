@@ -11,6 +11,9 @@ public class DocsSyncServices
     private readonly ApiOptions _options;
     private Octokit.User? User { get; set; }
 
+    private List<string> DirShas { get; set; } = new List<string>();
+    private List<string> FilesShas { get; set; } = new List<string>();
+
     public DocsSyncServices(DocsContext context)
     {
         _context = context;
@@ -19,6 +22,42 @@ public class DocsSyncServices
         {
             PageSize = 100,
         };
+    }
+
+    public async Task AutoSyncAsync()
+    {
+        DirShas = new List<string>();
+        FilesShas = new List<string>();
+        // 同步并记录本次同步的 文件夹和文件的sha
+        var config = _context.WebConfigs.FirstOrDefault();
+        if (config == null)
+        {
+            Console.WriteLine("未配置github参数，无法同步");
+            return;
+        }
+        if (config.GithubPAT == null || config.RepositoryId == null) return;
+
+        await SetPATAsync(config.GithubPAT);
+
+        await SyncDocsAsync(config.RepositoryId);
+        // 删除库中不在本次更新中的sha
+        await ClearOldFilesAsync();
+    }
+
+    /// <summary>
+    /// 清理旧文件及目录
+    /// </summary>
+    /// <returns></returns>
+    public async Task ClearOldFilesAsync()
+    {
+        var oldFiles = await _context.Docs.Where(d => !FilesShas.Contains(d.GitSha!)).ToListAsync();
+        _context.Docs.RemoveRange(oldFiles);
+
+        var oldDirs = await _context.DocsCatalogs.Where(d => !DirShas.Contains(d.GitSha!))
+            .ToListAsync();
+        oldDirs = oldDirs.OrderByDescending(o => o.CreatedTime).ToList();
+        _context.Docs.RemoveRange(oldFiles);
+        await _context.SaveChangesAsync();
     }
 
     /// <summary>
@@ -84,6 +123,7 @@ public class DocsSyncServices
             var sort = 0;
             foreach (var d in dirs)
             {
+                DirShas.Add(d.Sha);
                 var exist = _context.DocsCatalogs.Any(c => c.GitSha == d.Sha);
                 if (!exist)
                 {
@@ -118,6 +158,7 @@ public class DocsSyncServices
 
             if (files.Any())
             {
+                FilesShas.AddRange(files.Select(f => f.Sha).ToList());
                 // 库中不存在则添加
                 var shas = files.Select(f => f.Sha).ToList();
                 var existshas = _context.Docs.Where(d => shas.Contains(d.GitSha))

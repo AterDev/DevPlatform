@@ -1,4 +1,7 @@
 using System.Linq.Expressions;
+using System.Security.Cryptography;
+using System.Text;
+
 namespace DocAPI.Utils;
 public static partial class Extensions
 {
@@ -51,5 +54,14 @@ public static partial class Extensions
         return source.Provider.CreateQuery<TResult>(
             Expression.Call(typeof(Queryable), "Select", new Type[] { sourceType, resultType },
                 source.Expression, Expression.Quote(selector)));
+    }
+
+
+    public static string ComputeSignature(string stringToSign, string secret)
+    {
+        using var hmacsha256 = new HMACSHA256(Convert.FromBase64String(secret));
+        var bytes = Encoding.ASCII.GetBytes(stringToSign);
+        var hashedBytes = hmacsha256.ComputeHash(bytes);
+        return Convert.ToBase64String(hashedBytes);
     }
 }

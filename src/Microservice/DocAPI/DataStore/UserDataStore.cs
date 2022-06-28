@@ -1,5 +1,6 @@
 using System.Security.Cryptography;
 using System.Text;
+
 using DocAPI.Models.UserDtos;
 namespace DocAPI.DataStore;
 public class UserDataStore : DataStoreBase<DocsContext, User, UserUpdateDto, UserFilter, UserItemDto>
@@ -32,8 +33,9 @@ public class UserDataStore : DataStoreBase<DocsContext, User, UserUpdateDto, Use
         var user = new User
         {
             UserName = username,
-            Password = Md5Hash( password)
+            Password = Md5Hash(password)
         };
+        Console.WriteLine("created user: admin/admin123.");
         return await base.AddAsync(user);
     }
 

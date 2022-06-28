@@ -1,4 +1,5 @@
 using DocAPI.Models.DocsDtos;
+
 namespace DocAPI.Controllers;
 
 /// <summary>
@@ -10,10 +11,6 @@ public class DocsController : RestApiBase<DocsDataStore, Docs, DocsUpdateDto, Do
     {
     }
 
-    [HttpPost("update")]
-    public void UpdateFromGithub()
-    {
-    }
 
     /// <summary>
     /// 关联添加
